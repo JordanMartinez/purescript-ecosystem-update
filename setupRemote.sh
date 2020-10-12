@@ -23,3 +23,7 @@ cd purescript-$1
 git checkout -b updateTo14
 
 git reset --hard upstream/master
+
+echo ""
+echo "Open the below URL to see whether repo has any pre-existing PRs and/or issues"
+echo https://github.com/purescript/purescript-$1
