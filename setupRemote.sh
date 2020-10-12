@@ -11,6 +11,9 @@ BASE_GH_ORG=purescript
 # Your GitHub username
 GH_USERNAME=JordanMartinez
 
+# The current release candidate
+PS_TAG=v0.14.0-rc3
+
 # go up one level
 cd ..
 
@@ -32,8 +35,16 @@ sed --in-place -r 's/\^[0-9]+\.[0-9]+\.[0-9]+/master/g' bower.json
 echo "Updating `purescript-psa` to `v0.8.0`"
 sed --in-place 's/"purescript-psa": "^0.6.0"/"purescript-psa": "^0.8.0"/' package.json
 
-git add bower.json package.json
-git commit -m "Update dependencies to master; psa to v0.8.0"
+# use `sed` to update TAG in .travis.yml to latest release candidate
+echo "Updating `.travis.yml` TAG to $PS_TAG"
+## comment out the previous TAG
+sed --in-place 's/- TAG/# - TAG/g' .travis.yml
+## insert `  - TAG=PS_TAG` and a newline in front of the `  - curl` line
+## See https://stackoverflow.com/a/584926
+sed --in-place 's/- curl/- TAG='"$PS_TAG"'\n  - curl/' .travis.yml
+
+git add bower.json package.json .travis.yml
+git commit -m "Update TAG to $PS_TAG; dependencies to master; psa to v0.8.0"
 
 echo ""
 echo "Open the below URL to see whether repo has any pre-existing PRs and/or issues"
