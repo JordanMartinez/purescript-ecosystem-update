@@ -3,6 +3,7 @@
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
+# This file is based on the `.travis.yml` file in the `purescript-prelude` repo
 export PATH="$(pwd):$PATH"
 cd ../purescript-$1
 npm install
