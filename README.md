@@ -6,76 +6,51 @@
 gh auth login
 ```
 
-2. (Optional, but recommended) Change the default git protocol from `https` to `ssh`
+2. Change the default git protocol from `https` to `ssh`
 
 ```bash
 gh config set git_protocol=ssh
 ```
 
-3. Look at [`libDeps.txt`](./libDeps.txt) to see what to work on next. See also the [purescript repo's "update ecosystme to v0.14.0" issue](https://github.com/purescript/purescript/issues/3942)
+3. Modify the `./setupRemote.sh` file
+     - Change the `GH_USERNAME` variable to use your GitHub username
+     - Change the `PS_TAG` variablel to whatever is the latest.
 
-4. Modify the `./setupRemote.sh` file's `GH_USERNAME` variable to use your GitHub username
+4. Look at [`libDeps.txt`](./libDeps.txt) to see what to work on next. See also the [purescript repo's "update ecosystme to v0.14.0" issue](https://github.com/purescript/purescript/issues/3942)
 
-5. Install the package and its dependencies and set up its git remotes
+5. Claim the package on the issue
+
+6. Setup the repo and automate the boilerplate updates
 
 ```bash
-# Generate the corresponding `<packageName>.dhall` file
-./genSpagoFile.sh <packageName>
+./setupRemote.sh <packageName>
+```
 
-# Install and compile just that package and its dependencies
+7. Test whether code compiles
+
+```bash
 ./compile.sh <packageName>
-
-# Setup a remote to your fork of the repo.
-#   If package is stored at `.spago/packageName/version`
-#   run `ls .spago/packageName` to see what the version is
-./setupRemote.sh <packageName> <versionName>
 ```
 
-Using `prelude` as an example, we would run...
-```bash
-# Generate the corresponding `<packageName>.dhall` file
-./genSpagoFile.sh prelude
-
-# Install and compile just that package and its dependencies
-./compile.sh prelude
-
-# outputs master
-ls .spago/prelude
-
-# Setup a remote to your fork of the repo.
-./setupRemote.sh prelude master
-```
-
-6. Do your updates locally
+8. Navigate to the created directory
 
 ```bash
-cd .spago/packageName/versionName
-#   make changes via your editor
-
-# verify that the package still compiles
-./compile.sh <packageName>
-
-# if you need to reinstall / update a dependency
-./reinstall <dependencyName> <packageName>
+cd ../purescript-<packageName>
 ```
 
-For example
-```bash
-cd .spago/functions/v4.0.0
-#   make changes via your editor
-# verify that the package still compiles
-./compile.sh functions
-
-# if you need to reinstall / update a dependency
-# You can do this. Note: it will delete any prior work you had
-# done previously
-./reinstall prelude functions
-```
-
-7. Create a PR
+9. Create a PR via `gh` CLI tool
 
 ```bash
-git push -u origin updateTo14
-
-# Create a PR on GitHub
+gh pr create
+# 1st question: Choose the `purescript/purescript-<packageName>`
+# 2nd question: Choose your repo
+# For title: Update to v0.14.0-rc3
+# For body
+## Press `e` to open text editor
+## Write: `Backlinking to purescript/purescript#3942`
+## Press CTRL+O
+## Press CTRL+X
+# 3rd Question: Choose 'Submit'
 ```
+
+10. Look at the repo to see whether any issues/PRs should also be merged.
