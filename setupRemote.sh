@@ -31,17 +31,17 @@ git checkout -b updateTo14
 git reset --hard upstream/master
 
 # use 'sed' to update all purescript dependencies in bower to `master`
-echo "Updating all deps in `bower.json` to `master`"
+echo "Updating all deps in 'bower.json' to 'master'"
 sed --in-place -r 's/\^[0-9]+\.[0-9]+\.[0-9]+/master/g' bower.json
 
 # use `sed` to update purescript-psa to v0.8.0
-echo "Updating `purescript-psa` to `v0.8.0`"
+echo "Updating 'purescript-psa' to 'v0.8.0'"
 sed --in-place 's/"purescript-psa": "^0.6.0"/"purescript-psa": "^0.8.0"/' package.json
 
 # use `sed` to update TAG in .travis.yml to latest release candidate
 # by commenting out old one
 # and inserting new one in front of the next command (i.e. `curl`)
-echo "Updating `.travis.yml` TAG to $PS_TAG"
+echo "Updating '.travis.yml' TAG to $PS_TAG"
 sed --in-place 's/- TAG/# - TAG/' .travis.yml
 
 ## See https://stackoverflow.com/a/584926
@@ -52,7 +52,7 @@ git add bower.json package.json .travis.yml
 git commit -m "Update TAG to $PS_TAG; dependencies to master; psa to v0.8.0"
 
 echo ""
-echo "Try running `./compile.sh $1` and use `1` to select the `master` branch if `bower` complains"
+echo "Try running './compile.sh $1' and use '1' to select the 'master' branch if 'bower' complains"
 echo ""
 echo "Open the below URL to see whether repo has any pre-existing PRs and/or issues"
 echo https://github.com/purescript/purescript-$1
