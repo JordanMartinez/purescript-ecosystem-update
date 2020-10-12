@@ -54,6 +54,6 @@ git commit -m "Update TAG to $PS_TAG; dependencies to master; psa to v0.8.0"
 echo ""
 echo "Remaining Steps:"
 echo "1. 'cd' into 'purescript-$1' via 'cd ../purescript-$1'"
-ehco "2. Run './compile.sh $1' and use '1' to select the 'master' branch if 'bower' complains"
+echo "2. Run './compile.sh $1' and use '1' to select the 'master' branch if 'bower' complains"
 echo "3. Open the below URL to see whether repo has any pre-existing PRs and/or issues"
 echo https://github.com/purescript/purescript-$1
