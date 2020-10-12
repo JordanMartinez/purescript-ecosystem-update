@@ -24,6 +24,21 @@ git checkout -b updateTo14
 
 git reset --hard upstream/master
 
+# use 'sed' to update dependencies to `master`
+echo "Updating all deps in `bower.json` to `master`"
+sed -r 's/\^[0-9]+\.[0-9]+\.[0-9]+/master/g' bower.json > bower2.json
+rm bower.json
+mv bower2.json bower.json
+
+# use `sed` to update psa to v0.8.0
+echo "Update `purescript-psa` to `v0.8.0`"
+sed 's/"purescript-psa": "^0.6.0"/"purescript-psa": "^0.8.0"/' package.json > package2.json
+rm package.json
+mv package2.json package.json
+
+git add bower.json package.json
+git commit -m "Update dependencies to master; psa to v0.8.0"
+
 echo ""
 echo "Open the below URL to see whether repo has any pre-existing PRs and/or issues"
 echo https://github.com/purescript/purescript-$1
