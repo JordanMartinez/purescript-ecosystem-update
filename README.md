@@ -74,7 +74,7 @@ cd master
 4. Run the `./init.sh` file (globally installs `pulp`, `bower`, and `purescript-psa`; logs you into GitHub via `gh`; downloads the `purs` binary)
 
 ```bash
-./setup.sh
+./init.sh
 ```
 
 5. Modify the `./setupRemote.sh` file
