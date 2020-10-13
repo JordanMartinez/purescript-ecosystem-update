@@ -180,7 +180,8 @@ gh pr create --title MSG --body ""
 ### Making Subsequent PRs
 
 ```bash
-cd package-sets/
+# pwd = master folder
+cd ../package-sets/
 # 1. Fetch latest changes to package set
 
 export PACKAGE_NAME="<package name>"
