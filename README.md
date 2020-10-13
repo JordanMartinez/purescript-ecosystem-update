@@ -135,3 +135,65 @@ gh pr create --title "Update to v0.14.0-rc3" --body "Backlinking to purescript/p
 8. If the library needs any updating, has any other issues or PRs, work on those in a separate PR.
 
 9. Loop
+
+## Update the `prepare-0.14` branch in the `package-sets` repo
+
+### Context
+
+**When your "Update to v0.14.0" PR gets merged, submit a PR to the `package-sets` repo's `prepare-0.14` branch and update the repo's version to `master`. **
+
+Note: This step verifies that future PureScript release candidates still build libraries that were updated using a prior release candidate. For example, I updated `purescript-prelude` using the `v0.14.0-rc2` release. The `v0.14.0-rc3` release was made after that. Does `purescript-prelude` still build fine on the `-rc3` release? By submitting a PR, I can verify that `prelude` will still compile fine via `spago` without needing to submit PRs that update the TAG in the `.travis.yml` file of the library's repo.
+
+The `master` version will be changed to the released version once everything builds properly.
+
+### Making the First PR
+
+1. `git clone` the repo using
+
+```bash
+pwd # should be `fourteen/`, the folder containing `master` and other repos
+gh repo fork purescript/package-sets --clone=true --remote=true
+cd package-sets/
+git checkout upstream/prepare-0.14
+export PACKAGE_NAME="<package name>"
+git switch -c "$PACKAGE_NAME-0.14"
+# Update the `src/updatedLibs.dhall` file
+# so that the list of dependencies includes the name
+# of the repo you updated
+git add src/updatedLibs.dhall
+export MSG="Updated $PACKAGE_NAME to v0.14.0"
+git commit -m $MSG
+gh pr create --title MSG --body ""
+# 1st question: Choose the `purescript/package-sets` repo
+# 2nd question: Choose your repo
+# 3rd Question: Choose 'Submit'
+```
+
+### Making Subsequent PRs
+
+```bash
+cd package-sets/
+# 1. Fetch latest changes to package set
+
+export PACKAGE_NAME="<package name>"
+git checkout -b "$PACKAGE_NAME-0.14"
+git fetch upstream
+git reset --hard upstream
+
+# 2. Add the updated library to the file
+
+# Update the `src/updatedLibs.dhall` file
+# so that the list of dependencies includes the name
+# of the repo you updated
+nano src/updatedLibs.dhall
+
+# 3. Submit a PR with the update
+
+git add src/updatedLibs.dhall
+export MSG="Updated <package name> to v0.14.0"
+git commit -m $MSG
+gh pr create --title MSG --body ""
+# 1st question: Choose the `purescript/package-sets` repo
+# 2nd question: Choose your repo
+# 3rd Question: Choose 'Submit'
+```
