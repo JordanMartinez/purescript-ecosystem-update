@@ -132,7 +132,7 @@ gh pr create --title "Update to v0.14.0-rc3" --body "Backlinking to purescript/p
 
 ### Context
 
-**When your "Update to v0.14.0" PR gets merged, submit a PR to the `package-sets` repo's `prepare-0.14` branch and update the repo's version to `master`. **
+**When your "Update to v0.14.0" PR gets merged, submit a PR to the `package-sets` repo's `prepare-0.14` branch and update the repo's version to `master`.**
 
 Note: This step verifies that future PureScript release candidates still build libraries that were updated using a prior release candidate. For example, I updated `purescript-prelude` using the `v0.14.0-rc2` release. The `v0.14.0-rc3` release was made after that. Does `purescript-prelude` still build fine on the `-rc3` release? By submitting a PR, I can verify that `prelude` will still compile fine via `spago` without needing to submit PRs that update the TAG in the `.travis.yml` file of the library's repo.
 
