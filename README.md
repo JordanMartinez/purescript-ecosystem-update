@@ -126,15 +126,9 @@ cd ../purescript-<packageName>
 
 ```bash
 # pwd = purescript-<packageName> folder
-gh pr create
+gh pr create --title "Update to v0.14.0-rc3" --body "Backlinking to purescript/purescript#3942"
 # 1st question: Choose the `purescript/purescript-<packageName>`
 # 2nd question: Choose your repo
-# For title: Update to v0.14.0-rc3
-# For body
-## Press `e` to open text editor
-## Write: `Backlinking to purescript/purescript#3942`
-## Press CTRL+O
-## Press CTRL+X
 # 3rd Question: Choose 'Submit'
 ```
 
