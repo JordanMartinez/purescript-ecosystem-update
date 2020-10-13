@@ -157,9 +157,12 @@ cd package-sets/
 git checkout upstream/prepare-0.14
 export PACKAGE_NAME="<package name>"
 git switch -c "$PACKAGE_NAME-0.14"
+
 # Update the `src/updatedLibs.dhall` file
 # so that the list of dependencies includes the name
 # of the repo you updated
+nano src/updatedLibs.dhall
+
 git add src/updatedLibs.dhall
 export MSG="Updated $PACKAGE_NAME to v0.14.0"
 git commit -m $MSG
