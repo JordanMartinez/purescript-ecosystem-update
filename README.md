@@ -158,10 +158,23 @@ git checkout upstream/prepare-0.14
 export PACKAGE_NAME="<package name>"
 git switch -c "$PACKAGE_NAME-0.14"
 
+# Add the library to the list of updated libraries
+# and update its version field to `master`.
+#
+# For an example of the next two steps' work,
+# see https://github.com/purescript/package-sets/pull/717
+
 # Update the `src/updatedLibs.dhall` file
 # so that the list of dependencies includes the name
 # of the repo you updated
 nano src/updatedLibs.dhall
+
+# Update the `src/groups/purescript.dhall` file
+# so that the version of that library now reads `master`.
+#
+# Tip: search for "<packageName> =" to quickly find that
+# entry in the file
+nano src/groups/purescript.dhall
 
 git add src/updatedLibs.dhall
 export MSG="Updated $PACKAGE_NAME to v0.14.0"
@@ -183,12 +196,22 @@ git checkout -b "$PACKAGE_NAME-0.14"
 git fetch upstream
 git reset --hard upstream
 
-# 2. Add the updated library to the file
+# 2. Add the library to the list of updated libraries
+# and update its version field to `master`.
+#
+# Example: https://github.com/purescript/package-sets/pull/717
 
 # Update the `src/updatedLibs.dhall` file
 # so that the list of dependencies includes the name
 # of the repo you updated
 nano src/updatedLibs.dhall
+
+# Update the `src/groups/purescript.dhall` file
+# so that the version of that library now reads `master`.
+#
+# Tip: search for "<packageName> =" to quickly find that
+# entry in the file
+nano src/groups/purescript.dhall
 
 # 3. Submit a PR with the update
 
