@@ -140,7 +140,7 @@ The `master` version will be changed to the released version once everything bui
 
 ### Making the First PR
 
-1. `git clone` the repo using
+1. `git clone` the `package-sets` repo using
 
 ```bash
 pwd # should be `fourteen/`, the folder containing `master` and other repos
