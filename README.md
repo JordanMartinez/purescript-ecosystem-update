@@ -60,7 +60,7 @@ All other breaking changes, documentation, and other issues should be merged AFT
 mkdir fourteen
 ```
 
-1. `git clone` this repo while inside that new folder
+2. `git clone` this repo while inside that new folder
 
 ```bash
 cd fourteen
@@ -68,23 +68,23 @@ git clone https://github.com/JordanMartinez/updatePsLibs.git master
 cd master
 ```
 
-1. [Install GitHub's new CLI tool: `gh`](https://github.com/cli/cli#installation)
+3. [Install GitHub's new CLI tool: `gh`](https://github.com/cli/cli#installation)
 
-1. Login to GitHub using the GitHub CLI tool
+4. Login to GitHub using the GitHub CLI tool
 
 ```bash
 gh auth login
 ```
 
-1. Change the default git protocol from `https` to `ssh`
+5. Change the default git protocol from `https` to `ssh`
 
 ```bash
 gh config set git_protocol=ssh
 ```
 
-1. (Optional) If you don't trust me, [download the latest PureScript release candidate](https://github.com/purescript/purescript/releases/) and overwrite the `purs` binary in `master` with it.
+6. (Optional) If you don't trust me, [download the latest PureScript release candidate](https://github.com/purescript/purescript/releases/) and overwrite the `purs` binary in `master` with it.
 
-1. Modify the `./setupRemote.sh` file
+7. Modify the `./setupRemote.sh` file
      - Change the `GH_USERNAME` variable to use your GitHub username
      - Change the `PS_TAG` variable to whatever is the latest.
 
@@ -95,9 +95,9 @@ gh config set git_protocol=ssh
     - [all unmerged PRs currently submitted to update a library to `v0.14.0`](https://github.com/search?q=org%3Apurescript+is%3Apr+state%3Aopen+Update+to+v0.14.0)
     - [all merged PRs submitted that already updated a library to `v0.14.0`](https://github.com/search?q=org%3Apurescript+is%3Apr+state%3Aclosed+Update+to+v0.14.0)
 
-1. Claim the package on the [purescript repo's "update ecosystme to v0.14.0" issue](https://github.com/purescript/purescript/issues/3942)
+2. Claim the package on the [purescript repo's "update ecosystme to v0.14.0" issue](https://github.com/purescript/purescript/issues/3942)
 
-1. Clone the repo, set up remotes, and automate the boilerplate updates (i.e. `.travis.yml`, `package.json`, `bower.json` files) by running the below bash script
+3. Clone the repo, set up remotes, and automate the boilerplate updates (i.e. `.travis.yml`, `package.json`, `bower.json` files) by running the below bash script
 
 ```bash
 # pwd = master folder
@@ -105,9 +105,9 @@ gh config set git_protocol=ssh
 # A folder called `../purescript-<packageName>` will now have been created
 ```
 
-1. Look at the package's repo to see whether any issues/PRs should also be merged. For example, if someone has already added role annotations and whatnot, then merge their PR into yours rather than redoing the work they have done.
+4. Look at the package's repo to see whether any issues/PRs should also be merged. For example, if someone has already added role annotations and whatnot, then merge their PR into yours rather than redoing the work they have done.
 
-1. Test whether code compiles. If `bower` complains, select the `master` branch of each repository (usually an answer of `1` will be correct)
+5. Test whether code compiles. If `bower` complains, select the `master` branch of each repository (usually an answer of `1` will be correct)
 
 ```bash
 # pwd = master folder
@@ -115,13 +115,13 @@ gh config set git_protocol=ssh
 # This will compile the code in `../purescript-<packagename>`
 ```
 
-1. Navigate to the created directory
+6. Navigate to the created directory
 
 ```bash
 cd ../purescript-<packageName>
 ```
 
-1. Create a PR via `gh` CLI tool
+7. Create a PR via `gh` CLI tool
 
 ```bash
 # pwd = purescript-<packageName> folder
@@ -137,6 +137,6 @@ gh pr create
 # 3rd Question: Choose 'Submit'
 ```
 
-1. If the library needs any updating, has any other issues or PRs, work on those in a separate PR.
+8. If the library needs any updating, has any other issues or PRs, work on those in a separate PR.
 
-1. Loop
+9. Loop
