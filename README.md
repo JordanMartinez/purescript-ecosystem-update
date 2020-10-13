@@ -34,6 +34,8 @@ foo _ = --
 
 Usages of `# Type` should be replaced with `Row Type`.
 
+<!-- Before and after examples for all of these changes would be nice, even if it's just a simple substitution. -->
+
 Usages of `RowList` will need to be replaced with `RowList Type`.
 
 Usages of `unsafeCoerce` should be updated to use `coerce` from [`safe-coerce`](https://github.com/purescript/purescript-safe-coerce) when possible.
@@ -82,6 +84,8 @@ gh auth login
 ```bash
 gh config set git_protocol=ssh
 ```
+
+<!-- Is the tracked `purs` binary cross-platform? What about adding a `wget`/`curl` step to `setup.sh` and removing the tracked binary? Also, might want to do a squash/force-push to remove the 50MB binary from git history. It takes a while to clone the repo on slow connections otherwise. -->
 
 6. (Optional) If you don't trust me, [download the latest PureScript release candidate](https://github.com/purescript/purescript/releases/) and overwrite the `purs` binary in `master` with it.
 
