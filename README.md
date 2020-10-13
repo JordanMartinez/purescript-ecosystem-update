@@ -16,7 +16,7 @@ At this time, `package-query.js` isn't necessary as `libDeps.txt` provides the i
 
 These are all automated via the `./setupRemote.sh` file:
 - `.travis.yml` file's `TAG` needs to be updated to `v0.14.0-rc3` or whatever the latest release candidate.
-- all dependencies in the `bower.json` file need to be updated to `master`. **Note:** whil this is automated, it might also incorrectly update unrelated version bounds to `master`.
+- all dependencies in the `bower.json` file need to be updated to `master`. **Note:** while this is automated, it might also incorrectly update unrelated version bounds to `master`.
 - `package.json` file's `purescript-psa` version needs to be updated to `v0.8.0`.
 
 ### Things specific to `v0.14.0`
