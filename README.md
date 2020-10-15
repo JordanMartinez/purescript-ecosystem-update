@@ -108,25 +108,19 @@ cd master
 # This will compile the code in `../purescript-<packagename>`
 ```
 
-6. Navigate to the created directory
+6. Create a PR via the `gh` CLI tool
 
 ```bash
-cd ../purescript-<packageName>
-```
-
-7. Create a PR via `gh` CLI tool
-
-```bash
-# pwd = purescript-<packageName> folder
-gh pr create --title "Update to v0.14.0-rc3" --body "Backlinking to purescript/purescript#3942"
+# pwd = master folder
+./createPR.sh <packageName>
 # 1st question: Choose the `purescript/purescript-<packageName>`
 # 2nd question: Choose your repo
 # 3rd Question: Choose 'Submit'
 ```
 
-8. If the library needs any updating, has any other issues or PRs, work on those in a separate PR.
+7. If the library needs any updating, has any other issues or PRs, work on those in a separate PR.
 
-9. Loop
+8. Loop
 
 ## Update the `prepare-0.14` branch in the `package-sets` repo
 
