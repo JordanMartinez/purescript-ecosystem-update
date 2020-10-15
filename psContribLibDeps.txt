@@ -1,3 +1,5 @@
+Note: this was outputted via `cat libDeps.txt | grep '/purescript-contrib/' > psLibDeps.txt`
+
 0  arraybuffer-types              https://github.com/purescript-contrib/purescript-arraybuffer-types.git                     []
 0  unsafe-reference               https://github.com/purescript-contrib/purescript-unsafe-reference.git                      []
 2  js-timers                      https://github.com/purescript-contrib/purescript-js-timers.git                             ["effect","prelude"]
