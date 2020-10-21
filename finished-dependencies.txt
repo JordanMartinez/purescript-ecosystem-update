@@ -25,3 +25,4 @@ exists
 type-equality
 tailrec
 typelevel-prelude
+foldable-traversable
