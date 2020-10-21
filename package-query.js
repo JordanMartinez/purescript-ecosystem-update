@@ -465,6 +465,19 @@ var PS = {};
     };
   };
 
+  exports._deleteAt = function (just) {
+    return function (nothing) {
+      return function (i) {
+        return function (l) {
+          if (i < 0 || i >= l.length) return nothing;
+          var l1 = l.slice();
+          l1.splice(i, 1);
+          return just(l1);
+        };
+      };
+    };
+  };
+
   //------------------------------------------------------------------------------
   // Transformations -------------------------------------------------------------
   //------------------------------------------------------------------------------
@@ -2302,6 +2315,25 @@ var PS = {};
           });
       };
   };
+  var deleteAt = $foreign["_deleteAt"](Data_Maybe.Just.create)(Data_Maybe.Nothing.value);
+  var deleteBy = function (v) {
+      return function (v1) {
+          return function (v2) {
+              if (v2.length === 0) {
+                  return [  ];
+              };
+              return Data_Maybe.maybe(v2)(function (i) {
+                  return Data_Maybe.fromJust()(deleteAt(i)(v2));
+              })(findIndex(v(v1))(v2));
+          };
+      };
+  };
+  var $$delete = function (dictEq) {
+      return deleteBy(Data_Eq.eq(dictEq));
+  };
+  var difference = function (dictEq) {
+      return Data_Foldable.foldr(Data_Foldable.foldableArray)($$delete(dictEq));
+  };
   var concatMap = Data_Function.flip(Control_Bind.bind(Control_Bind.bindArray));
   var mapMaybe = function (f) {
       return concatMap((function () {
@@ -2326,6 +2358,7 @@ var PS = {};
   exports["sortBy"] = sortBy;
   exports["groupBy"] = groupBy;
   exports["nub"] = nub;
+  exports["difference"] = difference;
   exports["replicate"] = $foreign.replicate;
   exports["length"] = $foreign.length;
   exports["cons"] = $foreign.cons;
@@ -2427,6 +2460,10 @@ var PS = {};
     };
   };
 
+  exports.trim = function (s) {
+    return s.trim();
+  };
+
   exports.joinWith = function (s) {
     return function (xs) {
       return xs.join(s);
@@ -2444,6 +2481,7 @@ var PS = {};
   };
   exports["null"] = $$null;
   exports["split"] = $foreign.split;
+  exports["trim"] = $foreign.trim;
   exports["joinWith"] = $foreign.joinWith;
 })(PS);
 (function(exports) {
@@ -10566,20 +10604,23 @@ var PS = {};
       };
       return GenSpagoFiles;
   })();
-  var parseGenLibDeps = Data_Functor.map(Options_Applicative_Types.parserFunctor)(GenLibraryDeps.create)(Data_Functor.map(Options_Applicative_Types.parserFunctor)(function (v) {
-      return {
-          libraryDepFile: v
+  var parseGenLibDeps = Data_Functor.map(Options_Applicative_Types.parserFunctor)(GenLibraryDeps.create)(Control_Apply.apply(Options_Applicative_Types.parserApply)(Data_Functor.map(Options_Applicative_Types.parserFunctor)(function (v) {
+      return function (v1) {
+          return {
+              libraryDepFile: v,
+              finishedDepsFile: v1
+          };
       };
-  })(Options_Applicative_Builder.strOption(Data_Foldable.fold(Data_Foldable.foldableArray)(Options_Applicative_Builder_Internal.modMonoid)([ Options_Applicative_Builder["long"](Options_Applicative_Builder_Internal.optionFieldsHasName)("output"), Options_Applicative_Builder["short"](Options_Applicative_Builder_Internal.optionFieldsHasName)("o"), Options_Applicative_Builder.metavar(Options_Applicative_Builder_Internal.optionFieldsHasMetavar)("FILE"), Options_Applicative_Builder.help("Indicates the file that will store the outputted content."), Options_Applicative_Builder.value(Options_Applicative_Builder_Internal.optionFieldsHasValue)("./ordered-content.txt"), Options_Applicative_Builder.showDefault(Data_Show.showString) ]))));
+  })(Options_Applicative_Builder.strOption(Data_Foldable.fold(Data_Foldable.foldableArray)(Options_Applicative_Builder_Internal.modMonoid)([ Options_Applicative_Builder["long"](Options_Applicative_Builder_Internal.optionFieldsHasName)("output"), Options_Applicative_Builder["short"](Options_Applicative_Builder_Internal.optionFieldsHasName)("o"), Options_Applicative_Builder.metavar(Options_Applicative_Builder_Internal.optionFieldsHasMetavar)("FILE"), Options_Applicative_Builder.help("Indicates the file that will store the outputted content."), Options_Applicative_Builder.value(Options_Applicative_Builder_Internal.optionFieldsHasValue)("./ordered-content.txt"), Options_Applicative_Builder.showDefault(Data_Show.showString) ]))))(Options_Applicative_Builder.strOption(Data_Foldable.fold(Data_Foldable.foldableArray)(Options_Applicative_Builder_Internal.modMonoid)([ Options_Applicative_Builder["long"](Options_Applicative_Builder_Internal.optionFieldsHasName)("finished-dependencies-file"), Options_Applicative_Builder["short"](Options_Applicative_Builder_Internal.optionFieldsHasName)("d"), Options_Applicative_Builder.metavar(Options_Applicative_Builder_Internal.optionFieldsHasMetavar)("FILE"), Options_Applicative_Builder.help("Indicates the file that lists packages that have already been updated on a separate line."), Options_Applicative_Builder.value(Options_Applicative_Builder_Internal.optionFieldsHasValue)("./finished-dependencies.txt"), Options_Applicative_Builder.showDefault(Data_Show.showString) ]))));
   var maybeMultiString = Control_Bind.bind(Options_Applicative_Types.readMBind)(Options_Applicative_Types.readerAsk)(function (s) {
       var strArray = Data_Array.filter((function () {
-          var $13 = Data_HeytingAlgebra.not(Data_HeytingAlgebra.heytingAlgebraBoolean);
-          return function ($14) {
-              return $13(Data_String_Common["null"]($14));
+          var $15 = Data_HeytingAlgebra.not(Data_HeytingAlgebra.heytingAlgebraBoolean);
+          return function ($16) {
+              return $15(Data_String_Common["null"]($16));
           };
       })())(Data_String_Common.split(",")(s));
-      var $7 = Data_Array["null"](strArray);
-      if ($7) {
+      var $9 = Data_Array["null"](strArray);
+      if ($9) {
           return Control_Applicative.pure(Options_Applicative_Types.readMApplicative)(Data_Maybe.Nothing.value);
       };
       return Control_Applicative.pure(Options_Applicative_Types.readMApplicative)(Data_Maybe.Just.create(Data_Array.nub(Data_Ord.ordString)(strArray)));
@@ -11442,6 +11483,12 @@ var PS = {};
       };
   };
 
+  exports.deletePurs = function (keyEquals, key, keyHash) {
+      return function (m) {
+          return m.delet(keyEquals, key, keyHash, 0);
+      };
+  };
+
   exports.unionWithPurs = function (eq, hash, f) {
       return function (l) {
           return function (r) {
@@ -11470,6 +11517,12 @@ var PS = {};
       return m.datamap === 0 && m.nodemap === 0;
   }
 
+  exports.mapWithIndexPurs = function (f) {
+      return function (m) {
+          return m.imap(f);
+      };
+  };
+
   exports.foldMapWithIndexPurs = function (mempty) {
       return function (mappend) {
           return function (f) {
@@ -11486,6 +11539,21 @@ var PS = {};
       };
   };
 })(PS["Data.HashMap"] = PS["Data.HashMap"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.8
+  "use strict";
+  $PS["Data.FunctorWithIndex"] = $PS["Data.FunctorWithIndex"] || {};
+  var exports = $PS["Data.FunctorWithIndex"];
+  var FunctorWithIndex = function (Functor0, mapWithIndex) {
+      this.Functor0 = Functor0;
+      this.mapWithIndex = mapWithIndex;
+  };
+  var mapWithIndex = function (dict) {
+      return dict.mapWithIndex;
+  };
+  exports["FunctorWithIndex"] = FunctorWithIndex;
+  exports["mapWithIndex"] = mapWithIndex;
+})(PS);
 (function(exports) {
   // This Source Code Form is subject to the terms of the Mozilla Public
   // License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11531,6 +11599,8 @@ var PS = {};
   var Data_Foldable = $PS["Data.Foldable"];
   var Data_FoldableWithIndex = $PS["Data.FoldableWithIndex"];
   var Data_Function = $PS["Data.Function"];
+  var Data_Functor = $PS["Data.Functor"];
+  var Data_FunctorWithIndex = $PS["Data.FunctorWithIndex"];
   var Data_Hashable = $PS["Data.Hashable"];
   var Data_Maybe = $PS["Data.Maybe"];
   var Data_Monoid = $PS["Data.Monoid"];
@@ -11551,6 +11621,12 @@ var PS = {};
           return $foreign.lookupPurs(Data_Maybe.Nothing.value, Data_Maybe.Just.create, Data_Eq.eq(dictHashable.Eq0()), k, Data_Hashable.hash(dictHashable)(k));
       };
   };
+  var functorWithIndexHashMap = new Data_FunctorWithIndex.FunctorWithIndex(function () {
+      return functorHashMap;
+  }, $foreign.mapWithIndexPurs);
+  var functorHashMap = new Data_Functor.Functor(function (f) {
+      return Data_FunctorWithIndex.mapWithIndex(functorWithIndexHashMap)(Data_Function["const"](f));
+  });
   var foldableWithIndexHashMap = new Data_FoldableWithIndex.FoldableWithIndex(function () {
       return foldableHashMap;
   }, function (dictMonoid) {
@@ -11576,10 +11652,17 @@ var PS = {};
           };
       });
   };
+  var $$delete = function (dictHashable) {
+      return function (k) {
+          return $foreign.deletePurs(Data_Eq.eq(dictHashable.Eq0()), k, Data_Hashable.hash(dictHashable)(k));
+      };
+  };
   exports["singleton"] = singleton;
   exports["lookup"] = lookup;
+  exports["delete"] = $$delete;
   exports["filterKeys"] = filterKeys;
   exports["semigroupHashMap"] = semigroupHashMap;
+  exports["functorHashMap"] = functorHashMap;
   exports["foldableWithIndexHashMap"] = foldableWithIndexHashMap;
   exports["empty"] = $foreign.empty;
   exports["toArrayBy"] = $foreign.toArrayBy;
@@ -13647,6 +13730,7 @@ var PS = {};
   var Data_Eq = $PS["Data.Eq"];
   var Data_Foldable = $PS["Data.Foldable"];
   var Data_FoldableWithIndex = $PS["Data.FoldableWithIndex"];
+  var Data_Function = $PS["Data.Function"];
   var Data_Functor = $PS["Data.Functor"];
   var Data_HashMap = $PS["Data.HashMap"];
   var Data_Hashable = $PS["Data.Hashable"];
@@ -13671,11 +13755,23 @@ var PS = {};
   var Parser = $PS["Parser"];
   var Partial_Unsafe = $PS["Partial.Unsafe"];
   var Text_Parsing_StringParser = $PS["Text.Parsing.StringParser"];
+  var removeFinishedDeps = function (depsToRemove) {
+      return function (packageMap) {
+          var removedKeys = Data_Foldable.foldl(Data_Foldable.foldableArray)(Data_Function.flip(Data_HashMap["delete"](Data_Hashable.hashableString)))(packageMap)(depsToRemove);
+          return Data_Functor.mapFlipped(Data_HashMap.functorHashMap)(removedKeys)(function (packageMeta) {
+              return {
+                  dependencies: Data_Array.difference(Data_Eq.eqString)(packageMeta.dependencies)(depsToRemove),
+                  repo: packageMeta.repo,
+                  version: packageMeta.version
+              };
+          });
+      };
+  };
   var mkSpagoDhall = function (v) {
       return Data_String_Common.joinWith("\x0a")([ "{ name = \"my-project\"", ", dependencies = " + Data_Show.show(Data_Show.showArray(Data_Show.showString))(Data_Array.snoc(v.meta.dependencies)(v["package"])), ", packages = ./packages.dhall", ", sources = [] : List Text", "}" ]);
   };
   var mkSortedPackageArray = (function () {
-      var $61 = Data_Array.sortBy(function (l) {
+      var $63 = Data_Array.sortBy(function (l) {
           return function (r) {
               var v = Data_Ord.compare(Data_Ord.ordInt)(l.depCount)(r.depCount);
               if (v instanceof Data_Ordering.EQ) {
@@ -13684,7 +13780,7 @@ var PS = {};
               return v;
           };
       });
-      var $62 = Data_HashMap.toArrayBy(function (k) {
+      var $64 = Data_HashMap.toArrayBy(function (k) {
           return function (v) {
               return {
                   "package": k,
@@ -13697,8 +13793,8 @@ var PS = {};
               };
           };
       });
-      return function ($63) {
-          return $61($62($63));
+      return function ($65) {
+          return $63($64($65));
       };
   })();
   var mkOrderedContent = function (arr) {
@@ -13771,11 +13867,11 @@ var PS = {};
                           packageName: v.packageName
                       });
                   };
-                  throw new Error("Failed pattern match at Application (line 123, column 21 - line 130, column 105): " + [ v3.constructor.name ]);
+                  throw new Error("Failed pattern match at Application (line 126, column 21 - line 133, column 105): " + [ v3.constructor.name ]);
               };
-              throw new Error("Failed pattern match at Application (line 121, column 7 - line 130, column 105): " + [ v2.constructor.name ]);
+              throw new Error("Failed pattern match at Application (line 124, column 7 - line 133, column 105): " + [ v2.constructor.name ]);
           };
-          throw new Error("Failed pattern match at Application (line 114, column 73 - line 130, column 105): " + [ v1.constructor.name ]);
+          throw new Error("Failed pattern match at Application (line 117, column 73 - line 133, column 105): " + [ v1.constructor.name ]);
       };
       var getDepsRecursively = function (packageName) {
           return function (packageMeta) {
@@ -13802,7 +13898,7 @@ var PS = {};
                       var v1 = getDepsRecursively(packageName)(packageMeta)(mapSoFar);
                       return v1.updatedMap;
                   };
-                  throw new Error("Failed pattern match at Application (line 100, column 5 - line 104, column 22): " + [ v.constructor.name ]);
+                  throw new Error("Failed pattern match at Application (line 103, column 5 - line 107, column 22): " + [ v.constructor.name ]);
               };
           };
       };
@@ -13823,7 +13919,7 @@ var PS = {};
                               };
                               return Data_HashMap.filterKeys(isDesiredPackage)(allDepsKnown);
                           };
-                          throw new Error("Failed pattern match at Application (line 68, column 31 - line 72, column 53): " + [ v.whitelist.constructor.name ]);
+                          throw new Error("Failed pattern match at Application (line 71, column 31 - line 75, column 53): " + [ v.whitelist.constructor.name ]);
                       })();
                       var sortedPackageArray = mkSortedPackageArray(onlyDesiredPackages);
                       return Control_Bind.bind(Effect_Aff.bindAff)(Effect_Class.liftEffect(Effect_Aff.monadEffectAff)(Effect_Ref["new"](Data_List_Types.Nil.value)))(function (ref) {
@@ -13851,17 +13947,22 @@ var PS = {};
           };
       };
       var runGenLibDeps = function (v) {
-          return function (allDepsKnown) {
+          return function (result) {
               return Control_Bind.bind(Effect_Aff.bindAff)(Node_FS_Aff.exists(v.libraryDepFile))(function (fileExists) {
-                  var $52 = fileExists && !env.force;
-                  if ($52) {
+                  var $53 = fileExists && !env.force;
+                  if ($53) {
                       return Effect_Class.liftEffect(Effect_Aff.monadEffectAff)(function __do() {
                           Effect_Console.log("Error: Output file '" + (v.libraryDepFile + "'already exists. To overwrite this file, use the `--force` flag."))();
                           return Effect_Console.log("Exiting program.")();
                       });
                   };
-                  var orderedContent = mkOrderedContent(mkSortedPackageArray(allDepsKnown));
-                  return Node_FS_Aff.writeTextFile(Node_Encoding.UTF8.value)(v.libraryDepFile)(orderedContent);
+                  return Control_Bind.bind(Effect_Aff.bindAff)(Node_FS_Aff.readTextFile(Node_Encoding.UTF8.value)(v.finishedDepsFile))(function (finishedDeps) {
+                      var depsToRemove = Data_Functor.map(Data_Functor.functorArray)(Data_String_Common.trim)(Data_String_Common.split("\x0a")(finishedDeps));
+                      var removedDeps = removeFinishedDeps(depsToRemove)(result);
+                      var allDepsKnown = findAllTransitiveDeps(removedDeps);
+                      var orderedContent = mkOrderedContent(mkSortedPackageArray(allDepsKnown));
+                      return Node_FS_Aff.writeTextFile(Node_Encoding.UTF8.value)(v.libraryDepFile)(orderedContent);
+                  });
               });
           };
       };
@@ -13878,16 +13979,15 @@ var PS = {};
               });
           };
           if (v instanceof Data_Either.Right) {
-              var allDepsKnown = findAllTransitiveDeps(v.value0.result);
               if (env.command instanceof CLI.GenLibraryDeps) {
-                  return runGenLibDeps(env.command.value0)(allDepsKnown);
+                  return runGenLibDeps(env.command.value0)(v.value0.result);
               };
               if (env.command instanceof CLI.GenSpagoFiles) {
-                  return runSpagoFiles(env.command.value0)(allDepsKnown);
+                  return runSpagoFiles(env.command.value0)(findAllTransitiveDeps(v.value0.result));
               };
-              throw new Error("Failed pattern match at Application (line 43, column 7 - line 47, column 45): " + [ env.command.constructor.name ]);
+              throw new Error("Failed pattern match at Application (line 42, column 7 - line 46, column 63): " + [ env.command.constructor.name ]);
           };
-          throw new Error("Failed pattern match at Application (line 34, column 3 - line 47, column 45): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Application (line 34, column 3 - line 46, column 63): " + [ v.constructor.name ]);
       });
   };
   exports["runApp"] = runApp;
