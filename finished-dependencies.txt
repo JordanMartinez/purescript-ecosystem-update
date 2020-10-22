@@ -27,3 +27,4 @@ tailrec
 typelevel-prelude
 foldable-traversable
 tuples
+random
