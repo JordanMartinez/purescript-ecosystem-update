@@ -29,3 +29,8 @@ foldable-traversable
 tuples
 random
 control
+record
+const
+profunctor
+unfoldable
+st
