@@ -1,4 +1,3 @@
-0  contravariant                  https://github.com/purescript/purescript-contravariant.git                                 []
 0  functors                       https://github.com/purescript/purescript-functors.git                                      []
 0  globals                        https://github.com/purescript/purescript-globals.git                                       []
 0  lcg                            https://github.com/purescript/purescript-lcg.git                                           []
