@@ -35,3 +35,4 @@ profunctor
 unfoldable
 st
 contravariant
+nonempty
