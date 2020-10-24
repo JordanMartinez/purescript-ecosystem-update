@@ -29,11 +29,13 @@ foreign import data Constructor2 :: Foo
 
 ```purescript
 -- data, type, and newtype do not need a kind signature
--- if all type parameters are used on the right-hand side
+-- if all type parameters are fixed to something concrete
+-- on the right-hand side
 data Foo a b c d = AllUsedHere a b c d
 
--- data, type, and newtype need a kind signature if
--- at least one type parameter is NOT used on the right-side.
+-- A kind signature is suggested (and sometimes needed) if
+-- at least one type parameter is NOT otherwise fixed to something
+-- concrete. on the right-side.
 -- In such a case, the kind signature will end in 'Type'
 -- and one will use 'forall' syntax for kinds
 data TypeName :: forall k. k -> Type
