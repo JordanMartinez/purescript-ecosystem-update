@@ -51,7 +51,7 @@ class TypeClass anyKind aType aSymbol
 - in preparation for ES modules in future breaking changes, primes are no longer allowed in FFI
 ```javascript
 // before
-exports.functionName' = function (a) { return a; };
+exports["functionName'"] = function (a) { return a; };
 //
 // after
 exports.functionNameImpl = function (a) { return a; }
