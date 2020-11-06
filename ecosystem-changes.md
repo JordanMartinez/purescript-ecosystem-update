@@ -5,7 +5,7 @@
 - `purescript-psa` needs to be updated to `v0.8.0`
 - `spago` does not need to be updated
 - Use the `prepare-0.14` `package-sets` branch for `v0.14.0`-compatible libraries
-- A new command was added to the `purs` binary: `purs graph`. 
+- A new command was added to the `purs` binary: `purs graph`.
 
 ## Summary of `v0.14.0` changes
 
@@ -16,11 +16,19 @@
 
 ```purescript
 -- before
+module Foo.Bar (kind Foo, Constructor1, Constructor2)
+
+import Data.Module (kind KindName)
+
 foreign import kind Foo
 foreign import data Constructor1 :: Foo
 foreign import data Constructor2 :: Foo
 
 -- after
+module Foo.Bar (Foo, Constructor1, Constructor2)
+
+import Data.Module (KindName)
+
 foreign import data Foo
 foreign import data Constructor1 :: Foo
 foreign import data Constructor2 :: Foo
