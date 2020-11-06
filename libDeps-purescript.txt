@@ -1,6 +1,6 @@
 0  globals (pending Globals Port PR review) https://github.com/purescript/purescript-globals.git                                       []
 0  lcg (blocked by globals) https://github.com/purescript/purescript-lcg.git                                           []
-0  transformers (pending CI build?) https://github.com/purescript/purescript-transformers.git                                  []
+0  transformers (test dep on arrays) https://github.com/purescript/purescript-transformers.git                                  []
 0  validation (test dep on strings) https://github.com/purescript/purescript-validation.git                                    []
 0  arrays (blocked by `kind` deletion) https://github.com/purescript/purescript-arrays.git                                        []
 0  gen (blocked by lcg) https://github.com/purescript/purescript-gen.git                                           []
