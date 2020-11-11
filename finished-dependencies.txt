@@ -37,3 +37,5 @@ st
 contravariant
 nonempty
 functors
+transformers
+arrays
