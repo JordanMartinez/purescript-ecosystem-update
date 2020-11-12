@@ -39,3 +39,4 @@ nonempty
 functors
 transformers
 arrays
+parallel

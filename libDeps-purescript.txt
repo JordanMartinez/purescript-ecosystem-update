@@ -3,7 +3,6 @@
 0  validation (test dep on strings) https://github.com/purescript/purescript-validation.git                                    []
 0  gen (blocked by lcg) https://github.com/purescript/purescript-gen.git                                           []
 0  lists (blocked by lcg) https://github.com/purescript/purescript-lists.git                                         []
-0  parallel (pending CI build) https://github.com/purescript/purescript-parallel.git                                      []
 1  catenable-lists                https://github.com/purescript/purescript-catenable-lists.git                               ["lists"]
 1  enums                          https://github.com/purescript/purescript-enums.git                                         ["gen"]
 1  minibench                      https://github.com/purescript/purescript-minibench.git                                     ["globals"]
