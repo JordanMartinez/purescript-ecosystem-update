@@ -92,31 +92,64 @@ foo (SProxy :: SProxy "a") -- still compiles, but won't in future
 foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 ```
 
-## `purescript-globals` has been deprecated; some things were moved while others were not
+## `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers`
 
 **Summary:**
 - Remove `globals`/`purescript-globals` from your repos' dependencies
 - Update any usage of these modules to their new names
-    - `Global` -> `Data.Number`
-    - `Global.Unsafe` -> `Data.Number.Unsafe`
-- If you used any of the `Number`-related code above, add a dependency on `purescript-numbers`
-- If you used any of the URI code above, add a dependency on `purescript-uri-components`.
+    - `Global (isNan, nan, isFinite, infinity)` -> `Data.Number (isNan, nan, isFinite, infinity)`
+    - `Global (toFixed, toPrecision, toExponential)` -> `Data.Number.Format (toStringWith, fixed, precision, exponential)`
+- If you use any of the `Number`-related code above, add a dependency on `purescript-numbers`
+- If you used any of the encode/decode URI code above, add a dependency on `purescript-js-uri` (a repo that hasn't yet been created as of this writing).
 - If you used `unsafeStringify`, either use `purescript-debug` or work with others to publish the code as a new library
 
-`purescript-globals` had code for 3 things:
-- [majority of the repo] - `Number`-related code (e.g. `nan`, `isFinite`, `readFloat`, `toFixed`, etc.)
-- [four functions] - `URI`-related code (e.g. `encodeURI`/`decodeURI`, `encodeURIComponent`/`decodeURIComponent`)
-- [one function] - `unsafeStringify`, which converts anything into a `String`
+`purescript-globals` had code for 6 things:
+1. [4 functions] - `Number`-related code (i.e. `nan`, `isNan`, `infinity`, and `isFinite`)
+1. [2 function] - parsing a `String` into base-specific `Int`s (i.e. `readInt`) and possibly invalid `Number`s (i.e. `readFloat`)
+1. [3 functions] - safe `Number`-formatting code (i.e. `toFixed`, `toPrecision`, `toExponential`)
+1. [3 functions] - unsafe, JavaScript-specific `Number`-formatting code, (i.e. `unsafeToFixed`, `unsafeToPrecision`, `unsafeToExponential`)
+1. [1 function] - `unsafeStringify`, which converts anything into a `String`
+1. [8 functions] - safe and unsafe `URI`-related code (e.g. `encodeURI`/`decodeURI`, `encodeURIComponent`/`decodeURIComponent`, and unsafe variants)
 
 It seems that all of this code was originally stored in this repo because of the influence of the JavaScript backend. Since all/most of this code could be accessed via the global object, why not store it in a repo that is similarly named?
 
-Upon further reflection, we agreed that this was not a wise decision and moved all the `Number`-related code into `purescript-numbers`, which was brought into the core repos. Since this repo consists mostly of the `Number`-related code, why is it stored in a repo called `purescript-globals`? Moreover, `sharkdp` wrote the `purescript-numbers` repo, which wrapped `purescript-globals` and provided additional functionality for the `Number` type. After discussing this with `sharkdp`, `sharkdp` agreed to move `purescript-numbers` to the core repos. We then ported all the `Number`-related code from `purescript-globals` to `purescript-numbers`.
+Upon further reflection, we agreed that this was not a wise decision. Since this repo consists mostly of the `Number`-related code, why is it stored in a repo called `purescript-globals`? Moreover, `sharkdp` wrote the `purescript-numbers` repo, which wrapped `purescript-globals` and provided additional functionality for the `Number` type (e.g. safe `String`-to-`Number` parser, etc.). So, why isn't the `Number`-related code stored there?
+
+After discussing this with `sharkdp`, `sharkdp` agreed to move `purescript-numbers` to the core repos. We then ported some of the `Number`-related code from `purescript-globals` to `purescript-numbers`, and dropped pretty much everything else.
 
 Thus, the following module names have been changed:
 - `Global` -> `Data.Number`
-- `Global.Unsafe` -> `Data.Number.Unsafe`
+- `Global.Unsafe` -> (dropped)
+
+**[4 functions] - `Number`-related code (i.e. `nan`, `isNan`, `infinity`, and `isFinite`)**
+
+These were ported to `purescript-numbers` and are now found under the `Data.Number` module name.
+
+**[2 function] - parsing a `String` into base-specific `Int`s (i.e. `readInt`) and possibly invalid `Number`s (i.e. `readFloat`)**
+
+These were dropped:
+- `readFloat` could return `Infinity`, which is a valid `Number`, but often not what you want. `purescript-numbers` already has the safer `fromString :: String -> Maybe Number`, so we thought `readFloat` was superfluous.
+- `readInt` has no problems with it, but we thought its usage was likely low enough to not be needed. If someone does need this, they should open an issue on the `purescript-integers` repo and submit a PR that adds it there.
+
+**[3 functions] - safe `Number`-formatting code (i.e. `toFixed`, `toPrecision`, `toExponential`)**
+
+These were dropped because `purescript-numbers` already provides such formatting code via the `Data.Number.Format` module. Below shows the `globals` -> `numbers` migration. `intArg` is an `Int` argument:
+
+| `purescript-globals` | `purescript-numbers` |
+| - | - |
+| `toFixed intArg 4.0` | `toStringWith (fixed intArg) 4.0` |
+| `toPrecision intArg 4.0` | `toStringWith (precision intArg) 4.0` |
+| `toExponential intArg 4.0` | `toStringWith (exponential intArg) 4.0` |
+
+**[3 functions] - unsafe, JavaScript-specific `Number`-formatting code, (i.e. `unsafeToFixed`, `unsafeToPrecision`, `unsafeToExponential`)**
+
+These were dropped because they were too heavily dependent on the JavaScript backend, specifically, how it handles errors. Core libraries ought to be backend-independent as much as possible.
+
+**[1 function] - `unsafeStringify`, which converts anything into a `String`**
 
 We decided not to move `unsafeStringify` into another repo. We believed that this function would be used in debugging. Since `purescript-debug` already allows one to print any value to the console, this seemed unneecessary.
+
+**[8 functions] - safe and unsafe `URI`-related code (e.g. `encodeURI`/`decodeURI`, `encodeURIComponent`/`decodeURIComponent`, and unsafe variants)**
 
 This left the `URI`-related code. We didn't think they warranted a place in `purescript-strings` since they are more specific to `URI` things rather than `String` things. We also thought it should no longer be in a core repo. So we decided on a quick-and-dirty fix: move it outside of the core repos and into its own repo in the `purescript-contrib` organization. We called it `purescript-uri-components` because `purescript-uri` was already taken. This change will reduce breaking changes in downstram libraries as the code will still be available.
 
