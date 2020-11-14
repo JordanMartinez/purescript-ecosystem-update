@@ -174,3 +174,13 @@ However, `Foldable1` only defined two ways to fold and both don't specify direct
 - `foldr1`
 
 This counts as a breaking change because data types that implemented `Foldable1` now need to update their instances to implement these two new functions as well. If you want to implement these quickly, consider using the default implementations: `foldl1Default` and `foldr1Default`.
+
+## `purescript-lcg`'s `lcgPerturb` changed its `Number` argument to a safer `Int` argument
+
+**Summary**:
+- Type signature was changed
+    - Before: `lcgPerturb :: Number -> Seed -> Seed`
+    - After: `lcgPerturb :: Int -> Seed -> Seed`
+- You might need to update your `Coarbitrary` instances if you use `purescript-quickcheck` to test your code
+
+One could pass a `Number` value that isn't a valid 32-bit integer, which might cause a runtime error to occur. The implementation of this function needs a `Number` value so that truncation doesn't occur. To support both goals, the implementation now converts the `Int` argument to a `Number` before it gets used internally.
