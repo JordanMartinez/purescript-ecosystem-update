@@ -13798,11 +13798,25 @@ var PS = {};
       };
   })();
   var mkOrderedContent = function (arr) {
+      var maxPartLength = function (acc) {
+          return function (r) {
+              return {
+                  dep: Data_Ord.max(Data_Ord.ordInt)(acc.dep)(Data_String_CodeUnits.length(Data_Show.show(Data_Show.showInt)(r.depCount))),
+                  "package": Data_Ord.max(Data_Ord.ordInt)(acc["package"])(Data_String_CodeUnits.length(r["package"])),
+                  repo: Data_Ord.max(Data_Ord.ordInt)(acc.repo)(Data_String_CodeUnits.length(r.meta.repo))
+              };
+          };
+      };
+      var maxLength = Data_Foldable.foldl(Data_Foldable.foldableArray)(maxPartLength)({
+          dep: 0,
+          "package": 0,
+          repo: 0
+      })(arr);
       var buildLine = function (acc) {
           return function (r) {
-              var repo = Data_String_Utils.padEnd(90)(r.meta.repo);
-              var $$package = Data_String_Utils.padEnd(30)(r["package"]);
-              var depCount = Data_String_Utils.padEnd(2)(Data_Show.show(Data_Show.showInt)(r.depCount));
+              var repo = Data_String_Utils.padEnd(maxLength.repo)(r.meta.repo);
+              var $$package = Data_String_Utils.padEnd(maxLength["package"])(r["package"]);
+              var depCount = Data_String_Utils.padEnd(maxLength.dep)(Data_Show.show(Data_Show.showInt)(r.depCount));
               var nextLine = depCount + (" " + ($$package + (" " + (repo + (" " + Data_Show.show(Data_Show.showArray(Data_Show.showString))(r.meta.dependencies))))));
               return {
                   init: false,
@@ -13867,11 +13881,11 @@ var PS = {};
                           packageName: v.packageName
                       });
                   };
-                  throw new Error("Failed pattern match at Application (line 126, column 21 - line 133, column 105): " + [ v3.constructor.name ]);
+                  throw new Error("Failed pattern match at Application (line 127, column 21 - line 134, column 105): " + [ v3.constructor.name ]);
               };
-              throw new Error("Failed pattern match at Application (line 124, column 7 - line 133, column 105): " + [ v2.constructor.name ]);
+              throw new Error("Failed pattern match at Application (line 125, column 7 - line 134, column 105): " + [ v2.constructor.name ]);
           };
-          throw new Error("Failed pattern match at Application (line 117, column 73 - line 133, column 105): " + [ v1.constructor.name ]);
+          throw new Error("Failed pattern match at Application (line 118, column 73 - line 134, column 105): " + [ v1.constructor.name ]);
       };
       var getDepsRecursively = function (packageName) {
           return function (packageMeta) {
@@ -13898,7 +13912,7 @@ var PS = {};
                       var v1 = getDepsRecursively(packageName)(packageMeta)(mapSoFar);
                       return v1.updatedMap;
                   };
-                  throw new Error("Failed pattern match at Application (line 103, column 5 - line 107, column 22): " + [ v.constructor.name ]);
+                  throw new Error("Failed pattern match at Application (line 104, column 5 - line 108, column 22): " + [ v.constructor.name ]);
               };
           };
       };
@@ -13919,7 +13933,7 @@ var PS = {};
                               };
                               return Data_HashMap.filterKeys(isDesiredPackage)(allDepsKnown);
                           };
-                          throw new Error("Failed pattern match at Application (line 71, column 31 - line 75, column 53): " + [ v.whitelist.constructor.name ]);
+                          throw new Error("Failed pattern match at Application (line 72, column 31 - line 76, column 53): " + [ v.whitelist.constructor.name ]);
                       })();
                       var sortedPackageArray = mkSortedPackageArray(onlyDesiredPackages);
                       return Control_Bind.bind(Effect_Aff.bindAff)(Effect_Class.liftEffect(Effect_Aff.monadEffectAff)(Effect_Ref["new"](Data_List_Types.Nil.value)))(function (ref) {
@@ -13985,9 +13999,9 @@ var PS = {};
               if (env.command instanceof CLI.GenSpagoFiles) {
                   return runSpagoFiles(env.command.value0)(findAllTransitiveDeps(v.value0.result));
               };
-              throw new Error("Failed pattern match at Application (line 42, column 7 - line 46, column 63): " + [ env.command.constructor.name ]);
+              throw new Error("Failed pattern match at Application (line 43, column 7 - line 47, column 63): " + [ env.command.constructor.name ]);
           };
-          throw new Error("Failed pattern match at Application (line 34, column 3 - line 46, column 63): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Application (line 35, column 3 - line 47, column 63): " + [ v.constructor.name ]);
       });
   };
   exports["runApp"] = runApp;
