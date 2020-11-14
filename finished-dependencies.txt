@@ -45,3 +45,6 @@ minibench
 lcg
 lists
 gen
+catenable-lists
+enums
+semirings
