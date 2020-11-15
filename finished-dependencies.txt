@@ -47,3 +47,6 @@ gen
 catenable-lists
 enums
 semirings
+strings
+generics-rep
+exists
