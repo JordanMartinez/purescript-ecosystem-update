@@ -54,3 +54,6 @@ foreign
 free
 quickcheck
 ordered-collections
+validation
+foreign-object
+datetime
