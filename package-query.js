@@ -13760,7 +13760,9 @@ var PS = {};
           var removedKeys = Data_Foldable.foldl(Data_Foldable.foldableArray)(Data_Function.flip(Data_HashMap["delete"](Data_Hashable.hashableString)))(packageMap)(depsToRemove);
           return Data_Functor.mapFlipped(Data_HashMap.functorHashMap)(removedKeys)(function (packageMeta) {
               return {
-                  dependencies: Data_Array.difference(Data_Eq.eqString)(packageMeta.dependencies)(depsToRemove),
+                  dependencies: Data_Array.filter(function (el) {
+                      return !Data_Foldable.elem(Data_Foldable.foldableArray)(Data_Eq.eqString)(el)(depsToRemove);
+                  })(packageMeta.dependencies),
                   repo: packageMeta.repo,
                   version: packageMeta.version
               };
