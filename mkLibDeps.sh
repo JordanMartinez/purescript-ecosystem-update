@@ -10,5 +10,5 @@ set -euo pipefail
 # Produces the `libDeps.txt` file
 node ./package-query.js --input ./packageSet.json --force genLibDeps --output ./libDeps.txt --finished-dependencies-file ./finished-dependencies.txt
 
-cat ./libDeps.txt | grep '/purescript/' > ./libDeps-purescript.txt
+# cat ./libDeps.txt | grep '/purescript/' > ./libDeps-purescript.txt
 cat ./libDeps.txt | grep '/purescript-contrib/' > ./libDeps-purescript-contrib.txt
