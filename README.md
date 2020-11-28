@@ -53,6 +53,8 @@ All other breaking changes, documentation, and other issues should be merged AFT
 
 ## Procedures
 
+Note: the instructions below are outdated. All files mentioned below have been suffixed with "Bower" as they won't be the exact commands one will use if using "Spago". So, I renamed the original (e.g. "setupRemote.sh" -> "setupBower.sh"), duplicated the file, prefixedthat file with "Spago" (e.g. "setupRemote.sh" -> "setupSpago.sh") and updated the Spago file to work on Spago. There are a few other assumptions made in this process that will be documented later.
+
 ### Setup your environment
 
 1. Create a new directory explicitly for this purpose so that any changes made in this directory will not affect any of your other projects
