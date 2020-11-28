@@ -36,7 +36,7 @@ sed --in-place -r 's/\^[0-9]+\.[0-9]+\.[0-9]+/master/g' bower.json
 
 # use `sed` to update purescript-psa to v0.8.0
 echo "Updating 'purescript-psa' to 'v0.8.0'"
-sed --in-place 's/"purescript-psa": "^0.6.0"/"purescript-psa": "^0.8.0"/' package.json
+sed --in-place 's/"purescript-psa": .+/"purescript-psa": "^0.8.0"/' package.json
 
 # use `sed` to update TAG in .travis.yml to latest release candidate
 # by commenting out old one
