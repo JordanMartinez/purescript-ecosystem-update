@@ -42,20 +42,11 @@ let upstream =
 in  upstream
 EOF
 
-# Either add a dependency on `purescript-psa` or update it to v0.8.0
-# to ensure any compiler warnings count as errors when compiling the repo's code
-#   To understand JQ's syntax, see its man page
-#   To understand why we need to create a temporary file, see
-#     https://stackoverflow.com/questions/36565295/jq-to-replace-text-directly-on-file-like-sed-i
-jq 'setpath(["devDependencies", "purescript-psa"]; "v0.8.0")' package.json > package.json.tmp && mv package.json.tmp package.json
-
 # TODO: figure out how to update CI to pull in the v0.14.0-rc3 PS release
 
 # Add these files and commit them to our branch
-git add packages.dhall package.json
+git add packages.dhall
 git commit -m "Update packages.dhall to prepare-0.14 bootstrap"
-git add package.json
-git commit -m "Add or update dev dependency on psa to v0.8.0"
 
 echo <<EOF
 Remaining Steps:
