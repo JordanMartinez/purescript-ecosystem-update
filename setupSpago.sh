@@ -37,7 +37,7 @@ git checkout -b updateTo14 upstream/$CHECKED_OUT_BRANCH
 #     https://linuxize.com/post/bash-heredoc/
 cat <<"EOF" > packages.dhall
 let upstream =
-      https://raw.githubusercontent.com/JordanMartinez/package-sets/updateContribLibs/prepare-0.14-packages.dhall
+      https://raw.githubusercontent.com/purescript/package-sets/prepare-0.14/src/packages.dhall sha256:04c542b4d44c644031baf6220f441718289302ff4d4f71d43d57887eb295cf26
 
 in  upstream
 EOF
