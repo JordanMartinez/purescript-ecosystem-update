@@ -57,3 +57,7 @@ ordered-collections
 validation
 foreign-object
 datetime
+http-methods
+argonaut-core
+js-timers
+now
