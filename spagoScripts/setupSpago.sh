@@ -48,7 +48,7 @@ git commit -m "Update packages.dhall to prepare-0.14 bootstrap"
 
 # Update the `.github/workflows/ci.yml` file to specifically use
 # the `v0.14.0-rc3` PS release
-./yq eval '.jobs.build.steps.[1].with.purescript = "0.14.0-rc3"' .github/workflows/ci.yml
+sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "0.14.0-rc3"/' .github/workflows/ci.yml
 
 git add .github/workflows/ci.yml
 git commit -m "Update CI to use v0.14.0-rc3 PS release"
