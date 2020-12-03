@@ -42,11 +42,16 @@ let upstream =
 in  upstream
 EOF
 
-# TODO: figure out how to update CI to pull in the v0.14.0-rc3 PS release
-
 # Add these files and commit them to our branch
 git add packages.dhall
 git commit -m "Update packages.dhall to prepare-0.14 bootstrap"
+
+# Update the `.github/workflows/ci.yml` file to specifically use
+# the `v0.14.0-rc3` PS release
+./yq eval '.jobs.build.steps.[1].with.purescript = "0.14.0-rc3"' .github/workflows/ci.yml
+
+git add .github/workflows/ci.yml
+git commit -m "Update CI to use v0.14.0-rc3 PS release"
 
 echo <<EOF
 Remaining Steps:
