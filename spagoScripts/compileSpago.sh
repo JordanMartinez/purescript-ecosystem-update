@@ -10,5 +10,5 @@ set -euo pipefail
 # `purescript-contrib/purescript-now` repo
 export PATH="$(pwd):$PATH"
 cd ../purescript-$1
-spago --verbose build -u "--strict"
+spago build -u "--strict --censor-codes=UserDefinedWarning"
 spago test
