@@ -10,5 +10,5 @@ set -euo pipefail
 # `purescript-contrib/purescript-now` repo
 export PATH="$(pwd):$PATH"
 cd ../purescript-$1
-spago build -u "--strict"
+spago --verbose build -u "--strict"
 spago test
