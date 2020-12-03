@@ -53,6 +53,12 @@ git commit -m "Update packages.dhall to prepare-0.14 bootstrap"
 git add .github/workflows/ci.yml
 git commit -m "Update CI to use v0.14.0-rc3 PS release"
 
+# Update dependency on globals to numbers. Note: this might not be needed
+# every time.
+sed -i 's/"globals"/"numbers"/' spago.dhall
+git add spago.dhall
+git commit -m "Update dependency on 'globals' to 'numbers''"
+
 echo <<EOF
 Remaining Steps:
 1. Run './compileSpago.sh $GH_REPO'
