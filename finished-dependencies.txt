@@ -66,3 +66,5 @@ machines
 options
 these
 unicode
+strings-extra
+arraybuffer-types
