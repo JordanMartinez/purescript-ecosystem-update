@@ -63,3 +63,6 @@ js-timers
 now
 nullable
 machines
+options
+these
+unicode
