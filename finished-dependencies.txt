@@ -73,3 +73,5 @@ unsafe-reference
 aff
 media-types
 js-date
+avar
+pathy
