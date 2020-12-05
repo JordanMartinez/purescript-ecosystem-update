@@ -99,6 +99,7 @@ foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 - Update any usage of these modules to their new names
     - `Global (isNan, nan, isFinite, infinity)` -> `Data.Number (isNan, nan, isFinite, infinity)`
     - `Global (toFixed, toPrecision, toExponential)` -> `Data.Number.Format (toStringWith, fixed, precision, exponential)`
+- If use used `readInt`, use `purescript-integers`' `readStringAs (Radix base) string` instead.
 - If you use any of the `Number`-related code above, add a dependency on `purescript-numbers`
 - If you used any of the encode/decode URI code above, add a dependency on `purescript-js-uri` (a repo that hasn't yet been created as of this writing).
 - If you used `unsafeStringify`, either use `purescript-debug` or work with others to publish the code as a new library
@@ -129,7 +130,7 @@ These were ported to `purescript-numbers` and are now found under the `Data.Numb
 
 These were dropped:
 - `readFloat` could return `Infinity`, which is a valid `Number`, but often not what you want. `purescript-numbers` already has the safer `fromString :: String -> Maybe Number`, so we thought `readFloat` was superfluous.
-- `readInt` has no problems with it, but we thought its usage was likely low enough to not be needed. If someone does need this, they should open an issue on the `purescript-integers` repo and submit a PR that adds it there.
+- `readInt` was a direct FFI to JavaScript's `readInt`. When porting it over to `purescript-integers`, we realized that `fromStringAs` already implements the same functionality but in a safer way than JavaScript's `readInt` function.
 
 **[3 functions] - safe `Number`-formatting code (i.e. `toFixed`, `toPrecision`, `toExponential`)**
 
