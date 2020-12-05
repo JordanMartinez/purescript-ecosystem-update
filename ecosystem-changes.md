@@ -193,3 +193,9 @@ One could pass a `Number` value that isn't a valid 32-bit integer, which might c
     - Before: `fromLeft :: forall a b. Partial => Either a b -> a`
     - After: `fromLeft :: forall a b. a -> Either a b -> a`
 - Usages of `unsafePartial <<< fromRight` should be replaced with `either (\_ -> unsafeCrashWith "failure message here") identity`
+
+### `purescript-control`'s `MonadZero` has been deprecated
+
+**Summary**
+- Replace `MonadZero m =>` with `Monad m => Alternative m =>`
+- Replace `import Control.MonadZero (guard)` with `import Control.Alternative (guard)`
