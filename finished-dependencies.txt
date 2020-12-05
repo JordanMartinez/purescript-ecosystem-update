@@ -86,3 +86,4 @@ argonaut-traversals
 argonaut-generic
 coroutines
 parsing
+graphs
