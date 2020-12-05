@@ -92,7 +92,7 @@ foo (SProxy :: SProxy "a") -- still compiles, but won't in future
 foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 ```
 
-## `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers`
+### `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers`
 
 **Summary:**
 - Remove `globals`/`purescript-globals` from your repos' dependencies
@@ -156,7 +156,7 @@ This left the `URI`-related code. We didn't think they warranted a place in `pur
 
 However, the ecosystem as a whole still needs a better library to work with URIs. `purescript-uri` is accurate but too heavy. The URI functions from `purescript-uri-components` are light, but don't solve the problem well.
 
-## `Foldable1` added `foldl1` and `foldr1` as members
+### `Foldable1` added `foldl1` and `foldr1` as members
 
 **Summary**:
 - Data types that have a `Foldable1` instance need to implement `foldl1` and `foldr1`. Consider using the default implementations: `foldl1Default` and `foldr1Default`.
@@ -176,7 +176,7 @@ However, `Foldable1` only defined two ways to fold and both don't specify direct
 
 This counts as a breaking change because data types that implemented `Foldable1` now need to update their instances to implement these two new functions as well. If you want to implement these quickly, consider using the default implementations: `foldl1Default` and `foldr1Default`.
 
-## `purescript-lcg`'s `lcgPerturb` changed its `Number` argument to a safer `Int` argument
+### `purescript-lcg`'s `lcgPerturb` changed its `Number` argument to a safer `Int` argument
 
 **Summary**:
 - Type signature was changed
@@ -186,7 +186,7 @@ This counts as a breaking change because data types that implemented `Foldable1`
 
 One could pass a `Number` value that isn't a valid 32-bit integer, which might cause a runtime error to occur. The implementation of this function needs a `Number` value so that truncation doesn't occur. To support both goals, the implementation now converts the `Int` argument to a `Number` before it gets used internally.
 
-## `purescript-either`'s `unsafeLeft` and `unsafeRight` are now total functions, not partial functions like `fromMaybe`
+### `purescript-either`'s `unsafeLeft` and `unsafeRight` are now total functions, not partial functions like `fromMaybe`
 
 **Summary**
 - Type signatures now include a default value
