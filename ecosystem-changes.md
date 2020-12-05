@@ -199,3 +199,7 @@ One could pass a `Number` value that isn't a valid 32-bit integer, which might c
 **Summary**
 - Replace `MonadZero m =>` with `Monad m => Alternative m =>`
 - Replace `import Control.MonadZero (guard)` with `import Control.Alternative (guard)`
+
+## Breaking Changes in the `purescript-contrib` libraries
+
+This section has yet to be written
