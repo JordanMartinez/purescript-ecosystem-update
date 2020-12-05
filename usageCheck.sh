@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-# Prints all places where a kind-specific Proxy is used
+# $1 = <package name>
+#  Example: "now" for `purescript-contrib/purescript-now`
+
+# Prints all usages of things that are deprecated or should be updated
+
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
