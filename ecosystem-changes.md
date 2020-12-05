@@ -185,3 +185,11 @@ This counts as a breaking change because data types that implemented `Foldable1`
 - You might need to update your `Coarbitrary` instances if you use `purescript-quickcheck` to test your code
 
 One could pass a `Number` value that isn't a valid 32-bit integer, which might cause a runtime error to occur. The implementation of this function needs a `Number` value so that truncation doesn't occur. To support both goals, the implementation now converts the `Int` argument to a `Number` before it gets used internally.
+
+## `purescript-either`'s `unsafeLeft` and `unsafeRight` are now total functions, not partial functions like `fromMaybe`
+
+**Summary**
+- Type signatures now include a default value
+    - Before: `fromLeft :: forall a b. Partial => Either a b -> a`
+    - After: `fromLeft :: forall a b. a -> Either a b -> a`
+- Usages of `unsafePartial <<< fromRight` should be replaced with `either (\_ -> unsafeCrashWith "failure message here") identity`
