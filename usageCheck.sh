@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # Prints all places where a kind-specific Proxy is used
+# See https://wizardzines.com/comics/bash-errors/
+set -euo pipefail
 
 cd ../purescript-$1
 
