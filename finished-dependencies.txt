@@ -81,3 +81,8 @@ fork
 aff-coroutines
 aff-bus
 argonaut-codecs
+argonaut
+argonaut-traversals
+argonaut-generic
+coroutines
+parsing
