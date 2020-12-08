@@ -9,7 +9,7 @@ set -euo pipefail
 # cd into the correct directory
 cd ../purescript-$1
 
-ISSUE=purescript/purescript\#3492
+ISSUE=purescript/purescript\#3942
 #ISSUE=purescript-contrib/governance\#35
 
 # Use gh to create the PR
