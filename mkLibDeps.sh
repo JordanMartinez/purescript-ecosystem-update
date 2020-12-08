@@ -14,3 +14,4 @@ node ./package-query.js --input ./packageSet.json --force genLibDeps --output ./
 sleep 0.1
 # cat ./libDeps.txt | grep '/purescript/' > ./libDeps-purescript.txt
 cat ./libDeps.txt | grep '/purescript-contrib/' > ./libDeps-purescript-contrib.txt
+cat ./libDeps.txt | grep '/purescript-web/' > ./libDeps-purescript-web.txt
