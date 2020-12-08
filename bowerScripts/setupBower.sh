@@ -38,6 +38,9 @@ sed --in-place -r 's/\^[0-9]+\.[0-9]+\.[0-9]+/master/g' bower.json
 echo "Updating 'purescript-psa' to 'v0.8.0'"
 sed --in-place -r 's/"purescript-psa": .+/"purescript-psa": "^0.8.0"/' package.json
 
+echo "Updating 'pulp' to 'v15.0.0'"
+sed --in-place -r 's/"pulp": .+/"pulp": "^15.0.0"/' package.json
+
 # use `sed` to update TAG in .travis.yml to latest release candidate
 # by commenting out old one
 # and inserting new one in front of the next command (i.e. `curl`)
@@ -49,7 +52,7 @@ sed --in-place 's/- curl/- TAG='"$PS_TAG"'\n  - curl/' .travis.yml
 
 # Add these files and commit them to our branch
 git add bower.json package.json .travis.yml
-git commit -m "Update TAG to $PS_TAG; dependencies to master; psa to v0.8.0"
+git commit -m "Update TAG to $PS_TAG; dependencies to master; psa to v0.8.0; pulp to v15.0.0"
 
 echo ""
 echo "Remaining Steps:"
