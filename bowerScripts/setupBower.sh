@@ -39,7 +39,7 @@ echo "Updating 'purescript-psa' to 'v0.8.0'"
 sed --in-place -r 's/"purescript-psa": .+/"purescript-psa": "^0.8.0"/' package.json
 
 echo "Updating 'pulp' to 'v15.0.0'"
-sed --in-place -r 's/"pulp": .+/"pulp": "^15.0.0"/' package.json
+sed --in-place -r 's/"pulp": .+/"pulp": "^15.0.0",/' package.json
 
 # use `sed` to update TAG in .travis.yml to latest release candidate
 # by commenting out old one
