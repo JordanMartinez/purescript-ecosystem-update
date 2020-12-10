@@ -79,42 +79,48 @@ cd master
 ./init.sh
 ```
 
-5. Modify the `./setupRemote.sh` file
+5. Modify the `./fork.sh` file
      - Change the `GH_USERNAME` variable to use your GitHub username
      - Change the `PS_TAG` variable to whatever is the latest.
 
 ### Contribute
 
 1. Look at [`libDeps.txt`](./libDeps.txt) and see which `purescript` organization repo hasn't been claimed yet. Refer to these links as well:
-    - [purescript repo's "update ecosystme to v0.14.0" issue](https://github.com/purescript/purescript/issues/3942)
-    - [all unmerged PRs currently submitted to update a library to `v0.14.0`](https://github.com/search?q=org%3Apurescript+is%3Apr+state%3Aopen+Update+to+v0.14.0)
-    - [all merged PRs submitted that already updated a library to `v0.14.0`](https://github.com/search?q=org%3Apurescript+is%3Apr+state%3Aclosed+Update+to+v0.14.0)
 
-2. Claim the package on the [purescript repo's "update ecosystme to v0.14.0" issue](https://github.com/purescript/purescript/issues/3942)
-
-3. Clone the repo, set up remotes, and automate the boilerplate updates (i.e. `.travis.yml`, `package.json`, `bower.json` files) by running the below bash script
+2. Clone the repo, set up remotes, and automate the boilerplate updates (i.e. `ci.yml`, `package.json`, `bower.json` files) by running the below bash script
 
 ```bash
 # pwd = master folder
-./setupRemote.sh <packageName>
+./fork.sh <packageName>
 # A folder called `../purescript-<packageName>` will now have been created
 ```
 
-4. Look at the package's repo to see whether any issues/PRs should also be merged. For example, if someone has already added role annotations and whatnot, then merge their PR into yours rather than redoing the work they have done.
-
-5. Test whether code compiles. If `bower` complains, select the `master` branch of each repository (usually an answer of `1` will be correct)
+3. Check whether the library uses any code known to be need of updating
 
 ```bash
 # pwd = master folder
-./compile.sh <packageName>
-# This will compile the code in `../purescript-<packagename>`
+./usageCheck.sh <packageName>
+```
+
+4. Try compiling the code. Use the name of the build tool:
+
+```bash
+# pwd = master folder
+
+# If library uses bower...
+./bower.sh <packageName>
+# This will use Bower to compile the code in `../purescript-<packagename>`
+
+# If library uses Spago...
+./spago.sh <packageName>
+# This will use Spago to compile the code in `../purescript-<packagename>`
 ```
 
 6. Create a PR via the `gh` CLI tool
 
 ```bash
 # pwd = master folder
-./createPR.sh <packageName>
+./pr.sh <packageName>
 # 1st question: Choose the `purescript/purescript-<packageName>`
 # 2nd question: Choose your repo
 # 3rd Question: Choose 'Submit'
