@@ -57,7 +57,8 @@ git commit -m "Update eslint to v7.5.0"
 # Update the `.github/workflows/ci.yml` file to specifically use
 # the `v0.14.0-rc3` PS release
 echo "Update ci.yml to use purescript v0.14.0-rc3"
-sed -i 's/\( +\)uses: purescript-contrib\/setup-purescript@main/\1uses: purescript-contrib\/setup-purescript@main\n\1with:\n\1  purescript: "0.14.0-rc3"/' .github/workflows/ci.yml
+sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "0.14.0-rc3"/' .github/workflows/ci.yml
+sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "0.14.0-rc3"/' .github/workflows/ci.yml
 git add .github/workflows/ci.yml
 git commit -m "Update to v0.14.0-rc3 purescript"
 
