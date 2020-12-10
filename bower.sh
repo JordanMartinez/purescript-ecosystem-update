@@ -10,4 +10,4 @@ npm install
 bower install --production
 npm run -s build
 bower install
-npm -s test
+npm run -s test --if-present
