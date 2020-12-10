@@ -95,3 +95,4 @@ node-url
 posix-types
 web-dom
 web-storage
+node-streams
