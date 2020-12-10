@@ -87,3 +87,11 @@ argonaut-generic
 coroutines
 parsing
 graphs
+canvas
+web-events
+node-buffer
+node-path
+node-url
+posix-types
+web-dom
+web-storage
