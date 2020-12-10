@@ -40,7 +40,7 @@ git commit -m "Update Bower dependencies to master"
 
 # Update package.json file
 echo "Updating 'purescript-psa' to 'v0.8.0'"
-sed --in-place -r 's/"purescript-psa": .+/"purescript-psa": "^0.8.0"/' package.json
+sed --in-place -r 's/"purescript-psa": .+/"purescript-psa": "^0.8.0",/' package.json
 git add package.json
 git commit -m "Update purescript-psa to v0.8.0"
 
