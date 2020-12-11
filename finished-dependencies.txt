@@ -110,3 +110,6 @@ web-encoding
 web-streams
 node-child-process
 web-file
+web-touchevents
+github-actions-toolkit
+web-dom-parser
