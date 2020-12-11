@@ -3,7 +3,7 @@
 # $1 = the name of the package (e.g. prelude)
 
 # See https://wizardzines.com/comics/bash-errors/
-set -euo pipefail
+set -uo pipefail
 
 # The GitHub Owner for a repo you wish to update
 BASE_GH_ORG=purescript-node
