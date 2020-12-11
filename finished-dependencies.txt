@@ -99,3 +99,8 @@ node-streams
 web-html
 web-socket
 web-xhr
+node-readline
+web-promise
+node-http
+node-process
+node-fs
