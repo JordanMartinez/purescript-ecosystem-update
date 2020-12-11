@@ -96,3 +96,6 @@ posix-types
 web-dom
 web-storage
 node-streams
+web-html
+web-socket
+web-xhr
