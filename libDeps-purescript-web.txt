@@ -1,4 +1,1 @@
-0  web-clipboard                    https://github.com/purescript-web/purescript-web-clipboard.git                 []
-0  web-file                         https://github.com/purescript-web/purescript-web-file.git                      []
-0  web-uievents                     https://github.com/purescript-web/purescript-web-uievents.git                  []
-1  web-touchevents                  https://github.com/purescript-web/purescript-web-touchevents.git               ["web-uievents"]
+0  web-touchevents                  https://github.com/purescript-web/purescript-web-touchevents.git               []

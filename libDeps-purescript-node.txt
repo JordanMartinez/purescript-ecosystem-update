@@ -1,3 +1,2 @@
-0  node-child-process               https://github.com/purescript-node/purescript-node-child-process.git           []
 0  node-fs-aff                      https://github.com/purescript-node/purescript-node-fs-aff.git                  []
 0  node-net                         https://github.com/purescript-node/purescript-node-net.git                     []

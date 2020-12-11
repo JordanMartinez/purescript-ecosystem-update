@@ -104,3 +104,9 @@ web-promise
 node-http
 node-process
 node-fs
+web-clipboard
+web-uievents
+web-encoding
+web-streams
+node-child-process
+web-file
