@@ -1,5 +1,0 @@
-0  ace                              https://github.com/purescript-contrib/purescript-ace.git                       []
-0  form-urlencoded                  https://github.com/purescript-contrib/purescript-form-urlencoded.git           []
-0  jquery                           https://github.com/purescript-contrib/purescript-jquery.git                    []
-0  react                            https://github.com/purescript-contrib/purescript-react.git                     []
-1  react-dom                        https://github.com/purescript-contrib/purescript-react-dom.git                 ["react"]

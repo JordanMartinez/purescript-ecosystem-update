@@ -123,3 +123,8 @@ css
 web-dom-xparser
 node-fs-aff
 node-net
+ace
+form-urlencoded
+jquery
+react
+react-dom
