@@ -121,6 +121,70 @@ This change enables core types (e.g. `Maybe`, `Either`, `Tuple`, etc.) to have i
 
 See [purescript/purescript-record#73](https://github.com/purescript/purescript-record/pull/73)
 
+### `Foldable1` added `foldl1` and `foldr1` as members
+
+**Summary**:
+- Data types that have a `Foldable1` instance need to implement `foldl1` and `foldr1`. Consider using the default implementations: `foldl1Default` and `foldr1Default`.
+
+`Foldable` defines three ways to fold:
+- from the left via `foldl`
+- from the right via `foldr`
+- direction doesn't matter via `foldMap`
+
+However, `Foldable1` only defined two ways to fold and both don't specify direction:
+- `fold1`
+- `foldMap1`
+
+`Foldable` now includes the direction-specific folds that can help fold non-empty contexts more efficiently:
+- `foldl1`
+- `foldr1`
+
+This counts as a breaking change because data types that implemented `Foldable1` now need to update their instances to implement these two new functions as well. If you want to implement these quickly, consider using the default implementations: `foldl1Default` and `foldr1Default`.
+
+### `purescript-lcg`'s `lcgPerturb` changed its `Number` argument to a safer `Int` argument
+
+**Summary**:
+- Type signature was changed
+    - Before: `lcgPerturb :: Number -> Seed -> Seed`
+    - After: `lcgPerturb :: Int -> Seed -> Seed`
+- You might need to update your `Coarbitrary` instances if you use `purescript-quickcheck` to test your code
+
+One could pass a `Number` value that isn't a valid 32-bit integer, which might cause a runtime error to occur. The implementation of this function needs a `Number` value so that truncation doesn't occur. To support both goals, the implementation now converts the `Int` argument to a `Number` before it gets used internally.
+
+### `purescript-either`'s `unsafeLeft` and `unsafeRight` are now total functions, not partial functions like `fromMaybe`
+
+**Summary**
+- Type signatures now include a default value
+    - Before: `fromLeft :: forall a b. Partial => Either a b -> a`
+    - After: `fromLeft :: forall a b. a -> Either a b -> a`
+- Usages of `unsafePartial <<< fromRight` should be replaced with `either (\_ -> unsafeCrashWith "failure message here") identity`
+
+### `purescript-control`'s `MonadZero` has been deprecated
+
+**Summary**
+- Replace `MonadZero m =>` with `Monad m => Alternative m =>`
+- Replace `import Control.MonadZero (guard)` with `import Control.Alternative (guard)`
+
+### `purescript-ordered-collections`: preparing to change `Map`'s `Semigroup` instance
+
+**Summary**
+- a new `Data.Map.Unbiased` module was added that is the same as `Data.Map` in everything except its `Semigroup` instance.
+    - `Data.Map`: `left <> right` means the left map's values will be used when the same key is found in both maps.
+    - `Data.Map.Unbiased`: `left <> right` means the left map's values will be `append`ed with the right map's values when the same key is found in both maps.
+- Always use `Data.Map.Unbiased` from this point forward.
+- Changes we will be making in future releases:
+    - v0.14.0
+        - `Data.Map.Unbiased` - added
+        - `Data.Map`'s `Semigroup` instance unchanged but a deprecation notice is added, warning of future change
+    - v0.15.0
+      - `Data.Map.Unbiased` - deprecated
+      - `Data.Map`'s `Semigroup` instance is changed to `Data.Map.Unbiased` implementation. A deprecation notice is still shown, warning of the change.
+    - v0.16.0
+      - `Data.Map.Unbiased` - removed
+      - `Data.Map` - warning on `Semigroup` instance is removed
+
+See [Unbiasing the Semigroup instance for Map](https://discourse.purescript.org/t/unbiasing-the-semigroup-instance-for-map/1935) and [purescript/purescript-ordered-collections#38](https://github.com/purescript/purescript-ordered-collections/pull/38) for more context.
+
 ### `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers` or `js-uri`
 
 **Summary:**
@@ -186,70 +250,6 @@ We decided not to move `unsafeStringify` into another repo. We believed that thi
 This left the `URI`-related code. We didn't think they warranted a place in `purescript-strings` since they are more specific to `URI` things rather than `String` things. We also thought it should no longer be in a core repo. So we decided on a quick-and-dirty fix: move it outside of the core repos and into its own repo in the `purescript-contrib` organization. We called it [`purescript-js-uri`](https://github.com/purescript-contrib/purescript-js-uri) because `purescript-uri` was already taken and this code is specific to the JavaScript backend. This change will reduce breaking changes in downstram libraries as the code will still be available.
 
 However, the ecosystem as a whole still needs a better library to work with URIs. `purescript-uri` is accurate but too heavy. The URI functions from `purescript-uri-components` are light, but don't solve the problem well.
-
-### `Foldable1` added `foldl1` and `foldr1` as members
-
-**Summary**:
-- Data types that have a `Foldable1` instance need to implement `foldl1` and `foldr1`. Consider using the default implementations: `foldl1Default` and `foldr1Default`.
-
-`Foldable` defines three ways to fold:
-- from the left via `foldl`
-- from the right via `foldr`
-- direction doesn't matter via `foldMap`
-
-However, `Foldable1` only defined two ways to fold and both don't specify direction:
-- `fold1`
-- `foldMap1`
-
-`Foldable` now includes the direction-specific folds that can help fold non-empty contexts more efficiently:
-- `foldl1`
-- `foldr1`
-
-This counts as a breaking change because data types that implemented `Foldable1` now need to update their instances to implement these two new functions as well. If you want to implement these quickly, consider using the default implementations: `foldl1Default` and `foldr1Default`.
-
-### `purescript-lcg`'s `lcgPerturb` changed its `Number` argument to a safer `Int` argument
-
-**Summary**:
-- Type signature was changed
-    - Before: `lcgPerturb :: Number -> Seed -> Seed`
-    - After: `lcgPerturb :: Int -> Seed -> Seed`
-- You might need to update your `Coarbitrary` instances if you use `purescript-quickcheck` to test your code
-
-One could pass a `Number` value that isn't a valid 32-bit integer, which might cause a runtime error to occur. The implementation of this function needs a `Number` value so that truncation doesn't occur. To support both goals, the implementation now converts the `Int` argument to a `Number` before it gets used internally.
-
-### `purescript-either`'s `unsafeLeft` and `unsafeRight` are now total functions, not partial functions like `fromMaybe`
-
-**Summary**
-- Type signatures now include a default value
-    - Before: `fromLeft :: forall a b. Partial => Either a b -> a`
-    - After: `fromLeft :: forall a b. a -> Either a b -> a`
-- Usages of `unsafePartial <<< fromRight` should be replaced with `either (\_ -> unsafeCrashWith "failure message here") identity`
-
-### `purescript-control`'s `MonadZero` has been deprecated
-
-**Summary**
-- Replace `MonadZero m =>` with `Monad m => Alternative m =>`
-- Replace `import Control.MonadZero (guard)` with `import Control.Alternative (guard)`
-
-### `purescript-ordered-collections`: preparing to change `Map`'s `Semigroup` instance
-
-**Summary**
-- a new `Data.Map.Unbiased` module was added that is the same as `Data.Map` in everything except its `Semigroup` instance.
-    - `Data.Map`: `left <> right` means the left map's values will be used when the same key is found in both maps.
-    - `Data.Map.Unbiased`: `left <> right` means the left map's values will be `append`ed with the right map's values when the same key is found in both maps.
-- Always use `Data.Map.Unbiased` from this point forward.
-- Changes we will be making in future releases:
-    - v0.14.0
-        - `Data.Map.Unbiased` - added
-        - `Data.Map`'s `Semigroup` instance unchanged but a deprecation notice is added, warning of future change
-    - v0.15.0
-      - `Data.Map.Unbiased` - deprecated
-      - `Data.Map`'s `Semigroup` instance is changed to `Data.Map.Unbiased` implementation. A deprecation notice is still shown, warning of the change.
-    - v0.16.0
-      - `Data.Map.Unbiased` - removed
-      - `Data.Map` - warning on `Semigroup` instance is removed
-
-See [Unbiasing the Semigroup instance for Map](https://discourse.purescript.org/t/unbiasing-the-semigroup-instance-for-map/1935) and [purescript/purescript-ordered-collections#38](https://github.com/purescript/purescript-ordered-collections/pull/38) for more context.
 
 ## Breaking Changes in the `purescript-contrib` libraries
 
