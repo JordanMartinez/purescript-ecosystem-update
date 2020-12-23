@@ -213,6 +213,26 @@ One could pass a `Number` value that isn't a valid 32-bit integer, which might c
 - Replace `MonadZero m =>` with `Monad m => Alternative m =>`
 - Replace `import Control.MonadZero (guard)` with `import Control.Alternative (guard)`
 
+### `purescript-ordered-collections`: preparing to change `Map`'s `Semigroup` instance
+
+**Summary**
+- a new `Data.Map.Unbiased` module was added that is the same as `Data.Map` in everything except its `Semigroup` instance.
+    - `Data.Map`: `left <> right` means the left map's values will be used when the same key is found in both maps.
+    - `Data.Map.Unbiased`: `left <> right` means the left map's values will be `append`ed with the right map's values when the same key is found in both maps.
+- Always use `Data.Map.Unbiased` from this point forward.
+- Changes we will be making in future releases:
+    - v0.14.0
+        - `Data.Map.Unbiased` - added
+        - `Data.Map`'s `Semigroup` instance unchanged but a deprecation notice is added, warning of future change
+    - v0.15.0
+      - `Data.Map.Unbiased` - deprecated
+      - `Data.Map`'s `Semigroup` instance is changed to `Data.Map.Unbiased` implementation. A deprecation notice is still shown, warning of the change.
+    - v0.16.0
+      - `Data.Map.Unbiased` - removed
+      - `Data.Map` - warning on `Semigroup` instance is removed
+
+See [Unbiasing the Semigroup instance for Map](https://discourse.purescript.org/t/unbiasing-the-semigroup-instance-for-map/1935) and [purescript/purescript-ordered-collections#38](https://github.com/purescript/purescript-ordered-collections/pull/38) for more context.
+
 ## Breaking Changes in the `purescript-contrib` libraries
 
 This section has yet to be written
