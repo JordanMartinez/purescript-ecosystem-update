@@ -103,7 +103,7 @@ foo (SProxy :: SProxy "a") -- still compiles, but won't in future
 foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 ```
 
-### `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers`
+### `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers` or `js-uri`
 
 **Summary:**
 - Remove `globals`/`purescript-globals` from your repos' dependencies
@@ -112,7 +112,9 @@ foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
     - `Global (toFixed, toPrecision, toExponential)` -> `Data.Number.Format (toStringWith, fixed, precision, exponential)`
 - If use used `readInt`, use `purescript-integers`' `readStringAs (Radix base) string` instead.
 - If you use any of the `Number`-related code above, add a dependency on `purescript-numbers`
-- If you used any of the encode/decode URI code above, add a dependency on `purescript-js-uri` (a repo that hasn't yet been created as of this writing).
+- If you used any of the encode/decode URI code above, add a dependency on `purescript-js-uri`
+    - `spago`: `js-uri`
+    - `bower`: `purescript-js-uri": "https://github.com/purescript-contrib/purescript-js-uri.git#main"`
 - If you used `unsafeStringify`, either use `purescript-debug` or work with others to publish the code as a new library
 
 `purescript-globals` had code for 6 things:
@@ -163,7 +165,7 @@ We decided not to move `unsafeStringify` into another repo. We believed that thi
 
 **[8 functions] - safe and unsafe `URI`-related code (e.g. `encodeURI`/`decodeURI`, `encodeURIComponent`/`decodeURIComponent`, and unsafe variants)**
 
-This left the `URI`-related code. We didn't think they warranted a place in `purescript-strings` since they are more specific to `URI` things rather than `String` things. We also thought it should no longer be in a core repo. So we decided on a quick-and-dirty fix: move it outside of the core repos and into its own repo in the `purescript-contrib` organization. We called it `purescript-uri-components` because `purescript-uri` was already taken. This change will reduce breaking changes in downstram libraries as the code will still be available.
+This left the `URI`-related code. We didn't think they warranted a place in `purescript-strings` since they are more specific to `URI` things rather than `String` things. We also thought it should no longer be in a core repo. So we decided on a quick-and-dirty fix: move it outside of the core repos and into its own repo in the `purescript-contrib` organization. We called it [`purescript-js-uri`](https://github.com/purescript-contrib/purescript-js-uri) because `purescript-uri` was already taken and this code is specific to the JavaScript backend. This change will reduce breaking changes in downstram libraries as the code will still be available.
 
 However, the ecosystem as a whole still needs a better library to work with URIs. `purescript-uri` is accurate but too heavy. The URI functions from `purescript-uri-components` are light, but don't solve the problem well.
 
