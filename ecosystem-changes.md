@@ -103,6 +103,15 @@ foo (SProxy :: SProxy "a") -- still compiles, but won't in future
 foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 ```
 
+### `purescript-generics-rep` has been deprecated; its code was moved into `prelude`
+
+Note: this change is currently a work in progress. It hasn't yet been merged into `master` yet.
+
+**Summary**:
+- Remove all dependencies on `generics-rep` and replace them with `prelude`
+
+This change enables core types (e.g. `Maybe`, `Either`, `Tuple`, etc.) to have instances for the `Generic` compiler-solved type class.
+
 ### `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers` or `js-uri`
 
 **Summary:**
