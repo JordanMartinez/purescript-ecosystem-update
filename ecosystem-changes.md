@@ -165,6 +165,8 @@ One could pass a `Number` value that isn't a valid 32-bit integer, which might c
 - Replace `MonadZero m =>` with `Monad m => Alternative m =>`
 - Replace `import Control.MonadZero (guard)` with `import Control.Alternative (guard)`
 
+The `MonadZero` type class will be removed in `v0.15.0`
+
 ### `purescript-ordered-collections`: preparing to change `Map`'s `Semigroup` instance
 
 **Summary**
