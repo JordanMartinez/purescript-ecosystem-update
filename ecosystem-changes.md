@@ -112,6 +112,15 @@ Note: this change is currently a work in progress. It hasn't yet been merged int
 
 This change enables core types (e.g. `Maybe`, `Either`, `Tuple`, etc.) to have instances for the `Generic` compiler-solved type class.
 
+### `purescript-record`'s `Data.Record.Builder` API was made to be consistent with `Data.Record`'s API
+
+**Summary**
+- `Data.Record.merge` and `Data.Record.Builder.merge` are now consistent. The `Builder.merge` was a flipped version of `Record.merge`.
+- `Data.Record.union` and `Data.Record.Builder.union` are now consistent. The `Builder.union` was a flipped version of `Record.union`.
+- `Data.Record.Builder.flip` to replace usages of `Data.Function.flip` that had problems.
+
+See [purescript/purescript-record#73](https://github.com/purescript/purescript-record/pull/73)
+
 ### `purescript-globals` has been deprecated; `sharkdp/purescript-numbers` was moved into core libraries; some but not all `globals` code was ported to `purescript-numbers` or `js-uri`
 
 **Summary:**
