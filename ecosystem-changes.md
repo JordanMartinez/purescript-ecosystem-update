@@ -4,8 +4,19 @@
 
 - `purescript-psa` needs to be updated to `v0.8.0`
 - `spago` does not need to be updated
+- `pulp` must be on `v15.0.0`
 - Use the `prepare-0.14` `package-sets` branch for `v0.14.0`-compatible libraries
 - A new command was added to the `purs` binary: `purs graph`.
+
+Since Travis CI no longer offers a free tier, see the bottom of this file for how to easily switch to GitHub Actions
+
+### Migrating from Travis CI to GitHub Actions
+
+Since Travis Ci no longer offers a free tier, here's how you can migrate to GitHub Actions. You will need to create the following files where `.` is the root of your project's directory:
+- `./.github/workflows/ci.yml` (the `ci` name is not required and can be changed to something else)
+- `./package.json` (for `bower` only)
+
+Template files you can copy and modify for each build tool, `bower` and `spago`, can be found in the [`migrating-from-travis-to-gh-actions`  folder](./migrating-from-travis-to-gh-actions). These are based on the same files used in the `purescript` organization's repos (`bower`) and the `purescript-contrib` organization's repos (`spago`).
 
 ## Summary of `v0.14.0` changes
 

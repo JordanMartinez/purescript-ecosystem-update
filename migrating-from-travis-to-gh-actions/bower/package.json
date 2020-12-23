@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "eslint src && pulp build -- --censor-lib --strict  --censor-codes='UserDefinedWarning'",
+    "test": "pulp test"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "purescript-psa": "^0.8.0",
+    "pulp": "^15.0.0"
+  }
+}
