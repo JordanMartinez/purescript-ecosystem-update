@@ -151,7 +151,7 @@ This counts as a breaking change because data types that implemented `Foldable1`
 
 One could pass a `Number` value that isn't a valid 32-bit integer, which might cause a runtime error to occur. The implementation of this function needs a `Number` value so that truncation doesn't occur. To support both goals, the implementation now converts the `Int` argument to a `Number` before it gets used internally.
 
-### `purescript-either`'s `fromLeft` and `fromRight` are now total functions, not partial functions like `fromMaybe`
+### `purescript-either`'s `fromLeft` and `fromRight` are not partial functions anymore (like `Data.Maybe.fromJust`) but total functions (like `Data.Maybe.fromMaybe`)
 
 **Summary**
 - Type signatures now include a default value
