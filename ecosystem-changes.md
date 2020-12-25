@@ -112,12 +112,11 @@ Note: this change is currently a work in progress. It hasn't yet been merged int
 
 This change enables core types (e.g. `Maybe`, `Either`, `Tuple`, etc.) to have instances for the `Generic` compiler-solved type class.
 
-### `purescript-record`'s `Data.Record.Builder` API was made to be consistent with `Data.Record`'s API
+### `purescript-record`'s `Record.Builder` API was made to be consistent with `Record`'s API
 
 **Summary**
-- `Data.Record.merge` and `Data.Record.Builder.merge` are now consistent. The `Builder.merge` was a flipped version of `Record.merge`.
-- `Data.Record.union` and `Data.Record.Builder.union` are now consistent. The `Builder.union` was a flipped version of `Record.union`.
-- `Data.Record.Builder.flip` to replace usages of `Data.Function.flip` that had problems.
+- `Record.Builder.merge` and `Record.Builder.union` are now consistent with `Record.merge` and `Record.union`: `Record.Builder.merge` and `Record.Builder.union` used to prefer values from the record being built instead of their first argument in case of overlap (meaning that `build (Record.Builder.merge r1) r2` was not equivalent to `Record.merge r1 r2` when both `r1` and `r2` have fields in common).
+- `Record.Builder.flip` was added to recover the previous behaviour of `Record.Builder.merge` and `Record.Builder.union` without adding more functions.
 
 See [purescript/purescript-record#73](https://github.com/purescript/purescript-record/pull/73)
 
