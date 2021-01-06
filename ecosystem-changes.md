@@ -113,6 +113,27 @@ foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 
 This change enables core types (e.g. `Maybe`, `Either`, `Tuple`, etc.) to have instances for the `Generic` compiler-solved type class.
 
+### `purescript-newtype`: `Coercible` is a super class of `Newtype` and `Newtype` no longer has `wrap` and `unwrap` members
+
+**Summary**
+- `unwrap`/`wrap` are now derived functions
+- other derived functions (e.g. `ala`, `over`, etc.) are now more performant as they use `coerce`
+
+[`Newtype` before this change](https://github.com/purescript/purescript-newtype/blob/v3.0.0/src/Data/Newtype.purs#L36-L38)
+
+`Newtype` after this change:
+
+```purescript
+class Newtype :: Type -> Type -> Constraint
+class Coercible t a <= Newtype t a | t -> a
+
+wrap :: forall t a. Newtype t a => a -> t
+wrap = coerce
+
+unwrap :: forall t a. Newtype t a => t -> a
+unwrap = coerce
+```
+
 ### `purescript-record`'s `Record.Builder` API was made to be consistent with `Record`'s API
 
 **Summary**
