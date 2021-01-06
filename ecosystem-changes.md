@@ -103,12 +103,13 @@ foo (SProxy :: SProxy "a") -- still compiles, but won't in future
 foo (Proxy :: Proxy "a") -- compiles and correct way to use this now
 ```
 
-### `purescript-generics-rep` has been deprecated; its code was moved into `prelude`
-
-Note: this change is currently a work in progress. It hasn't yet been merged into `master` yet.
+### `purescript-generics-rep` has been deprecated; its non-`Enum` code was moved into `prelude` and its `Enum` code was moved to `enums`
 
 **Summary**:
 - Remove all dependencies on `generics-rep` and replace them with `prelude`
+- If you used `GenericEnum`, add a dependency on `enums`
+- Modules containing type class generics were renamed. For example, `Data.Generic.Rep.Show` is now `Data.Show.Generic`
+- `derive instance genericFoo :: Generic Foo _` where `Foo` is `data Foo = Foo (Either Int Int)` now compiles.
 
 This change enables core types (e.g. `Maybe`, `Either`, `Tuple`, etc.) to have instances for the `Generic` compiler-solved type class.
 
