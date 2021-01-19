@@ -277,3 +277,14 @@ However, the ecosystem as a whole still needs a better library to work with URIs
 ## Breaking Changes in the `purescript-contrib` libraries
 
 This section has yet to be written
+
+## Breaking Changes in the `purescript-node` libraries
+
+### `node-readline`'s `setPrompt` and `Interface`-related functions
+
+- [Removed `length` parameter to `setPrompt`](https://github.com/purescript-node/purescript-node-readline/pull/21)
+- [Moved `Interface` to be last parameter in functions using `Interface`](https://github.com/purescript-node/purescript-node-readline/pull/23)
+
+## Breaking Changes in the `purescript-web` libraries
+
+This section has yet to be written
