@@ -142,6 +142,17 @@ unwrap = coerce
 
 See [purescript/purescript-record#73](https://github.com/purescript/purescript-record/pull/73)
 
+## Various changes made in `purescript-arrays`
+
+**Summary**
+
+- Change `Data.Array.ST.empty` to `Data.Array.ST.new`
+- Change `group'` to `groupAll`
+
+`Data.Array.ST.empty` was renamed to `Data.Array.ST.new` to be consistent across all `ST` modules (e.g. `STRef`, etc.)
+
+`group'` was renamed to `groupAll` and more variations of that function were provided.
+
 ### `Foldable1` added `foldl1` and `foldr1` as members
 
 **Summary**:
