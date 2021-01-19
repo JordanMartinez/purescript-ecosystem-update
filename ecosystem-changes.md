@@ -302,8 +302,20 @@ This section has yet to be written
 
 ### `node-readline`'s `setPrompt` and `Interface`-related functions
 
-- [Removed `length` parameter to `setPrompt`](https://github.com/purescript-node/purescript-node-readline/pull/21)
-- [Moved `Interface` to be last parameter in functions using `Interface`](https://github.com/purescript-node/purescript-node-readline/pull/23)
+**Summary**
+
+- Remove the `length` parameter to `setPrompt`
+    - Before: `setPrompt "> " 2 interface"`
+    - After:  `setPrompt "> "   interface"`
+- Moved the `Interface` parameter to end of `setLineHandler` function's arg list:
+    - Before: `setLineHandler interface \str -> handleUserInput str`
+    - After:
+        - Either: `setLineHandler (\str -> handleUserInput str) interface`
+        - Or: `interface # setLineHandler \str -> handleUserInput str`
+
+The `length` parameter was part of Node v0.10. We only support Node v10.0, which doesn't include this parameter.
+
+There was an inconsistency between `setLineHandler` and other functions that use `Interface` (e.g. `setPrompt`). By convention, these kinds of args should be at the end of the arg list, so that one can write `createInterface >>= setLineHandler \str -> handleStr >>= nextPart`.
 
 ## Breaking Changes in the `purescript-web` libraries
 
