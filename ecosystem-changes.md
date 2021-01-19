@@ -199,6 +199,15 @@ One could pass a `Number` value that isn't a valid 32-bit integer, which might c
 
 The `MonadZero` type class will be removed in `v0.15.0`
 
+### `purescript-foreign-object`'s `Semigroup` instance was changed
+
+**Summary**
+- Check your usages of `Foreign.Object.Object`'s `Semigroup` instances
+
+Before this change, the `Semigroup` instance for `Foreign.Object.Object` would  cause `singleton k a <> singleton k b` to be equivalent to `singleton k (b <> a)`, not `singleton k (a <> b)` as expected.
+
+After this change, `singleton k a <> singleton k b` is equivalent to `singleton k (a <> b)` as expected.
+
 ### `purescript-ordered-collections`: preparing to change `Map`'s `Semigroup` instance
 
 **Summary**
