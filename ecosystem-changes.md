@@ -153,10 +153,11 @@ See [purescript/purescript-record#73](https://github.com/purescript/purescript-r
 
 `group'` was renamed to `groupAll` and more variations of that function were provided.
 
-### `Foldable1` added `foldl1` and `foldr1` as members
+### `Foldable1` added `foldl1` and `foldr1` as members and dropped `fold1` as a member
 
 **Summary**:
 - Data types that have a `Foldable1` instance need to implement `foldl1` and `foldr1`. Consider using the default implementations: `foldl1Default` and `foldr1Default`.
+- `fold1` is now a derived function rather than a type class member of `Foldable`
 
 `Foldable` defines three ways to fold:
 - from the left via `foldl`
@@ -170,6 +171,8 @@ However, `Foldable1` only defined two ways to fold and both don't specify direct
 `Foldable` now includes the direction-specific folds that can help fold non-empty contexts more efficiently:
 - `foldl1`
 - `foldr1`
+
+Since `Foldable`'s `fold` is defined as `foldMap identity`, we changed `Foldable1`'s `fold1` to also be defined as a derived function via `foldMap1 identity`.
 
 This counts as a breaking change because data types that implemented `Foldable1` now need to update their instances to implement these two new functions as well. If you want to implement these quickly, consider using the default implementations: `foldl1Default` and `foldr1Default`.
 
