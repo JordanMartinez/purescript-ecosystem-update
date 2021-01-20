@@ -15,3 +15,5 @@ Mid-March 2020, COVID became a pandemic and things got... really weird. I'm not 
 From March 2020 to September 2020, various issues with the Coercible feature (and the interplay between Coercible and PolyKinds, I believe) were found and fixed, resulting in (at the time of writing) 16 PRs.
 
 Travis CI was being used in all `core`, `web`, `node`, and `contrib` PureScript libraries besides the compiler repo. [Using this post's timeline for context](https://www.jeffgeerling.com/blog/2020/travis-cis-new-pricing-plan-threw-wrench-my-open-source-works), Travis CI announced that it would no longer offer its free tier for open source projects. Following Spago, we chose GitHub Actions as the CI to use as its replacement, migrating all of the above repos to GitHub Actions.
+
+Lastly, it's our policy to do breaking changes in `core`, `contrib`, `web`, and `node` libraries at the same time as breaking language changes, so that fixing these changes can be batched together rather than be an ongoing activity.
