@@ -17,3 +17,34 @@ From March 2020 to September 2020, various issues with the Coercible feature (an
 Travis CI was being used in all `core`, `web`, `node`, and `contrib` PureScript libraries besides the compiler repo. [Using this post's timeline for context](https://www.jeffgeerling.com/blog/2020/travis-cis-new-pricing-plan-threw-wrench-my-open-source-works), Travis CI announced that it would no longer offer its free tier for open source projects. Following Spago, we chose GitHub Actions as the CI to use as its replacement, migrating all of the above repos to GitHub Actions.
 
 Lastly, it's our policy to do breaking changes in `core`, `contrib`, `web`, and `node` libraries at the same time as breaking language changes, so that fixing these changes can be batched together rather than be an ongoing activity.
+
+## Specific issues
+
+Ordering these in a chronological way, these are the issues we came across.
+
+### Bower's solver chooses the wrong version
+
+- When we were originally updating all libraries to `v0.14.0`, we needed to change their dependencies to the `master` branch. If any one of them was not on `master`, including test dependencies, then a version of a library that was still on `v0.13.x` and all of its transitive dependencies would be pulled in. As a result, the code would often not compile.
+
+### Lack of a clear dependency graph between packages, including test dependencies
+
+- Harry's list (based on Gary's old script?)
+- Jordan's list (based on a package-set)
+- test dependencies weren't a part of lists
+
+### Lack of getting a timely review or responding to PR feedback in a timely manner
+
+- Due to the above Bower issue, we could only update a few libraries at a time. If these libraries
+
+### Lack of a single tracking issues to which all other issues backlinked
+
+- initial issue listed all repos with checkboxes
+- issue length became a problem as one could no longer see all PRs submitted and whether they had been merged or not
+
+### Too many breaking changes to do in one breaking PS release
+
+- getting `v0.14.0` out sooner became more important than adding another breaking change
+- some changes were not merged because of a few reasons:
+    - no one reviewed the PR
+    - disagreement among core contributors about whether something should be done / how it should be done
+    - lack of expertise in an area to know whether such changes were correct and appropriate
