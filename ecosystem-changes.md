@@ -322,4 +322,12 @@ There was an inconsistency between `setLineHandler` and other functions that use
 
 ## Breaking Changes in the `purescript-web` libraries
 
-This section has yet to be written
+### `purescript-web-html`
+
+**Summary**
+- Creating an `HTMLImageElement` and `HTMLAudioElement` no longer has a `Unit` argument as its unneeded
+- `scrollX` and `scrollY` now return `Effect Number` instead of `Effect Int`, as these functions can return subpixel values
+- Removed `Newtype` instances for two types whose constructors aren't exported:
+    - `RequestAnimationFrameId` from `Web.HTML.Window`
+    - `RequestIdleCallbackId` from `Web.HTML.Window`
+- Changed `HTML.HTMLInputElement.accept` and `setAccept` attribute functions to use `String` since it's more flexible (but less type-safe) than defining a type that addresses all media types.
