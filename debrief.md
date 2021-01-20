@@ -4,7 +4,7 @@
 
 ## The Larger Context
 
-The initial Coercible PR was [first created on May 4, 2018](https://github.com/purescript/purescript/pull/3351#issue-185918529). After some initial feedback, [9 months passed](https://github.com/purescript/purescript/pull/3351#issuecomment-470342192) before the next round of feedback occurred. The [next three months (March to June)](https://github.com/purescript/purescript/pull/3351#issuecomment-514778214) saw activity before no activity occurred again. While the PR was finished, it was not [merged until Feb 2020](https://github.com/purescript/purescript/pull/3351#event-3019914938). Harry clarified in Slack that they didn't merge the Coercible PR immediately because at the time they weren't certain whether the next PureScript release should be a breaking one or not. 
+The initial Coercible PR was [first created on May 4, 2018](https://github.com/purescript/purescript/pull/3351#issue-185918529). After some initial feedback, [9 months passed](https://github.com/purescript/purescript/pull/3351#issuecomment-470342192) before the next round of feedback occurred. The [next three months (March to June)](https://github.com/purescript/purescript/pull/3351#issuecomment-514778214) saw activity before no activity occurred again. While the PR was finished, it was not [merged until Feb 2020](https://github.com/purescript/purescript/pull/3351#event-3019914938). Harry clarified in Slack that they didn't merge the Coercible PR immediately because at the time they weren't certain whether the next PureScript release should be a breaking one or not.
 
 [Based on the first commit in his PR](https://github.com/purescript/purescript/pull/3779/commits/83fedaa4b3152fed751e2ff63c5c39c2cbcebc2d), Nate started working on the PolyKinds feature in August 2019 before [announcing it in October 2019]](https://discourse.purescript.org/t/help-getting-polykinds-over-the-line/1025/). He finished the gist of it around Febuary 2020. The last few weeks ironed out a few things and it was finally merged in early [March 2020]](https://github.com/purescript/purescript/pull/3779#event-3129505043).
 
@@ -16,7 +16,7 @@ From March 2020 to September 2020, various issues with the Coercible feature (an
 
 Travis CI was being used in all `core`, `web`, `node`, and `contrib` PureScript libraries besides the compiler repo. [Using this post's timeline for context](https://www.jeffgeerling.com/blog/2020/travis-cis-new-pricing-plan-threw-wrench-my-open-source-works), Travis CI announced that it would no longer offer its free tier for open source projects. Following Spago, we chose GitHub Actions as the CI to use as its replacement, migrating all of the above repos to GitHub Actions.
 
-Lastly, it's our policy to do breaking changes in `core`, `contrib`, `web`, and `node` libraries at the same time as breaking language changes, so that fixing these changes can be batched together rather than be an ongoing activity.
+Lastly, it's our policy to do breaking changes in `core`, `contrib`, `web`, and `node` libraries at the same time as breaking language changes, so that fixing these changes can be batched together rather than be an ongoing activity. Unfortunately, many of these libraries haven't been receiving the maintenance attention that they need. Thus, we paid a "maintenance debt" in this release cycle.
 
 ## Specific issues
 
