@@ -31,7 +31,7 @@ Ordering these in a chronological way, these are the issues we came across.
 
 - Harry's list (based on Gary's old script?)
 - Jordan's list (based on a package-set)
-- test dependencies weren't a part of lists
+- while both lists were useful in tracking down which repo to do next, neither included a package's test dependencies. For example, even though `purescript-validation` was something that should have been easily updated early in the process, its test dependency on `purescript-quickcheck` was much farther down the line. Thus, it was the second- or third-to-last package we updated.
 
 ### Lack of getting a timely review or responding to PR feedback in a timely manner
 
