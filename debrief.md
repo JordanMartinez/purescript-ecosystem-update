@@ -64,6 +64,12 @@ This was my (Jordan's) fault. `contrib` libraries had changed their default bran
 
 `contrib` should implement a similar policy as `core` to reduce this problem in the future.
 
+### We had to migrate `core`, `web`, and `node` libraries from Travis CI to GitHub Actions
+
+Travis CI suddenly announced their free tier was gone. @f-f strongly encouraged us to use GH Actions due to it working "surprsingly well" for him with `spago`. We followed suit.
+
+`bash` scripts helped us automate a lot of this. We also made a mistake in the initial script, so we had to use a second one to fix issues done by the first one.
+
 ### Too many breaking changes to do in one breaking PS release
 
 - getting `v0.14.0` out sooner became more important than adding another breaking change
