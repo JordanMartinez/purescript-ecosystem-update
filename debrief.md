@@ -56,3 +56,12 @@ While I can't recall exactly how long it took, I recall `core` libraries taking 
     - no one reviewed the PR
     - disagreement among core contributors about whether something should be done / how it should be done
     - lack of expertise in an area to know whether such changes were correct and appropriate
+
+## Numerous `contrib` repos depended on a repo outside of the `contrib` libraries
+
+`core` libraries have a policy that they do not depend on non-`core` libraries. While this can make some things inconvenient, it makes a huge difference when updating libraries due to a breaking change in the compiler.
+
+`contrib` does not currently follow such a policy, and the pain of that choice revealed itself in this release cyle. There were test dependencies were outside of `contrib` maintainers' control (e.g. `purescript-naturals`, `purescript-spec` or `purescript-test-unit`). For `naturals`, we dropped the dependency and updated the code. For the test libraries, we had to bootstrap a workaround using `ReaderT String Aff a`, so that we did not touch the tests but still got the nice test reports provided by those other libraries.
+
+`contrib` should implement a similar policy as `core` to reduce this problem in the future.
+
