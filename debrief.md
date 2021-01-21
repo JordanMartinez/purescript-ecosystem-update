@@ -56,14 +56,6 @@ This was my (Jordan's) fault. `contrib` libraries had changed their default bran
 
 `contrib` libraries made the decision to switch to `spago` before we started updating the `v0.14.0` libraries. When updating the `contrib` repos to `v0.14.0`, we sometimes changed the list of dependencies it had. However, the `packages.dhall` file in the `package-sets` repo wasn't updated unless we also updated its corresponding entry. This wasn't hard to fix, but could complicate CI. If `foo` pulled in `bar` (as defined in the `packages.dhall` file in the `package-sets` repo) rather than `bar` (as defined in the `purescript-bar` repo), CI would complain and we'd have to figure out why. Fortunately, this was rarely a problem.
 
-### Too many breaking changes to do in one breaking PS release
-
-- getting `v0.14.0` out sooner became more important than adding another breaking change
-- some changes were not merged because of a few reasons:
-    - no one reviewed the PR
-    - disagreement among core contributors about whether something should be done / how it should be done
-    - lack of expertise in an area to know whether such changes were correct and appropriate
-
 ## Numerous `contrib` repos depended on a repo outside of the `contrib` libraries
 
 `core` libraries have a policy that they do not depend on non-`core` libraries. While this can make some things inconvenient, it makes a huge difference when updating libraries due to a breaking change in the compiler.
@@ -71,6 +63,14 @@ This was my (Jordan's) fault. `contrib` libraries had changed their default bran
 `contrib` does not currently follow such a policy, and the pain of that choice revealed itself in this release cyle. There were test dependencies were outside of `contrib` maintainers' control (e.g. `purescript-naturals`, `purescript-spec` or `purescript-test-unit`). For `naturals`, we dropped the dependency and updated the code. For the test libraries, we had to bootstrap a workaround using `ReaderT String Aff a`, so that we did not touch the tests but still got the nice test reports provided by those other libraries.
 
 `contrib` should implement a similar policy as `core` to reduce this problem in the future.
+
+### Too many breaking changes to do in one breaking PS release
+
+- getting `v0.14.0` out sooner became more important than adding another breaking change
+- some changes were not merged because of a few reasons:
+    - no one reviewed the PR
+    - disagreement among core contributors about whether something should be done / how it should be done
+    - lack of expertise in an area to know whether such changes were correct and appropriate
 
 ### Morale of _new_ contributors dropped three times when...
 
