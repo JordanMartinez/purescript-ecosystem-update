@@ -27,7 +27,6 @@ Ordering these in a chronological way, these are the issues we came across.
 ### Bower's solver chooses the wrong version
 
 - When we were originally updating all libraries to `v0.14.0`, we needed to change their dependencies to the `master` branch. If any one of them was not on `master`, including test dependencies, then a version of a library that was still on `v0.13.x` and all of its transitive dependencies would be pulled in. As a result, the code would often not compile.
-- The above issue was especially problematic because `contrib` libraries changed their default branch from `master` to `main`. Thus, one PR updated dependencies to `master`, which still referred to `v0.13.x` dependencies rather than `main`, which had been updated to `v0.14.0`.
 
 ### Lack of a clear dependency graph between packages, including test dependencies
 
@@ -48,6 +47,10 @@ While I can't recall exactly how long it took, I recall `core` libraries taking 
 - Early on in [purescript/purescript#3942](https://github.com/purescript/purescript/issues/3942), we originally created a checked list of linked repos. After a while, the issue's length made it difficult to determine which repos had PRs submitted, which of those PRs were merged, and what remaining work we had to do. Numerous comments throughout the issue made it hard to know the status of what to do. Part of the issue here is that GitHub does not provide tooling for the kind of mass-change we're doing in the ecosystem
 - Over time, we started creating an issue to which all other PRs would backlink. This made things significantly easier to see which PRs had been submitted, were merged, and still had work to be done.
 - Jordan thinks we need two GH issues to fully resolve this pain: one to act as a 'backlinking-target' issue for PRs and other issues and a second one to be used for discussion. However, a more appropriate tool would be better (e.g. a spreadsheet), but Jordan isn't sure what tool would work that's cheap and integrates with GitHub.
+
+### We started migrating `web`/`node` libraries from `bower` to `spago` across multiple repos and then reverted that change
+
+This was my (Jordan's) fault. `contrib` libraries had changed their default branch from `master` to `main`. Thus, one PR I submitted that updated dependencies to `master`, which still referred to `v0.13.x` dependencies rather than `main`, which had been updated to `v0.14.0`. Thus, Bower was pulling in `v0.13.x` transitive dependencies and I could not determine why that was happening. I led other contributors to migrate from Bower to Spago. Harry pushed hard against. I investigated the issue further and found the `master`/`main` issue. Once that was fixed, we reverted this migration work again, wasting time and energy.
 
 ### Package sets in the `package-set` repo don't automatically update when `contrib` repos are updated
 
