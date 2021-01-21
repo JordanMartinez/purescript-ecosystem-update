@@ -49,6 +49,10 @@ While I can't recall exactly how long it took, I recall `core` libraries taking 
 - Over time, we started creating an issue to which all other PRs would backlink. This made things significantly easier to see which PRs had been submitted, were merged, and still had work to be done.
 - Jordan thinks we need two GH issues to fully resolve this pain: one to act as a 'backlinking-target' issue for PRs and other issues and a second one to be used for discussion. However, a more appropriate tool would be better (e.g. a spreadsheet), but Jordan isn't sure what tool would work that's cheap and integrates with GitHub.
 
+### Package sets in the `package-set` repo don't automatically update when `contrib` repos are updated
+
+`contrib` libraries made the decision to switch to `spago` before we started updating the `v0.14.0` libraries. When updating the `contrib` repos to `v0.14.0`, we sometimes changed the list of dependencies it had. However, the `packages.dhall` file in the `package-sets` repo wasn't updated unless we also updated its corresponding entry. This wasn't hard to fix, but could complicate CI. If `foo` pulled in `bar` (as defined in the `packages.dhall` file in the `package-sets` repo) rather than `bar` (as defined in the `purescript-bar` repo), CI would complain and we'd have to figure out why. Fortunately, this was rarely a problem.
+
 ### Too many breaking changes to do in one breaking PS release
 
 - getting `v0.14.0` out sooner became more important than adding another breaking change
@@ -64,4 +68,3 @@ While I can't recall exactly how long it took, I recall `core` libraries taking 
 `contrib` does not currently follow such a policy, and the pain of that choice revealed itself in this release cyle. There were test dependencies were outside of `contrib` maintainers' control (e.g. `purescript-naturals`, `purescript-spec` or `purescript-test-unit`). For `naturals`, we dropped the dependency and updated the code. For the test libraries, we had to bootstrap a workaround using `ReaderT String Aff a`, so that we did not touch the tests but still got the nice test reports provided by those other libraries.
 
 `contrib` should implement a similar policy as `core` to reduce this problem in the future.
-
