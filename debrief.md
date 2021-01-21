@@ -45,8 +45,9 @@ While I can't recall exactly how long it took, I recall `core` libraries taking 
 
 ### Lack of a single tracking issues to which all other issues backlinked
 
-- initial issue listed all repos with checkboxes
-- issue length became a problem as one could no longer see all PRs submitted and whether they had been merged or not
+- Early on in [purescript/purescript#3942](https://github.com/purescript/purescript/issues/3942), we originally created a checked list of linked repos. After a while, the issue's length made it difficult to determine which repos had PRs submitted, which of those PRs were merged, and what remaining work we had to do. Numerous comments throughout the issue made it hard to know the status of what to do. Part of the issue here is that GitHub does not provide tooling for the kind of mass-change we're doing in the ecosystem
+- Over time, we started creating an issue to which all other PRs would backlink. This made things significantly easier to see which PRs had been submitted, were merged, and still had work to be done.
+- Jordan thinks we need two GH issues to fully resolve this pain: one to act as a 'backlinking-target' issue for PRs and other issues and a second one to be used for discussion. However, a more appropriate tool would be better (e.g. a spreadsheet), but Jordan isn't sure what tool would work that's cheap and integrates with GitHub.
 
 ### Too many breaking changes to do in one breaking PS release
 
