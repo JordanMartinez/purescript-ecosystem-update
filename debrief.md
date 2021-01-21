@@ -25,6 +25,7 @@ Ordering these in a chronological way, these are the issues we came across.
 ### Bower's solver chooses the wrong version
 
 - When we were originally updating all libraries to `v0.14.0`, we needed to change their dependencies to the `master` branch. If any one of them was not on `master`, including test dependencies, then a version of a library that was still on `v0.13.x` and all of its transitive dependencies would be pulled in. As a result, the code would often not compile.
+- The above issue was especially problematic because `contrib` libraries changed their default branch from `master` to `main`. Thus, one PR updated dependencies to `master`, which still referred to `v0.13.x` dependencies rather than `main`, which had been updated to `v0.14.0`.
 
 ### Lack of a clear dependency graph between packages, including test dependencies
 
