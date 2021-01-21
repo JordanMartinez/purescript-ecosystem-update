@@ -72,6 +72,12 @@ Travis CI suddenly announced their free tier was gone. @f-f strongly encouraged 
 
 `bash` scripts helped us automate a lot of this. We also made a mistake in the initial script, so we had to use a second one to fix issues done by the first one.
 
+### Getting approval for trivial changes is tedious, annoying, and feels like a bottleneck
+
+Piggybacking on the previous note, getting 2 core contributors approval for simple changes before we can merge is annoying, especially when the change is purely administrative:
+- updating all dependencies to `master`
+- updating CI to use a newer version of `v0.14.0`
+
 ### Too many breaking changes to do in one breaking PS release
 
 - getting `v0.14.0` out sooner became more important than adding another breaking change
