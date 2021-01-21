@@ -16,6 +16,8 @@ From March 2020 to September 2020, various issues with the Coercible feature (an
 
 Travis CI was being used in all `core`, `web`, `node`, and `contrib` PureScript libraries besides the compiler repo. [Using this post's timeline for context](https://www.jeffgeerling.com/blog/2020/travis-cis-new-pricing-plan-threw-wrench-my-open-source-works), Travis CI announced that it would no longer offer its free tier for open source projects. Following Spago, we chose GitHub Actions as the CI to use as its replacement, migrating all of the above repos to GitHub Actions.
 
+We have many small modular libraries that make up the `core`, `web`, `node`, and `contrib` libraries. Due to the resulting dependency graph between them, we can only update a few libraries at a time and we have to submit many PRs to update the entire ecosystem. A single change that needs to be made across all of them (e.g. update dependencies to latest version / `master`; update CI to be consistent across all of them; etc.) can be quickly bottlenecked if a core contributor does not approve and merge the PR.
+
 Lastly, it's our policy to do breaking changes in `core`, `contrib`, `web`, and `node` libraries at the same time as breaking language changes, so that fixing these changes can be batched together rather than be an ongoing activity. Unfortunately, many of these libraries haven't been receiving the maintenance attention that they need. Thus, we paid a "maintenance debt" in this release cycle.
 
 ## Specific issues
