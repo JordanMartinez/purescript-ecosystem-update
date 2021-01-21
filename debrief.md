@@ -71,3 +71,14 @@ This was my (Jordan's) fault. `contrib` libraries had changed their default bran
 `contrib` does not currently follow such a policy, and the pain of that choice revealed itself in this release cyle. There were test dependencies were outside of `contrib` maintainers' control (e.g. `purescript-naturals`, `purescript-spec` or `purescript-test-unit`). For `naturals`, we dropped the dependency and updated the code. For the test libraries, we had to bootstrap a workaround using `ReaderT String Aff a`, so that we did not touch the tests but still got the nice test reports provided by those other libraries.
 
 `contrib` should implement a similar policy as `core` to reduce this problem in the future.
+
+### Morale of _new_ contributors dropped three times when...
+
+- we realized that `web` and `node` libraries would need to be updated, too.
+    - "YES! `core` libraries are finally compiling on `v0.14.0`. `contrib` libraries were, too. That means we're almost done, right!? 😁 Awesom--Wait! WHAT!? We still have TWO more GitHub organization's worth of libraries to update? Bleh..."
+- we realized that, now that the ecosystem compiled on `v0.14.0`, it was time to merge breaking changes and fix their ripples throughout the ecosystem
+    - "Ok, NOW all libraries are done. We can now-- Wait, WHAT!? We still have to implement a breaking change in `purescript-gen`? What!? I can't get CI to pass until I've fixed a dependency's usage of some code that was broken in a recently merged PR unrelated to this one? Double bleh..."
+- we realized we would have to write changelogs for 4 GitHub organizations' worth of repositories
+    - "Ok, NOW all libraries are done and all but a few 'breaking changes' PRs are pending review. Not much else is--WAIT! ARE YOU KIDDING ME!? WE HAVE TO WRITE CHANGELOGS DOCUMENTING EVERYTHING WE'VE BEEN DOING IN THE PAST 4 MONTHS!? THAT'S LIKE 200 REPOSITORIES, MAN! 😭 ... well... at least we can automate parts of this via a script and generate an initial changelog using GitHub releases. Oh, and we need to update all repos' CI to `v0.14.0-rc5`. Oh, and.... And.... Blehdy bleh..."
+
+On a side note, I'd say the gratitude _new_ contributors had for _current_ maintainers who have been doing this for a while increased greatly. Wow... the core contributors have done a LOT of behind-the-scenes work.
