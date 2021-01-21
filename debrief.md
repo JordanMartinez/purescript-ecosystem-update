@@ -37,7 +37,11 @@ Ordering these in a chronological way, these are the issues we came across.
 
 ### Lack of getting a timely review or responding to PR feedback in a timely manner
 
-- Due to the above Bower issue, we could only update a few libraries at a time. If these libraries
+- Early in the process of updating `core` libraries to `v0.14.0`, there were multiple times where one library towards the "root" of the dependency graph (i.e. very few dependencies on anything else) can hold up all of its dependent libraries for two reasons:
+    - Either a PR was submitted but a core contributor takes a long time to approve it, much less respond with feedback on what needs to be changed to get it merged
+    - Or a PR was submitted and changes were requested but the original person took a long time to make such changes (e.g. vacation, didn't see it, schedule cycles didn't "line up")
+
+While I can't recall exactly how long it took, I recall `core` libraries taking a month or so (e.g. all of October) just to update 30 repos or so because of this issue. Most of the changes needed to update the library were trivial (e.g. updating bower, pulp, psa, and depenedencies).
 
 ### Lack of a single tracking issues to which all other issues backlinked
 
