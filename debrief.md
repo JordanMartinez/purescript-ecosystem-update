@@ -58,6 +58,12 @@ This was my (Jordan's) fault. `contrib` libraries had changed their default bran
 
 `contrib` libraries made the decision to switch to `spago` before we started updating the `v0.14.0` libraries. When updating the `contrib` repos to `v0.14.0`, we sometimes changed the list of dependencies it had. However, the `packages.dhall` file in the `package-sets` repo wasn't updated unless we also updated its corresponding entry. This wasn't hard to fix, but could complicate CI. If `foo` pulled in `bar` (as defined in the `packages.dhall` file in the `package-sets` repo) rather than `bar` (as defined in the `purescript-bar` repo), CI would complain and we'd have to figure out why. Fortunately, this was rarely a problem.
 
+### Packages were transferred across GitHub but not across `owner-name.dhall` files
+
+In a few situations, a GitHub repository was transferred from the owner (e.g. Slamdata) to a new one (e.g. `purescript-contrib`). However, the package was not transferred from one file (e.g. `slamdata.dhall`) to the corresponding file (e.g. `purescript-contrib.dhall`).
+
+Jordan discovered this after building all `contrib` libraries and then discovering that not all of them were in the `purescript-contrib.dhall` file. He transferred those files, but wonders whether this will cause problems when we work on the Registry.
+
 ### Numerous `contrib` repos depended on a repo outside of the `contrib` libraries
 
 `core` libraries have a policy that they do not depend on non-`core` libraries. While this can make some things inconvenient, it makes a huge difference when updating libraries due to a breaking change in the compiler.
