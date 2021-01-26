@@ -84,6 +84,14 @@ Piggybacking on the previous note, getting 2 core contributors approval for simp
 - updating all dependencies to `master`
 - updating CI to use a newer version of `v0.14.0`
 
+### No easy way to quickly identify all breaking changes across multiple repos
+
+Initially, we had to look through all repos to even know which issues and PRs were considered 'breaking' and had been planned for this upcoming release, and which were not. This could easily be sped up if we used GitHub labels in a standardized way and a search across multiple repos.
+
+### No easy way to quickly identify all PRs that are ready for review / approved
+
+Once a PR was submitted, it became hard to find which PRs were ready for review or were approved and just needed to be merged. We solved this by using a multi-repo search. This AFAICR did not require using GitHub labels to tag things.
+
 ### Too many breaking changes to do in one breaking PS release
 
 - getting `v0.14.0` out sooner became more important than adding another breaking change
