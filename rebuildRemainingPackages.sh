@@ -12,13 +12,18 @@ DEPS=./finished-dependencies.txt
 echo "" > $DEPS
 echo "proxy" >> $DEPS
 echo "generics-rep" >> $DEPS
+echo "globals" >> $DEPS
 
 # overwrite the `packages-0.14.dhall` file with hash-less copy
 # so that any new updates are automatically pulled in
 cp packages-0.14-no-hash.dhall packages-0.14.dhall
 
+echo "Finding packages that have been updated...."
 # Now use that package set to compute those that have already been updated
 spago -x spago-0.14.dhall ls packages | cut -d ' ' -f 1 >> $DEPS
+echo "Done."
 
+echo "Calculating unblocked libraries"
 # Now calculate the ones that are unblocked
 node ./package-query.js --input ./packageSet.json --force genLibDeps --output ./libDeps.txt --finished-dependencies-file $DEPS
+echo "Done."
