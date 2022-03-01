@@ -8,7 +8,7 @@ This workflow makes heavy usage of GitHub's new CLI tool, `gh`, and bash scripts
 
 This workflow assumes that you will use two terminal sessions/windows/tabs to update a library: one where the present working directory is this folder (i.e. `master`) and the other will be the library you rae updating (e.g. `purescript-prelude`). The `purs` binary is stored in this folder (i.e. `master`) (as opposed to the folder that stores a library, such as `purescript-prelude`), so that you don't need to deal with path mangling. Rather, you will run `./compile.sh <packageName>` to compile the package properly.
 
-At this time, `package-query.js` isn't necessary as `libDeps.txt` provides the information we currently need at this stage of the update. It may be needed in the future, but I will likely just push a change to this repo that you can then fetch to get that new information.
+At this time, `package-graph.js` isn't necessary as `libDeps.txt` provides the information we currently need at this stage of the update. It may be needed in the future, but I will likely just push a change to this repo that you can then fetch to get that new information.
 
 ## What needs to be updated?
 
