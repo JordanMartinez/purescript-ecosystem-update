@@ -113,8 +113,8 @@ function forkAll {
       # No JS Files here!
       echo "$REPO_URL does not have any JS files"
       git checkout origin/$DEFAULT_BRANCH_NAME
-      git switch -c $DEFAULT_BRANCH_NAME
-      git branch -u origin $DEFAULT_BRANCH_NAME
+      git switch -c update-to-0.15
+      git push -u origin update-to-0.15
     fi
 
     # Update the `.github/workflows/ci.yml` file to specifically use
