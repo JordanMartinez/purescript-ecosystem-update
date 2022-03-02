@@ -81,11 +81,7 @@ function forkAll {
 
       if [ -f ".eslintrc.json" ]; then
         local TEMP_FILE=.eslintrc.json.tmp
-        cat .eslintrc.json | jq '
-          .parserOptions.ecmaVersion |= 6 |
-          .parserOptions.sourceType |= "module" |
-          .env |= del(.commonjs) |
-          .env.es6 |= true' >$TEMP_FILE && mv $TEMP_FILE .eslintrc.json
+        sed -i -e '4i\    "sourceType": "module"' -e 's/ecmaVersion": 5/ecmaVersion": 6,/; s/commonjs": true/es6": true/' .eslintrc.json
         git add .eslintrc.json
         git commit -m "Update .eslintrc.json to ES6"
       fi
