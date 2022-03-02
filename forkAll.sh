@@ -22,9 +22,11 @@ function forkAll {
   function updateDependencies {
     case "$BUILD_TOOL" in
     "bower")
-      # use 'sed' to update all purescript dependencies in bower to `master`
+      # uses 'jq' to update all purescript `dependencies` and
+      # `devDependencies` (if exists) in bower.json to `master`
       echo "Updating all deps in 'bower.json' to 'master'"
-      sed --in-place -r 's/\^[0-9]+\.[0-9]+\.[0-9]+/master/g' bower.json
+      local TMP_FILE=bower.json.temp
+      cat bower.json | jq '.dependencies[]? |= "master" | .devDependencies[]? |= "master"' >$TMP_FILE && mv $TMP_FILE bower.json
       git add bower.json
       git commit -m "Update Bower dependencies to master"
       ;;
