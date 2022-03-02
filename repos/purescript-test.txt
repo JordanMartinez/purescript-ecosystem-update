@@ -1,1 +1,2 @@
 git@github.com:purescript/purescript-prelude.git
+git@github.com:purescript/purescript-newtype.git
