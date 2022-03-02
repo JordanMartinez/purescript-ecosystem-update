@@ -119,11 +119,11 @@ function forkAll {
 
     # Update the `.github/workflows/ci.yml` file to specifically use
     # the alpha PS release
-    echo "Update ci.yml to use purescript v0.15.0-alpha-01"
-    sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "0.15.0-alpha-01"/' .github/workflows/ci.yml
-    sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "0.15.0-alpha-01"/' .github/workflows/ci.yml
+    echo "Update ci.yml to use purescript unstable"
+    sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+    sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
     git add .github/workflows/ci.yml
-    git commit -m "Update to CI to use v0.15.0-alpha-01 purescript"
+    git commit -m "Update to CI to use 'unstable' purescript"
 
     updateDependencies
 
