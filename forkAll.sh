@@ -66,7 +66,7 @@ function forkAll {
     if [ $(find src/ -type f -name '*.js' 2>/dev/null | wc -l) -gt 0 ]; then
       echo "$REPO_URL has JS files"
       gh repo fork $REPO_URL --clone=false --org working-group-purescript-es
-      git remote add wg "git@github.com:$REPO_ORG/$REPO_PROJ.git"
+      git remote add wg "git@github.com:working-group-purescript-es/$REPO_PROJ.git"
       git fetch wg
       if [ $(git branch -r | grep 'wg/es-modules' | wc -l) -gt 0 ]; then
         git checkout wg/es-modules
