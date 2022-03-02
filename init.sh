@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# 1. Installs necessary tooling
+# 2. Sets up `gh` tool
+# 3. downloads the latest `purs` and stores it locally here
+#      so other scripts can include it on the PATH
+
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 

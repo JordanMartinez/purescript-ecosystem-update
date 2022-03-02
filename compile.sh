@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# 1. Compiles code in project using locally-downloaded `purs` binary
+# 2. Lints the javascript code
+
 # Expected usage
 #     ./pr.sh 1 prelude
 #     ./pr.sh 2 aff

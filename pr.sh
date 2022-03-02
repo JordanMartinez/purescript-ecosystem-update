@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# 1. Creates a PR for 1 project using consistent language
+
 # Expected usage
 #     ./pr.sh 1 prelude
 #     ./pr.sh 2 aff

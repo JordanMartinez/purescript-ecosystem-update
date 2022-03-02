@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# 1. Creates a local copy of every library in core, contrib, web, and node
+# 2. Applies changes across all of them to ensure things remain consistent
+#      so that future ecosystem updates are easier to do as a batch script
+
 # See https://wizardzines.com/comics/bash-errors/
 set -uo pipefail
 
