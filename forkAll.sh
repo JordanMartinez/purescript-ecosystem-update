@@ -71,13 +71,21 @@ function forkAll {
       git checkout wg/es-modules
       git switch -c es-modules
       git branch -u wg es-modules
-
-      echo "$REPO_URL: Using lebab to transform CJS to ES"
-      lebab --replace src --transform commonjs
-      lebab --replace test --transform commonjs
-      echo "$REPO_URL: Replacing 'export var' with 'export const'"
-      find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
-      find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+      if [ -d "src" ] && [ -d "test" ]; then
+        echo "$REPO_URL: Using lebab to transform CJS to ES - both"
+        lebab --replace src --transform commonjs
+        lebab --replace test --transform commonjs
+        find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        git add src test
+        git commit -m "Migrated FFI to ES modules via 'lebab'"
+      elif [ -d "src" ]; then
+        echo "$REPO_URL: Using lebab to transform CJS to ES - source"
+        lebab --replace src --transform commonjs
+        find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        git add src
+        git commit -m "Migrated FFI to ES modules via 'lebab'"
+      fi
     else
       # No JS Files here!
       echo "$REPO_URL does not have any JS files"
