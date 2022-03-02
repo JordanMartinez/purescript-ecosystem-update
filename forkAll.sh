@@ -5,7 +5,7 @@
 #      so that future ecosystem updates are easier to do as a batch script
 
 # See https://wizardzines.com/comics/bash-errors/
-set -uo pipefail
+set -xuo pipefail
 
 PACKAGES_DHALL_CONTENT="let upstream =
       https://raw.githubusercontent.com/purescript/package-sets/prepare-0.15/src/packages.dhall
@@ -68,9 +68,15 @@ function forkAll {
       gh repo fork $REPO_URL --clone=false --org working-group-purescript-es
       git remote add wg "git@github.com:$REPO_ORG/$REPO_PROJ.git"
       git fetch wg
-      git checkout wg/es-modules
-      git switch -c es-modules
-      git branch -u wg es-modules
+      if [ $(git branch -r | grep 'wg/es-modules' | wc -l) -gt 0 ]; then
+        git checkout wg/es-modules
+        git switch -c es-modules
+        git branch -u wg es-modules
+      else
+        git checkout origin/master
+        git switch -c es-modules
+        git push -u wg es-modules
+      fi
 
       if [ -f ".eslintrc.json" ]; then
         local TEMP_FILE=.eslintrc.json.tmp
