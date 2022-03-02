@@ -17,6 +17,17 @@
 export PATH="$(pwd):$PATH"
 
 case "${1}" in
+0)
+  pushd ../purescript-test/purescript-$2
+  # This is based on what was the `.travis.yml` file in the `purescript-prelude` repo
+  npm install
+  bower install --production
+  npm run -s build
+  bower install
+  npm run -s test --if-present
+  eslint src test
+  popd
+  ;;
 1)
   pushd ../purescript/purescript-$2
   # This is based on what was the `.travis.yml` file in the `purescript-prelude` repo
