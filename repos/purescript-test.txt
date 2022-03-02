@@ -1,0 +1,1 @@
+git@github.com:purescript/purescript-prelude.git
