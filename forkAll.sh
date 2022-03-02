@@ -71,7 +71,7 @@ function forkAll {
       if [ $(git branch -r | grep 'wg/es-modules' | wc -l) -gt 0 ]; then
         git checkout wg/es-modules
         git switch -c es-modules
-        git branch -u wg es-modules
+        git branch -u wg/es-modules
       else
         git checkout origin/master
         git switch -c es-modules
