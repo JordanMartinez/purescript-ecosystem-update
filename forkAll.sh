@@ -71,6 +71,18 @@ function forkAll {
       git checkout wg/es-modules
       git switch -c es-modules
       git branch -u wg es-modules
+
+      if [ -f ".eslintrc.json" ]; then
+        local TEMP_FILE=.eslintrc.json.tmp
+        cat .eslintrc.json | jq '
+          .parserOptions.ecmaVersion |= 6 |
+          .parserOptions.sourceType |= "module" |
+          .env |= del(.commonjs) |
+          .env.es6 |= true' >$TEMP_FILE && mv $TEMP_FILE .eslintrc.json
+        git add .eslintrc.json
+        git commit -m "Update .eslintrc.json to ES6"
+      fi
+
       if [ -d "src" ] && [ -d "test" ]; then
         echo "$REPO_URL: Using lebab to transform CJS to ES - both"
         # Transform to ES 6
@@ -106,17 +118,6 @@ function forkAll {
     sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "0.15.0-alpha-01"/' .github/workflows/ci.yml
     git add .github/workflows/ci.yml
     git commit -m "Update to CI to use v0.15.0-alpha-01 purescript"
-
-    if [ -f ".eslintrc.json" ]; then
-      local TEMP_FILE=.eslintrc.json.tmp
-      cat .eslintrc.json | jq '
-        .parserOptions.ecmaVersion |= 6 |
-        .parserOptions.sourceType |= "module" |
-        .env |= del(.commonjs) |
-        .env.es6 |= true' >$TEMP_FILE && mv $TEMP_FILE .eslintrc.json
-      git add .eslintrc.json
-      git commit -m "Update .eslintrc.json to ES6"
-    fi
 
     updateDependencies
 
