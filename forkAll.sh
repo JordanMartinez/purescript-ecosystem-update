@@ -73,16 +73,21 @@ function forkAll {
       git branch -u wg es-modules
       if [ -d "src" ] && [ -d "test" ]; then
         echo "$REPO_URL: Using lebab to transform CJS to ES - both"
+        # Transform to ES 6
         lebab --replace src --transform commonjs
         lebab --replace test --transform commonjs
+        # Replace 'export var' with 'export const'
         find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
         find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        # Remove `"use strict";\n\n`
+        eslint --fix --fix-type suggestion src test || echo "eslint detected an linting issue"
         git add src test
         git commit -m "Migrated FFI to ES modules via 'lebab'"
       elif [ -d "src" ]; then
         echo "$REPO_URL: Using lebab to transform CJS to ES - source"
         lebab --replace src --transform commonjs
         find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        eslint --fix --fix-type suggestion src || echo "eslint detected an linting issue"
         git add src
         git commit -m "Migrated FFI to ES modules via 'lebab'"
       fi
