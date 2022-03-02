@@ -12,7 +12,7 @@ PACKAGES_DHALL_CONTENT="let upstream =
 
 in  upstream
 "
-REMOVE_USE_STRICT_SCRIPT=$(cat remove-use-strict.js)
+REMOVE_USE_STRICT_SCRIPT=$(cat node-scripts/remove-use-strict.js)
 
 function forkAll {
   local PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
