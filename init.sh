@@ -3,7 +3,7 @@
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
-npm i -g pulp bower purescript-psa@0.8.0
+npm i -g pulp bower purescript-psa spago
 gh auth login
 gh config set git_protocol ssh
 
