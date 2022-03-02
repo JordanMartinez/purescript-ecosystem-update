@@ -108,7 +108,7 @@ function forkAll {
         .parserOptions.ecmaVersion |= 6 |
         .parserOptions.sourceType |= "module" |
         .env |= del(.commonjs) |
-        .env.es6 |= true' >$TEMP_FILE && mv $TEMP_FILE .eslintrc.json && rm $TEMP_FILE
+        .env.es6 |= true' >$TEMP_FILE && mv $TEMP_FILE .eslintrc.json
       git add .eslintrc.json
       git commit -m "Update .eslintrc.json to ES6"
     fi
