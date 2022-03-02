@@ -1,0 +1,12 @@
+git@github.com:purescript-node/purescript-node-buffer.git
+git@github.com:purescript-node/purescript-node-child-process.git
+git@github.com:purescript-node/purescript-node-fs-aff.git
+git@github.com:purescript-node/purescript-node-fs.git
+git@github.com:purescript-node/purescript-node-http.git
+git@github.com:purescript-node/purescript-node-net.git
+git@github.com:purescript-node/purescript-node-path.git
+git@github.com:purescript-node/purescript-node-process.git
+git@github.com:purescript-node/purescript-node-readline.git
+git@github.com:purescript-node/purescript-node-streams.git
+git@github.com:purescript-node/purescript-node-url.git
+git@github.com:purescript-node/purescript-posix-types.git
