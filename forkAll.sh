@@ -92,14 +92,14 @@ function forkAll {
         find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
         find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
         # Remove `"use strict";\n\n`
-        eslint --fix --fix-type suggestion src test || echo "eslint detected an linting issue"
+        eslint --fix --fix-type suggestion src test || echo "eslint detected a linting issue"
         git add src test
         git commit -m "Migrated FFI to ES modules via 'lebab'"
       elif [ -d "src" ]; then
         echo "$REPO_URL: Using lebab to transform CJS to ES - source"
         lebab --replace src --transform commonjs
         find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
-        eslint --fix --fix-type suggestion src || echo "eslint detected an linting issue"
+        eslint --fix --fix-type suggestion src || echo "eslint detected a linting issue"
         git add src
         git commit -m "Migrated FFI to ES modules via 'lebab'"
       fi
