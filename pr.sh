@@ -27,7 +27,7 @@ set -euo pipefail
 
 #!/usr/bin/env bash
 
-PR_BODY_PS=$(cat ./pr_body/purescript.txt)
+PR_BODY_PS=$(cat ./body-of-pr.txt)
 
 TITLE="Update to v0.15.0"
 
