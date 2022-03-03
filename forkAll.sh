@@ -71,13 +71,11 @@ function forkAll {
       git fetch wg
       if [ $(git branch -r | grep 'wg/es-modules' | wc -l) -gt 0 ]; then
         git checkout wg/es-modules
-        git switch -c es-modules
-        git branch -u wg/es-modules
       else
         git checkout origin/master
-        git switch -c es-modules
-        git push -u wg es-modules
       fi
+      git switch -c es-modules-libraries
+      git push -u wg es-modules-libraries
 
       if [ -f ".eslintrc.json" ]; then
         local TEMP_FILE=.eslintrc.json.tmp
