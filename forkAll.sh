@@ -89,20 +89,31 @@ function forkAll {
         # Transform to ES 6
         lebab --replace src --transform commonjs
         lebab --replace test --transform commonjs
+        git add src test
+        git commit -m "Migrated FFI to ES modules via 'lebab'"
         # Replace 'export var' with 'export const'
         find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
         find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        git add src test
+        git commit -m "Replaced 'export var' with 'export const'"
         # Remove `"use strict";\n\n`
         find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
         find test -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
         git add src test
-        git commit -m "Migrated FFI to ES modules via 'lebab'"
+        git commit -m "Removed '\"use strict\";' in FFI files"
       elif [ -d "src" ]; then
         echo "$REPO_URL: Using lebab to transform CJS to ES - source"
         lebab --replace src --transform commonjs
-        find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
         git add src
         git commit -m "Migrated FFI to ES modules via 'lebab'"
+
+        find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+        git add src
+        git commit -m "Replaced 'export var' with 'export const'"
+
+        find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
+        git add src
+        git commit -m "Removed '\"use strict\";' in FFI files"
       fi
     else
       # No JS Files here!
