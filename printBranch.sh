@@ -30,8 +30,8 @@ function printBranch::main {
       REPO_URL=$(echo $line | sed 's/git@github.com://g; s/.git$//g')
       REPO_ORG=$(echo $REPO_URL | cut -d '/' -f 1)
       REPO_PROJ=$(echo $REPO_URL | cut -d '/' -f 2)
-      echo "  if has(\"$REPO_PROJ\") then .$REPO_PROJ |= \"$BRANCH\" else . end |" >> $DEPS_FILE
-      echo "  if has(\"$REPO_PROJ\") then .$REPO_PROJ |= \"$BRANCH\" else . end |" >> $DEV_DEPS_FILE
+      echo "  if has(\"$REPO_PROJ\") then .\"$REPO_PROJ\" |= \"$BRANCH\" else . end |" >> $DEPS_FILE
+      echo "  if has(\"$REPO_PROJ\") then .\"$REPO_PROJ\" |= \"$BRANCH\" else . end |" >> $DEV_DEPS_FILE
     done
     cat $DEPS_FILE >> $FINAL_FILE
     echo "  ." >> $FINAL_FILE
