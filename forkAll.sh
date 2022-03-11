@@ -37,7 +37,7 @@ function forkAll {
       # `devDependencies` (if exists) in bower.json to `master`
       echo "Updating all deps in 'bower.json' to 'master' or 'main'"
       local TMP_FILE=bower.json.temp
-      cat bower.json | jq "$(cat $JQ_SCIPT_UPDATE_BOWER_JSON)" >$TMP_FILE && mv $TMP_FILE bower.json
+      cat bower.json | jq "$(cat $JQ_SCRIPT_UPDATE_BOWER_JSON)" >$TMP_FILE && mv $TMP_FILE bower.json
       git add bower.json
       git commit -m "Update Bower dependencies to master"
       ;;
