@@ -49,6 +49,16 @@ function forkAll {
       ;;
     *) echo "Unknown build tool option: $3" ;;
     esac
+
+    if [ -f "package.json" ]; then
+      cat package.json | jq '
+        if has("devDependencies") then
+          .devDependencies |= (
+            if has("purescript-psa") then ."purescript-psa" = "^0.8.2" else . end |
+            if has("pulp") then ."pulp" = "0.16.0-0" else . end
+          )
+        else . end' > package.json.new && mv package.json.new package.json
+    fi
   }
 
   mkdir -p ../$PARENT_DIR
