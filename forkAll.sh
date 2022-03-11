@@ -17,6 +17,7 @@ REMOVE_USE_STRICT_SCRIPT=$(cat node-scripts/remove-use-strict.js)
 source ./displayBranch.sh
 
 JQ_SCRIPT_UPDATE_BOWER_JSON=jq-script--update-bower-json.txt
+ESLINT_DIFF_EXPECTED=$(cat files/.eslintrc.json)
 
 # Regenerate JQ script for updating bower.json file
 # and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
@@ -98,10 +99,14 @@ function forkAll {
       git push -u wg es-modules-libraries
 
       if [ -f ".eslintrc.json" ]; then
-        local TEMP_FILE=.eslintrc.json.tmp
-        sed -i -e '4i\    "sourceType": "module"' -e 's/ecmaVersion": 5/ecmaVersion": 6,/; s/commonjs": true/es6": true/' .eslintrc.json
-        git add .eslintrc.json
-        git commit -m "Update .eslintrc.json to ES6"
+        local TEMP_FILE=.eslintrc.json.new
+        echo $ESLINTRC_CONTENT > $TEMP_FILE
+        local ESLINT_DIFF_ACTUAL=$(diff .eslintrc.json $TEMP_FILE)
+        if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
+          mv $TEMP_FILE .eslintrc.json
+          git add .eslintrc.json
+          git commit -m "Update .eslintrc.json to ES6"
+        fi
       fi
 
       if [ -d "src" ] && [ -d "test" ]; then
