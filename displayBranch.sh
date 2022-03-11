@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function printBranch::main {
+function displayBranch::main {
   local FINAL_FILE=$1
   local DEPS_FILE=bowerDeps-deps.txt
   local DEV_DEPS_FILE=bowerDeps-dev-deps.tx

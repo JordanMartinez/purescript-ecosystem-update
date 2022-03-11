@@ -14,13 +14,13 @@ in  upstream
 "
 REMOVE_USE_STRICT_SCRIPT=$(cat node-scripts/remove-use-strict.js)
 
-source ./printBranch.sh
+source ./displayBranch.sh
 
 JQ_SCRIPT_UPDATE_BOWER_JSON=jq-script--update-bower-json.txt
 
 # Regenerate JQ script for updating bower.json file
 # and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
-printBranch::main $JQ_SCRIPT_UPDATE_BOWER_JSON
+displayBranch::main $JQ_SCRIPT_UPDATE_BOWER_JSON
 
 function forkAll {
   local PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
