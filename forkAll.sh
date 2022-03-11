@@ -58,6 +58,8 @@ function forkAll {
             if has("pulp") then ."pulp" = "16.0.0-0" else . end
           )
         else . end' > package.json.new && mv package.json.new package.json
+      git add package.json
+      git commit -m "Update pulp to 16.0.0-0 and psa to 0.8.2"
     fi
   }
 
