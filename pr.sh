@@ -34,7 +34,7 @@ TITLE="Update to v0.15.0"
 case "${1}" in
 0)
   # This file is based on the `.travis.yml` file in the `purescript-prelude` repo
-  pushd ../purescript-test/purescript-$2
+  pushd ../ps-0/purescript-$2
   git branch | grep '*'
   gh pr create --title "$TITLE" --body "$PR_BODY_PS" --label "purs-0.15" --label "type: breaking change"
   popd
