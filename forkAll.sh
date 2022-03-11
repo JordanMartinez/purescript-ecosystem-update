@@ -55,7 +55,7 @@ function forkAll {
         if has("devDependencies") then
           .devDependencies |= (
             if has("purescript-psa") then ."purescript-psa" = "^0.8.2" else . end |
-            if has("pulp") then ."pulp" = "0.16.0-0" else . end
+            if has("pulp") then ."pulp" = "16.0.0-0" else . end
           )
         else . end' > package.json.new && mv package.json.new package.json
     fi
@@ -158,7 +158,7 @@ function forkAll {
   popd
 }
 
-forkAll "./repos/purescript-test.txt" "master" "bower"
+forkAll "./repos/ps-0.txt" "master" "bower"
 # forkAll "./repos/purescript.txt" "master" "bower"
 # forkAll "./repos/purescript-contrib.txt" "main" "spago"
 # forkAll "./repos/purescript-web.txt" "master" "spago"
