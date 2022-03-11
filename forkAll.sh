@@ -17,7 +17,8 @@ REMOVE_USE_STRICT_SCRIPT=$(cat node-scripts/remove-use-strict.js)
 source ./displayBranch.sh
 
 JQ_SCRIPT_UPDATE_BOWER_JSON=jq-script--update-bower-json.txt
-ESLINT_DIFF_EXPECTED=$(cat files/.eslintrc.json)
+ESLINTRC_CONTENT=$(cat files/.eslintrc.json)
+ESLINT_DIFF_EXPECTED=$(cat files/.eslintrc.json.diff)
 
 # Regenerate JQ script for updating bower.json file
 # and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
@@ -165,8 +166,8 @@ function forkAll {
   popd
 }
 
-forkAll "./repos/ps-0.txt" "master" "bower"
-# forkAll "./repos/purescript.txt" "master" "bower"
+# forkAll "./repos/ps-0.txt" "master" "bower"
+forkAll "./repos/purescript.txt" "master" "bower"
 # forkAll "./repos/purescript-contrib.txt" "main" "spago"
 # forkAll "./repos/purescript-web.txt" "master" "spago"
 # forkAll "./repos/purescript-node.txt" "master" "spago"
