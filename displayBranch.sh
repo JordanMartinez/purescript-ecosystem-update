@@ -9,17 +9,20 @@ function displayBranch::main {
     rm $1 || echo "$1 doesn't exist; skipping."
   }
 
-  # jq '.dependencies |= (
-  #   if has("purescript-repo") then (.purescript-repo |= "branchName") else . end |
-  #   if has("purescript-repo2") then (.purescript-repo2 |= "branchName") else . end |
-  #   .
-  # ) | .devDependencies |= (
-  #   if has("purescript-repo") then (.purescript-repo |= "branchName") else . end |
-  #   if has("purescript-repo2") then (.purescript-repo2 |= "branchName") else . end |
-  #   .
-  # )'
+  # jq '
+  #   if has("dependencies" then .dependencies |= (
+  #     if has("purescript-repo") then (."purescript-repo" |= "branchName") else . end |
+  #     if has("purescript-repo2") then (."purescript-repo2" |= "branchName") else . end |
+  #     .
+  #   ) else . end |
+  #   if has("devDependencies") then .devDependencies |= (
+  #     if has("purescript-repo") then (."purescript-repo" |= "branchName") else . end |
+  #     if has("purescript-repo2") then (."purescript-repo2" |= "branchName") else . end |
+  #     .
+  #   ) else . end
+  #   '
   #
-  # Intended to be called via `cat bower.json | jq $(cat $FINAL_FILE)`
+  # Intended to be called via `cat bower.json | jq "$FILE_CONTENTS"`
   function printBranch {
     local FILE=$(cat $1)
     local BRANCH=$2
