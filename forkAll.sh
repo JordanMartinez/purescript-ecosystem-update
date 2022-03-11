@@ -14,15 +14,18 @@ in  upstream
 "
 REMOVE_USE_STRICT_SCRIPT=$(cat node-scripts/remove-use-strict.js)
 
-source ./displayBranch.sh
-
-JQ_SCRIPT_UPDATE_BOWER_JSON=jq-script--update-bower-json.txt
 ESLINTRC_CONTENT=$(cat files/.eslintrc.json)
 ESLINT_DIFF_EXPECTED=$(cat files/.eslintrc.json.diff)
 
+
+JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
+
 # Regenerate JQ script for updating bower.json file
 # and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
-displayBranch::main $JQ_SCRIPT_UPDATE_BOWER_JSON
+source ./displayBranch.sh
+displayBranch::main $JQ_SCRIPT_LOCATION
+
+JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat $JQ_SCRIPT_LOCATION)
 
 function forkAll {
   local PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
@@ -37,7 +40,7 @@ function forkAll {
       # `devDependencies` (if exists) in bower.json to `master`
       echo "Updating all deps in 'bower.json' to 'master' or 'main'"
       local TMP_FILE=bower.json.temp
-      cat bower.json | jq "$(cat $JQ_SCRIPT_UPDATE_BOWER_JSON)" >$TMP_FILE && mv $TMP_FILE bower.json
+      cat bower.json | jq "$JQ_SCRIPT_UPDATE_BOWER_JSON" >$TMP_FILE && mv $TMP_FILE bower.json
       git add bower.json
       git commit -m "Update Bower dependencies to master"
       ;;
