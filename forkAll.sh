@@ -17,56 +17,136 @@ REMOVE_USE_STRICT_SCRIPT=$(cat node-scripts/remove-use-strict.js)
 ESLINTRC_CONTENT=$(cat files/.eslintrc.json)
 ESLINT_DIFF_EXPECTED=$(cat files/.eslintrc.json.diff)
 
-
-JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
-
 # Regenerate JQ script for updating bower.json file
 # and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
+JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
+
 source ./displayBranch.sh
 displayBranch::main $JQ_SCRIPT_LOCATION
 
 JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat $JQ_SCRIPT_LOCATION)
+
+# Updates the dependencies in bower or spago projects
+# to latest `master`/`main`
+function forakAll::updateDependencies {
+  local BUILD_TOOL=$1
+  case "$BUILD_TOOL" in
+  "bower") forkAll::updateBower
+    ;;
+  "spago") forkAll::updateSpago
+    ;;
+  *) echo "Unknown build tool option: $3" ;;
+  esac
+}
+
+# Uses 'jq' to update all purescript `dependencies` and
+# `devDependencies` (if exists) in bower.json to `master`
+# or `main`, the default branch.
+function forkAll::updateBower {
+  echo "Updating all deps in 'bower.json' to 'master' or 'main'"
+  local TMP_FILE=bower.json.new
+  cat bower.json | jq "$JQ_SCRIPT_UPDATE_BOWER_JSON" >$TMP_FILE && mv $TMP_FILE bower.json
+  git add bower.json
+  git commit -m "Update Bower dependencies to master or main"
+}
+
+# Overwrite `packages.dhall` with the `prepare-0.15` version
+# of package set
+function forkAll::updateSpago {
+  echo $PACKAGES_DHALL_CONTENT > packages.dhall
+  git add packages.dhall
+  git commit -m "Update packages.dhall to 'prepare-0.15' package set"
+}
+
+function forkAll::updatePackageJson {
+  if [ -f "package.json" ]; then
+    local TMP_FILE=package.json.new
+    cat package.json | jq '
+      if has("devDependencies") then
+        .devDependencies |= (
+          if has("purescript-psa") then ."purescript-psa" = "^0.8.2" else . end |
+          if has("pulp") then ."pulp" = "16.0.0-0" else . end
+        )
+      else . end' > $TMP_FILE && mv $TMP_FILE package.json
+    git add package.json
+    git commit -m "Update pulp to 16.0.0-0 and psa to 0.8.2"
+  fi
+}
+
+# Updates the `.eslintrc.json` file
+# by checking whether the difference between the
+# current file and the desired one match.
+# (This uses a pre-computed diff).
+# If so, overwrites current one with desired one.
+function forkAll::updateEslintrcJson {
+  if [ -f ".eslintrc.json" ]; then
+    local TEMP_FILE=.eslintrc.json.new
+    echo $ESLINTRC_CONTENT > $TEMP_FILE
+    local ESLINT_DIFF_ACTUAL=$(diff .eslintrc.json $TEMP_FILE)
+    if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
+      mv $TEMP_FILE .eslintrc.json
+      git add .eslintrc.json
+      git commit -m "Update .eslintrc.json to ES6"
+    fi
+  fi
+}
+
+# Uses a combination of `lebab`, `sed`
+# and a Node script to update all FFI
+# to ES modules. This will work 95%
+# of the time, but still needs to be verified.
+function forkAll::updateFFIToESModules {
+  local MIGRATION_MSG="Migrated FFI to ES modules via 'lebab'"
+  local EXPORT_UPDATE_MSG="Replaced 'export var' with 'export const'"
+  local STRICT_FIX_MSG="Removed '\"use strict\";' in FFI files"
+  if [ -d "src" ] && [ -d "test" ]; then
+    echo "Using lebab to transform CJS to ES - both"
+    # Transform to ES 6
+    lebab --replace src --transform commonjs
+    lebab --replace test --transform commonjs
+    git add src test
+    git commit -m "$MIGRATION_MSG"
+    # Replace 'export var' with 'export const'
+    find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+    find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+    git add src test
+    git commit -m "$EXPORT_UPDATE_MSG"
+    # Remove `"use strict";\n\n`
+    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
+    find test -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
+    git add src test
+    git commit -m "$STRICT_FIX_MSG"
+  elif [ -d "src" ]; then
+    echo "Using lebab to transform CJS to ES - source"
+    lebab --replace src --transform commonjs
+    git add src
+    git commit -m "$MIGRATION_MSG"
+
+    find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
+    git add src
+    git commit -m "$EXPORT_UPDATE_MSG"
+
+    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
+    git add src
+    git commit -m "$STRICT_FIX_MSG"
+  fi
+}
+
+# Update the `.github/workflows/ci.yml` file to specifically use
+# the latest alpha PS release
+function forkAll::updateCiYml {
+  echo "Update ci.yml to use purescript unstable"
+  sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+  sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+  git add .github/workflows/ci.yml
+  git commit -m "Update to CI to use 'unstable' purescript"
+}
 
 function forkAll {
   local PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
   local REMOTES_FILE=$(cat $1)
   local DEFAULT_BRANCH_NAME=$2
   local BUILD_TOOL=$3
-
-  function updateDependencies {
-    case "$BUILD_TOOL" in
-    "bower")
-      # uses 'jq' to update all purescript `dependencies` and
-      # `devDependencies` (if exists) in bower.json to `master`
-      echo "Updating all deps in 'bower.json' to 'master' or 'main'"
-      local TMP_FILE=bower.json.temp
-      cat bower.json | jq "$JQ_SCRIPT_UPDATE_BOWER_JSON" >$TMP_FILE && mv $TMP_FILE bower.json
-      git add bower.json
-      git commit -m "Update Bower dependencies to master"
-      ;;
-    "spago")
-      # Overwrite `packages.dhall` with the `prepare-0.14` version
-      #   To understand the below syntax, see
-      #     https://linuxize.com/post/bash-heredoc/
-      cat $PACKAGES_DHALL_CONTENT >packages.dhall
-      git add packages.dhall
-      git commit -m "Update packages.dhall to prepare-0.15 bootstrap"
-      ;;
-    *) echo "Unknown build tool option: $3" ;;
-    esac
-
-    if [ -f "package.json" ]; then
-      cat package.json | jq '
-        if has("devDependencies") then
-          .devDependencies |= (
-            if has("purescript-psa") then ."purescript-psa" = "^0.8.2" else . end |
-            if has("pulp") then ."pulp" = "16.0.0-0" else . end
-          )
-        else . end' > package.json.new && mv package.json.new package.json
-      git add package.json
-      git commit -m "Update pulp to 16.0.0-0 and psa to 0.8.2"
-    fi
-  }
 
   mkdir -p ../$PARENT_DIR
   pushd ../$PARENT_DIR
@@ -102,48 +182,9 @@ function forkAll {
       git switch -c es-modules-libraries
       git push -u wg es-modules-libraries
 
-      if [ -f ".eslintrc.json" ]; then
-        local TEMP_FILE=.eslintrc.json.new
-        echo $ESLINTRC_CONTENT > $TEMP_FILE
-        local ESLINT_DIFF_ACTUAL=$(diff .eslintrc.json $TEMP_FILE)
-        if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
-          mv $TEMP_FILE .eslintrc.json
-          git add .eslintrc.json
-          git commit -m "Update .eslintrc.json to ES6"
-        fi
-      fi
+      forkAll::updateEslintrcJson
 
-      if [ -d "src" ] && [ -d "test" ]; then
-        echo "$REPO_URL: Using lebab to transform CJS to ES - both"
-        # Transform to ES 6
-        lebab --replace src --transform commonjs
-        lebab --replace test --transform commonjs
-        git add src test
-        git commit -m "Migrated FFI to ES modules via 'lebab'"
-        # Replace 'export var' with 'export const'
-        find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
-        find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
-        git add src test
-        git commit -m "Replaced 'export var' with 'export const'"
-        # Remove `"use strict";\n\n`
-        find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
-        find test -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
-        git add src test
-        git commit -m "Removed '\"use strict\";' in FFI files"
-      elif [ -d "src" ]; then
-        echo "$REPO_URL: Using lebab to transform CJS to ES - source"
-        lebab --replace src --transform commonjs
-        git add src
-        git commit -m "Migrated FFI to ES modules via 'lebab'"
-
-        find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i 's/export var/export const/g'
-        git add src
-        git commit -m "Replaced 'export var' with 'export const'"
-
-        find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
-        git add src
-        git commit -m "Removed '\"use strict\";' in FFI files"
-      fi
+      forkAll::updateFFIToESModules
     else
       # No JS Files here!
       echo "$REPO_URL does not have any JS files"
@@ -152,15 +193,11 @@ function forkAll {
       git push -u origin update-to-0.15
     fi
 
-    # Update the `.github/workflows/ci.yml` file to specifically use
-    # the alpha PS release
-    echo "Update ci.yml to use purescript unstable"
-    sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
-    sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
-    git add .github/workflows/ci.yml
-    git commit -m "Update to CI to use 'unstable' purescript"
+    forkAll::updateCiYml
 
-    updateDependencies
+    forkAll::updateDependencies $BUILD_TOOL
+
+    forkAll::updatePackageJson
 
     popd
 
