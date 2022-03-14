@@ -10,7 +10,7 @@ set -euo pipefail
 # Produces the `libDeps.txt` file
 node ./package-graph.js --input ./packages-0.14.7.json --force lib-deps --output ./libDeps.txt --deps ./finished-dependencies.txt
 
-node ./package-graph.js --input ./packages-0.14.7.json --force lib-deps --output ./originalPackagesList.txt
+# node ./package-graph.js --input ./packages-0.14.7.json --force lib-deps --output ./originalPackagesList.txt
 
 # Sleep for 0.1 seconds. otherwise only one file will be outputted
 sleep 0.1
