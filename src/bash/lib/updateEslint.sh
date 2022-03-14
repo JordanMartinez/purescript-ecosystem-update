@@ -28,5 +28,6 @@ function updateEslint::main {
 
     updateEslint::main::checkAndCommit "1"
     updateEslint::main::checkAndCommit "2"
+    updateEslint::main::checkAndCommit "3"
   fi
 }
