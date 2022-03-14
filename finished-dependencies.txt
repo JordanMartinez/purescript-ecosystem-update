@@ -9,3 +9,4 @@ assert
 exists
 safe-coerce
 refs
+record
