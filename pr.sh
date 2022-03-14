@@ -16,6 +16,8 @@
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
+ROOT_DIR=$(dirname "$(readlink -f "$0")")
+
 # During the execution of the `gh pr create` command,
 # you will be asked 3 questoins. Here's how to answer them
 # 1st question: Base repo
@@ -27,8 +29,8 @@ set -euo pipefail
 
 #!/usr/bin/env bash
 
-PR_ES_BODY_PS=$(cat ./files/body-of-es-pr.txt)
-PR_UP_BODY_PS=$(cat ./files/body-of-update-pr.txt)
+PR_ES_BODY_PS=$(cat "$ROOT_DIR/files/pr/body-of-es-pr.txt")
+PR_UP_BODY_PS=$(cat "$ROOT_DIR/files/pr/body-of-update-pr.txt")
 
 TITLE="Update to v0.15.0"
 
