@@ -35,7 +35,7 @@ TITLE="Update to v0.15.0"
 function makePr {
   git branch | grep '*'
 
-  if [ $(find src/ -type f -name '*.js' 2>/dev/null | wc -l) -gt 0 ]; then
+  if [ "$(find src/ -type f -name '*.js' 2>/dev/null | wc -l)" -gt 0 ]; then
     gh pr create --title "$TITLE" --body "$PR_ES_BODY_PS" --label "purs-0.15" --label "type: breaking change" --web
   else
     gh pr create --title "$TITLE" --body "$PR_UP_BODY_PS" --label "purs-0.15" --label "type: breaking change" --web
@@ -45,28 +45,28 @@ function makePr {
 case "${1}" in
 0)
   # This file is based on the `.travis.yml` file in the `purescript-prelude` repo
-  pushd ../ps-0/purescript-$2
+  pushd "../ps-0/purescript-$2"
   makePr
   popd
   ;;
 1)
   # This file is based on the `.travis.yml` file in the `purescript-prelude` repo
-  pushd ../purescript/purescript-$2
+  pushd "../purescript/purescript-$2"
   makePr
   popd
   ;;
 2)
-  pushd ../purescript-contrib/purescript-$2
+  pushd "../purescript-contrib/purescript-$2"
   makePr
   popd
   ;;
 3)
-  pushd ../purescript-node/purescript-node-$2
+  pushd "../purescript-node/purescript-node-$2"
   makePr
   popd
   ;;
 4)
-  pushd ../purescript-web/purescript-web-$2
+  pushd "../purescript-web/purescript-web-$2"
   makePr
   popd
   ;;
