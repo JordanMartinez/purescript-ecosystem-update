@@ -27,3 +27,5 @@ either
 bifunctors
 contravariant
 exceptions
+profunctor
+tailrec
