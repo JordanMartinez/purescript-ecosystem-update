@@ -29,3 +29,5 @@ contravariant
 exceptions
 profunctor
 tailrec
+functors
+st
