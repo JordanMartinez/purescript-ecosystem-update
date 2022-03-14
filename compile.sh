@@ -14,7 +14,8 @@
 #   3 - purescript-node
 #   4 - purescript-web
 
-export PATH="$(pwd):$PATH"
+PATH="$(pwd):$PATH"
+export PATH
 
 case "${1}" in
 0)
