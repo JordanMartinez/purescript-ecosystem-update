@@ -20,7 +20,7 @@ REPO_URL_FILE_PS_WEB="$ROOT_DIR/repos/purescript-node.txt"
 # Determines whether to use 'master' or 'main'
 # as branch name for PureScript dependency in `bower.json` file
 function updateDependencies::recalcBowerRepoBranches {
-  local DEPS_FILE, DEV_DEPS_FILE
+  local DEPS_FILE DEV_DEPS_FILE
   DEPS_FILE=bowerDeps-deps.txt
   DEV_DEPS_FILE=bowerDeps-dev-deps.tx
 
@@ -43,7 +43,7 @@ function updateDependencies::recalcBowerRepoBranches {
   #
   # Intended to be called via `cat bower.json | jq "$FILE_CONTENTS"`
   function printBranch {
-    local FILE, BRANCH
+    local FILE BRANCH
     FILE=$(cat "$1")
     BRANCH="$2"
 
@@ -99,7 +99,8 @@ function updateDependencies::main {
 # or `main`, the default branch.
 function updateDeps::updateBower {
   echo "Updating all deps in 'bower.json' to 'master' or 'main'"
-  local TMP_FILE=bower.json.new
+  local TMP_FILE
+  TMP_FILE=bower.json.new
   jq "$JQ_SCRIPT_UPDATE_BOWER_JSON" bower.json > "$TMP_FILE" && mv "$TMP_FILE" bower.json
   git add bower.json
   git commit -m "Update Bower dependencies to master or main"

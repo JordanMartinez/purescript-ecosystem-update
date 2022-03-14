@@ -9,10 +9,11 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 # If so, overwrites current one with desired one.
 function updateEslint::main {
   if [ -f ".eslintrc.json" ]; then
-    local TEMP_FILE=.eslintrc.json.new
+    local TEMP_FILE
+    TEMP_FILE=.eslintrc.json.new
 
     function updateEslint::main::checkAndCommit {
-      local FILE_NUM, ESLINTRC_CONTENT, ESLINT_DIFF_EXPECTED, ESLINT_DIFF_ACTUAL
+      local FILE_NUM ESLINTRC_CONTENT ESLINT_DIFF_EXPECTED ESLINT_DIFF_ACTUAL
       FILE_NUM="$1"
       ESLINTRC_CONTENT=$(cat "$ROOT_DIR/files/eslint/$FILE_NUM.json")
       ESLINT_DIFF_EXPECTED=$(cat "$ROOT_DIR/files/eslint/$FILE_NUM.json.diff")

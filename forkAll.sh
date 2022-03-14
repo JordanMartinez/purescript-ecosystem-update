@@ -25,7 +25,7 @@ REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
 
 function forkAll {
-  local PARENT_DIR, REMOTES_FILE, DEFAULT_BRANCH_NAME, BUILD_TOOL
+  local PARENT_DIR REMOTES_FILE DEFAULT_BRANCH_NAME BUILD_TOOL
   PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
   REMOTES_FILE=$(cat "$1")
   DEFAULT_BRANCH_NAME=$2
