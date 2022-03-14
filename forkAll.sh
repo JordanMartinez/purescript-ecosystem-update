@@ -14,7 +14,7 @@ source src/bash/lib/migrateFfiToEs6.sh
 # Regenerate JQ script for updating bower.json file
 # and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
 JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
-source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION"
+source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "0"
 JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
 
 source src/bash/lib/updateEslint.sh

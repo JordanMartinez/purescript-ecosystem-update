@@ -68,7 +68,6 @@ function updateDependencies::recalcBowerRepoBranches {
     } > "$JQ_SCRIPT_LOCATION"
   }
 
-  rmFile "$JQ_SCRIPT_LOCATION"
   rmFile "$DEPS_FILE"
   rmFile "$DEV_DEPS_FILE"
 
@@ -120,6 +119,7 @@ case "${DISABLE_SCRIPT_UPDATE}" in
     ;;
   *)
     echo "Updating JQ script for bower deps. Storing content in file: $1"
+    rmFile "$JQ_SCRIPT_LOCATION" || echo "$JQ_SCRIPT_LOCATION does not exist; skipping its deletion."
     updateDependencies::recalcBowerRepoBranches
     ;;
 esac
