@@ -2,6 +2,8 @@
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
+EXIT_IF_LINT_FAILURE="$1"
+
 # Updates the `.eslintrc.json` file
 # by checking whether the difference between the
 # current file and the desired one match.
@@ -21,6 +23,20 @@ function updateEslint::main {
       ESLINT_DIFF_ACTUAL=$(diff .eslintrc.json $TEMP_FILE)
       if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
         mv "$TEMP_FILE" .eslintrc.json
+
+        case "${EXIT_IF_LINT_FAILURE}" in
+          "fail")
+            if [ -d "src" ]; then
+              eslint src
+            fi
+            if [ -d "test" ]; then
+              eslint src
+            fi
+            ;;
+          *)
+            echo "Skipping lint check"
+            ;;
+        esac
         git add .eslintrc.json
         git commit -m "Update .eslintrc.json to ES6"
       fi
@@ -29,5 +45,7 @@ function updateEslint::main {
     updateEslint::main::checkAndCommit "1"
     updateEslint::main::checkAndCommit "2"
     updateEslint::main::checkAndCommit "3"
+  else
+    echo "No .eslintrc.json file found. Skipping eslint update."
   fi
 }

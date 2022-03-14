@@ -24,13 +24,14 @@ JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
 source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "1"
 JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
 
-source src/bash/lib/updateEslint.sh
+source src/bash/lib/updateEslint.sh "fail"
 source src/bash/lib/updateGhActions.sh
 source src/bash/lib/updatePackageJson.sh
 
-REMOVE_USE_STRICT_SCRIPT=$(cat $ROOT_DIR/src/node/lib/remove-use-strict.js)
+REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
-export PATH="$(pwd):$PATH"
+PATH="$(pwd):$PATH"
+export PATH
 BUILD_TOOL=""
 
 case "${1}" in
