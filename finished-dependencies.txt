@@ -24,3 +24,6 @@ tuples
 typelevel-prelude
 distributive
 either
+bifunctors
+contravariant
+exceptions
