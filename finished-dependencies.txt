@@ -40,3 +40,4 @@ lazy
 unfoldable
 nonempty
 lcg
+arrays
