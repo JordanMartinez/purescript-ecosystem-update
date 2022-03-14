@@ -12,3 +12,6 @@ safe-coerce
 refs
 record
 newtype
+type-equality
+orders
+control
