@@ -73,6 +73,14 @@ case "$3" in
 "ci")
   updateGhActions::main
   ;;
+"clear-bower")
+  if [ -f "bower.json" ]; then
+    rm -rf bower_components/ output/
+    bower cache clean
+  else
+    echo "No bower.json file found"
+  fi
+  ;;
 *)
   echo "$3 is not a valid forkAll function name"
   exit 1
