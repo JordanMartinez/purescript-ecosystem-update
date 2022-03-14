@@ -24,7 +24,7 @@ function updateEslint::main {
       if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
         mv "$TEMP_FILE" .eslintrc.json
 
-        case "${EXIT_IF_LINT_FAILURE}" in
+        case "$EXIT_IF_LINT_FAILURE" in
           "fail")
             if [ -d "src" ]; then
               eslint src
