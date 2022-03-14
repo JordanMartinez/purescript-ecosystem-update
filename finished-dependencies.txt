@@ -22,3 +22,5 @@ identity
 maybe
 tuples
 typelevel-prelude
+distributive
+either
