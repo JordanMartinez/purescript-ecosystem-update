@@ -15,3 +15,5 @@ newtype
 type-equality
 orders
 control
+psci-support
+invariant
