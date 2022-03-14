@@ -17,3 +17,8 @@ orders
 control
 psci-support
 invariant
+const
+identity
+maybe
+tuples
+typelevel-prelude
