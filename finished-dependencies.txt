@@ -4,3 +4,8 @@ partial
 math
 unsafe-coerce
 console
+functions
+assert
+exists
+safe-coerce
+refs
