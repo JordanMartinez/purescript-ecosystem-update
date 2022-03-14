@@ -31,3 +31,8 @@ profunctor
 tailrec
 functors
 st
+numbers
+integers
+foldable-traversable
+minibench
+random
