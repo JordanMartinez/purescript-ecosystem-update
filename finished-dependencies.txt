@@ -11,3 +11,4 @@ exists
 safe-coerce
 refs
 record
+newtype
