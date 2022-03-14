@@ -2,3 +2,5 @@ prelude
 effect
 partial
 math
+unsafe-coerce
+console
