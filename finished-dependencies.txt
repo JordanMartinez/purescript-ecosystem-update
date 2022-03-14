@@ -36,3 +36,4 @@ integers
 foldable-traversable
 minibench
 random
+lazy
