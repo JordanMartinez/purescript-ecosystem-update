@@ -47,3 +47,10 @@ parallel
 enums
 strings
 lists
+catenable-lists
+foreign
+semirings
+quickcheck
+foreign-object
+free
+ordered-collections
