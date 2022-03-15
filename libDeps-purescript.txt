@@ -1,4 +1,0 @@
-0  datetime                         https://github.com/purescript/purescript-datetime.git                          []
-0  filterable                       https://github.com/purescript/purescript-filterable.git                        []
-0  graphs                           https://github.com/purescript/purescript-graphs.git                            []
-0  validation                       https://github.com/purescript/purescript-validation.git                        []

@@ -54,3 +54,7 @@ quickcheck
 foreign-object
 free
 ordered-collections
+validation
+datetime
+filterable
+graphs
