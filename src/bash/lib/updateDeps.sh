@@ -59,10 +59,13 @@ function updateDependencies::recalcBowerRepoBranches {
     {
       echo "if has(\"dependencies\") then .dependencies |= ("
       cat "$DEPS_FILE"
+      # Sigh... fix filterable
+      echo "  if has(\"purescript-filterable\") then .\"purescript-filterable\" |= \"main\" else . end |"
       echo "  ."
       echo ") else . end | "
       echo " if has (\"devDependencies\") then .devDependencies |= ("
       cat "$DEV_DEPS_FILE"
+      echo "  if has(\"purescript-filterable\") then .\"purescript-filterable\" |= \"main\" else . end |"
       echo "  ."
       echo ") else . end"
     } > "$JQ_SCRIPT_LOCATION"

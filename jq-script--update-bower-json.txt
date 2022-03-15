@@ -136,6 +136,7 @@ if has("dependencies") then .dependencies |= (
   if has("purescript-node-streams") then ."purescript-node-streams" |= "master" else . end |
   if has("purescript-node-url") then ."purescript-node-url" |= "master" else . end |
   if has("purescript-posix-types") then ."purescript-posix-types" |= "master" else . end |
+  if has("purescript-filterable") then ."purescript-filterable" |= "main" else . end |
   .
 ) else . end | 
  if has ("devDependencies") then .devDependencies |= (
@@ -276,5 +277,6 @@ if has("dependencies") then .dependencies |= (
   if has("purescript-node-streams") then ."purescript-node-streams" |= "master" else . end |
   if has("purescript-node-url") then ."purescript-node-url" |= "master" else . end |
   if has("purescript-posix-types") then ."purescript-posix-types" |= "master" else . end |
+  if has("purescript-filterable") then ."purescript-filterable" |= "main" else . end |
   .
 ) else . end
