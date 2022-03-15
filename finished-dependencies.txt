@@ -45,3 +45,5 @@ transformers
 gen
 parallel
 enums
+strings
+lists
