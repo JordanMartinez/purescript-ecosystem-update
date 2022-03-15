@@ -1,7 +1,7 @@
 xed CHANGELOG.md
 
 - Migrate FFI to ES modules (# by @kl0tl and @JordanMartinez)
-- Update project and deps to PureScript v0.15.0 (#25 by @JordanMartinez)
+- Update project and deps to PureScript v0.15.0 (# by @JordanMartinez)
 - Replaced polymorphic proxies with monomorphic `Proxy` (#81 by @JordanMartinez)
 
 git add CHANGELOG.md
