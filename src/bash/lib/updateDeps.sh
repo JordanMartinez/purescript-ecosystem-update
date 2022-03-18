@@ -8,8 +8,7 @@ DISABLE_SCRIPT_UPDATE=$2
 PACKAGES_DHALL_CONTENT="let upstream =
       https://raw.githubusercontent.com/purescript/package-sets/prepare-0.15/src/packages.dhall
 
-in  upstream
-"
+in  upstream"
 
 REPO_URL_FILE_PS="$ROOT_DIR/repos/purescript.txt"
 REPO_URL_FILE_PS_CONTRIB="$ROOT_DIR/repos/purescript-contrib.txt"
