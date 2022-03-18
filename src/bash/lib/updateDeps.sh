@@ -85,7 +85,7 @@ function updateDependencies::recalcBowerRepoBranches {
 
 # Updates the dependencies in bower or spago projects
 # to latest `master`/`main`
-function updateDependencies::main {
+function updateDeps::main {
   local BUILD_TOOL
   BUILD_TOOL="$1"
   case "$BUILD_TOOL" in
