@@ -58,6 +58,9 @@ case "$3" in
 "deps")
   updateDeps::main
   ;;
+"trans")
+  updateDeps::spagoInstallMissingDeps
+  ;;
 "packageJson")
   updatePackageJson::main
   ;;
