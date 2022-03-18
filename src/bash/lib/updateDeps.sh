@@ -89,9 +89,9 @@ function updateDeps::main {
   local BUILD_TOOL
   BUILD_TOOL="$1"
   case "$BUILD_TOOL" in
-  "bower") forkAll::updateBower
+  "bower") updateDeps::updateBower
     ;;
-  "spago") forkAll::updateSpago
+  "spago") updateDeps::updateSpago
     ;;
   *) echo "Unknown build tool option: $3" ;;
   esac
