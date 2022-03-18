@@ -9,6 +9,7 @@
 #     ./apply.sh 3 fs
 #     ./apply.sh 4 xhr
 # ... where ...
+#   0 - purescript-test
 #   1 - purescript
 #   2 - purescript-contrib
 #   3 - purescript-node
@@ -35,6 +36,10 @@ export PATH
 BUILD_TOOL=""
 
 case "${1}" in
+0)
+  pushd ../purescript-test/purescript-$2
+  BUILD_TOOL="bower"
+  ;;
 1)
   pushd ../purescript/purescript-$2
   BUILD_TOOL="bower"
