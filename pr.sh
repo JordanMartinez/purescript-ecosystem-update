@@ -8,6 +8,7 @@
 #     ./pr.sh 3 fs
 #     ./pr.sh 4 xhr
 # ... where ...
+#   0 - purescript-test
 #   1 - purescript
 #   2 - purescript-contrib
 #   3 - purescript-node
@@ -47,7 +48,7 @@ function makePr {
 case "${1}" in
 0)
   # This file is based on the `.travis.yml` file in the `purescript-prelude` repo
-  pushd "../ps-0/purescript-$2"
+  pushd "../purescript-test/purescript-$2"
   makePr
   popd
   ;;
