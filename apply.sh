@@ -28,6 +28,7 @@ JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
 source src/bash/lib/updateEslint.sh "fail"
 source src/bash/lib/updateGhActions.sh
 source src/bash/lib/updatePackageJson.sh
+source src/bash/lib/checkForDeprecated.sh
 
 REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
@@ -85,6 +86,9 @@ case "$3" in
   else
     echo "No bower.json file found"
   fi
+  ;;
+"check")
+  checkForDeprecated::main
   ;;
 *)
   echo "$3 is not a valid forkAll function name"
