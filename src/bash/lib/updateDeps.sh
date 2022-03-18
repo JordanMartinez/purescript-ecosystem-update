@@ -136,6 +136,7 @@ function updateDeps::spagoInstall {
     if [ -d "output" ]; then
       rm -rf output
     fi
+    SPAGO_OUT=""
     spago build -u "--stash" 2> "$SPAGO_OUT"
     SPAGO_INSTALL_COMMAND=$(tail -n 1 "$SPAGO_OUT")
     if [ "$(echo "$SPAGO_INSTALL_COMMAND" | grep -c "spago install")" -eq 0 ]; then
