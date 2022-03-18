@@ -121,6 +121,28 @@ function updateDeps::updateSpago {
     git commit -m "Removed unneeded 'psci-support' package"
   fi
 }
+
+function updateDeps::spagoInstall {
+  if [ -f "spago.dhall" ]; then
+    local SPAGO_OUT SPAGO_INSTALL_COMMAND PACKAGES_TO_INSTALL
+    if [ -d ".spago" ]; then
+      rm -rf .spago
+    fi
+    if [ -d "output" ]; then
+      rm -rf output
+    fi
+    spago build 2> "$SPAGO_OUT"
+    SPAGO_INSTALL_COMMAND=$(tail -n 1 "$SPAGO_OUT")
+    if [ "$(echo "$SPAGO_INSTALL_COMMAND" | grep -c "spago install")" -eq 0 ]; then
+      # deletes 'spago install ' part of text
+      PACKAGES_TO_INSTALL="${SPAGO_INSTALL_COMMAND//spago install /}"
+      # hacky way to get `spago install` to work
+      spago install $(echo "$PACKAGES_TO_INSTALL" | tr ' ' ' ')
+      git add spago.dhall
+      git commit -m "Fix spago transitive dependency errors"
+      spago build
+    fi
+  fi
 }
 
 case "${DISABLE_SCRIPT_UPDATE}" in
