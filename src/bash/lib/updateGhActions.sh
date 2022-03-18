@@ -9,8 +9,9 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 # If so, overwrites current one with desired one.
 function updateGhActions::main {
   if [ -f ".github/workflows/ci.yml" ]; then
-    local TEMP_FILE
-    TEMP_FILE=ci.yml.new
+    local TEMP_FILE TARGET_FILE
+    TARGET_FILE=ci.yml
+    TEMP_FILE="$TARGET_FILE.new"
     pushd .github/workflows
 
     function updateEslint::main::checkAndCommit {
@@ -19,12 +20,12 @@ function updateGhActions::main {
       CONTENT=$(cat "$ROOT_DIR/files/gh-actions/$FILE_NUM.yml")
       DIFF_EXPECTED=$(cat "$ROOT_DIR/files/gh-actions/$FILE_NUM.yml.diff")
       echo "$CONTENT" > "$TEMP_FILE"
-      DIFF_ACTUAL=$(diff .ci.yml $TEMP_FILE)
+      DIFF_ACTUAL=$(diff $TARGET_FILE $TEMP_FILE)
       if [ "$DIFF_EXPECTED" == "$DIFF_ACTUAL" ]; then
         echo "Match found on $FILE_NUM"
-        mv "$TEMP_FILE" ci.yml
-        git add ci.yml
-        git commit -m "Updated ci.yml using file pattern: $FILE_NUM"
+        mv "$TEMP_FILE" "$TARGET_FILE"
+        git add "$TARGET_FILE"
+        git commit -m "Updated $TARGET_FILE using file pattern: $FILE_NUM"
       else
         echo "Match failed for $FILE_NUM"
       fi
