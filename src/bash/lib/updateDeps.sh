@@ -86,35 +86,32 @@ function updateDependencies::recalcBowerRepoBranches {
 # Updates the dependencies in bower or spago projects
 # to latest `master`/`main`
 function updateDeps::main {
-  local BUILD_TOOL
-  BUILD_TOOL="$1"
-  case "$BUILD_TOOL" in
-  "bower") updateDeps::updateBower
-    ;;
-  "spago") updateDeps::updateSpago
-    ;;
-  *) echo "Unknown build tool option: $3" ;;
-  esac
+  updateDeps::updateBower
+  updateDeps::updateSpago
 }
 
 # Uses 'jq' to update all purescript `dependencies` and
 # `devDependencies` (if exists) in bower.json to `master`
 # or `main`, the default branch.
 function updateDeps::updateBower {
-  echo "Updating all deps in 'bower.json' to 'master' or 'main'"
-  local TMP_FILE
-  TMP_FILE=bower.json.new
-  jq "$JQ_SCRIPT_UPDATE_BOWER_JSON" bower.json > "$TMP_FILE" && mv "$TMP_FILE" bower.json
-  git add bower.json
-  git commit -m "Update Bower dependencies to master or main"
+  if [ -f "bower.json" ]; then
+    echo "Updating all deps in 'bower.json' to 'master' or 'main'"
+    local TMP_FILE
+    TMP_FILE=bower.json.new
+    jq "$JQ_SCRIPT_UPDATE_BOWER_JSON" bower.json > "$TMP_FILE" && mv "$TMP_FILE" bower.json
+    git add bower.json
+    git commit -m "Update Bower dependencies to master or main"
+  fi
 }
 
 # Overwrite `packages.dhall` with the `prepare-0.15` version
 # of package set
 function updateDeps::updateSpago {
-  echo "$PACKAGES_DHALL_CONTENT" > packages.dhall
-  git add packages.dhall
-  git commit -m "Update packages.dhall to 'prepare-0.15' package set"
+  if [ -f "packages.dhall" ]; then
+    echo "$PACKAGES_DHALL_CONTENT" > packages.dhall
+    git add packages.dhall
+    git commit -m "Update packages.dhall to 'prepare-0.15' package set"
+  fi
 }
 
 case "${DISABLE_SCRIPT_UPDATE}" in

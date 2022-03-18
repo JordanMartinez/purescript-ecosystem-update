@@ -25,11 +25,10 @@ REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
 
 function forkAll {
-  local PARENT_DIR REMOTES_FILE DEFAULT_BRANCH_NAME BUILD_TOOL
+  local PARENT_DIR REMOTES_FILE DEFAULT_BRANCH_NAME
   PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
   REMOTES_FILE=$(cat "$1")
   DEFAULT_BRANCH_NAME=$2
-  BUILD_TOOL=$3
 
   mkdir -p "../$PARENT_DIR"
   pushd "../$PARENT_DIR" || (echo "pushd failed for '../$PARENT_DIR'" && exit)
@@ -78,7 +77,7 @@ function forkAll {
 
     updateGhActions::main
 
-    updateDeps::main "$BUILD_TOOL"
+    updateDeps::main
 
     updatePackageJson::main
 
@@ -89,11 +88,12 @@ function forkAll {
   popd || (echo "popd on org dir failed" && exit 1)
 }
 
-# forkAll "./repos/ps-0.txt" "master" "bower"
-forkAll "./repos/purescript.txt" "master" "bower"
-# forkAll "./repos/purescript-contrib.txt" "main" "spago"
-# forkAll "./repos/purescript-web.txt" "master" "spago"
-# forkAll "./repos/purescript-node.txt" "master" "spago"
+# forkAll "./repos/ps-0.txt" "master"
+# forkAll "./repos/purescript.txt" "master"
+forkAll "./repos/purescript-test.txt" "main"
+# forkAll "./repos/purescript-contrib.txt" "main"
+# forkAll "./repos/purescript-web.txt" "master"
+# forkAll "./repos/purescript-node.txt" "master"
 
 # echo ""
 # echo "Remaining Steps:"
