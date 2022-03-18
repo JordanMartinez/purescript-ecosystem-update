@@ -1,2 +1,2 @@
-git@github.com:purescript/purescript-prelude.git
-git@github.com:purescript/purescript-newtype.git
+git@github.com:purescript-contrib/purescript-argonaut-core.git
+git@github.com:purescript-contrib/purescript-arraybuffer-types.git
