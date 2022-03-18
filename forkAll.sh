@@ -59,7 +59,7 @@ function forkAll {
       if [ "$(git branch -r | grep -c 'wg/es-modules')" -gt 0 ]; then
         git checkout wg/es-modules
       else
-        git checkout origin/master
+        git checkout "origin/$DEFAULT_BRANCH_NAME"
       fi
       git switch -c es-modules-libraries
       git push -u wg es-modules-libraries
