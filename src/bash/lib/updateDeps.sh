@@ -111,6 +111,16 @@ function updateDeps::updateSpago {
     git add packages.dhall
     git commit -m "Update packages.dhall to 'prepare-0.15' package set"
   fi
+
+  # drop `psci-support` from dependencies
+  if [ -f "spago.dhall" ]; then
+    local TMP_FILE
+    TMP_FILE=spago.dhall.tmp
+    sed '/, "psci-support"/d' spago.dhall > $TMP_FILE && mv $TMP_FILE spago.dhall
+    git add spago.dhall
+    git commit -m "Removed unneeded 'psci-support' package"
+  fi
+}
 }
 
 case "${DISABLE_SCRIPT_UPDATE}" in
