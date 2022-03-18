@@ -123,6 +123,8 @@ function updateDeps::updateSpago {
     git add spago.dhall
     git commit -m "Removed unneeded 'psci-support' package"
   fi
+
+  updateDeps::spagoInstall
 }
 
 function updateDeps::spagoInstall {
@@ -134,7 +136,7 @@ function updateDeps::spagoInstall {
     if [ -d "output" ]; then
       rm -rf output
     fi
-    spago build 2> "$SPAGO_OUT"
+    spago build -u "--stash" 2> "$SPAGO_OUT"
     SPAGO_INSTALL_COMMAND=$(tail -n 1 "$SPAGO_OUT")
     if [ "$(echo "$SPAGO_INSTALL_COMMAND" | grep -c "spago install")" -eq 0 ]; then
       # deletes 'spago install ' part of text
@@ -143,7 +145,7 @@ function updateDeps::spagoInstall {
       spago install $(echo "$PACKAGES_TO_INSTALL" | tr ' ' ' ')
       git add spago.dhall
       git commit -m "Fix spago transitive dependency errors"
-      spago build
+      spago build -u "--stash"
     fi
   fi
 }

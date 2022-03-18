@@ -61,7 +61,7 @@ case "${1}" in
   # If the package set has changed since the last time we ran
   # it may have a different hash.
   # So, let's overwrite it to remove that hash.
-  updateDeps::spago
+  updateDeps::main
 
   spago build -u "--strict"
   spago test
@@ -78,7 +78,7 @@ case "${1}" in
   # If the package set has changed since the last time we ran
   # it may have a different hash.
   # So, let's overwrite it to remove that hash.
-  updateDeps::spago
+  updateDeps::main
   spago build -u "--strict"
   spago test
   if [ -d "src" ]; then
@@ -94,7 +94,7 @@ case "${1}" in
   # If the package set has changed since the last time we ran
   # it may have a different hash.
   # So, let's overwrite it to remove that hash.
-  updateDeps::spago
+  updateDeps::main
   spago build -u "--strict"
   spago test
   if [ -d "src" ]; then
