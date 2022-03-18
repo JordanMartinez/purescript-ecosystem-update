@@ -22,6 +22,7 @@ function updateEslint::main {
       echo "$ESLINTRC_CONTENT" > "$TEMP_FILE"
       ESLINT_DIFF_ACTUAL=$(diff .eslintrc.json $TEMP_FILE)
       if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
+        echo "Match found on $FILE_NUM"
         mv "$TEMP_FILE" .eslintrc.json
 
         case "$EXIT_IF_LINT_FAILURE" in
@@ -39,12 +40,15 @@ function updateEslint::main {
         esac
         git add .eslintrc.json
         git commit -m "Update .eslintrc.json to ES6"
+      else
+        echo "Match failed for $FILE_NUM"
       fi
     }
 
     updateEslint::main::checkAndCommit "1"
     updateEslint::main::checkAndCommit "2"
     updateEslint::main::checkAndCommit "3"
+    updateEslint::main::checkAndCommit "4"
   else
     echo "No .eslintrc.json file found. Skipping eslint update."
   fi
