@@ -139,7 +139,7 @@ function updateDeps::spagoInstall {
     SPAGO_OUT=""
     spago build -u "--stash" 2> "$SPAGO_OUT"
     SPAGO_INSTALL_COMMAND=$(tail -n 1 "$SPAGO_OUT")
-    if [ "$(echo "$SPAGO_INSTALL_COMMAND" | grep -c "spago install")" -eq 0 ]; then
+    if [ "$(echo "$SPAGO_INSTALL_COMMAND" | grep -c "spago install")" -eq 1 ]; then
       # deletes 'spago install ' part of text
       PACKAGES_TO_INSTALL="${SPAGO_INSTALL_COMMAND//spago install /}"
       # hacky way to get `spago install` to work
