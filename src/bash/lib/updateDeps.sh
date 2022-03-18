@@ -136,9 +136,9 @@ function updateDeps::spagoInstall {
     if [ -d "output" ]; then
       rm -rf output
     fi
-    SPAGO_OUT=""
+    SPAGO_OUT=spago-out.txt
     spago build -u "--stash" 2> "$SPAGO_OUT"
-    SPAGO_INSTALL_COMMAND=$(echo "$SPAGO_OUT" | tail -n 1)
+    SPAGO_INSTALL_COMMAND=$(tail -n 1 "$SPAGO_OUT")
     if [ "$(echo "$SPAGO_INSTALL_COMMAND" | grep -c "spago install")" -eq 1 ]; then
       # deletes 'spago install ' part of text
       PACKAGES_TO_INSTALL="${SPAGO_INSTALL_COMMAND//spago install /}"
@@ -147,6 +147,7 @@ function updateDeps::spagoInstall {
       git add spago.dhall
       git commit -m "Fix spago transitive dependency errors"
       spago build -u "--stash"
+      rm "$SPAGO_OUT"
     fi
   fi
 }
