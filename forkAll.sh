@@ -17,7 +17,7 @@ JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
 source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "0"
 JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
 
-source src/bash/lib/updateEslint.sh
+source src/bash/lib/updateEslint.sh "continue"
 source src/bash/lib/updateGhActions.sh
 source src/bash/lib/updatePackageJson.sh
 
