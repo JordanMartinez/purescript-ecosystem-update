@@ -15,7 +15,7 @@
 #   3 - purescript-node
 #   4 - purescript-web
 
-ROOT_DIR=$(dirname "$(readlink -f "$0")")
+# ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
 source src/bash/lib/migrateFfiToEs6.sh
 
