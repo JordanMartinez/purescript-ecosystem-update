@@ -17,6 +17,10 @@
 PATH="$(pwd):$PATH"
 export PATH
 
+JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
+source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "1"
+JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
+
 case "${1}" in
 0)
   pushd ../ps-0/purescript-$2
@@ -52,6 +56,11 @@ case "${1}" in
   ;;
 2)
   pushd ../purescript-contrib/purescript-$2
+  # If the package set has changed since the last time we ran
+  # it may have a different hash.
+  # So, let's overwrite it to remove that hash.
+  updateDeps::spago
+
   spago build -u "--strict"
   spago test
   if [ -d "src" ]; then
@@ -64,6 +73,10 @@ case "${1}" in
   ;;
 3)
   pushd ../purescript-node/purescript-node-$2
+  # If the package set has changed since the last time we ran
+  # it may have a different hash.
+  # So, let's overwrite it to remove that hash.
+  updateDeps::spago
   spago build -u "--strict"
   spago test
   if [ -d "src" ]; then
@@ -76,6 +89,10 @@ case "${1}" in
   ;;
 4)
   pushd ../purescript-web/purescript-web-$2
+  # If the package set has changed since the last time we ran
+  # it may have a different hash.
+  # So, let's overwrite it to remove that hash.
+  updateDeps::spago
   spago build -u "--strict"
   spago test
   if [ -d "src" ]; then
