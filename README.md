@@ -67,7 +67,7 @@ mkdir fourteen
 
 ```bash
 cd fourteen
-git clone https://github.com/JordanMartinez/updatePsLibs.git master
+git clone https://github.com/JordanMartinez/purescript-ecosystem-update.git master
 cd master
 ```
 
