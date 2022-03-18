@@ -60,13 +60,13 @@ Note: the instructions below are outdated. All files mentioned below have been s
 1. Create a new directory explicitly for this purpose so that any changes made in this directory will not affect any of your other projects
 
 ```bash
-mkdir fourteen
+mkdir 15
 ```
 
 2. `git clone` this repo while inside that new folder
 
 ```bash
-cd fourteen
+cd 15
 git clone https://github.com/JordanMartinez/purescript-ecosystem-update.git master
 cd master
 ```
