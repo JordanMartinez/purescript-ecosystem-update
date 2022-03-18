@@ -86,7 +86,7 @@ case "$3" in
   checkForDeprecated::main
   ;;
 *)
-  echo "$3 is not a valid forkAll function name"
+  echo "$3 is not a valid option"
   exit 1
 esac
 
