@@ -39,23 +39,18 @@ BUILD_TOOL=""
 case "${1}" in
 0)
   pushd ../purescript-test/purescript-$2
-  BUILD_TOOL="bower"
   ;;
 1)
   pushd ../purescript/purescript-$2
-  BUILD_TOOL="bower"
   ;;
 2)
   pushd ../purescript-contrib/purescript-$2
-  BUILD_TOOL="spago"
   ;;
 3)
   pushd ../purescript-node/purescript-node-$2
-  BUILD_TOOL="bower"
   ;;
 4)
   pushd ../purescript-web/purescript-web-$2
-  BUILD_TOOL="bower"
   ;;
 *)
   echo "$1 is not a valid option."
@@ -65,7 +60,7 @@ esac
 
 case "$3" in
 "deps")
-  updateDeps::main "$BUILD_TOOL"
+  updateDeps::main
   ;;
 "packageJson")
   updatePackageJson::main
