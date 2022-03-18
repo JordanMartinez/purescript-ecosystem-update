@@ -23,13 +23,15 @@ JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
 
 case "${1}" in
 0)
-  pushd ../ps-0/purescript-$2
-  # This is based on what was the `.travis.yml` file in the `purescript-prelude` repo
-  npm install
-  bower install --production
-  npm run -s build
-  bower install
-  npm run -s test --if-present
+  pushd ../purescript-test/purescript-$2
+  # If the package set has changed since the last time we ran
+  # it may have a different hash.
+  # So, let's overwrite it to remove that hash.
+  updateDeps::bower
+  updateDeps::spago
+
+  spago build -u "--strict"
+  spago test
   if [ -d "src" ]; then
     eslint src
   fi
