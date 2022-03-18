@@ -38,19 +38,19 @@ BUILD_TOOL=""
 
 case "${1}" in
 0)
-  pushd ../purescript-test/purescript-$2
+  pushd "../purescript-test/purescript-$2"
   ;;
 1)
-  pushd ../purescript/purescript-$2
+  pushd "../purescript/purescript-$2"
   ;;
 2)
-  pushd ../purescript-contrib/purescript-$2
+  pushd "../purescript-contrib/purescript-$2"
   ;;
 3)
-  pushd ../purescript-node/purescript-node-$2
+  pushd "../purescript-node/purescript-node-$2"
   ;;
 4)
-  pushd ../purescript-web/purescript-web-$2
+  pushd "../purescript-web/purescript-web-$2"
   ;;
 *)
   echo "$1 is not a valid option."
