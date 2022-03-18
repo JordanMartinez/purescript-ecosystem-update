@@ -1,25 +1,20 @@
-0a1
-> #1.yml
-18a20
->           purescript: "unstable"
-30c32,45
-<         run: spago install
+1d0
+< #1.yml
+20d18
+<           purescript: "unstable"
+32,40c30
+<         run: |
+<           npm install bower pulp
+<           bower install
+<           spago install
+< 
+<       - name: Build source (pulp)
+<         run: |
+<           pulp build -- '--censor-lib --strict'
+<           rm -rf output
 ---
->         run: |
->           if [ -f "bower.json" ]; then
->             npm install bower pulp
->             bower install
->             pulp build -- "--strict"
->             pulp test -- "--strict"
->           fi
->           bower install
->           spago install
-> 
->       - name: Build source (pulp)
->         run: |
->           pulp build -- '--censor-lib --strict'
->           rm -rf output
-32c47
-<       - name: Build source
+>         run: spago install
+42c32
+<       - name: Build source (spago)
 ---
->       - name: Build source (spago)
+>       - name: Build source

@@ -30,12 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ -f "bower.json" ]; then
-            npm install bower pulp
-            bower install
-            pulp build -- "--strict"
-            pulp test -- "--strict"
-          fi
+          npm install bower pulp
           bower install
           spago install
 
