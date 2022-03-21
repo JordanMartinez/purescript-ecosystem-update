@@ -8,7 +8,7 @@ set -euo pipefail
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
-DEPS_CONTENT="$(cat "$ROOT_DIR/files/package-graph/libDeps.txt" | grep '^0')"
+DEPS_CONTENT="$(grep '^0' "$ROOT_DIR/files/package-graph/libDeps.txt")"
 
 case "${1}" in
 1)
