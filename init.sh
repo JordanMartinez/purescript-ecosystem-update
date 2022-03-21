@@ -14,11 +14,21 @@ gh config set git_protocol ssh
 
 # Download the PureScript release based on `PS_TAG`
 PS_TAG=v0.15.0-alpha-02
+FILE=""
 OUTPUT=./purescript.tar.gz
 TAR_DIR=./purescript
 
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Darwin*) FILE=linux64;;
+    Linux*)  FILE=macos;;
+    # CYGWIN*) FILE=Cygwin;;
+    # MINGW*)  FILE=MinGw;;
+    *)       echo "UNKNOWN:${unameOut}" && exit 1
+esac
+
 # Download and extract the archive
-curl --location --output $OUTPUT https://github.com/purescript/purescript/releases/download/$PS_TAG/linux64.tar.gz
+curl --location --output $OUTPUT https://github.com/purescript/purescript/releases/download/$PS_TAG/$FILE.tar.gz
 tar -xvf $OUTPUT
 
 # Move the `purs` binary to this folder
