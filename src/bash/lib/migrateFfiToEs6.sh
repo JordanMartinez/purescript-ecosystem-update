@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
-REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
 # Uses a combination of `lebab`, `sed`
 # and a Node script to update all FFI
@@ -24,8 +23,8 @@ function migrateFfiToEs6::main {
     git add src test
     git commit -m "$EXPORT_UPDATE_MSG"
     # Remove `"use strict";\n\n`
-    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- "{}" \;
-    find test -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- "{}" \;
+    find src -type f -wholename "**/*.js" -print0 -exec node "$ROOT_DIR/src/node/lib/remove-use-strict.mjs" "{}" \;
+    find test -type f -wholename "**/*.js" -print0 -exec node "$ROOT_DIR/src/node/lib/remove-use-strict.mjs" "{}" \;
     git add src test
     git commit -m "$STRICT_FIX_MSG"
   elif [ -d "src" ]; then
@@ -38,7 +37,7 @@ function migrateFfiToEs6::main {
     git add src
     git commit -m "$EXPORT_UPDATE_MSG"
 
-    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- "{}" \;
+    find src -type f -wholename "**/*.js" -print0 -exec node "$ROOT_DIR/src/node/lib/remove-use-strict.mjs" "{}" \;
     git add src
     git commit -m "$STRICT_FIX_MSG"
   fi
