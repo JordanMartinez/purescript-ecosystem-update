@@ -51,7 +51,7 @@ echo "prelude" >> finished-dependencies.txt
 
 [./pr.sh](./pr.sh) opens a PR using the [GitHub CLI tool, gh](https://github.com/cli/cli) with a consistent title, message body, labels, and backlinking to the tracking issue.
 
-[./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file, so you can know which libraries have been unblocked now that their dependencies have been updated.
+[./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file via [`purescript-package-graph`](https://github.com/JordanMartinez/purescript-package-graph), so you can know which libraries have been unblocked now that their dependencies have been updated.
 
 When setup correctly, the project structure should look like this:
 ```
