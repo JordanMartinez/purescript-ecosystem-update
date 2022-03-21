@@ -16,6 +16,11 @@ Breaking changes made in libraries are done at the same time as when breaking ch
 # If any fixes need to be done separately / after the fact
 # ./apply.sh 1 prelude ffi
 ./pr.sh 1 prelude
+
+# Once the PR is merged...
+echo "prelude" >> finished-dependencies.txt
+./mkLibDeps.sh
+# Do the next repo until finished
 ```
 
 [./init.sh](./init.sh) sets up all the tools you need to make the scripts work.
@@ -25,6 +30,8 @@ Breaking changes made in libraries are done at the same time as when breaking ch
 [./compile.sh](./compile.sh) compiles one repo and verifies that it builds, its tests pass, and any linting is checked.
 
 [./pr.sh](./pr.sh) opens a PR using the [GitHub CLI tool, gh](https://github.com/cli/cli) with a consistent title, message body, labels, and backlinking to the tracking issue.
+
+[./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file, so you can know which libraries have been unblocked now that their dependencies have been updated.
 
 [./apply.sh](./apply.sh) applies a single change to one repo. It's used to apply any one-time fixes if `forkAll.sh` missed it previously due to a bad script.
 
