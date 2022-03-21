@@ -28,7 +28,7 @@ REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
 function forkAll {
   local PARENT_DIR REMOTES_FILE
-  PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
+  PARENT_DIR=$(echo "$1" | sed 's|files/repos||; s/\.//g; s/txt//; s#/##g')
   REMOTES_FILE=$(cat "$1")
 
   mkdir -p "../$PARENT_DIR"
@@ -95,11 +95,11 @@ function forkAll {
   popd || (echo "popd on org dir failed" && exit 1)
 }
 
-forkAll "./repos/purescript-test.txt"
-# forkAll "./repos/purescript.txt"
-# forkAll "./repos/purescript-contrib.txt"
-# forkAll "./repos/purescript-web.txt"
-# forkAll "./repos/purescript-node.txt"
+forkAll "./files/repos/purescript-test.txt"
+# forkAll "./files/repos/purescript.txt"
+# forkAll "./files/repos/purescript-contrib.txt"
+# forkAll "./files/repos/purescript-web.txt"
+# forkAll "./files/repos/purescript-node.txt"
 
 # echo ""
 # echo "Remaining Steps:"

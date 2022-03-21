@@ -10,10 +10,10 @@ PACKAGES_DHALL_CONTENT="let upstream =
 
 in  upstream"
 
-REPO_URL_FILE_PS="$ROOT_DIR/repos/purescript.txt"
-REPO_URL_FILE_PS_CONTRIB="$ROOT_DIR/repos/purescript-contrib.txt"
-REPO_URL_FILE_PS_NODE="$ROOT_DIR/repos/purescript-web.txt"
-REPO_URL_FILE_PS_WEB="$ROOT_DIR/repos/purescript-node.txt"
+REPO_URL_FILE_PS="$ROOT_DIR/files/repos/purescript.txt"
+REPO_URL_FILE_PS_CONTRIB="$ROOT_DIR/files/repos/purescript-contrib.txt"
+REPO_URL_FILE_PS_NODE="$ROOT_DIR/files/repos/purescript-web.txt"
+REPO_URL_FILE_PS_WEB="$ROOT_DIR/files/repos/purescript-node.txt"
 
 
 # Determines whether to use 'master' or 'main'
