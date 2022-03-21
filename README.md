@@ -46,57 +46,6 @@ echo "prelude" >> finished-dependencies.txt
 
 [./apply.sh](./apply.sh) applies a single change to one repo. It's used to apply any one-time fixes if `forkAll.sh` missed it previously due to a bad script.
 
-## Context
-
-These instructions work only on the `purescript` organization repos, which use `bower`. These instructions will change when we work on the `purescript-contrib` organization repos (because it uses `spago`) and will likely change slightly after that when people work on updating the non-`purescript*` repos.
-
-This workflow makes heavy usage of GitHub's new CLI tool, `gh`, and bash scripts to speed up the manual process of cloning a repo, setting up the remote, making changes, and submitting a PR. You can submit a PR in less than 20 seconds when the library doesn't need to be updated.
-
-This workflow assumes that you will use two terminal sessions/windows/tabs to update a library: one where the present working directory is this folder (i.e. `master`) and the other will be the library you rae updating (e.g. `purescript-prelude`). The `purs` binary is stored in this folder (i.e. `master`) (as opposed to the folder that stores a library, such as `purescript-prelude`), so that you don't need to deal with path mangling. Rather, you will run `./compile.sh <packageName>` to compile the package properly.
-
-At this time, `package-graph.js` isn't necessary as `libDeps.txt` provides the information we currently need at this stage of the update. It may be needed in the future, but I will likely just push a change to this repo that you can then fetch to get that new information.
-
-## What needs to be updated?
-
-### Things specific to the `purescript` organization repos:
-
-These are all automated via the `./setupRemote.sh` file:
-- `.travis.yml` file's `TAG` needs to be updated to `v0.14.0-rc3` or whatever the latest release candidate.
-- all dependencies in the `bower.json` file need to be updated to `master`. **Note:** while this is automated, it might also incorrectly update unrelated version bounds to `master`.
-- `package.json` file's `purescript-psa` version needs to be updated to `v0.8.0`.
-
-### Things specific to `v0.14.0`
-
-Any usage of a kind-specific proxy should be replaced with the "forall solution." This will reduce code breakage and give people time to update to the `Proxy` type.
-```purescript
--- Before
-foo :: forall s. IsSymbol s => SProxy s -> --
-foo _ = --
-
--- After
-foo :: forall sproxy s. IsSymbol s => sproxy s -> --
-foo _ = --
-```
-
-Usages of `# Type` should be replaced with `Row Type`.
-
-Usages of `RowList` will need to be replaced with `RowList Type`.
-
-Usages of `unsafeCoerce` should be updated to use `coerce` from [`safe-coerce`](https://github.com/purescript/purescript-safe-coerce) when possible.
-
-Kind signatures may need to be added to various types and type classes:
-```purescript
--- data, type, newtype end in 'Type'
-data TypeName :: forall k. k -> Type
-data TypeName k = TypeConstructorName
-
--- type classes' kind signature ends in 'Constraint'
-class TypeClass :: forall k. k -> Type -> Symbol -> Constraint
-class TypeClass anyKind aType aSymbol
-```
-
-All other breaking changes, documentation, and other issues should be merged AFTER the PR that updates the library to `v0.14.0` is merged.
-
 ## Procedures
 
 Note: the instructions below are outdated. All files mentioned below have been suffixed with "Bower" as they won't be the exact commands one will use if using "Spago". So, I renamed the original (e.g. "setupRemote.sh" -> "setupBower.sh"), duplicated the file, prefixedthat file with "Spago" (e.g. "setupRemote.sh" -> "setupSpago.sh") and updated the Spago file to work on Spago. There are a few other assumptions made in this process that will be documented later.
