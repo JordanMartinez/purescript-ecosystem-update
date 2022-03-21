@@ -9,6 +9,9 @@ set -xuo pipefail
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
+PATH="$(pwd):$PATH"
+export PATH
+
 source src/bash/lib/migrateFfiToEs6.sh
 
 # Regenerate JQ script for updating bower.json file
