@@ -12,14 +12,14 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 PATH="$(pwd):$PATH"
 export PATH
 
-source src/bash/lib/migrateFfiToEs6.sh
+source "$ROOT_DIR/src/bash/lib/migrateFfiToEs6.sh"
 
 # Regenerate JQ script for updating bower.json file
-source src/bash/lib/updateDeps.sh "0"
+source "$ROOT_DIR/src/bash/lib/updateDeps.sh" "0"
 
-source src/bash/lib/updateEslint.sh "continue"
-source src/bash/lib/updateGhActions.sh
-source src/bash/lib/updatePackageJson.sh
+source "$ROOT_DIR/src/bash/lib/updateEslint.sh" "continue"
+source "$ROOT_DIR/src/bash/lib/updateGhActions.sh"
+source "$ROOT_DIR/src/bash/lib/updatePackageJson.sh"
 
 function forkAll {
   local PARENT_DIR REMOTES_FILE

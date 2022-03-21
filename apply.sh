@@ -17,15 +17,12 @@
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
-source src/bash/lib/migrateFfiToEs6.sh
-
-# Regenerate JQ script for updating bower.json file
-source src/bash/lib/updateDeps.sh "1"
-
-source src/bash/lib/updateEslint.sh "fail"
-source src/bash/lib/updateGhActions.sh
-source src/bash/lib/updatePackageJson.sh
-source src/bash/lib/checkForDeprecated.sh
+source "$ROOT_DIR/src/bash/lib/migrateFfiToEs6.sh"
+source "$ROOT_DIR/src/bash/lib/updateDeps.sh" "1"
+source "$ROOT_DIR/src/bash/lib/updateEslint.sh" "fail"
+source "$ROOT_DIR/src/bash/lib/updateGhActions.sh"
+source "$ROOT_DIR/src/bash/lib/updatePackageJson.sh"
+source "$ROOT_DIR/src/bash/lib/checkForDeprecated.sh"
 
 PATH="$(pwd):$PATH"
 export PATH
