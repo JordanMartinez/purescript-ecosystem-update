@@ -18,7 +18,9 @@
 PATH="$(pwd):$PATH"
 export PATH
 
-JQ_SCRIPT_LOCATION=jq-script--update-bower-json.txt
+ROOT_DIR=$(dirname "$(readlink -f "$0")")
+
+JQ_SCRIPT_LOCATION="$ROOT_DIR/src/jq/update-bower-json.txt"
 source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "1"
 JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
 
