@@ -9,8 +9,19 @@ Breaking changes made in libraries are done at the same time as when breaking ch
 ## How: The intended workflow
 
 ```sh
+# Create a separate folder for containing both the scripts
+# and the local copies of the repos under their org-specific folder
+mkdir ps-libs
+cd ps-libs
+
+# Clone this repo and enter it
+git clone git@github.com:JordanMartinez/purescript-ecosystem-update.git 0.15
+cd 0.15
+
 ./init.sh
 ./forkall.sh
+
+
 # For each repo, the workflow looks like...
 ./compile.sh 1 prelude
 # If any fixes need to be done separately / after the fact
