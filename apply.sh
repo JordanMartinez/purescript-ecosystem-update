@@ -73,7 +73,11 @@ case "$3" in
   migrateFfiToEs6::main
   ;;
 "ci")
-  updateGhActions::main
+  if [ "$1" == "2" ]; then
+    updateGhActions::main "purescript-contrib"
+  else
+    updateGhActions::main "purescript-all-others"
+  fi
   ;;
 "clear-bower")
   if [ -f "bower.json" ]; then

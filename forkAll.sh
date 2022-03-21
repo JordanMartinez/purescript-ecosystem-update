@@ -31,7 +31,7 @@ function forkAll {
 
   for line in $REMOTES_FILE; do
     REPO_URL=$(echo "$line" | sed 's/git@github.com://g; s/.git$//g')
-    # REPO_ORG=$(echo "$REPO_URL" | cut -d '/' -f 1)
+    REPO_ORG=$(echo "$REPO_URL" | cut -d '/' -f 1)
     REPO_PROJ=$(echo "$REPO_URL" | cut -d '/' -f 2)
 
     gh repo fork "$REPO_URL" --clone=true
@@ -77,7 +77,7 @@ function forkAll {
       git push -u origin update-to-0.15
     fi
 
-    updateGhActions::main
+    updateGhActions::main "$REPO_ORG"
 
     updateDeps::main
 
