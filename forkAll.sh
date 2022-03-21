@@ -52,7 +52,9 @@ function forkAll {
       gh repo fork "$REPO_URL" --clone=false --org working-group-purescript-es
       git remote add wg "git@github.com:working-group-purescript-es/$REPO_PROJ.git"
       git fetch wg
-      if [ "$(git branch -r | grep -c 'wg/es-modules')" -gt 0 ]; then
+      if [ "$(git branch -r | grep -c 'wg/es-modules-libraries')" -gt 0 ]; then
+        git checkout wg/es-modules-libraries
+      elif [ "$(git branch -r | grep -c 'wg/es-modules')" -gt 0 ]; then
         git checkout wg/es-modules
       elif [ "$(git branch -r | grep -c 'origin/main')" -gt 0 ]; then
         git checkout origin/main
