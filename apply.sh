@@ -32,21 +32,25 @@ source src/bash/lib/checkForDeprecated.sh
 PATH="$(pwd):$PATH"
 export PATH
 
+function pushdOrExit {
+  pushd "$1" || (echo "'$1' does not exist. Did you run './forkAll.sh' yet for that directory?" && exit 1)
+}
+
 case "${1}" in
 0)
-  pushd "../purescript-test/purescript-$2"
+  pushdOrExit "../purescript-test/purescript-$2"
   ;;
 1)
-  pushd "../purescript/purescript-$2"
+  pushdOrExit "../purescript/purescript-$2"
   ;;
 2)
-  pushd "../purescript-contrib/purescript-$2"
+  pushdOrExit "../purescript-contrib/purescript-$2"
   ;;
 3)
-  pushd "../purescript-node/purescript-node-$2"
+  pushdOrExit "../purescript-node/purescript-node-$2"
   ;;
 4)
-  pushd "../purescript-web/purescript-web-$2"
+  pushdOrExit "../purescript-web/purescript-web-$2"
   ;;
 *)
   echo "$1 is not a valid option."
@@ -89,6 +93,6 @@ case "$3" in
   exit 1
 esac
 
-popd
+popd || echo "Could not popd"
 
 echo "Done"
