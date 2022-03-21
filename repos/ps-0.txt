@@ -1,4 +1,0 @@
-git@github.com:purescript/purescript-math.git
-git@github.com:purescript/purescript-partial.git
-git@github.com:purescript/purescript-type-equality.git
-git@github.com:purescript/purescript-unsafe-coerce.git

@@ -88,7 +88,6 @@ function forkAll {
   popd || (echo "popd on org dir failed" && exit 1)
 }
 
-# forkAll "./repos/ps-0.txt" "master"
 # forkAll "./repos/purescript.txt" "master"
 forkAll "./repos/purescript-test.txt" "main"
 # forkAll "./repos/purescript-contrib.txt" "main"
