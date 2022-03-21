@@ -10,4 +10,4 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 # on a newline and then rerun this script
 
 # Produces the `libDeps.txt` file
-node "$ROOT_DIR/src/node/lib/package-graph.js" --input ./packages-0.14.7.json --force lib-deps --output ./libDeps.txt --deps ./finished-dependencies.txt
+node "$ROOT_DIR/src/node/lib/package-graph.js" --input "$ROOT_DIR/files/package-graph/packages-0.14.7.json" --force lib-deps --output "$ROOT_DIR/files/package-graph/libDeps.txt" --deps "$ROOT_DIR/files/package-graph/finished-dependencies.txt"

@@ -6,20 +6,24 @@
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
+ROOT_DIR=$(dirname "$(readlink -f "$0")")
+
+DEPS_CONTENT="$(cat "$ROOT_DIR/files/package-graph/libDeps.txt" | grep '^0')"
+
 case "${1}" in
 1)
-  cat ./libDeps.txt | grep '^0' | grep '/purescript/'
+  echo "$DEPS_CONTENT" | grep '/purescript/'
   ;;
 2)
-  cat ./libDeps.txt | grep '^0' | grep '/purescript-contrib/'
+  echo "$DEPS_CONTENT" | grep '/purescript-contrib/'
   ;;
 3)
-  cat ./libDeps.txt | grep '^0' | grep '/purescript-node/'
+  echo "$DEPS_CONTENT" | grep '/purescript-node/'
   ;;
 4)
-  cat ./libDeps.txt | grep '^0' | grep '/purescript-web/'
+  echo "$DEPS_CONTENT" | grep '/purescript-web/'
   ;;
 *)
-  cat ./libDeps.txt | grep '^0'
+  echo "$DEPS_CONTENT"
   ;;
 esac
