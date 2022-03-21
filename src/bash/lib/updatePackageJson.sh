@@ -16,15 +16,11 @@ function updatePackageJson::main {
     jq '
         if has("devDependencies") then
           .devDependencies |= (
-            if has("purescript-psa") then ."purescript-psa" = "^0.8.2" else . end |
+            if has("purescript-psa") then ."purescript-psa" = "^0.8.2" else . end
           )
         else . end
       ' package.json > $TMP_FILE && mv $TMP_FILE package.json
     git add package.json
     git commit -m "Update psa to 0.8.2"
-
-    if [ -f "$TMP_FILE" ]; then
-      rm "$TMP_FILE"
-    fi
   fi
 }
