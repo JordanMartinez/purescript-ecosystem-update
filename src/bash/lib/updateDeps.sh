@@ -98,7 +98,11 @@ function updateDeps::updateBower {
     echo "Updating all deps in 'bower.json' to 'master' or 'main'"
     local TMP_FILE
     TMP_FILE=bower.json.new
+
+    set +x
     jq "$(cat "$JQ_SCRIPT_LOCATION")" bower.json > "$TMP_FILE" && mv "$TMP_FILE" bower.json
+    set -x
+
     git add bower.json
     git commit -m "Update Bower dependencies to master or main"
   fi
