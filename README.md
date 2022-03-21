@@ -23,6 +23,8 @@ cd 0.15
 
 
 # For each repo, the workflow looks like...
+./next.sh 1
+
 ./compile.sh 1 prelude
 # If any fixes need to be done separately / after the fact
 # ./apply.sh 1 prelude ffi
@@ -41,13 +43,15 @@ echo "prelude" >> finished-dependencies.txt
 
 [./forkAll.sh](./forkAll.sh) forks all repos to your account, clones them to a local folder, and applies all updates to each repo in a consistent manner.
 
+[./next.sh](./next.sh) sees which package(s) can be updated since all their dependencies have been updated.
+
 [./compile.sh](./compile.sh) compiles one repo and verifies that it builds, its tests pass, and any linting is checked.
+
+[./apply.sh](./apply.sh) applies a single change to one repo. It's used to apply any one-time fixes if `forkAll.sh` missed it previously due to a bad script.
 
 [./pr.sh](./pr.sh) opens a PR using the [GitHub CLI tool, gh](https://github.com/cli/cli) with a consistent title, message body, labels, and backlinking to the tracking issue.
 
 [./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file, so you can know which libraries have been unblocked now that their dependencies have been updated.
-
-[./apply.sh](./apply.sh) applies a single change to one repo. It's used to apply any one-time fixes if `forkAll.sh` missed it previously due to a bad script.
 
 When setup correctly, the project structure should look like this:
 ```
