@@ -19,13 +19,13 @@ function migrateFfiToEs6::main {
     git add src test
     git commit -m "$MIGRATION_MSG"
     # Replace 'export var' with 'export const'
-    find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i '.bckup' 's/export var/export const/g'
-    find test -type f -wholename "**/*.js" -print0 | xargs -0 sed -i '.bckup' 's/export var/export const/g'
+    find src -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" -exec rm "{}.bckup" \;
+    find test -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" -exec rm "{}.bckup" \;
     git add src test
     git commit -m "$EXPORT_UPDATE_MSG"
     # Remove `"use strict";\n\n`
-    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
-    find test -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
+    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- "{}" \;
+    find test -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- "{}" \;
     git add src test
     git commit -m "$STRICT_FIX_MSG"
   elif [ -d "src" ]; then
@@ -34,11 +34,11 @@ function migrateFfiToEs6::main {
     git add src
     git commit -m "$MIGRATION_MSG"
 
-    find src -type f -wholename "**/*.js" -print0 | xargs -0 sed -i '.bckup' 's/export var/export const/g'
+    find src -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" -exec rm "{}.bckup" \;
     git add src
     git commit -m "$EXPORT_UPDATE_MSG"
 
-    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- {} \;
+    find src -type f -wholename "**/*.js" -print0 -exec node --input-type module -e "$REMOVE_USE_STRICT_SCRIPT" -- "{}" \;
     git add src
     git commit -m "$STRICT_FIX_MSG"
   fi

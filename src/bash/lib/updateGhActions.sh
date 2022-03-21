@@ -27,7 +27,8 @@ function updateGhActions::main {
 
 function updateGhActions::contrib {
   echo "Update ci.yml to use purescript unstable"
-  sed -i '.bckup' 's/          purs-tidy: "latest"/          purescript: "unstable"\n          purs-tidy: "latest"/' .github/workflows/ci.yml
+  sed -i'.bckup' 's/          purs-tidy: "latest"/          purescript: "unstable"\n          purs-tidy: "latest"/' .github/workflows/ci.yml
+  rm .github/workflows/ci.yml.bckup
   git add .github/workflows/ci.yml
   git commit -m "Update to CI to use 'unstable' purescript"
 
@@ -35,15 +36,18 @@ function updateGhActions::contrib {
   git add .github/workflows/ci.yml
   git commit -m "Add CI test: verify 'bower.json' file works via pulp"
 
-  sed -i '.bckup' 's/      - name: Run tests/#      - name: Run tests/; s/        run: npm run test/#        run: npm run test/' .github/workflows/ci.yml
+  sed -i'.bckup' 's/      - name: Run tests/#      - name: Run tests/; s/        run: npm run test/#        run: npm run test/' .github/workflows/ci.yml
+  rm .github/workflows/ci.yml.bckup
   git add .github/workflows/ci.yml
   git commit -m "Ignore spago-based tests (temporarily)"
 }
 
 function updateGhActions::core {
   echo "Update ci.yml to use purescript unstable"
-  sed -i '.bckup' 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
-  sed -i '.bckup' 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+  sed -i'.bckup' '
+    s/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/;
+    s/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+  rm .github/workflows/ci.yml.bckup
   git add .github/workflows/ci.yml
   git commit -m "Update to CI to use 'unstable' purescript"
 }
