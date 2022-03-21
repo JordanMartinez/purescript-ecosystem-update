@@ -8,6 +8,8 @@ Breaking changes made in libraries are done at the same time as when breaking ch
 
 ## How: The intended workflow
 
+### By Example
+
 ```sh
 # Create a separate folder for containing both the scripts
 # and the local copies of the repos under their org-specific folder
@@ -39,6 +41,8 @@ echo "prelude" >> finished-dependencies.txt
 # Do the next repo until finished
 ```
 
+### Script Overview
+
 [./init.sh](./init.sh) sets up all the tools you need to make the scripts work.
 
 [./forkAll.sh](./forkAll.sh) forks all repos to your account, clones them to a local folder, and applies all updates to each repo in a consistent manner.
@@ -52,6 +56,8 @@ echo "prelude" >> finished-dependencies.txt
 [./pr.sh](./pr.sh) opens a PR using the [GitHub CLI tool, gh](https://github.com/cli/cli) with a consistent title, message body, labels, and backlinking to the tracking issue.
 
 [./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file via [`purescript-package-graph`](https://github.com/JordanMartinez/purescript-package-graph), so you can know which libraries have been unblocked now that their dependencies have been updated.
+
+### Folder Structure
 
 When setup correctly, the project structure should look like this:
 ```
