@@ -33,19 +33,19 @@ function pushdOrExit {
 
 case "${1}" in
 0)
-  pushdOrExit "../purescript-test/purescript-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-test/purescript-$2"
   ;;
 1)
-  pushdOrExit "../purescript/purescript-$2"
+  pushdOrExit "$ROOT_DIR/../purescript/purescript-$2"
   ;;
 2)
-  pushdOrExit "../purescript-contrib/purescript-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-contrib/purescript-$2"
   ;;
 3)
-  pushdOrExit "../purescript-node/purescript-node-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-node/purescript-node-$2"
   ;;
 4)
-  pushdOrExit "../purescript-web/purescript-web-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-web/purescript-web-$2"
   ;;
 *)
   echo "$1 is not a valid option."
