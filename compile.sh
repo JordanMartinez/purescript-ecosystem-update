@@ -57,31 +57,39 @@ function compile::other {
   fi
 }
 
+function pushdOrExit {
+  pushd "$1" || (echo "'$1' does not exist. Did you run './forkAll.sh' yet for that directory?" && exit 1)
+}
+
+function popdOrExit {
+  popd || (echo "popd failed" && exit 1)
+}
+
 case "${1}" in
 0)
-  pushd ../purescript-test/purescript-$2
+  pushdOrExit "$ROOT_DIR/../purescript-test/purescript-$2"
   compile::other
-  popd
+  popdOrExit
   ;;
 1)
-  pushd ../purescript/purescript-$2
+  pushdOrExit "$ROOT_DIR/../purescript/purescript-$2"
   compile::core
-  popd
+  popdOrExit
   ;;
 2)
-  pushd ../purescript-contrib/purescript-$2
+  pushdOrExit "$ROOT_DIR/../purescript-contrib/purescript-$2"
   compile::other
-  popd
+  popdOrExit
   ;;
 3)
-  pushd ../purescript-node/purescript-node-$2
+  pushdOrExit "$ROOT_DIR/../purescript-node/purescript-node-$2"
   compile::other
-  popd
+  popdOrExit
   ;;
 4)
-  pushd ../purescript-web/purescript-web-$2
+  pushdOrExit "$ROOT_DIR/../purescript-web/purescript-web-$2"
   compile::other
-  popd
+  popdOrExit
   ;;
 esac
 
