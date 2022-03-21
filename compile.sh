@@ -20,9 +20,7 @@ export PATH
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
-JQ_SCRIPT_LOCATION="$ROOT_DIR/src/jq/update-bower-json.txt"
-source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "1"
-JQ_SCRIPT_UPDATE_BOWER_JSON=$(cat "$JQ_SCRIPT_LOCATION")
+source "$ROOT_DIR/src/bash/lib/updateDeps.sh" "1"
 
 function compile::core {
   # This is based on what was the `.travis.yml` file in the `purescript-prelude` repo
