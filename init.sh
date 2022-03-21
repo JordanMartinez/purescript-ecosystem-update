@@ -13,9 +13,9 @@ gh auth login
 gh config set git_protocol ssh
 
 # Download the PureScript release based on `PS_TAG`
-export PS_TAG=v0.15.0-alpha-02
-export OUTPUT=./purescript.tar.gz
-export TAR_DIR=./purescript
+PS_TAG=v0.15.0-alpha-02
+OUTPUT=./purescript.tar.gz
+TAR_DIR=./purescript
 
 # Download and extract the archive
 curl --location --output $OUTPUT https://github.com/purescript/purescript/releases/download/$PS_TAG/linux64.tar.gz
