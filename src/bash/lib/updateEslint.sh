@@ -14,9 +14,10 @@ function updateEslint::lint {
 }
 
 # Updates the `.eslintrc.json` file
-# by checking whether the difference between the
-# current file and the desired one match.
-# (This uses a pre-computed diff).
+# by checking whether the file matches
+# a saved one (e.g. `1-expected.json`)
+# and uses the updated one that corresponds
+# to that saved one (e.g. `1.json`).
 # If so, overwrites current one with desired one.
 function updateEslint::main {
   if [ -f ".eslintrc.json" ]; then
