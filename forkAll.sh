@@ -23,12 +23,10 @@ source src/bash/lib/updatePackageJson.sh
 
 REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
-
 function forkAll {
-  local PARENT_DIR REMOTES_FILE DEFAULT_BRANCH_NAME
+  local PARENT_DIR REMOTES_FILE
   PARENT_DIR=$(echo "$1" | sed 's/repos//; s/\.//g; s/txt//; s#/##g')
   REMOTES_FILE=$(cat "$1")
-  DEFAULT_BRANCH_NAME=$2
 
   mkdir -p "../$PARENT_DIR"
   pushd "../$PARENT_DIR" || (echo "pushd failed for '../$PARENT_DIR'" && exit)
@@ -58,8 +56,10 @@ function forkAll {
       git fetch wg
       if [ "$(git branch -r | grep -c 'wg/es-modules')" -gt 0 ]; then
         git checkout wg/es-modules
+      elif [ "$(git branch -r | grep -c 'origin/main')" -gt 0 ]; then
+        git checkout origin/main
       else
-        git checkout "origin/$DEFAULT_BRANCH_NAME"
+        git checkout origin/master
       fi
       git switch -c es-modules-libraries
       git push -u wg es-modules-libraries
@@ -70,7 +70,11 @@ function forkAll {
     else
       # No JS Files here!
       echo "$REPO_URL does not have any JS files"
-      git checkout "origin/$DEFAULT_BRANCH_NAME"
+      if [ "$(git branch -r | grep -c 'origin/main')" -gt 0 ]; then
+        git checkout origin/main
+      else
+        git checkout origin/master
+      fi
       git switch -c update-to-0.15
       git push -u origin update-to-0.15
     fi
@@ -88,11 +92,11 @@ function forkAll {
   popd || (echo "popd on org dir failed" && exit 1)
 }
 
-forkAll "./repos/purescript-test.txt" "main"
-# forkAll "./repos/purescript.txt" "master"
-# forkAll "./repos/purescript-contrib.txt" "main"
-# forkAll "./repos/purescript-web.txt" "master"
-# forkAll "./repos/purescript-node.txt" "master"
+forkAll "./repos/purescript-test.txt"
+# forkAll "./repos/purescript.txt"
+# forkAll "./repos/purescript-contrib.txt"
+# forkAll "./repos/purescript-web.txt"
+# forkAll "./repos/purescript-node.txt"
 
 # echo ""
 # echo "Remaining Steps:"
