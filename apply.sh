@@ -87,6 +87,11 @@ case "$3" in
     echo "No bower.json file found"
   fi
   ;;
+"bi-dev")
+  bower install -D "purescript-$4"
+  git add bower.json
+  git commit -m "Installed bower dev dependency: purescript-$4"
+  ;;
 "check")
   checkForDeprecated::main
   ;;
