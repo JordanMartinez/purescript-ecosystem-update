@@ -57,6 +57,18 @@ echo "prelude" >> finished-dependencies.txt
 
 [./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file via [`purescript-package-graph`](https://github.com/JordanMartinez/purescript-package-graph), so you can know which libraries have been unblocked now that their dependencies have been updated.
 
+### The `org-num` arg
+
+`compile.sh`, `apply.sh`, `pr.sh`, and `next.sh` all take an integer as their first argument. The integer corresponds to the directory and GitHub organization (except for `0`, which is used for testing) that stores the repo.
+
+| org-number | folder | purpose | Example |
+| - | - | - | - |
+| 0 | `purescript-test` | Used to test the various scripts on a subset of repos before `./forkAll.sh` is used | `./compile 0 prelude` |
+| 1 | `purescript` | Used to run a command on one of the core libraries |  `./compile 1 prelude` |
+| 2 | `purescript-contrib` | Used to run a command on one of the contrib libraries |  `./compile 2 aff` |
+| 3 | `purescript-node` | Used to run a command on one of the `purescript-node` libraries |  `./compile 3 node-buffer` |
+| 4 | `purescript-web` | Used to run a command on one of the `purescript-web` libraries |  `./compile 4 web-xhr` |
+
 ### Folder Structure
 
 When setup correctly, the project structure should look like this:
