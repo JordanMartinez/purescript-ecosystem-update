@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
+REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
+
 # Uses a combination of `lebab`, `sed`
 # and a Node script to update all FFI
 # to ES modules. This will work 95%

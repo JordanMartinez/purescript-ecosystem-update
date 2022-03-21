@@ -21,8 +21,6 @@ source src/bash/lib/updateEslint.sh "continue"
 source src/bash/lib/updateGhActions.sh
 source src/bash/lib/updatePackageJson.sh
 
-REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
-
 function forkAll {
   local PARENT_DIR REMOTES_FILE
   PARENT_DIR=$(echo "$1" | sed 's|files/repos||; s/\.//g; s/txt//; s#/##g')
