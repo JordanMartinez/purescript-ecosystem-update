@@ -6,8 +6,8 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 # the latest alpha PS release
 function updateGhActions::main {
   echo "Update ci.yml to use purescript unstable"
-  sed -i 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
-  sed -i 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+  sed -i '.bckup' 's/        uses: purescript-contrib\/setup-purescript@main/        uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
+  sed -i '.bckup' 's/      - uses: purescript-contrib\/setup-purescript@main/      - uses: purescript-contrib\/setup-purescript@main\n        with:\n          purescript: "unstable"/' .github/workflows/ci.yml
   git add .github/workflows/ci.yml
   git commit -m "Update to CI to use 'unstable' purescript"
 }

@@ -8,7 +8,7 @@
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
-npm i -g pulp@16.0.0-0 bower purescript-psa spago esbuild lebab
+npm i -g pulp@16.0.0-0 bower purescript-psa spago esbuild lebab eslint
 gh auth login
 gh config set git_protocol ssh
 
