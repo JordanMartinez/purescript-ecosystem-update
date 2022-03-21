@@ -27,6 +27,9 @@ cd 0.15
 # If any fixes need to be done separately / after the fact
 # ./apply.sh 1 prelude ffi
 ./pr.sh 1 prelude
+     # Q1: Choose the actual repo
+     # Q2: Choose your fork
+     # Q3: Choose 'Submit'
 
 # Once the PR is merged...
 echo "prelude" >> finished-dependencies.txt
