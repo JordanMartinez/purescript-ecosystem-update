@@ -18,8 +18,8 @@ function migrateFfiToEs6::main {
     git add src test
     git commit -m "$MIGRATION_MSG"
     # Replace 'export var' with 'export const'
-    find src -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" -exec rm "{}.bckup" \;
-    find test -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" -exec rm "{}.bckup" \;
+    find src -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" \; -exec rm "{}.bckup" \;
+    find test -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" \; -exec rm "{}.bckup" \;
     git add src test
     git commit -m "$EXPORT_UPDATE_MSG"
     # Remove `"use strict";\n\n`
@@ -33,7 +33,7 @@ function migrateFfiToEs6::main {
     git add src
     git commit -m "$MIGRATION_MSG"
 
-    find src -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" -exec rm "{}.bckup" \;
+    find src -type f -wholename "**/*.js" -print0 -exec sed -i'.bckup' 's/export var/export const/g' "{}" \; -exec rm "{}.bckup" \;
     git add src
     git commit -m "$EXPORT_UPDATE_MSG"
 
