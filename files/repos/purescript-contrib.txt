@@ -45,4 +45,3 @@ git@github.com:purescript-contrib/purescript-uint.git
 git@github.com:purescript-contrib/purescript-unicode.git
 git@github.com:purescript-contrib/purescript-unsafe-reference.git
 git@github.com:purescript-contrib/purescript-uri.git
-git@github.com:purescript-contrib/purescript-vim.git
