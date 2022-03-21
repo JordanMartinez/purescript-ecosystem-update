@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
+# ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
 
 ADD_PULP_AND_BOWER_TO_CI="
       - name: Verify Bower & Pulp
