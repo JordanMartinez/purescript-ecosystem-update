@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ROOT_DIR=$(dirname "$(readlink -f "$0")")
+ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
 
 EXIT_IF_LINT_FAILURE="$1"
 

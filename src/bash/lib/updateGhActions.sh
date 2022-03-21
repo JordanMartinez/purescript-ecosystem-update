@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ROOT_DIR=$(dirname "$(readlink -f "$0")")
+ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
 
 # Update the `.github/workflows/ci.yml` file to specifically use
 # the latest alpha PS release
