@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
+ROOT_DIR=$(dirname "$(readlink -f "$0")")
 REMOVE_USE_STRICT_SCRIPT=$(cat "$ROOT_DIR/src/node/lib/remove-use-strict.js")
 
 # Uses a combination of `lebab`, `sed`
