@@ -22,5 +22,9 @@ function updatePackageJson::main {
       ' package.json > $TMP_FILE && mv $TMP_FILE package.json
     git add package.json
     git commit -m "Update psa to 0.8.2"
+
+    if [ -f "$TMP_FILE" ]; then
+      rm "$TMP_FILE"
+    fi
   fi
 }
