@@ -1,8 +1,0 @@
-2c2
-<   "env": { "browser": true, "commonjs": true },
----
->   "env": { "browser": true },
-4c4
-<   "parserOptions": { "ecmaVersion": 5 },
----
->   "parserOptions": { "ecmaVersion": 6, "sourceType": "module" },

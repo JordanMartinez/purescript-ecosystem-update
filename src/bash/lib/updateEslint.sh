@@ -20,19 +20,15 @@ function updateEslint::lint {
 # If so, overwrites current one with desired one.
 function updateEslint::main {
   if [ -f ".eslintrc.json" ]; then
-    local TEMP_FILE
-    TEMP_FILE=.eslintrc.json.new
 
     function updateEslint::main::checkAndCommit {
-      local FILE_NUM ESLINTRC_CONTENT ESLINT_DIFF_EXPECTED ESLINT_DIFF_ACTUAL
+      local FILE_NUM ESLINT_EXPECTED ESLINT_NEW_CONTENT
       FILE_NUM="$1"
-      ESLINTRC_CONTENT=$(cat "$ROOT_DIR/files/eslint/$FILE_NUM.json")
-      ESLINT_DIFF_EXPECTED=$(cat "$ROOT_DIR/files/eslint/$FILE_NUM.json.diff")
-      echo "$ESLINTRC_CONTENT" > "$TEMP_FILE"
-      ESLINT_DIFF_ACTUAL=$(diff .eslintrc.json $TEMP_FILE)
-      if [ "$ESLINT_DIFF_EXPECTED" == "$ESLINT_DIFF_ACTUAL" ]; then
+      ESLINT_EXPECTED=$(cat "$ROOT_DIR/files/eslint/$FILE_NUM-expected.json")
+      ESLINT_NEW_CONTENT=$(cat "$ROOT_DIR/files/eslint/$FILE_NUM.json")
+      if [ "$(cat .eslintrc.json)" == "$ESLINT_EXPECTED" ]; then
         echo "Match found on $FILE_NUM"
-        mv "$TEMP_FILE" .eslintrc.json
+        echo "$ESLINT_NEW_CONTENT" > .eslintrc.json
 
         case "$EXIT_IF_LINT_FAILURE" in
           "fail")
@@ -50,10 +46,6 @@ function updateEslint::main {
     }
 
     updateEslint::main::checkAndCommit "1"
-    updateEslint::main::checkAndCommit "2"
-    updateEslint::main::checkAndCommit "3"
-    updateEslint::main::checkAndCommit "4"
-    updateEslint::main::checkAndCommit "5"
   else
     echo "No .eslintrc.json file found. Skipping eslint update."
   fi
