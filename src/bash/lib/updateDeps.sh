@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-ROOT_DIR=$(dirname "$(readlink -f "$0")")
+ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")")"
 
-JQ_SCRIPT_LOCATION=$1
-DISABLE_SCRIPT_UPDATE=$2
+DISABLE_SCRIPT_UPDATE=$1
+
+JQ_SCRIPT_LOCATION="$ROOT_DIR/src/jq/update-bower-json.txt"
 
 PACKAGES_DHALL_CONTENT="let upstream =
       https://raw.githubusercontent.com/purescript/package-sets/prepare-0.15/src/packages.dhall

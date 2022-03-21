@@ -20,9 +20,7 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 source src/bash/lib/migrateFfiToEs6.sh
 
 # Regenerate JQ script for updating bower.json file
-# and store results in JQ_SCRIPT_UPDATE_BOWER_JSON
-JQ_SCRIPT_LOCATION="$ROOT_DIR/src/jq/update-bower-json.txt"
-source src/bash/lib/updateDeps.sh "$JQ_SCRIPT_LOCATION" "1"
+source src/bash/lib/updateDeps.sh "1"
 
 source src/bash/lib/updateEslint.sh "fail"
 source src/bash/lib/updateGhActions.sh
