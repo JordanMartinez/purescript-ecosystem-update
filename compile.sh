@@ -21,6 +21,7 @@ export PATH
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
 source "$ROOT_DIR/src/bash/lib/updateDeps.sh" "1"
+source "$ROOT_DIR/src/bash/lib/updateEslint.sh"
 
 function compile::core {
   # This is based on what was the `.travis.yml` file in the `purescript-prelude` repo
@@ -29,12 +30,7 @@ function compile::core {
   npm run -s build
   bower install
   npm run -s test --if-present
-  if [ -d "src" ]; then
-    eslint src
-  fi
-  if [ -d "test" ]; then
-    eslint test
-  fi
+  updateEslint::lint
 }
 
 function compile::other {
@@ -49,12 +45,7 @@ function compile::other {
     spago build -u "--strict"
     spago test
   fi
-  if [ -d "src" ]; then
-    eslint src
-  fi
-  if [ -d "test" ]; then
-    eslint test
-  fi
+  updateEslint::lint
 }
 
 function pushdOrExit {

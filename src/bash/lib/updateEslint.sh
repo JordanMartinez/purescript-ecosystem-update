@@ -4,6 +4,15 @@ ROOT_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")"
 
 EXIT_IF_LINT_FAILURE="$1"
 
+function updateEslint::lint {
+  if [ -d "src" ] && [ "$(find src/ -type f -name '*.js' 2>/dev/null | wc -l)" -gt 0 ]; then
+    eslint src
+  fi
+  if [ -d "test" ] && [ "$(find test/ -type f -name '*.js' 2>/dev/null | wc -l)" -gt 0 ]; then
+    eslint src
+  fi
+}
+
 # Updates the `.eslintrc.json` file
 # by checking whether the difference between the
 # current file and the desired one match.
@@ -27,12 +36,7 @@ function updateEslint::main {
 
         case "$EXIT_IF_LINT_FAILURE" in
           "fail")
-            if [ -d "src" ]; then
-              eslint src
-            fi
-            if [ -d "test" ]; then
-              eslint src
-            fi
+            updateEslint::lint
             ;;
           *)
             echo "Skipping lint check"
