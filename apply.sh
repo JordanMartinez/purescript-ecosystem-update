@@ -4,16 +4,19 @@
 # 2. Lints the javascript code
 
 # Expected usage
-#     ./apply.sh 1 prelude
-#     ./apply.sh 2 aff
-#     ./apply.sh 3 fs
-#     ./apply.sh 4 xhr
-# ... where ...
+#     ./apply.sh <org-num> <package-name> <fix-name>
+# ... where <org-num> is...
 #   0 - purescript-test
 #   1 - purescript
 #   2 - purescript-contrib
 #   3 - purescript-node
 #   4 - purescript-web
+#
+# ... <package-name> is the repo's name excluding `purescript-`
+#                    or `purescript-node-`/`purescript-web-`
+#                    if <org-num> is 3 or 4.
+#
+# ... <fix-name> is the actions listed at the bottom of this script.
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
