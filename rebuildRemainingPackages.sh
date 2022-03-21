@@ -6,7 +6,9 @@
 # See https://wizardzines.com/comics/bash-errors/
 set -euo pipefail
 
-DEPS=./finished-dependencies.txt
+ROOT_DIR=$(dirname "$(readlink -f "$0")")
+
+DEPS="$ROOT_DIR/finished-dependencies.txt"
 
 # Overwrite DEPS and add proxy and generics-rep to file
 echo "" >$DEPS
@@ -25,5 +27,5 @@ echo "Done."
 
 echo "Calculating unblocked libraries"
 # Now calculate the ones that are unblocked
-node ./package-graph.js --input ./packageSet.json --force lib-deps --output ./libDeps.txt --deps $DEPS
+node "$ROOT_DIR/src/node/lib/package-graph.js" --input ./packageSet.json --force lib-deps --output ./libDeps.txt --deps $DEPS
 echo "Done."
