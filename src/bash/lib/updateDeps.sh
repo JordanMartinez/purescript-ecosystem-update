@@ -122,7 +122,7 @@ function updateDeps::updateSpago {
     local TMP_FILE
     TMP_FILE=spago.dhall.tmp
     sed '
-      /, "psci-support"/d;
+      /^  , "psci-support"/d;
       s/ "psci-support"//;
       s/"psci-support" //;
       s/ dependencies = \[ \]/ dependencies = [ ] : List Text/;
