@@ -54,6 +54,7 @@ function updateEslint::main {
     updateEslint::main::checkAndCommit "6"
     updateEslint::main::checkAndCommit "7"
     updateEslint::main::checkAndCommit "8"
+    updateEslint::main::checkAndCommit "9"
   else
     echo "No .eslintrc.json file found. Skipping eslint update."
   fi
