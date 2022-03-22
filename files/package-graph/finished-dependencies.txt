@@ -109,3 +109,7 @@ node-url
 posix-types
 node-streams
 node-process
+
+
+canvas
+web-events
