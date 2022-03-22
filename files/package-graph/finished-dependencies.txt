@@ -101,6 +101,7 @@ aff-coroutines
 formatters
 js-date
 uri
+react-dom
 
 
 node-buffer
@@ -115,3 +116,5 @@ canvas
 web-events
 web-dom
 web-storage
+web-dom-parser
+web-encoding
