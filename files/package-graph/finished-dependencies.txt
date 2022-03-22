@@ -82,3 +82,7 @@ media-types
 pathy
 precise
 profunctor-lenses
+react
+these
+unicode
+unsafe-reference
