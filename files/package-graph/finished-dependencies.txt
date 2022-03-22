@@ -86,3 +86,4 @@ react
 these
 unicode
 unsafe-reference
+uint
