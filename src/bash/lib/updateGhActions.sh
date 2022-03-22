@@ -38,7 +38,11 @@ function updateGhActions::contrib {
   git add .github/workflows/ci.yml
   git commit -m "Add CI test: verify 'bower.json' file works via pulp"
 
-  sed -i'.bckup' 's/      - name: Run tests/#      - name: Run tests/; s/        run: npm run test/#        run: npm run test/' .github/workflows/ci.yml
+  sed -i'.bckup' '
+    s/      - name: Run tests/#      - name: Run tests/;
+    s/        run: npm run test/#        run: npm run test/;
+    s/        run: spago test --no-install/#        run: spago test --no-install/;
+    ' .github/workflows/ci.yml
   rm .github/workflows/ci.yml.bckup
   git add .github/workflows/ci.yml
   git commit -m "Ignore spago-based tests (temporarily)"
