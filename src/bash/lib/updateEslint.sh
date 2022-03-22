@@ -30,6 +30,8 @@ function updateEslint::main {
       if [ "$(cat .eslintrc.json)" == "$ESLINT_EXPECTED" ]; then
         echo "Match found on $FILE_NUM"
         echo "$ESLINT_NEW_CONTENT" > .eslintrc.json
+        git add .eslintrc.json
+        git commit -m "Update .eslintrc.json to ES6"
 
         case "$EXIT_IF_LINT_FAILURE" in
           "fail")
@@ -39,8 +41,6 @@ function updateEslint::main {
             echo "Skipping lint check"
             ;;
         esac
-        git add .eslintrc.json
-        git commit -m "Update .eslintrc.json to ES6"
       else
         echo "Match failed for $FILE_NUM"
       fi
