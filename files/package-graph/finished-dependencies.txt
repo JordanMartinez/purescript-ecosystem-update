@@ -63,3 +63,4 @@ aff
 argonaut-core
 options
 nullable
+arraybuffer-types
