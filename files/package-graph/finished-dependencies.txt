@@ -87,3 +87,6 @@ these
 unicode
 unsafe-reference
 uint
+argonaut-traversals
+float32
+
