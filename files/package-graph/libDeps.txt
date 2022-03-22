@@ -1,5 +1,4 @@
 0  abides                           https://github.com/athanclark/purescript-abides.git                            []
-0  aff-bus                          https://github.com/purescript-contrib/purescript-aff-bus.git                   []
 0  aff-promise                      https://github.com/nwolverson/purescript-aff-promise.git                       []
 0  ansi                             https://github.com/hdgarrood/purescript-ansi.git                               []
 0  argonaut-generic                 https://github.com/purescript-contrib/purescript-argonaut-generic.git          []
