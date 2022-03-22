@@ -73,5 +73,9 @@ fixed-points
 freet
 http-methods
 fork
+js-timers
+js-uri
+machines
+matryoshka
 
 
