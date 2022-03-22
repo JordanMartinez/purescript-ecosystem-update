@@ -77,12 +77,12 @@ case "${1}" in
   popdOrExit
   ;;
 3)
-  pushdOrExit "$ROOT_DIR/../purescript-node/purescript-node-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-node/purescript-$2"
   compile::other
   popdOrExit
   ;;
 4)
-  pushdOrExit "$ROOT_DIR/../purescript-web/purescript-web-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-web/purescript-$2"
   compile::other
   popdOrExit
   ;;
