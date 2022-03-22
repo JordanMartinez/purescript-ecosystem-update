@@ -121,10 +121,13 @@ function updateDeps::updateSpago {
   if [ -f "spago.dhall" ]; then
     local TMP_FILE
     TMP_FILE=spago.dhall.tmp
-    sed '/, "psci-support"/d' spago.dhall > $TMP_FILE && mv $TMP_FILE spago.dhall
-    sed 's/ "psci-support"//' spago.dhall > $TMP_FILE && mv $TMP_FILE spago.dhall
-    sed 's/"psci-support" //' spago.dhall > $TMP_FILE && mv $TMP_FILE spago.dhall
-    sed 's/ dependencies = \[ \]/ dependencies = [ ] : List Text/' spago.dhall > $TMP_FILE && mv $TMP_FILE spago.dhall
+    sed '
+      /, "psci-support"/d;
+      s/ "psci-support"//;
+      s/"psci-support" //;
+      s/ dependencies = \[ \]/ dependencies = [ ] : List Text/;
+      s/ dependencies = \[ \] : List Text : List Text/ dependencies = [ ] : List Text/;
+      ' spago.dhall > $TMP_FILE && mv $TMP_FILE spago.dhall
     git add spago.dhall
     git commit -m "Removed unneeded 'psci-support' package"
   fi
