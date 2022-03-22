@@ -59,16 +59,17 @@ function updateDependencies::recalcBowerRepoBranches {
     {
       echo "if has(\"dependencies\") then .dependencies |= ("
       cat "$DEPS_FILE"
-      # Sigh... fix filterable
-      # and js-uri
+      # Sigh... fix filterable, js-uri, and web-promise
       echo "  if has(\"purescript-filterable\") then .\"purescript-filterable\" |= \"main\" else . end |"
       echo "  if has(\"purescript-js-uri\") then .\"purescript-js-uri\" |= \"https://github.com/purescript-contrib/purescript-js-uri.git#main\" else . end |"
+      echo "  if has(\"purescript-web-promise\") then .\"purescript-web-promise\" |= \"https://github.com/purescript-web/purescript-web-promise.git#master\" else . end |"
       echo "  ."
       echo ") else . end | "
       echo " if has (\"devDependencies\") then .devDependencies |= ("
       cat "$DEV_DEPS_FILE"
       echo "  if has(\"purescript-filterable\") then .\"purescript-filterable\" |= \"main\" else . end |"
       echo "  if has(\"purescript-js-uri\") then .\"purescript-js-uri\" |= \"https://github.com/purescript-contrib/purescript-js-uri.git#main\" else . end |"
+      echo "  if has(\"purescript-web-promise\") then .\"purescript-web-promise\" |= \"https://github.com/purescript-web/purescript-web-promise.git#master\" else . end |"
       echo "  ."
       echo ") else . end"
     } > "$JQ_SCRIPT_LOCATION"

@@ -137,6 +137,7 @@ if has("dependencies") then .dependencies |= (
   if has("purescript-posix-types") then ."purescript-posix-types" |= "master" else . end |
   if has("purescript-filterable") then ."purescript-filterable" |= "main" else . end |
   if has("purescript-js-uri") then ."purescript-js-uri" |= "https://github.com/purescript-contrib/purescript-js-uri.git#main" else . end |
+  if has("purescript-web-promise") then ."purescript-web-promise" |= "https://github.com/purescript-web/purescript-web-promise.git#master" else . end |
   .
 ) else . end | 
  if has ("devDependencies") then .devDependencies |= (
@@ -278,5 +279,6 @@ if has("dependencies") then .dependencies |= (
   if has("purescript-posix-types") then ."purescript-posix-types" |= "master" else . end |
   if has("purescript-filterable") then ."purescript-filterable" |= "main" else . end |
   if has("purescript-js-uri") then ."purescript-js-uri" |= "https://github.com/purescript-contrib/purescript-js-uri.git#main" else . end |
+  if has("purescript-web-promise") then ."purescript-web-promise" |= "https://github.com/purescript-web/purescript-web-promise.git#master" else . end |
   .
 ) else . end
