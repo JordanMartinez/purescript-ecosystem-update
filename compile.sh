@@ -39,11 +39,15 @@ function compile::other {
   if [ -f "bower.json" ]; then
     bower install
     pulp build -- "--strict"
-    pulp test -- "--strict"
+    if [ -d "test" ]; then
+      pulp test -- "--strict"
+    fi
   fi
   if [ -f "spago.dhall" ]; then
     spago build -u "--strict"
-    spago test
+    if [ -d "test" ]; then
+      spago test -u "--strict"
+    fi
   fi
   updateEslint::lint
 }
