@@ -89,4 +89,13 @@ unsafe-reference
 uint
 argonaut-traversals
 float32
+argonaut
+coroutines
+arraybuffer
+strings-extra
+form-urlencoded
+parsing
+string-parsers
+
+
 
