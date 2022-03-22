@@ -70,6 +70,8 @@ aff-bus
 argonaut-generic
 concurrent-queues
 fixed-points
-
+freet
+http-methods
+fork
 
 
