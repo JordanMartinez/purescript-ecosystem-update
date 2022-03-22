@@ -23,6 +23,21 @@ case "${1}" in
 4)
   echo "$DEPS_CONTENT" | grep '/purescript-web/'
   ;;
+"core")
+  grep '/purecript/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+  ;;
+"contrib")
+  grep '/purecript-contrib/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+  ;;
+"node")
+  grep '/purecript-node/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+  ;;
+"web")
+  grep '/purecript-web/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+  ;;
+"all")
+  cat "$ROOT_DIR/files/package-graph/libDeps.txt"
+  ;;
 *)
   echo "$DEPS_CONTENT"
   ;;
