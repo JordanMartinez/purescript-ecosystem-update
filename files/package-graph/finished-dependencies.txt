@@ -99,3 +99,7 @@ string-parsers
 
 
 
+node-buffer
+node-path
+node-uri
+posix-types
