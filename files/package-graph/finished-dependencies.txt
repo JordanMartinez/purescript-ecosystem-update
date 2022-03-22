@@ -127,6 +127,7 @@ web-html
 web-socket
 web-streams
 web-clipboard
+web-uievents
 
 
 aff-promise
