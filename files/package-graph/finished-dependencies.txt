@@ -99,6 +99,7 @@ string-parsers
 now
 aff-coroutines
 formatters
+js-date
 
 
 node-buffer
