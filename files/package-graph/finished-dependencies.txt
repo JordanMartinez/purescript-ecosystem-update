@@ -119,6 +119,7 @@ web-storage
 web-dom-parser
 web-encoding
 web-file
+web-promise
 
 
 aff-promise
