@@ -103,6 +103,7 @@ js-date
 uri
 react-dom
 github-actions-toolkit
+routing
 
 
 node-buffer
@@ -125,6 +126,7 @@ web-promise
 web-html
 web-socket
 web-streams
+web-clipboard
 
 
 aff-promise
