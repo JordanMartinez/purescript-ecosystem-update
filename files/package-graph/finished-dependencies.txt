@@ -102,6 +102,7 @@ formatters
 js-date
 uri
 react-dom
+github-actions-toolkit
 
 
 node-buffer
@@ -110,6 +111,7 @@ node-url
 posix-types
 node-streams
 node-process
+node-readline
 
 
 canvas
@@ -120,6 +122,8 @@ web-dom-parser
 web-encoding
 web-file
 web-promise
+web-html
+web-socket
 
 
 aff-promise
