@@ -100,6 +100,7 @@ now
 aff-coroutines
 formatters
 js-date
+uri
 
 
 node-buffer

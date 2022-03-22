@@ -126,7 +126,6 @@
 0  undefined-or                     https://github.com/d86leader/purescript-undefined-or.git                       []
 0  unordered-collections            https://github.com/fehrenbach/purescript-unordered-collections.git             []
 0  unorm                            https://github.com/athanclark/purescript-unorm.git                             []
-0  uri                              https://github.com/purescript-contrib/purescript-uri.git                       []
 0  url-regex-safe                   https://github.com/srghma/purescript-url-regex-safe.git                        []
 0  variant                          https://github.com/natefaubion/purescript-variant.git                          []
 0  versions                         https://github.com/hdgarrood/purescript-versions.git                           []
