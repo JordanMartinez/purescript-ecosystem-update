@@ -45,10 +45,10 @@ case "${1}" in
   pushdOrExit "$ROOT_DIR/../purescript-contrib/purescript-$2"
   ;;
 3)
-  pushdOrExit "$ROOT_DIR/../purescript-node/purescript-node-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-node/purescript-$2"
   ;;
 4)
-  pushdOrExit "$ROOT_DIR/../purescript-web/purescript-web-$2"
+  pushdOrExit "$ROOT_DIR/../purescript-web/purescript-$2"
   ;;
 *)
   echo "$1 is not a valid option."
