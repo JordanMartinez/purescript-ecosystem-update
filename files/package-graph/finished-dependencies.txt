@@ -124,6 +124,7 @@ web-file
 web-promise
 web-html
 web-socket
+web-streams
 
 
 aff-promise
