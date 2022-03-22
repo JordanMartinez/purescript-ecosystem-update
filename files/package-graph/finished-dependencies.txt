@@ -67,3 +67,4 @@ arraybuffer-types
 avar
 argonaut-codecs
 aff-bus
+argonaut-generic
