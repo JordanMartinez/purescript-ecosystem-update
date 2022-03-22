@@ -96,6 +96,8 @@ strings-extra
 form-urlencoded
 parsing
 string-parsers
+now
+aff-coroutines
 
 
 
