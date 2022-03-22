@@ -59,10 +59,11 @@ function updateDependencies::recalcBowerRepoBranches {
     {
       echo "if has(\"dependencies\") then .dependencies |= ("
       cat "$DEPS_FILE"
-      # Sigh... fix filterable, js-uri, and web-promise
+      # Sigh... fix filterable, js-uri, web-promise, and web-streams
       echo "  if has(\"purescript-filterable\") then .\"purescript-filterable\" |= \"main\" else . end |"
       echo "  if has(\"purescript-js-uri\") then .\"purescript-js-uri\" |= \"https://github.com/purescript-contrib/purescript-js-uri.git#main\" else . end |"
       echo "  if has(\"purescript-web-promise\") then .\"purescript-web-promise\" |= \"https://github.com/purescript-web/purescript-web-promise.git#master\" else . end |"
+      echo "  if has(\"purescript-web-streams\") then .\"purescript-web-streams\" |= \"https://github.com/purescript-web/purescript-web-streams.git#master\" else . end |"
       echo "  ."
       echo ") else . end | "
       echo " if has (\"devDependencies\") then .devDependencies |= ("
@@ -70,6 +71,7 @@ function updateDependencies::recalcBowerRepoBranches {
       echo "  if has(\"purescript-filterable\") then .\"purescript-filterable\" |= \"main\" else . end |"
       echo "  if has(\"purescript-js-uri\") then .\"purescript-js-uri\" |= \"https://github.com/purescript-contrib/purescript-js-uri.git#main\" else . end |"
       echo "  if has(\"purescript-web-promise\") then .\"purescript-web-promise\" |= \"https://github.com/purescript-web/purescript-web-promise.git#master\" else . end |"
+      echo "  if has(\"purescript-web-streams\") then .\"purescript-web-streams\" |= \"https://github.com/purescript-web/purescript-web-streams.git#master\" else . end |"
       echo "  ."
       echo ") else . end"
     } > "$JQ_SCRIPT_LOCATION"
