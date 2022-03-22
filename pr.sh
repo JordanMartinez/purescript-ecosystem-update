@@ -64,12 +64,12 @@ case "${1}" in
   popd
   ;;
 3)
-  pushd "../purescript-node/purescript-node-$2"
+  pushd "../purescript-node/purescript-$2"
   makePr
   popd
   ;;
 4)
-  pushd "../purescript-web/purescript-web-$2"
+  pushd "../purescript-web/purescript-$2"
   makePr
   popd
   ;;
