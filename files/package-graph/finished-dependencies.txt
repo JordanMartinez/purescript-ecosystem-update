@@ -70,6 +70,7 @@ aff-bus
 argonaut-generic
 concurrent-queues
 fixed-points
+quickcheck-laws
 freet
 http-methods
 fork
