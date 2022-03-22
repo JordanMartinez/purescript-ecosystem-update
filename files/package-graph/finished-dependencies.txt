@@ -101,5 +101,7 @@ string-parsers
 
 node-buffer
 node-path
-node-uri
+node-url
 posix-types
+node-streams
+node-process
