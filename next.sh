@@ -8,7 +8,9 @@ set -euo pipefail
 
 ROOT_DIR=$(dirname "$(readlink -f "$0")")
 
-DEPS_CONTENT="$(grep '^0' "$ROOT_DIR/files/package-graph/libDeps.txt")"
+LIB_DEPS_FILE="$ROOT_DIR/files/package-graph/libDeps.txt"
+
+DEPS_CONTENT="$(grep '^0' "$LIB_DEPS_FILE")"
 
 case "${1}" in
 1)
@@ -23,20 +25,20 @@ case "${1}" in
 4)
   echo "$DEPS_CONTENT" | grep '/purescript-web/'
   ;;
-"core")
-  grep '/purecript/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+core)
+  grep '/purescript/' < "$LIB_DEPS_FILE"
   ;;
-"contrib")
-  grep '/purecript-contrib/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+contrib)
+  grep '/purescript-contrib/' < "$LIB_DEPS_FILE"
   ;;
-"node")
-  grep '/purecript-node/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+node)
+  grep '/purescript-node/' < "$LIB_DEPS_FILE"
   ;;
-"web")
-  grep '/purecript-web/' "$ROOT_DIR/files/package-graph/libDeps.txt"
+web)
+  grep '/purescript-web/' < "$LIB_DEPS_FILE"
   ;;
 "all")
-  cat "$ROOT_DIR/files/package-graph/libDeps.txt"
+  cat "$LIB_DEPS_FILE"
   ;;
 *)
   echo "$DEPS_CONTENT"
