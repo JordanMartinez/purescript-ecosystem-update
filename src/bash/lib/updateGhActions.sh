@@ -8,7 +8,9 @@ ADD_PULP_AND_BOWER_TO_CI="
           npm install bower pulp@16.0.0-0
           npx bower install
           npx pulp build -- --censor-lib --strict
-          npx pulp test"
+          if [ -d \"test\" ]; then
+            npx pulp test
+          fi"
 
 # Update the `.github/workflows/ci.yml` file to specifically use
 # the latest alpha PS release
