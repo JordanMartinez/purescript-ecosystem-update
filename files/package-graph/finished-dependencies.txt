@@ -64,3 +64,5 @@ argonaut-core
 options
 nullable
 arraybuffer-types
+avar
+argonaut-codecs
