@@ -33,7 +33,7 @@ ROOT_DIR=$(dirname "$(readlink -f "$0")")
 PR_ES_BODY_PS=$(cat "$ROOT_DIR/files/pr/body-of-es-pr.txt")
 PR_UP_BODY_PS=$(cat "$ROOT_DIR/files/pr/body-of-update-pr.txt")
 
-TITLE="Update to v0.15.0"
+TITLE="Update to PureScript v0.15.0"
 
 function makePr {
   git branch | grep '*'
