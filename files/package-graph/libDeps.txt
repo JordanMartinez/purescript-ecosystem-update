@@ -63,7 +63,6 @@
 0  ordered-set                      https://github.com/flip111/purescript-ordered-set.git                          []
 0  owoify                           https://github.com/deadshot465/purescript-owoify.git                           []
 0  pairs                            https://github.com/sharkdp/purescript-pairs.git                                []
-0  pathy                            https://github.com/purescript-contrib/purescript-pathy.git                     []
 0  phoenix                          https://github.com/brandonhamilton/purescript-phoenix.git                      []
 0  point-free                       https://github.com/ursi/purescript-point-free.git                              []
 0  polymorphic-vectors              https://github.com/artemisSystem/purescript-polymorphic-vectors.git            []

@@ -79,4 +79,5 @@ js-uri
 machines
 matryoshka
 media-types
+pathy
 
