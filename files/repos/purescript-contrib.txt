@@ -11,6 +11,7 @@ git@github.com:purescript-contrib/purescript-argonaut-traversals.git
 git@github.com:purescript-contrib/purescript-arraybuffer.git
 git@github.com:purescript-contrib/purescript-arraybuffer-types.git
 git@github.com:purescript-contrib/purescript-avar.git
+git@github.com:purescript-contrib/purescript-colors.git
 git@github.com:purescript-contrib/purescript-concurrent-queues.git
 git@github.com:purescript-contrib/purescript-coroutines.git
 git@github.com:purescript-contrib/purescript-css.git
