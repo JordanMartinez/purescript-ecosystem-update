@@ -104,6 +104,7 @@ uri
 react-dom
 github-actions-toolkit
 routing
+ace
 
 
 node-buffer
@@ -128,6 +129,11 @@ web-socket
 web-streams
 web-clipboard
 web-uievents
+web-touchevents
+web-cssom
+web-xhr
+web-fetch
+web-dom-xpath
 
 
 aff-promise
