@@ -105,6 +105,7 @@ react-dom
 github-actions-toolkit
 routing
 ace
+colors
 
 
 node-buffer
@@ -114,6 +115,7 @@ posix-types
 node-streams
 node-process
 node-readline
+node-fs
 
 
 canvas
