@@ -116,6 +116,10 @@ node-streams
 node-process
 node-readline
 node-fs
+node-child-process
+node-fs-aff
+node-net
+node-http
 
 
 canvas
