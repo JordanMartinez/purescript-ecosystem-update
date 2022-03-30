@@ -23,4 +23,6 @@ Moreover, before support for `v0.15.0` could be added, CI needed to migrated fro
 
 Similarly, before updates to `contrib` repos could be made, which further blocked `node` and `web` repos, `spago` needed to be updated to work on both `v0.14.0` and `v0.15.0`. Its usage of `nix` and the lack of familiarity of collaborators working on this part slowed things down as well. Moreover, a file whose parent directory included a space produced a bug that needed to be resolved before a new release could be made. This again slowed down `contrib` updates significantly.
 
+Fortunately, Thomas pointed out that we needed to also run `pulp` in CI to verify that the `bower.json` files worked properly (so `pulp` users could still use those libraries). One side-effect of this need is that we could bypass the spago limitations by using `pulp test` in CI until `spago` got updated.
+
 ### Issue Name
