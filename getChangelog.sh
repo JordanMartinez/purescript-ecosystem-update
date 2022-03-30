@@ -113,6 +113,14 @@ getChangelog "./files/repos/purescript-contrib.txt"
 getChangelog "./files/repos/purescript-web.txt"
 getChangelog "./files/repos/purescript-node.txt"
 
+# Stage the changelog file, so that the
+# node script that cleans it up
+# shows what's being removed in case the script
+# makes a mistake somewhere
+git add "$CHANGELOG_FILE"
+
+node "$ROOT_DIR/src/node/lib/remove-unused-changelog-headers.mjs" "$CHANGELOG_FILE"
+
 if [ -f "$MISSING" ] && [ "$(wc -l < "$MISSING")" -gt 0 ]; then
   echo "======================================="
   echo "Repos with missing changelog files are:"
