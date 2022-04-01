@@ -3,6 +3,8 @@ git@github.com:purescript-contrib/purescript-aff-bus.git
 git@github.com:purescript-contrib/purescript-aff-coroutines.git
 git@github.com:purescript-contrib/purescript-aff.git
 git@github.com:purescript-contrib/purescript-affjax.git
+git@github.com:purescript-contrib/purescript-affjax-web.git
+git@github.com:purescript-contrib/purescript-affjax-node.git
 git@github.com:purescript-contrib/purescript-argonaut-codecs.git
 git@github.com:purescript-contrib/purescript-argonaut-core.git
 git@github.com:purescript-contrib/purescript-argonaut-generic.git
