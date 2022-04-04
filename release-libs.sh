@@ -205,6 +205,11 @@ fi
 release_date=2021-02-26
 # release_date="$(date --date "${1-}" '+%Y-%m-%d')"
 
+if [ "$release_date" == "2021-02-26" ]; then
+  echo "Release date hasn't been updated for 0.15.0 release. Update it and try again"
+  exit 1
+fi
+
 while true; do
   read -rp "Which org should be released${dry_run:+ (this is a dry run)}? " org
   case $org in
