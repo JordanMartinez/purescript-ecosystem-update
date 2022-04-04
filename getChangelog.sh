@@ -92,7 +92,10 @@ function getChangelog {
       NEXT_RELEASE_HEADER_LINE_NUM="$(getChangelog::lineNumberOfFirstHdrLvl2 "$CL_NO_PREFIX")"
       CONTENT_LAST_LIN_NUM="$(( "$NEXT_RELEASE_HEADER_LINE_NUM" - 1 ))"
 
-      CL_CONTENT="$(echo "$CL_NO_PREFIX" | head -n "$CONTENT_LAST_LIN_NUM")"
+      CL_CONTENT="$(echo "$CL_NO_PREFIX" | \
+        head -n "$CONTENT_LAST_LIN_NUM" | \
+        sed -E "s|#([0-9]+)|[#\1](https://github.com/$REPO_ORG/$REPO_PROJ/pull/\1)|"
+        )"
 
       {
         echo "### $REPO_PROJ"
