@@ -103,11 +103,6 @@ function update_prelude_changelog {
   show_changes
 }
 
-function update_contrib_changelog {
-  sed --in-place -e 's/ (😱!!!)//' CHANGELOG.md
-  update_changelog purescript-contrib "$1" "$2" "$3"
-}
-
 function update_node_changelog {
   echo "Updating changelog"
   local release_date="$1"
@@ -178,8 +173,6 @@ function main {
     fi
     if [ "$org" = purescript-node ]; then
       update_node_changelog "$release_date"
-    elif [ "$org" = purescript-contrib ]; then
-      update_contrib_changelog "$package_name" "$version" "$release_date"
     elif [ "$package_name" = prelude ]; then
       update_prelude_changelog "$package_name" "$version" "$release_date"
     else
