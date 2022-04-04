@@ -1,6 +1,10 @@
 #! /usr/bin/env bash
 set -euo pipefail
 
+BOWER_PACKAGES_JSON='https://raw.githubusercontent.com/purescript/registry/master/bower-packages.json'
+NEW_PACKAGES_JSON='https://raw.githubusercontent.com/purescript/registry/master/new-packages.json'
+PACKAGE_SET_PREFIX='https://raw.githubusercontent.com/purescript/package-sets/prepare-0.15'
+
 function show_changes {
   git --no-pager show --format=''
 }
@@ -143,12 +147,11 @@ function open_pull_request {
 function main {
   local org="$1"
   local release_date="$2"
-  local package_set; package_set='https://raw.githubusercontent.com/kl0tl/package-sets/next'
-  local packages; packages="$(dhall-to-json <<< "$package_set/src/groups/purescript.dhall // $package_set/src/groups/purescript-contrib.dhall // $package_set/src/groups/purescript-web.dhall // $package_set/src/groups/purescript-node.dhall")"
-  local bower_packages; bower_packages="$(curl --silent --show-error https://raw.githubusercontent.com/kl0tl/registry/fix-bower-packages/bower-packages.json)"
-  local new_packages; new_packages="$(curl --silent --show-error https://raw.githubusercontent.com/kl0tl/registry/fix-bower-packages/new-packages.json)"
+  local packages; packages="$(dhall-to-json <<< "$PACKAGE_SET_PREFIX/src/groups/purescript.dhall // $PACKAGE_SET_PREFIX/src/groups/purescript-contrib.dhall // $PACKAGE_SET_PREFIX/src/groups/purescript-web.dhall // $PACKAGE_SET_PREFIX/src/groups/purescript-node.dhall")"
+  local bower_packages; bower_packages="$(curl --silent --show-error "$BOWER_PACKAGES_JSON")"
+  local new_packages; new_packages="$(curl --silent --show-error "$NEW_PACKAGES_JSON")"
   local registry; registry="$(jq --null-input --argjson bower_packages "$bower_packages" --argjson new_packages "$new_packages" '$bower_packages + $new_packages')"
-  local org_packages; org_packages="$(dhall-to-json <<< "$package_set/src/groups/$org.dhall")"
+  local org_packages; org_packages="$(dhall-to-json <<< "$PACKAGE_SET_PREFIX/src/groups/$org.dhall")"
   for package_name in $(jq --raw-output 'keys | .[]' <<< "$org_packages"); do
     local package; package="$(jq --arg key "$package_name" '.[$key]' <<< "$org_packages")"
     local repository_url; repository_url="$(jq --raw-output '.repo' <<< "$package")"
