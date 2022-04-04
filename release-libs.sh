@@ -1,10 +1,6 @@
 #! /usr/bin/env bash
 set -euo pipefail
 
-echo "Stopping script execution to prevent accidental usage."
-echo "Remove these three two lines locally"
-exit 1
-
 function show_changes {
   git --no-pager show --format=''
 }
@@ -198,10 +194,12 @@ function main {
   done
 }
 
-dry_run=''
-if [ "${1-}" = --dry-run ]; then
-  dry_run=true
+dry_run=true
+if [ "${1-}" = --no-dry-run ]; then
+  dry_run=''
   shift
+else
+  echo "Starting script in Dry Run mode; rerun with '--no-dry-run' to make actual releaes."
 fi
 
 release_date=2021-02-26
