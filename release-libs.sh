@@ -72,7 +72,7 @@ function update_contrib_bower_dependencies {
   echo "Updating bower dependencies"
   local packages="$1"
   local package_name="$2"
-  curl --silent --show-error https://raw.githubusercontent.com/kl0tl/package-sets/prepare-0.14/packages.dhall > ./packages.dhall
+  curl --silent --show-error "$PACKAGE_SET_PREFIX/packages.dhall" > ./packages.dhall
   local dependencies; dependencies="$(jq --arg package_name "$package_name" '.[$package_name].dependencies | map("purescript-" + .)' <<< "$packages")"
   update_bower_dependencies_with "$packages" dependencies "$dependencies"
   local dev_dependencies; dev_dependencies="$(dhall-to-json <<< './spago.dhall' | jq --argjson dependencies "$dependencies" '.dependencies - ["psci-support"] | map("purescript-" + .) | . - $dependencies')"
