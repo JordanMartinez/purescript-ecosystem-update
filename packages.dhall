@@ -3,6 +3,7 @@ let upstream =
         sha256:75d0f0719f32456e6bdc3efd41cfc64785655d2b751e3d080bd849033ed053f2
 
 in  upstream
+    with versions.version = "v6.1.0"
     with dodo-printer =
         { dependencies =
           [ "ansi", "foldable-traversable", "lists", "maybe", "strings" ]
