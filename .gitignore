@@ -1,3 +1,9 @@
 purs
 atom.sh
 v.sh
+
+.spago/
+generated-docs/
+output/
+.psc*
+.purs-repl
