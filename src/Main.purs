@@ -4,11 +4,14 @@ import Prelude
 
 import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
+import Command (Command(..))
+import Command.Init as InitCmd
 import Data.Array as Array
-import Data.Either (Either(..))
+import Data.Either (Either(..), either)
 import Effect (Effect)
-import Effect.Aff (launchAff_)
+import Effect.Aff (runAff_)
 import Effect.Console as Console
+import Effect.Exception (throwException)
 import Node.Process (argv)
 import Utils (setProcessExitCode)
 
@@ -27,4 +30,5 @@ main = do
           setProcessExitCode 1
     Right cmd ->
       case cmd of
+        Init -> runAff_ (either throwException $ const $ pure unit) InitCmd.init
         _ -> Console.log "Command not yet implemented"

@@ -2,7 +2,16 @@ module Utils where
 
 import Prelude
 
+import Data.Either (Either(..))
+import Data.Maybe (Maybe)
+import Data.Posix.Signal (Signal(..))
+import Data.String as String
 import Effect (Effect)
+import Effect.Aff (Aff, Error, effectCanceler, makeAff)
+import Effect.Class (liftEffect)
+import Node.Buffer as Buffer
+import Node.ChildProcess as CP
+import Node.Encoding (Encoding(..))
 
 -- | Per Node docs...
 -- | "Calling `process.exit()` will force the process to exit
@@ -27,3 +36,14 @@ import Effect (Effect)
 -- | naturally by avoiding scheduling any additional work for the event loop:
 foreign import setProcessExitCode :: Int -> Effect Unit
 
+execAff :: String -> Aff { stdout :: String, stderr :: String, error :: Maybe Error }
+execAff cmd = do
+  result@{ error } <- makeAff \cb -> do
+    subProcess <- CP.exec cmd CP.defaultExecOptions (cb <<< Right)
+    pure $ effectCanceler do
+      CP.kill SIGABRT subProcess
+  { stdout, stderr } <- liftEffect do
+    stdout <- String.trim <$> Buffer.toString UTF8 result.stdout
+    stderr <- String.trim <$> Buffer.toString UTF8 result.stderr
+    pure { stdout, stderr }
+  pure { error, stdout, stderr }
