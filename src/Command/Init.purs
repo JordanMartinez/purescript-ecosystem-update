@@ -136,6 +136,18 @@ verifyToolConstraints = do
         , trimStrToVersionStr: identity
         }
     , checkTool
+        { toolName: "purs-tidy"
+        , fullCommand: "purs-tidy --version"
+        , minVersion: version 0 7 1 Nil Nil
+        , trimStrToVersionStr: identity
+        }
+    , checkTool
+        { toolName: "git"
+        , fullCommand: "git --version"
+        , minVersion: version 2 25 1 Nil Nil
+        , trimStrToVersionStr: identity
+        }
+    , checkTool
         { toolName: "gh"
         , fullCommand: "gh --version"
         , minVersion: version 2 7 0 Nil Nil
