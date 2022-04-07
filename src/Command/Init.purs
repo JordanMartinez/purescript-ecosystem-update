@@ -45,7 +45,7 @@ verifyToolConstraints = do
         , "to a higher version. Please see above error message(s)."
         ]
   where
-  checkTool { toolName, fullCommand, minVersion, trimStrToVersionStr } = do
+  checkTool { toolName, fullCommand, minVersion, fixupVersionStr } = do
     { error, stdout } <- liftAff $ execAff fullCommand
     case error of
       Just err ->
@@ -58,7 +58,7 @@ verifyToolConstraints = do
       Nothing -> do
         let
           versionStr = stdout
-            # trimStrToVersionStr
+            # fixupVersionStr
             # dropWhileCharsNotDigits
             # String.trim
         case parseVersion versionStr of
@@ -93,61 +93,61 @@ verifyToolConstraints = do
         { toolName: "pulp"
         , fullCommand: "pulp --version"
         , minVersion: version 16 0 0 (numeric 0 : Nil) Nil
-        , trimStrToVersionStr: String.takeWhile ((/=) (codePointFromChar '\n'))
+        , fixupVersionStr: String.takeWhile ((/=) (codePointFromChar '\n'))
         }
     , checkTool
         { toolName: "bower"
         , fullCommand: "bower --version"
         , minVersion: version 1 8 13 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "psa"
         , fullCommand: "psa --version"
         , minVersion: version 0 8 2 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "spago"
         , fullCommand: "spago --version"
         , minVersion: version 0 20 7 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "esbuild"
         , fullCommand: "esbuild --version"
         , minVersion: version 0 14 23 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "lebab"
         , fullCommand: "lebab --version"
         , minVersion: version 3 1 1 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "eslint"
         , fullCommand: "eslint --version"
         , minVersion: version 8 10 0 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "purs-tidy"
         , fullCommand: "purs-tidy --version"
         , minVersion: version 0 7 1 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "git"
         , fullCommand: "git --version"
         , minVersion: version 2 25 1 Nil Nil
-        , trimStrToVersionStr: identity
+        , fixupVersionStr: identity
         }
     , checkTool
         { toolName: "gh"
         , fullCommand: "gh --version"
         , minVersion: version 2 7 0 Nil Nil
-        , trimStrToVersionStr: String.takeWhile ((/=) (codePointFromChar '('))
+        , fixupVersionStr: String.takeWhile ((/=) (codePointFromChar '('))
         }
     , checkTool
         { toolName: "jq"
@@ -156,6 +156,6 @@ verifyToolConstraints = do
         -- `jq --version` produces `jq-1.6`
         -- So, this hack adds a '.0' to the end of the string
         , minVersion: version 1 6 0 Nil Nil
-        , trimStrToVersionStr: \s -> s <> ".0"
+        , fixupVersionStr: \s -> s <> ".0"
         }
     ]
