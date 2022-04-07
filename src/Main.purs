@@ -6,6 +6,7 @@ import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
 import Command (Command(..))
 import Command.Clone as CloneCmd
+import Command.DownloadPurs as DownloadPursCmd
 import Command.Init as InitCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
@@ -34,6 +35,9 @@ main = do
         Init -> do
           runAff_ (either throwException $ const $ pure unit) do
             InitCmd.init
+        DownloadPurs mbVersion -> do
+          runAff_ (either throwException $ const $ pure unit) do
+            DownloadPursCmd.downloadPursBinary mbVersion
         Clone info org -> do
           runAff_ (either throwException $ const $ pure unit) do
             CloneCmd.clone info org
