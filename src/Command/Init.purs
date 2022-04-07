@@ -22,12 +22,14 @@ import Effect.Exception (throw)
 import Node.FS.Aff (unlink)
 import Node.Platform (Platform(..))
 import Node.Process as Process
+import Tools.Gh (checkGhGitProtocol, checkLoggedIntoGh)
 import Utils (execAff)
 
 init :: Aff Unit
 init = do
   verifyToolConstraints
-  loginToGh
+  checkLoggedIntoGh
+  checkGhGitProtocol
   downloadLatestPursBinary
 
 -- | Verifies that a given tool with the minimum version is installed
@@ -160,26 +162,6 @@ verifyToolConstraints = do
         , trimStrToVersionStr: \s -> s <> ".0"
         }
     ]
-
--- | Ensures user is logged in via `gh` tool and
--- | has `git_protocol` configured to use `ssh`
-loginToGh :: forall m. MonadAff m => m Unit
-loginToGh = do
-  authStatus <- liftAff $ execAff "gh auth status"
-  when (authStatus.stdout == "You are not logged into any GitHub hosts.") do
-    liftEffect $ throw $ Array.fold
-      [ "You are not logged into any GitHub hosts. "
-      , "Please run the following command to login to GitHub via `gh`:\n"
-      , "    gh auth login --git-protocol ssh --with-token"
-      ]
-
-  protocolStatus <- liftAff $ execAff "gh config get git_protocol"
-  unless (protocolStatus.stdout == "ssh") do
-    liftEffect $ throw $ Array.fold
-      [ "You are not using the 'ssh' git protocol."
-      , "Please run the following command to change it\n"
-      , "    gh config set git_protocol ssh"
-      ]
 
 downloadLatestPursBinary :: forall m. MonadAff m => m Unit
 downloadLatestPursBinary = do
