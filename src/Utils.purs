@@ -12,7 +12,7 @@ import Effect.Class (liftEffect)
 import Effect.Ref (Ref)
 import Effect.Ref as Ref
 import Node.Buffer as Buffer
-import Node.ChildProcess (ChildProcess, Exit(..), SpawnOptions, defaultSpawnOptions)
+import Node.ChildProcess (ChildProcess, Exit(..), SpawnOptions, ExecOptions, defaultSpawnOptions)
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
 import Node.Stream (Readable)
@@ -42,9 +42,12 @@ import Node.Stream as Stream
 foreign import setProcessExitCode :: Int -> Effect Unit
 
 execAff :: String -> Aff { stdout :: String, stderr :: String, error :: Maybe Error }
-execAff cmd = do
+execAff cmd = execAff' cmd identity
+
+execAff' :: String -> (ExecOptions -> ExecOptions) -> Aff { stdout :: String, stderr :: String, error :: Maybe Error }
+execAff' cmd modifyOptions  = do
   result@{ error } <- makeAff \cb -> do
-    subProcess <- CP.exec cmd CP.defaultExecOptions (cb <<< Right)
+    subProcess <- CP.exec cmd (modifyOptions CP.defaultExecOptions) (cb <<< Right)
     pure $ effectCanceler do
       CP.kill SIGABRT subProcess
   { stdout, stderr } <- liftEffect do
