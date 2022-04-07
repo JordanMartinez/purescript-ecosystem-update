@@ -31,9 +31,13 @@ main = do
           setProcessExitCode 1
     Right cmd ->
       case cmd of
-        Init -> runAff_ (either throwException $ const $ pure unit) InitCmd.init
-        Clone info org ->
-          runAff_ (either throwException $ const $ pure unit) $ CloneCmd.clone info org
+        Init -> do
+          runAff_ (either throwException $ const $ pure unit) do
+            InitCmd.init
+        Clone info org -> do
+          runAff_ (either throwException $ const $ pure unit) do
+            CloneCmd.clone info org
         CloneAll org ->
-          runAff_ (either throwException $ const $ pure unit) $ CloneCmd.cloneAll org
+          runAff_ (either throwException $ const $ pure unit) do
+            CloneCmd.cloneAll org
         _ -> Console.log "Command not yet implemented"
