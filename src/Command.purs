@@ -13,7 +13,7 @@ data Command
   -- | Gets a local copy of the purs binary from GitHub
   | DownloadPurs (Maybe Version)
   -- | Clone all packages
-  | CloneAll { makeFork :: Maybe GitHubOwner }
+  | CloneAll (Maybe GitHubOwner)
   -- | Runs all update actions across all repos
   | UpdateAll
   -- | Clone a repo locally with the option of making a fork

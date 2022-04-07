@@ -5,6 +5,7 @@ import Prelude
 import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
 import Command (Command(..))
+import Command.Clone as CloneCmd
 import Command.Init as InitCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
@@ -31,4 +32,8 @@ main = do
     Right cmd ->
       case cmd of
         Init -> runAff_ (either throwException $ const $ pure unit) InitCmd.init
+        Clone info org ->
+          runAff_ (either throwException $ const $ pure unit) $ CloneCmd.clone info org
+        CloneAll org ->
+          runAff_ (either throwException $ const $ pure unit) $ CloneCmd.cloneAll org
         _ -> Console.log "Command not yet implemented"

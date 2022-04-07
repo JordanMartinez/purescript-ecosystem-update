@@ -55,8 +55,7 @@ parseCliArgs =
 
   cloneAllCmd = ArgParse.command [ "cloneAll" ] description do
     CloneAll
-      <$> fromRecord
-        { makeFork: parseMakeForkOption }
+      <$> optional parseCloneToGhOrg
       <* ArgParse.flagHelp
     where
     description = "git clone all packages locally"
@@ -112,11 +111,6 @@ parseCliArgs =
       # ArgParse.unformat "DIR" case _ of
         "" -> Left $ "Directory was empty"
         s -> Right s
-
-    parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
-      # ArgParse.unformat "GITHUB_ORG" case _ of
-        "" -> Left $ "GitHub organization name was empty"
-        s -> Right $ GitHubOwner s
 
   bowerCmd = ArgParse.command ["bower"] description do
     Bower
@@ -206,11 +200,10 @@ parseCliArgs =
     where
     description = "If set, clears the repo's local bower cache"
 
-  parseMakeForkOption = ArgParse.optional
-    $ ArgParse.argument [ "--make-fork" ] description
-    # ArgParse.unformat "GITHUB_ORG" (Right <<< GitHubOwner)
-    where
-    description = "TODO"
+  parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
+    # ArgParse.unformat "GITHUB_ORG" case _ of
+      "" -> Left $ "GitHub organization name was empty"
+      s -> Right $ GitHubOwner s
 
   -- labelPrefix =
   --   choose "Label prefix"
