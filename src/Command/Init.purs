@@ -193,3 +193,12 @@ downloadLatestPursBinary = do
             , "'"
             ]
   liftAff $ unlink purescriptTarGzFile
+  { stdout } <- liftAff $ execAff $ "./" <> pursFile <> " --version"
+  case parseVersion stdout of
+    Left e
+      | stdout == "" ->
+          liftEffect $ throw $ "Failed to download binary"
+      | otherwise ->
+          liftEffect $ throw $ "Failed to parse version of download purs binary: " <> show e
+    Right v ->
+        log $ "Downloaded purs binary with version: " <> showVersion v
