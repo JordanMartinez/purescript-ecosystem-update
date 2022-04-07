@@ -5,3 +5,13 @@ exports.setProcessExitCode = function (code) {
     process.exitCode = code;
   };
 };
+
+exports.onSpawn = function onSpawn(cp) {
+  return function (cb) {
+    return function () {
+      cp.on("spawn", function () {
+        cb();
+      });
+    };
+  };
+};
