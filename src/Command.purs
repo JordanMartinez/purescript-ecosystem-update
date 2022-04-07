@@ -9,12 +9,12 @@ import Types (GitHubOwner, Package)
 data Command
   -- | Initializes the project structure
   = Init
+  -- | Gets a local copy of the purs binary from GitHub
+  | DownloadPurs (Maybe Version)
   -- | Clone all packages
   | CloneAll { makeFork :: Maybe GitHubOwner }
   -- | Runs all update actions across all repos
   | UpdateAll
-  -- | Gets a local copy of the purs binary from GitHub
-  | DownloadPurs Version
   -- | Clone a repo locally with the option of making a fork
   | Clone { package :: Package, makeFork :: Maybe GitHubOwner }
   -- | Update bower.json file

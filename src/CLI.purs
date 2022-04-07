@@ -5,7 +5,9 @@ import Prelude
 import ArgParse.Basic (ArgError, fromRecord, parseArgs)
 import ArgParse.Basic as ArgParse
 import Command (Command(..))
-import Data.Either (Either(..), hush)
+import Data.Bifunctor (lmap)
+import Data.Either (Either(..))
+import Data.Maybe (Maybe(..))
 import Data.String (joinWith)
 import Data.Version as Version
 import Types (GitHubOwner(..), Package(..))
@@ -62,9 +64,18 @@ parseCliArgs =
 
   downloadPursCmd = ArgParse.command ["downloadPurs"] description do
     DownloadPurs
-      <$> ArgParse.any "VERSION" "The PureScript version" (hush <<< Version.parseVersion)
+      <$> ArgParse.choose "version"
+        [ Nothing <$ parseLatestFlag
+        , Just <$> parseVersionFlag
+        ]
     where
     description = "Download the specified version from GitHub and use it in future scripts"
+    parseLatestFlag =
+      ArgParse.flag [ "--latest" ] "Gets the latest prerelease PureScript"
+        # ArgParse.boolean
+    parseVersionFlag =
+      ArgParse.argument [ "--version" ] "Download the specified version of PureScript"
+        # ArgParse.unformat "VERSION" (lmap (append "Error when parsing version: " <<< show) <<< Version.parseVersion)
 
   cloneCmd = ArgParse.command ["clone"] description do
     Clone
