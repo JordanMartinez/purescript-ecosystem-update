@@ -1,10 +1,11 @@
 module Command where
 
-import Prelude
 
+import Data.Either (Either)
 import Data.Maybe (Maybe)
 import Data.Version (Version)
-import Types (GitHubOwner, Package)
+import Node.Path (FilePath)
+import Types (GitHubOwner, GitHubProject, Package, PackageInfo)
 
 data Command
   -- | Initializes the project structure
@@ -16,7 +17,7 @@ data Command
   -- | Runs all update actions across all repos
   | UpdateAll
   -- | Clone a repo locally with the option of making a fork
-  | Clone { package :: Package, makeFork :: Maybe GitHubOwner }
+  | Clone (Either { owner :: GitHubOwner, repo :: GitHubProject, package :: Package, directory :: FilePath } PackageInfo) (Maybe GitHubOwner)
   -- | Update bower.json file
   | Bower { package :: Package }
   -- | Update spago.dhall and packages.dhall files

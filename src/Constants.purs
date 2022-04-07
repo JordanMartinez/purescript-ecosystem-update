@@ -28,3 +28,9 @@ gitIgnoreFile = ".gitignore"
 
 purescriptTarGzFile :: String
 purescriptTarGzFile = "purescript.tar.gz"
+
+gitRemoteNameOriginal :: String
+gitRemoteNameOriginal = "origin"
+
+gitRemoteNameFork :: String
+gitRemoteNameFork = "self"

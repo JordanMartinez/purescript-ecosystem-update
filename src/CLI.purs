@@ -2,15 +2,19 @@ module CLI where
 
 import Prelude
 
-import ArgParse.Basic (ArgError, fromRecord, parseArgs)
+import ArgParse.Basic (ArgError, fromRecord, optional, parseArgs)
 import ArgParse.Basic as ArgParse
 import Command (Command(..))
+import Data.Array as Array
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
-import Data.Maybe (Maybe(..))
-import Data.String (joinWith)
+import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Newtype (unwrap)
+import Data.String (Pattern(..), joinWith)
+import Data.String as String
 import Data.Version as Version
-import Types (GitHubOwner(..), Package(..))
+import Packages (packages)
+import Types (GitHubOwner(..), GitHubProject(..), Package(..))
 
 parseCliArgs :: Array String -> Either ArgError Command
 parseCliArgs =
@@ -79,13 +83,40 @@ parseCliArgs =
 
   cloneCmd = ArgParse.command ["clone"] description do
     Clone
-      <$> fromRecord
-        { package: parsePackage
-        , makeFork: parseMakeForkOption
-        }
+      <$> ArgParse.choose "option"
+        [ Right <$> parseRegularPackage
+        , ado
+          { owner, repo, package } <- parseIrregularPackage
+          dir <- optional parseDir
+          in Left { owner, repo, package, directory: fromMaybe (unwrap package) dir }
+        ]
+      <*> optional parseCloneToGhOrg
       <* ArgParse.flagHelp
     where
     description = "git clone single package"
+    parseRegularPackage = ArgParse.argument [ "--package" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
+      # ArgParse.unformat "PACKAGE" case _ of
+        s | Just r <- Array.findMap (\rec -> if s == unwrap rec.name then Just rec else Nothing) packages -> Right r
+          | otherwise -> Left $ "'" <> s <> "' is not a core, contrib, node, or web package"
+
+    parseIrregularPackage = ArgParse.argument [ "--repo" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
+      # ArgParse.unformat "OWNER/REPO" case _ of
+        s | [ owner, repo ] <- String.split (Pattern "/") s -> Right
+              { owner: GitHubOwner owner
+              , repo: GitHubProject repo
+              , package: Package $ fromMaybe repo $ String.stripPrefix (Pattern "purescript-") repo
+              }
+          | otherwise -> Left $ "Splitting '" <> s <> "' by the first `/` did not produce `OWNER/REPO`."
+
+    parseDir = ArgParse.argument [ "--directory" ] "The directory into which to `git clone`. If not provided, the package name will be used."
+      # ArgParse.unformat "DIR" case _ of
+        "" -> Left $ "Directory was empty"
+        s -> Right s
+
+    parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
+      # ArgParse.unformat "GITHUB_ORG" case _ of
+        "" -> Left $ "GitHub organization name was empty"
+        s -> Right $ GitHubOwner s
 
   bowerCmd = ArgParse.command ["bower"] description do
     Bower
