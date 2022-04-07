@@ -25,3 +25,6 @@ pursJsonFile = "purs.json"
 
 gitIgnoreFile :: String
 gitIgnoreFile = ".gitignore"
+
+purescriptTarGzFile :: String
+purescriptTarGzFile = "purescript.tar.gz"
