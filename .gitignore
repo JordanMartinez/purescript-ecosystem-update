@@ -2,6 +2,7 @@ purs
 atom.sh
 v.sh
 
+node_modules/
 .spago/
 generated-docs/
 output/

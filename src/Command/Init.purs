@@ -2,6 +2,9 @@ module Command.Init where
 
 import Prelude
 
+import Affjax as Affjax
+import Affjax.ResponseFormat as RF
+import Affjax.StatusCode (StatusCode(..))
 import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Enum (enumFromTo)
@@ -18,12 +21,17 @@ import Effect.Aff.Class (class MonadAff, liftAff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
 import Effect.Exception (throw)
+import Node.Buffer (fromArrayBuffer)
+import Node.FS.Aff (unlink, writeFile)
+import Node.Platform (Platform(..))
+import Node.Process as Process
 import Utils (execAff)
 
 init :: Aff Unit
 init = do
   verifyToolConstraints
   loginToGh
+  downloadLatestPursBinary
 
 -- | Verifies that a given tool with the minimum version is installed
 -- | and throws an error otherwise.
@@ -163,3 +171,42 @@ loginToGh = do
       , "Please run the following command to change it\n"
       , "    gh config set git_protocol ssh"
       ]
+
+downloadLatestPursBinary :: forall m. MonadAff m => m Unit
+downloadLatestPursBinary = do
+  { platformStr, pursFile } <- case Process.platform of
+    Just Linux -> pure { platformStr: "linux64", pursFile: "purs" }
+    Just Darwin -> pure { platformStr: "macos", pursFile: "purs" }
+    Just Win32 -> pure { platformStr: "win64", pursFile: "purs.exe" }
+    x -> liftEffect $ throw $ "Unsupported platform: " <> show x
+  let
+    pursDownloadFile = "purescript.tar.gz"
+    jqScript = Array.fold
+      [ "'map(select(.prerelease == true)) | .[0].assets | map(select(.name == \""
+      , platformStr
+      , ".tar.gz\")) | .[0].browser_download_url'"
+      ]
+  { stdout: downloadUrl } <- liftAff $ execAff $
+    "gh api repos/purescript/purescript/releases --jq " <> jqScript
+  res <- liftAff $ Affjax.get RF.arrayBuffer downloadUrl
+  case res of
+    Left err -> liftEffect $ throw $ Affjax.printError err
+    Right { status, statusText, body }
+      | status /= StatusCode 200 ->
+          liftEffect $ throw $ Array.fold
+            [ "Downloading `purs` binary resulted in non-200 HTTP status: "
+            , show status
+            , ": "
+            , statusText
+            ]
+      | otherwise -> do
+          buf <- liftEffect $ fromArrayBuffer body
+          liftAff $ writeFile pursDownloadFile buf
+          void $ liftAff $ execAff $ Array.fold
+            [ "tar -xvzf "
+            , pursDownloadFile
+            , " --strip-components 1 'purescript/"
+            , pursFile
+            , "'"
+            ]
+          liftAff $ unlink pursDownloadFile

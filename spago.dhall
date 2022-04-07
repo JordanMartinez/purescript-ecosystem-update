@@ -1,6 +1,7 @@
 { name = "ecosystem-update"
 , dependencies =
   [ "aff"
+  , "affjax"
   , "argparse-basic"
   , "arrays"
   , "avar"
