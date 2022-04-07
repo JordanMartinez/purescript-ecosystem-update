@@ -1,4 +1,5 @@
 const process = require("process");
+const fs = require("fs");
 
 exports.setProcessExitCode = function (code) {
   return function () {
@@ -15,3 +16,15 @@ exports.onSpawn = function onSpawn(cp) {
     };
   };
 };
+
+exports.handleCallbackImpl = function (left, right, f) {
+  return function (err, value) {
+    if (err) {
+      f(left(err))();
+    } else {
+      f(right(value))();
+    }
+  };
+};
+
+exports.fdStatImpl = fs.fdStat;

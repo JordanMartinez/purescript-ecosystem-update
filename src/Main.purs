@@ -5,6 +5,7 @@ import Prelude
 import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
 import Command (Command(..))
+import Command.Bower as BowerCmd
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
 import Command.Init as InitCmd
@@ -44,4 +45,7 @@ main = do
         CloneAll org ->
           runAff_ (either throwException $ const $ pure unit) do
             CloneCmd.cloneAll org
+        Bower { package } ->
+          runAff_ (either throwException $ const $ pure unit) do
+            BowerCmd.updateDependenciesToMain package
         _ -> Console.log "Command not yet implemented"

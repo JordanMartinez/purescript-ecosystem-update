@@ -3,18 +3,25 @@ module Utils where
 import Prelude
 
 import Data.Either (Either(..))
+import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Data.Maybe (Maybe(..))
+import Data.Nullable (Nullable)
 import Data.Posix.Signal (Signal(..))
 import Data.String as String
 import Effect (Effect)
-import Effect.Aff (Aff, Error, effectCanceler, makeAff)
+import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
 import Effect.Class (liftEffect)
 import Effect.Ref (Ref)
 import Effect.Ref as Ref
+import Node.Buffer (Buffer)
 import Node.Buffer as Buffer
-import Node.ChildProcess (ChildProcess, Exit(..), SpawnOptions, ExecOptions, defaultSpawnOptions)
+import Node.ChildProcess (ChildProcess, ExecOptions, Exit(..), SpawnOptions, defaultSpawnOptions)
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
+import Node.FS (FileDescriptor)
+import Node.FS.Async (Callback)
+import Node.FS.Internal (mkEffect)
+import Node.FS.Stats (Stats(..), StatsObj)
 import Node.Stream (Readable)
 import Node.Stream as Stream
 
@@ -83,55 +90,91 @@ instance Show SpawnExit where
 
 -- | All information regarding the result of `spawn`
 -- | in an easily-consumable format
-type SpawnResult =
+type SpawnResult a =
   { error :: Maybe SpawnError
   , exit :: SpawnExit
-  , stdout :: String
-  , stderr :: String
+  , stdout :: a
+  , stderr :: a
   }
 
 -- | Spawn a command with its args with no concern for its options
-spawnAff :: String -> Array String -> Aff SpawnResult
+spawnAff :: String -> Array String -> Aff ChildProcess
 spawnAff cmd args = spawnAff' cmd args identity
 
 -- | Spawn a command with its args, modifying the `defaultSpawnOptions` record
-spawnAff' :: String -> Array String -> (SpawnOptions -> SpawnOptions) -> Aff SpawnResult
-spawnAff' cmd args modifyOptions = do
-  makeAff \cb -> do
-    ctorRef <- Ref.new FailedToSpawn
-    errorResult <- Ref.new Nothing
-    subProcess <- CP.spawn cmd args (modifyOptions defaultSpawnOptions)
-    onSpawn subProcess do
-      Ref.write Errored ctorRef
-    CP.onError subProcess \e -> do
-      ctor <- Ref.read ctorRef
-      Ref.write (Just $ ctor e) errorResult
-    stdOutRef <- streamToRef $ CP.stdout subProcess
-    stdErrRef <- streamToRef $ CP.stderr subProcess
-    CP.onClose subProcess \e -> do
-      finalError <- Ref.read errorResult
-      stdout <- Ref.read stdOutRef
-      stderr <- Ref.read stdErrRef
-      cb $ Right
-        { error: finalError
-        , exit: case e of
-            Normally i -> Exited i
-            BySignal sig -> Killed sig
-        , stdout
-        , stderr
-        }
-    pure $ effectCanceler do
-      CP.kill SIGTERM subProcess
-  where
-  streamToRef :: forall w. Readable w -> Effect (Ref String)
-  streamToRef stream = do
-    buffs <- Ref.new []
-    strRef <- Ref.new ""
-    Stream.onData stream \buf -> do
-      Ref.modify_ (_ <> [ buf ]) buffs
-    Stream.onEnd stream do
-      str <- Ref.read buffs >>= Buffer.concat >>= Buffer.toString UTF8
-      Ref.write (String.trim str) strRef
-    pure strRef
+spawnAff' :: String -> Array String -> (SpawnOptions -> SpawnOptions) -> Aff ChildProcess
+spawnAff' cmd args modifyOptions = liftEffect do
+  CP.spawn cmd args (modifyOptions defaultSpawnOptions)
+
+withSpawnResult :: ChildProcess -> Aff (SpawnResult String)
+withSpawnResult subProcess = do
+  rec@{ error, exit } <- withSpawnResult' subProcess
+  stdout <- liftEffect $ Buffer.toString UTF8 rec.stdout
+  stderr <- liftEffect $ Buffer.toString UTF8 rec.stderr
+  pure { error, exit, stdout, stderr }
+
+withSpawnResult' :: ChildProcess -> Aff (SpawnResult Buffer)
+withSpawnResult' subProcess = makeAff \cb -> do
+  stdOutRef <- streamToRef $ CP.stdout subProcess
+  stdErrRef <- streamToRef $ CP.stderr subProcess
+
+  ctorRef <- Ref.new FailedToSpawn
+  errorResult <- Ref.new Nothing
+  onSpawn subProcess do
+    Ref.write Errored ctorRef
+  CP.onError subProcess \e -> do
+    ctor <- Ref.read ctorRef
+    Ref.write (Just $ ctor e) errorResult
+  CP.onClose subProcess \e -> do
+    finalError <- Ref.read errorResult
+    stdout <- Ref.read stdOutRef
+    stderr <- Ref.read stdErrRef
+    cb $ Right
+      { error: finalError
+      , exit: case e of
+          Normally i -> Exited i
+          BySignal sig -> Killed sig
+      , stdout
+      , stderr
+      }
+  pure nonCanceler
+
+streamToRef :: forall x. Readable x -> Effect (Ref Buffer)
+streamToRef stream = do
+  buffs <- Ref.new []
+  finalRef <- Ref.new =<< Buffer.create 0
+  Stream.onData stream \buf -> do
+    Ref.modify_ (_ <> [ buf ]) buffs
+  Stream.onEnd stream do
+    finalBuf <- Ref.read buffs >>= Buffer.concat
+    Ref.write finalBuf finalRef
+  pure finalRef
 
 foreign import onSpawn :: ChildProcess -> Effect Unit -> Effect Unit
+
+type JSCallback a = Fn2 (Nullable Error) a Unit
+
+foreign import handleCallbackImpl ::
+  forall a. Fn3 (Error -> Either Error a)
+                (a -> Either Error a)
+                (Callback a)
+                (JSCallback a)
+
+handleCallback :: forall a. (Callback a) -> JSCallback a
+handleCallback cb = runFn3 handleCallbackImpl Left Right cb
+
+fdStat
+  :: FileDescriptor
+  -> Callback Stats
+  -> Effect Unit
+fdStat fd cb = mkEffect $ \_ -> runFn2
+  fdStatImpl fd (handleCallback $ cb <<< (<$>) Stats)
+
+fdStatAff
+  :: FileDescriptor
+  -> Aff Stats
+fdStatAff fd = makeAff \cb -> do
+  fdStat fd cb
+  pure nonCanceler
+
+foreign import fdStatImpl :: Fn2 FileDescriptor (JSCallback StatsObj) Unit
