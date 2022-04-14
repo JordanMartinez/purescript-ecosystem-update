@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "release-order": "spago run -m Scripts.Release",
+    "noop": "echo 'nothing to see here'"
+  },
   "dependencies": {
     "xhr2": "^0.2.1"
   }

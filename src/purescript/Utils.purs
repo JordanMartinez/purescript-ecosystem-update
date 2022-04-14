@@ -25,6 +25,14 @@ import Node.FS.Stats (Stats(..), StatsObj)
 import Node.Stream (Readable)
 import Node.Stream as Stream
 
+foreign import mkdirImpl :: String -> { recursive :: Boolean } -> Effect Unit -> Effect Unit
+
+mkdir :: String -> { recursive :: Boolean } -> Aff Unit
+mkdir path opt = makeAff \cb -> do
+  mkdirImpl path opt do
+    cb $ Right unit
+  pure nonCanceler
+
 -- | Per Node docs...
 -- | "Calling `process.exit()` will force the process to exit
 -- | as quickly as possible even if there are still asynchronous

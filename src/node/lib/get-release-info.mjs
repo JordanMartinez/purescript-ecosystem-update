@@ -11,7 +11,9 @@ for (const i in utils.reposArray) {
 
   const repoDir = path.join("..", repoInfo.repoOrg, repoInfo.repoProj);
 
-  const obj = {};
+  const obj = {
+    ...repoInfo
+  };
 
   console.log("... Fetching latest tags");
   utils.handleSpawn(
@@ -71,6 +73,8 @@ for (const i in utils.reposArray) {
     {
       "1": () => {
         obj.hasBowerJsonFile = false;
+        obj.bowerDependencies = [];
+        obj.bowerDevDependencies = [];
       },
       "0": (catResult) => {
         obj.hasBowerJsonFile = true;
@@ -78,11 +82,11 @@ for (const i in utils.reposArray) {
         const bowerContent = JSON.parse(catResult.stdout.toString("utf-8"));
         const pkgDeps =
           bowerContent.hasOwnProperty("dependencies")
-            ? Object.keys(bowerContent.dependencies).map((str) => str.slice("purescript-".length)).sort()
+            ? Object.keys(bowerContent.dependencies).map((str) => str.slice("purescript-".length)).filter((x) => x !== "").sort()
             : [];
             const pkgDevDeps =
           bowerContent.hasOwnProperty("devDependencies")
-            ? Object.keys(bowerContent.devDependencies).map((str) => str.slice("purescript-".length)).sort()
+            ? Object.keys(bowerContent.devDependencies).map((str) => str.slice("purescript-".length)).filter((x) => x !== "").sort()
             : [];
 
         obj.bowerDependencies = pkgDeps;
@@ -109,6 +113,7 @@ for (const i in utils.reposArray) {
     {
       "1": () => {
         obj.hasSpagoDhallFile = false;
+        obj.spagoDependencies = [];
       },
       "0": (catResult) => {
         obj.hasSpagoDhallFile = true;
@@ -133,6 +138,7 @@ for (const i in utils.reposArray) {
     {
       "1": () => {
         obj.hasTestDhallFile = false;
+        obj.spagoTestDependencies = [];
       },
       "0": (catResult) => {
         obj.hasTestDhallFile = true;

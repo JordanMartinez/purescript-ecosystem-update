@@ -1,5 +1,10 @@
 {
   "arrays": {
+    "repoUrl": "git@github.com:purescript/purescript-arrays.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-arrays",
+    "pkg": "arrays",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -86,9 +91,16 @@
       "minibench"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "assert": {
+    "repoUrl": "git@github.com:purescript/purescript-assert.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-assert",
+    "pkg": "assert",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.0-rc.1",
@@ -111,9 +123,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "bifunctors": {
+    "repoUrl": "git@github.com:purescript/purescript-bifunctors.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-bifunctors",
+    "pkg": "bifunctors",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.0.2",
@@ -145,9 +164,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "catenable-lists": {
+    "repoUrl": "git@github.com:purescript/purescript-catenable-lists.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-catenable-lists",
+    "pkg": "catenable-lists",
+    "defaultBranch": "master",
     "gitTags": [
       "0.1.0",
       "v0.1.1",
@@ -180,9 +206,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "console": {
+    "repoUrl": "git@github.com:purescript/purescript-console.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-console",
+    "pkg": "console",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.0-rc.1",
@@ -206,9 +239,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "const": {
+    "repoUrl": "git@github.com:purescript/purescript-const.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-const",
+    "pkg": "const",
+    "defaultBranch": "master",
     "gitTags": [
       "0.0.1",
       "v0.1.0",
@@ -239,9 +279,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "contravariant": {
+    "repoUrl": "git@github.com:purescript/purescript-contravariant.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-contravariant",
+    "pkg": "contravariant",
+    "defaultBranch": "master",
     "gitTags": [
       "0.0.1",
       "v0.1.0",
@@ -273,9 +320,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "control": {
+    "repoUrl": "git@github.com:purescript/purescript-control.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-control",
+    "pkg": "control",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -315,9 +369,16 @@
       "effect"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "datetime": {
+    "repoUrl": "git@github.com:purescript/purescript-datetime.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-datetime",
+    "pkg": "datetime",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.1.0",
@@ -382,9 +443,16 @@
       "strings"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "distributive": {
+    "repoUrl": "git@github.com:purescript/purescript-distributive.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-distributive",
+    "pkg": "distributive",
+    "defaultBranch": "master",
     "gitTags": [
       "0.0.1",
       "v0.1.0",
@@ -414,9 +482,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "effect": {
+    "repoUrl": "git@github.com:purescript/purescript-effect.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-effect",
+    "pkg": "effect",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v1.0.0",
@@ -432,9 +507,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "either": {
+    "repoUrl": "git@github.com:purescript/purescript-either.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-either",
+    "pkg": "either",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -478,9 +560,16 @@
       "effect"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "enums": {
+    "repoUrl": "git@github.com:purescript/purescript-enums.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-enums",
+    "pkg": "enums",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -527,9 +616,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "exceptions": {
+    "repoUrl": "git@github.com:purescript/purescript-exceptions.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-exceptions",
+    "pkg": "exceptions",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -560,9 +656,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "exists": {
+    "repoUrl": "git@github.com:purescript/purescript-exists.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-exists",
+    "pkg": "exists",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -585,9 +688,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "filterable": {
+    "repoUrl": "git@github.com:purescript/purescript-filterable.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-filterable",
+    "pkg": "filterable",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -623,9 +733,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "foldable-traversable": {
+    "repoUrl": "git@github.com:purescript/purescript-foldable-traversable.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-foldable-traversable",
+    "pkg": "foldable-traversable",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -691,9 +808,16 @@
       "unsafe-coerce"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "foreign": {
+    "repoUrl": "git@github.com:purescript/purescript-foreign.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-foreign",
+    "pkg": "foreign",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -749,9 +873,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "foreign-object": {
+    "repoUrl": "git@github.com:purescript/purescript-foreign-object.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-foreign-object",
+    "pkg": "foreign-object",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -783,9 +914,16 @@
       "quickcheck"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "free": {
+    "repoUrl": "git@github.com:purescript/purescript-free.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-free",
+    "pkg": "free",
+    "defaultBranch": "master",
     "gitTags": [
       "0.0.0",
       "0.0.1",
@@ -870,9 +1008,16 @@
       "functors"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "functions": {
+    "repoUrl": "git@github.com:purescript/purescript-functions.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-functions",
+    "pkg": "functions",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.0-rc.1",
@@ -890,9 +1035,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "functors": {
+    "repoUrl": "git@github.com:purescript/purescript-functors.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-functors",
+    "pkg": "functors",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -931,9 +1083,16 @@
       "assert"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "gen": {
+    "repoUrl": "git@github.com:purescript/purescript-gen.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-gen",
+    "pkg": "gen",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -970,9 +1129,16 @@
       "transformers"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "graphs": {
+    "repoUrl": "git@github.com:purescript/purescript-graphs.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-graphs",
+    "pkg": "graphs",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -1002,9 +1168,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "identity": {
+    "repoUrl": "git@github.com:purescript/purescript-identity.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-identity",
+    "pkg": "identity",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -1034,9 +1207,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "integers": {
+    "repoUrl": "git@github.com:purescript/purescript-integers.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-integers",
+    "pkg": "integers",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.1.0",
@@ -1069,9 +1249,16 @@
       "partial"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "invariant": {
+    "repoUrl": "git@github.com:purescript/purescript-invariant.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-invariant",
+    "pkg": "invariant",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -1093,9 +1280,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "lazy": {
+    "repoUrl": "git@github.com:purescript/purescript-lazy.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-lazy",
+    "pkg": "lazy",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1124,9 +1318,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "lcg": {
+    "repoUrl": "git@github.com:purescript/purescript-lcg.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-lcg",
+    "pkg": "lcg",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -1145,9 +1346,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "lists": {
+    "repoUrl": "git@github.com:purescript/purescript-lists.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-lists",
+    "pkg": "lists",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.2.0",
@@ -1248,9 +1456,16 @@
       "minibench"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "math": {
+    "repoUrl": "git@github.com:purescript/purescript-math.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-math",
+    "pkg": "math",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1270,9 +1485,16 @@
     "bowerDependencies": [],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "maybe": {
+    "repoUrl": "git@github.com:purescript/purescript-maybe.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-maybe",
+    "pkg": "maybe",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1311,9 +1533,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "minibench": {
+    "repoUrl": "git@github.com:purescript/purescript-minibench.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-minibench",
+    "pkg": "minibench",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -1333,9 +1562,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "newtype": {
+    "repoUrl": "git@github.com:purescript/purescript-newtype.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-newtype",
+    "pkg": "newtype",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v1.0.0",
@@ -1354,9 +1590,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "nonempty": {
+    "repoUrl": "git@github.com:purescript/purescript-nonempty.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-nonempty",
+    "pkg": "nonempty",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1393,9 +1636,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "numbers": {
+    "repoUrl": "git@github.com:purescript/purescript-numbers.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-numbers",
+    "pkg": "numbers",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -1419,9 +1669,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "ordered-collections": {
+    "repoUrl": "git@github.com:purescript/purescript-ordered-collections.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-ordered-collections",
+    "pkg": "ordered-collections",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -1457,9 +1714,16 @@
       "quickcheck"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "orders": {
+    "repoUrl": "git@github.com:purescript/purescript-orders.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-orders",
+    "pkg": "orders",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1483,9 +1747,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "parallel": {
+    "repoUrl": "git@github.com:purescript/purescript-parallel.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-parallel",
+    "pkg": "parallel",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -1527,9 +1798,16 @@
       "functions"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "partial": {
+    "repoUrl": "git@github.com:purescript/purescript-partial.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-partial",
+    "pkg": "partial",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -1546,9 +1824,16 @@
     "bowerDependencies": [],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "prelude": {
+    "repoUrl": "git@github.com:purescript/purescript-prelude.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-prelude",
+    "pkg": "prelude",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.0-rc.1",
@@ -1589,9 +1874,16 @@
     "bowerDependencies": [],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "profunctor": {
+    "repoUrl": "git@github.com:purescript/purescript-profunctor.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-profunctor",
+    "pkg": "profunctor",
+    "defaultBranch": "master",
     "gitTags": [
       "0.0.1",
       "v0.0.2",
@@ -1627,9 +1919,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "psci-support": {
+    "repoUrl": "git@github.com:purescript/purescript-psci-support.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-psci-support",
+    "pkg": "psci-support",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.0.0-rc.1",
@@ -1648,9 +1947,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "quickcheck": {
+    "repoUrl": "git@github.com:purescript/purescript-quickcheck.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-quickcheck",
+    "pkg": "quickcheck",
+    "defaultBranch": "master",
     "gitTags": [
       "0.1.4",
       "v0.1.0",
@@ -1739,9 +2045,16 @@
       "numbers"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "random": {
+    "repoUrl": "git@github.com:purescript/purescript-random.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-random",
+    "pkg": "random",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1769,9 +2082,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "record": {
+    "repoUrl": "git@github.com:purescript/purescript-record.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-record",
+    "pkg": "record",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -1798,9 +2118,16 @@
       "assert"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "refs": {
+    "repoUrl": "git@github.com:purescript/purescript-refs.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-refs",
+    "pkg": "refs",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1826,9 +2153,16 @@
       "assert"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "safe-coerce": {
+    "repoUrl": "git@github.com:purescript/purescript-safe-coerce.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-safe-coerce",
+    "pkg": "safe-coerce",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.0.2",
@@ -1844,9 +2178,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "semirings": {
+    "repoUrl": "git@github.com:purescript/purescript-semirings.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-semirings",
+    "pkg": "semirings",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1871,9 +2212,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "st": {
+    "repoUrl": "git@github.com:purescript/purescript-st.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-st",
+    "pkg": "st",
+    "defaultBranch": "master",
     "gitTags": [
       "4.1.0",
       "v0.1.0",
@@ -1902,9 +2250,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "strings": {
+    "repoUrl": "git@github.com:purescript/purescript-strings.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-strings",
+    "pkg": "strings",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -1982,9 +2337,16 @@
       "minibench"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "tailrec": {
+    "repoUrl": "git@github.com:purescript/purescript-tailrec.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-tailrec",
+    "pkg": "tailrec",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -2028,9 +2390,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "transformers": {
+    "repoUrl": "git@github.com:purescript/purescript-transformers.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-transformers",
+    "pkg": "transformers",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.0.2",
@@ -2113,9 +2482,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "tuples": {
+    "repoUrl": "git@github.com:purescript/purescript-tuples.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-tuples",
+    "pkg": "tuples",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -2154,9 +2530,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "type-equality": {
+    "repoUrl": "git@github.com:purescript/purescript-type-equality.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-type-equality",
+    "pkg": "type-equality",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -2173,9 +2556,16 @@
       "newtype"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "typelevel-prelude": {
+    "repoUrl": "git@github.com:purescript/purescript-typelevel-prelude.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-typelevel-prelude",
+    "pkg": "typelevel-prelude",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -2204,9 +2594,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "unfoldable": {
+    "repoUrl": "git@github.com:purescript/purescript-unfoldable.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-unfoldable",
+    "pkg": "unfoldable",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -2245,9 +2642,16 @@
       "psci-support"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "unsafe-coerce": {
+    "repoUrl": "git@github.com:purescript/purescript-unsafe-coerce.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-unsafe-coerce",
+    "pkg": "unsafe-coerce",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -2265,9 +2669,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "validation": {
+    "repoUrl": "git@github.com:purescript/purescript-validation.git",
+    "repoOrg": "purescript",
+    "repoProj": "purescript-validation",
+    "pkg": "validation",
+    "defaultBranch": "master",
     "gitTags": [
       "0.0.1",
       "v0.0.2",
@@ -2305,9 +2716,16 @@
       "strings"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "ace": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-ace.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-ace",
+    "pkg": "ace",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.10.0",
@@ -2343,7 +2761,6 @@
       "web-uievents"
     ],
     "bowerDevDependencies": [
-      "",
       "console",
       "refs"
     ],
@@ -2366,9 +2783,15 @@
       "web-html",
       "web-uievents"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "aff-bus": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-aff-bus.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-aff-bus",
+    "pkg": "aff-bus",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -2406,9 +2829,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "aff-coroutines": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-aff-coroutines.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-aff-coroutines",
+    "pkg": "aff-coroutines",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -2455,9 +2884,15 @@
       "prelude",
       "transformers"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "aff": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-aff.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-aff",
+    "pkg": "aff",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.10.0",
@@ -2570,9 +3005,15 @@
       "transformers",
       "unsafe-coerce"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "affjax": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-affjax.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-affjax",
+    "pkg": "affjax",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.10.0",
@@ -2686,9 +3127,15 @@
       "web-file",
       "web-xhr"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "affjax-web": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-affjax-web.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-affjax-web",
+    "pkg": "affjax-web",
+    "defaultBranch": "main",
     "gitTags": [],
     "inBowerRegistry": false,
     "hasBowerJsonFile": true,
@@ -2702,9 +3149,15 @@
     "spagoDependencies": [
       "affjax"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "affjax-node": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-affjax-node.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-affjax-node",
+    "pkg": "affjax-node",
+    "defaultBranch": "main",
     "gitTags": [],
     "inBowerRegistry": false,
     "hasBowerJsonFile": true,
@@ -2718,9 +3171,15 @@
     "spagoDependencies": [
       "affjax"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "argonaut-codecs": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-argonaut-codecs.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-argonaut-codecs",
+    "pkg": "argonaut-codecs",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -2812,9 +3271,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "argonaut-core": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-argonaut-core.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-argonaut-core",
+    "pkg": "argonaut-core",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -2873,9 +3338,15 @@
       "tailrec",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "argonaut-generic": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-argonaut-generic.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-argonaut-generic",
+    "pkg": "argonaut-generic",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -2920,9 +3391,15 @@
       "prelude",
       "strings"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "argonaut": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-argonaut.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-argonaut",
+    "pkg": "argonaut",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.0.1",
       "v0.0.2",
@@ -2997,9 +3474,15 @@
       "quickcheck",
       "strings"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "argonaut-traversals": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-argonaut-traversals.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-argonaut-traversals",
+    "pkg": "argonaut-traversals",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -3071,9 +3554,15 @@
       "tuples",
       "unfoldable"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "arraybuffer": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-arraybuffer.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-arraybuffer",
+    "pkg": "arraybuffer",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3135,9 +3624,15 @@
       "uint",
       "unfoldable"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "arraybuffer-types": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-arraybuffer-types.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-arraybuffer-types",
+    "pkg": "arraybuffer-types",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3156,9 +3651,15 @@
     ],
     "hasSpagoDhallFile": true,
     "spagoDependencies": [],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "avar": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-avar.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-avar",
+    "pkg": "avar",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -3197,9 +3698,15 @@
       "prelude",
       "refs"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "colors": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-colors.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-colors",
+    "pkg": "colors",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3259,9 +3766,15 @@
       "prelude",
       "strings"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "concurrent-queues": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-concurrent-queues.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-concurrent-queues",
+    "pkg": "concurrent-queues",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v1.0.0",
@@ -3297,9 +3810,15 @@
       "tuples",
       "unfoldable"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "coroutines": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-coroutines.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-coroutines",
+    "pkg": "coroutines",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -3355,9 +3874,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "css": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-css.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-css",
+    "pkg": "css",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -3429,6 +3954,11 @@
     ]
   },
   "fixed-points": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-fixed-points.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-fixed-points",
+    "pkg": "fixed-points",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -3461,9 +3991,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "float32": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-float32.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-float32",
+    "pkg": "float32",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.0.0",
       "v0.0.1",
@@ -3498,6 +4034,11 @@
     ]
   },
   "fork": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-fork.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-fork",
+    "pkg": "fork",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -3523,9 +4064,15 @@
       "prelude",
       "transformers"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "formatters": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-formatters.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-formatters",
+    "pkg": "formatters",
+    "defaultBranch": "main",
     "gitTags": [
       "0.0.1",
       "0.0.5",
@@ -3598,9 +4145,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "form-urlencoded": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-form-urlencoded.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-form-urlencoded",
+    "pkg": "form-urlencoded",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1",
       "v0.1.0",
@@ -3649,9 +4202,15 @@
       "strings",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "freet": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-freet.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-freet",
+    "pkg": "freet",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3707,9 +4266,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "http-methods": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-http-methods.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-http-methods",
+    "pkg": "http-methods",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3740,9 +4305,15 @@
       "prelude",
       "strings"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "js-date": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-js-date.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-js-date",
+    "pkg": "js-date",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -3787,9 +4358,15 @@
       "prelude",
       "transformers"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "js-timers": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-js-timers.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-js-timers",
+    "pkg": "js-timers",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -3817,9 +4394,15 @@
       "prelude",
       "refs"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "js-uri": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-js-uri.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-js-uri",
+    "pkg": "js-uri",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v2.0.0"
@@ -3842,9 +4425,15 @@
       "maybe",
       "prelude"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "machines": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-machines.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-machines",
+    "pkg": "machines",
+    "defaultBranch": "main",
     "gitTags": [
       "0.1.0",
       "0.1.1",
@@ -3902,9 +4491,15 @@
       "tuples",
       "unfoldable"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "matryoshka": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-matryoshka.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-matryoshka",
+    "pkg": "matryoshka",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3945,9 +4540,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "media-types": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-media-types.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-media-types",
+    "pkg": "media-types",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -3970,9 +4571,15 @@
       "newtype",
       "prelude"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "now": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-now.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-now",
+    "pkg": "now",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -4007,9 +4614,15 @@
       "prelude",
       "transformers"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "nullable": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-nullable.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-nullable",
+    "pkg": "nullable",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -4044,9 +4657,15 @@
       "maybe",
       "prelude"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "options": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-options.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-options",
+    "pkg": "options",
+    "defaultBranch": "main",
     "gitTags": [
       "0.0.1",
       "0.1.0",
@@ -4093,9 +4712,15 @@
       "prelude",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "parsing": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-parsing.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-parsing",
+    "pkg": "parsing",
+    "defaultBranch": "main",
     "gitTags": [
       "0.1.1",
       "v0.1.0",
@@ -4199,9 +4824,15 @@
       "unfoldable",
       "unicode"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "pathy": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-pathy.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-pathy",
+    "pkg": "pathy",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -4269,9 +4900,15 @@
       "typelevel-prelude",
       "unsafe-coerce"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "precise": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-precise.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-precise",
+    "pkg": "precise",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -4327,9 +4964,15 @@
       "tuples",
       "unfoldable"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "profunctor-lenses": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-profunctor-lenses.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-profunctor-lenses",
+    "pkg": "profunctor-lenses",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -4432,9 +5075,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "quickcheck-laws": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-quickcheck-laws.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-quickcheck-laws",
+    "pkg": "quickcheck-laws",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -4475,9 +5124,15 @@
       "quickcheck",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "react-dom": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-react-dom.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-react-dom",
+    "pkg": "react-dom",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -4513,9 +5168,15 @@
       "react",
       "web-dom"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "react": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-react.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-react",
+    "pkg": "react",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.0.2",
       "v0.0.3",
@@ -4580,9 +5241,15 @@
       "typelevel-prelude",
       "unsafe-coerce"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "routing": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-routing.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-routing",
+    "pkg": "routing",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -4664,9 +5331,15 @@
       "web-events",
       "web-html"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "string-parsers": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-string-parsers.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-string-parsers",
+    "pkg": "string-parsers",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -4747,9 +5420,15 @@
       "transformers",
       "unfoldable"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "strings-extra": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-strings-extra.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-strings-extra",
+    "pkg": "strings-extra",
+    "defaultBranch": "main",
     "gitTags": [
       "1.0.0",
       "v1.0.0",
@@ -4789,9 +5468,15 @@
       "strings",
       "unicode"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "these": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-these.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-these",
+    "pkg": "these",
+    "defaultBranch": "main",
     "gitTags": [
       "0.1.0",
       "0.2.0",
@@ -4842,9 +5527,15 @@
       "tailrec",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "uint": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-uint.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-uint",
+    "pkg": "uint",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -4898,6 +5589,11 @@
     ]
   },
   "unicode": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-unicode.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-unicode",
+    "pkg": "unicode",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.0.1",
       "v1.0.0",
@@ -4944,9 +5640,15 @@
       "transformers",
       "unsafe-coerce"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "unsafe-reference": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-unsafe-reference.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-unsafe-reference",
+    "pkg": "unsafe-reference",
+    "defaultBranch": "main",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -4972,9 +5674,15 @@
       "exceptions",
       "prelude"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "uri": {
+    "repoUrl": "git@github.com:purescript-contrib/purescript-uri.git",
+    "repoOrg": "purescript-contrib",
+    "repoProj": "purescript-uri",
+    "pkg": "uri",
+    "defaultBranch": "main",
     "gitTags": [
       "v0.1.0-rc.1",
       "v0.2.0",
@@ -5056,9 +5764,15 @@
       "transformers",
       "tuples"
     ],
-    "hasTestDhallFile": false
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-buffer": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-buffer.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-buffer",
+    "pkg": "node-buffer",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.1.0",
@@ -5091,13 +5805,19 @@
     "bowerDevDependencies": [
       "assert",
       "console",
-      "foldable-traversable",
-      "proxy"
+      "foldable-traversable"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-child-process": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-child-process.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-child-process",
+    "pkg": "node-child-process",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.0.1",
       "v0.1.0",
@@ -5139,9 +5859,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-fs-aff": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-fs-aff.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-fs-aff",
+    "pkg": "node-fs-aff",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5173,9 +5900,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-fs": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-fs.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-fs",
+    "pkg": "node-fs",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5218,7 +5952,6 @@
       "enums",
       "exceptions",
       "functions",
-      "globals",
       "integers",
       "js-date",
       "maybe",
@@ -5236,9 +5969,16 @@
       "node-buffer"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-http": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-http.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-http",
+    "pkg": "node-http",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5278,6 +6018,7 @@
       "foreign-object",
       "maybe",
       "node-buffer",
+      "node-net",
       "node-streams",
       "node-url",
       "nullable",
@@ -5289,9 +6030,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-net": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-net.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-net",
+    "pkg": "node-net",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -5316,9 +6064,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-path": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-path.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-path",
+    "pkg": "node-path",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.2.0",
@@ -5341,9 +6096,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-process": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-process.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-process",
+    "pkg": "node-process",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5377,9 +6139,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-readline": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-readline.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-readline",
+    "pkg": "node-readline",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5414,9 +6183,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-streams": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-streams.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-streams",
+    "pkg": "node-streams",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5454,9 +6230,16 @@
       "partial"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "node-url": {
+    "repoUrl": "git@github.com:purescript-node/purescript-node-url.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-node-url",
+    "pkg": "node-url",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5472,11 +6255,20 @@
     "bowerDependencies": [
       "nullable"
     ],
-    "bowerDevDependencies": [],
+    "bowerDevDependencies": [
+      "assert"
+    ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "posix-types": {
+    "repoUrl": "git@github.com:purescript-node/purescript-posix-types.git",
+    "repoOrg": "purescript-node",
+    "repoProj": "purescript-posix-types",
+    "pkg": "posix-types",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5496,9 +6288,16 @@
       "console"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "canvas": {
+    "repoUrl": "git@github.com:purescript-web/purescript-canvas.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-canvas",
+    "pkg": "canvas",
+    "defaultBranch": "master",
     "gitTags": [
       "v0.1.0",
       "v0.1.1",
@@ -5541,9 +6340,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-clipboard": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-clipboard.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-clipboard",
+    "pkg": "web-clipboard",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -5556,9 +6362,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-cssom": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-cssom.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-cssom",
+    "pkg": "web-cssom",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0"
     ],
@@ -5571,9 +6384,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-dom": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-dom.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-dom",
+    "pkg": "web-dom",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -5592,9 +6412,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-dom-parser": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-dom-parser.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-dom-parser",
+    "pkg": "web-dom-parser",
+    "defaultBranch": "master",
     "gitTags": [
       "v5.0.0",
       "v6.0.0",
@@ -5616,9 +6443,16 @@
       "psci-support"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-dom-xpath": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-dom-xpath.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-dom-xpath",
+    "pkg": "web-dom-xpath",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -5643,9 +6477,16 @@
       "web-dom-parser"
     ],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-encoding": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-encoding.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-encoding",
+    "pkg": "web-encoding",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0"
@@ -5660,9 +6501,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-events": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-events.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-events",
+    "pkg": "web-events",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -5680,9 +6528,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-fetch": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-fetch.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-fetch",
+    "pkg": "web-fetch",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -5703,9 +6558,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-file": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-file.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-file",
+    "pkg": "web-file",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -5727,9 +6589,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-html": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-html.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-html",
+    "pkg": "web-html",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -5758,9 +6627,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-promise": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-promise.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-promise",
+    "pkg": "web-promise",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.0.1",
@@ -5782,9 +6658,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-socket": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-socket.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-socket",
+    "pkg": "web-socket",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -5798,9 +6681,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-storage": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-storage.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-storage",
+    "pkg": "web-storage",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -5815,9 +6705,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-streams": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-streams.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-streams",
+    "pkg": "web-streams",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0"
@@ -5835,9 +6732,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-touchevents": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-touchevents.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-touchevents",
+    "pkg": "web-touchevents",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v2.0.0",
@@ -5850,9 +6754,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-uievents": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-uievents.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-uievents",
+    "pkg": "web-uievents",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -5866,9 +6777,16 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   },
   "web-xhr": {
+    "repoUrl": "git@github.com:purescript-web/purescript-web-xhr.git",
+    "repoOrg": "purescript-web",
+    "repoProj": "purescript-web-xhr",
+    "pkg": "web-xhr",
+    "defaultBranch": "master",
     "gitTags": [
       "v1.0.0",
       "v1.1.0",
@@ -5891,6 +6809,8 @@
     ],
     "bowerDevDependencies": [],
     "hasSpagoDhallFile": false,
-    "hasTestDhallFile": false
+    "spagoDependencies": [],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   }
 }

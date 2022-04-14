@@ -1,0 +1,2410 @@
+{
+  "arrays": [
+    {
+      "origin": "git@github.com:purescript/purescript-arrays.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-arrays.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-arrays.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-arrays.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-arrays.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-arrays.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-arrays.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-arrays.git"
+    }
+  ],
+  "assert": [
+    {
+      "origin": "git@github.com:purescript/purescript-assert.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-assert.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-assert.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-assert.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-assert.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-assert.git"
+    }
+  ],
+  "bifunctors": [
+    {
+      "origin": "git@github.com:purescript/purescript-bifunctors.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-bifunctors.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-bifunctors.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-bifunctors.git"
+    }
+  ],
+  "catenable-lists": [
+    {
+      "origin": "git@github.com:purescript/purescript-catenable-lists.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-catenable-lists.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-catenable-lists.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-catenable-lists.git"
+    }
+  ],
+  "console": [
+    {
+      "origin": "git@github.com:purescript/purescript-console.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-console.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-console.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-console.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-console.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-console.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-console.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-console.git"
+    }
+  ],
+  "const": [
+    {
+      "origin": "git@github.com:purescript/purescript-const.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-const.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-const.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-const.git"
+    }
+  ],
+  "contravariant": [
+    {
+      "origin": "git@github.com:purescript/purescript-contravariant.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-contravariant.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-contravariant.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-contravariant.git"
+    }
+  ],
+  "control": [
+    {
+      "origin": "git@github.com:purescript/purescript-control.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-control.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-control.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-control.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-control.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-control.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-control.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-control.git"
+    }
+  ],
+  "datetime": [
+    {
+      "origin": "git@github.com:purescript/purescript-datetime.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-datetime.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-datetime.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-datetime.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-datetime.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-datetime.git"
+    }
+  ],
+  "distributive": [
+    {
+      "origin": "git@github.com:purescript/purescript-distributive.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-distributive.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-distributive.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-distributive.git"
+    }
+  ],
+  "effect": [
+    {
+      "origin": "git@github.com:purescript/purescript-effect.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-effect.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-effect.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-effect.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-effect.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-effect.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-effect.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-effect.git"
+    }
+  ],
+  "either": [
+    {
+      "origin": "git@github.com:purescript/purescript-either.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-either.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-either.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-either.git"
+    }
+  ],
+  "enums": [
+    {
+      "origin": "git@github.com:purescript/purescript-enums.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-enums.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-enums.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-enums.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-enums.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-enums.git"
+    }
+  ],
+  "exceptions": [
+    {
+      "origin": "git@github.com:purescript/purescript-exceptions.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-exceptions.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-exceptions.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-exceptions.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-exceptions.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-exceptions.git"
+    }
+  ],
+  "exists": [
+    {
+      "origin": "git@github.com:purescript/purescript-exists.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-exists.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-exists.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-exists.git"
+    }
+  ],
+  "filterable": [
+    {
+      "origin": "git@github.com:purescript/purescript-filterable.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-filterable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-filterable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-filterable.git"
+    }
+  ],
+  "foldable-traversable": [
+    {
+      "origin": "git@github.com:purescript/purescript-foldable-traversable.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-foldable-traversable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-foldable-traversable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-foldable-traversable.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-foldable-traversable.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-foldable-traversable.git"
+    }
+  ],
+  "foreign": [
+    {
+      "origin": "git@github.com:purescript/purescript-foreign.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-foreign.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-foreign.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-foreign.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-foreign.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-foreign.git"
+    }
+  ],
+  "foreign-object": [
+    {
+      "origin": "git@github.com:purescript/purescript-foreign-object.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-foreign-object.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-foreign-object.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-foreign-object.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-foreign-object.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-foreign-object.git"
+    }
+  ],
+  "free": [
+    {
+      "origin": "git@github.com:purescript/purescript-free.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-free.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-free.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-free.git"
+    }
+  ],
+  "functions": [
+    {
+      "origin": "git@github.com:purescript/purescript-functions.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-functions.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-functions.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-functions.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-functions.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-functions.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-functions.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-functions.git"
+    }
+  ],
+  "functors": [
+    {
+      "origin": "git@github.com:purescript/purescript-functors.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-functors.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-functors.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-functors.git"
+    }
+  ],
+  "gen": [
+    {
+      "origin": "git@github.com:purescript/purescript-gen.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-gen.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-gen.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-gen.git"
+    }
+  ],
+  "graphs": [
+    {
+      "origin": "git@github.com:purescript/purescript-graphs.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-graphs.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-graphs.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-graphs.git"
+    }
+  ],
+  "identity": [
+    {
+      "origin": "git@github.com:purescript/purescript-identity.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-identity.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-identity.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-identity.git"
+    }
+  ],
+  "integers": [
+    {
+      "origin": "git@github.com:purescript/purescript-integers.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-integers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-integers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-integers.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-integers.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-integers.git"
+    }
+  ],
+  "invariant": [
+    {
+      "origin": "git@github.com:purescript/purescript-invariant.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-invariant.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-invariant.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-invariant.git"
+    }
+  ],
+  "lazy": [
+    {
+      "origin": "git@github.com:purescript/purescript-lazy.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-lazy.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-lazy.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-lazy.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-lazy.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-lazy.git"
+    }
+  ],
+  "lcg": [
+    {
+      "origin": "git@github.com:purescript/purescript-lcg.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-lcg.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-lcg.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-lcg.git"
+    }
+  ],
+  "lists": [
+    {
+      "origin": "git@github.com:purescript/purescript-lists.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-lists.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-lists.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-lists.git"
+    }
+  ],
+  "math": [
+    {
+      "origin": "git@github.com:purescript/purescript-math.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-math.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-math.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-math.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-math.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-math.git"
+    }
+  ],
+  "maybe": [
+    {
+      "origin": "git@github.com:purescript/purescript-maybe.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-maybe.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-maybe.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-maybe.git"
+    }
+  ],
+  "minibench": [
+    {
+      "origin": "git@github.com:purescript/purescript-minibench.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-minibench.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-minibench.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-minibench.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-minibench.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-minibench.git"
+    }
+  ],
+  "newtype": [
+    {
+      "origin": "git@github.com:purescript/purescript-newtype.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-newtype.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-newtype.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-newtype.git"
+    }
+  ],
+  "nonempty": [
+    {
+      "origin": "git@github.com:purescript/purescript-nonempty.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-nonempty.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-nonempty.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-nonempty.git"
+    }
+  ],
+  "numbers": [
+    {
+      "jamie": "git@github.com:JamieBallingall/purescript-numbers.git"
+    },
+    {
+      "jamie": "git@github.com:JamieBallingall/purescript-numbers.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-numbers.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-numbers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-numbers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-numbers.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-numbers.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-numbers.git"
+    }
+  ],
+  "ordered-collections": [
+    {
+      "origin": "git@github.com:purescript/purescript-ordered-collections.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-ordered-collections.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-ordered-collections.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-ordered-collections.git"
+    }
+  ],
+  "orders": [
+    {
+      "origin": "git@github.com:purescript/purescript-orders.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-orders.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-orders.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-orders.git"
+    }
+  ],
+  "parallel": [
+    {
+      "origin": "git@github.com:purescript/purescript-parallel.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-parallel.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-parallel.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-parallel.git"
+    }
+  ],
+  "partial": [
+    {
+      "origin": "git@github.com:purescript/purescript-partial.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-partial.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-partial.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-partial.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-partial.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-partial.git"
+    }
+  ],
+  "prelude": [
+    {
+      "origin": "git@github.com:purescript/purescript-prelude.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-prelude.git"
+    },
+    {
+      "reactor": "git@github.com:reactormonk/purescript-prelude.git"
+    },
+    {
+      "reactor": "git@github.com:reactormonk/purescript-prelude.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-prelude.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-prelude.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-prelude.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-prelude.git"
+    }
+  ],
+  "profunctor": [
+    {
+      "origin": "git@github.com:purescript/purescript-profunctor.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-profunctor.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-profunctor.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-profunctor.git"
+    }
+  ],
+  "psci-support": [
+    {
+      "origin": "git@github.com:purescript/purescript-psci-support.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-psci-support.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-psci-support.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-psci-support.git"
+    }
+  ],
+  "quickcheck": [
+    {
+      "origin": "git@github.com:purescript/purescript-quickcheck.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-quickcheck.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-quickcheck.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-quickcheck.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-quickcheck.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-quickcheck.git"
+    }
+  ],
+  "random": [
+    {
+      "origin": "git@github.com:purescript/purescript-random.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-random.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-random.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-random.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-random.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-random.git"
+    }
+  ],
+  "record": [
+    {
+      "origin": "git@github.com:purescript/purescript-record.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-record.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-record.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-record.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-record.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-record.git"
+    }
+  ],
+  "refs": [
+    {
+      "origin": "git@github.com:purescript/purescript-refs.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-refs.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-refs.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-refs.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-refs.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-refs.git"
+    }
+  ],
+  "safe-coerce": [
+    {
+      "origin": "git@github.com:purescript/purescript-safe-coerce.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-safe-coerce.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-safe-coerce.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-safe-coerce.git"
+    }
+  ],
+  "semirings": [
+    {
+      "origin": "git@github.com:purescript/purescript-semirings.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-semirings.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-semirings.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-semirings.git"
+    }
+  ],
+  "st": [
+    {
+      "origin": "git@github.com:purescript/purescript-st.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-st.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-st.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-st.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-st.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-st.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-st.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-st.git"
+    }
+  ],
+  "strings": [
+    {
+      "origin": "git@github.com:purescript/purescript-strings.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-strings.git"
+    },
+    {
+      "qk": "git@github.com:Quelklef/purescript-strings.git"
+    },
+    {
+      "qk": "git@github.com:Quelklef/purescript-strings.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-strings.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-strings.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-strings.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-strings.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-strings.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-strings.git"
+    }
+  ],
+  "tailrec": [
+    {
+      "origin": "git@github.com:purescript/purescript-tailrec.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-tailrec.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-tailrec.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-tailrec.git"
+    }
+  ],
+  "transformers": [
+    {
+      "origin": "git@github.com:purescript/purescript-transformers.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-transformers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-transformers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-transformers.git"
+    }
+  ],
+  "tuples": [
+    {
+      "origin": "git@github.com:purescript/purescript-tuples.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-tuples.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-tuples.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-tuples.git"
+    }
+  ],
+  "type-equality": [
+    {
+      "origin": "git@github.com:purescript/purescript-type-equality.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-type-equality.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-type-equality.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-type-equality.git"
+    }
+  ],
+  "typelevel-prelude": [
+    {
+      "origin": "git@github.com:purescript/purescript-typelevel-prelude.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-typelevel-prelude.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-typelevel-prelude.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-typelevel-prelude.git"
+    }
+  ],
+  "unfoldable": [
+    {
+      "matt": "git@github.com:matthewleon/purescript-unfoldable.git"
+    },
+    {
+      "matt": "git@github.com:matthewleon/purescript-unfoldable.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-unfoldable.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-unfoldable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unfoldable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unfoldable.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-unfoldable.git"
+    },
+    {
+      "upstream": "git://github.com/kl0tl/purescript-unfoldable.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unfoldable.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unfoldable.git"
+    }
+  ],
+  "unsafe-coerce": [
+    {
+      "origin": "git@github.com:purescript/purescript-unsafe-coerce.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-unsafe-coerce.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unsafe-coerce.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unsafe-coerce.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unsafe-coerce.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unsafe-coerce.git"
+    }
+  ],
+  "validation": [
+    {
+      "origin": "git@github.com:purescript/purescript-validation.git"
+    },
+    {
+      "origin": "git@github.com:purescript/purescript-validation.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-validation.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-validation.git"
+    }
+  ],
+  "ace": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-ace.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-ace.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-ace.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-ace.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-ace.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-ace.git"
+    }
+  ],
+  "aff-bus": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-aff-bus.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-aff-bus.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-aff-bus.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-aff-bus.git"
+    }
+  ],
+  "aff-coroutines": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-aff-coroutines.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-aff-coroutines.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-aff-coroutines.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-aff-coroutines.git"
+    }
+  ],
+  "aff": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-aff.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-aff.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-aff.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-aff.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-aff.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-aff.git"
+    }
+  ],
+  "affjax": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-affjax.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-affjax.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-affjax.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-affjax.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-affjax.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-affjax.git"
+    }
+  ],
+  "affjax-web": [
+    {
+      "fork": "git@github.com:JordanMartinez/purescript-affjax-web.git"
+    },
+    {
+      "fork": "git@github.com:JordanMartinez/purescript-affjax-web.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-affjax-web.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-affjax-web.git"
+    }
+  ],
+  "affjax-node": [
+    {
+      "fork": "git@github.com:JordanMartinez/purescript-affjax-node.git"
+    },
+    {
+      "fork": "git@github.com:JordanMartinez/purescript-affjax-node.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-affjax-node.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-affjax-node.git"
+    }
+  ],
+  "argonaut-codecs": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-codecs.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-codecs.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-codecs.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-codecs.git"
+    }
+  ],
+  "argonaut-core": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-core.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-core.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-core.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-core.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-argonaut-core.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-argonaut-core.git"
+    }
+  ],
+  "argonaut-generic": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-generic.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-generic.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-generic.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-generic.git"
+    }
+  ],
+  "argonaut": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut.git"
+    }
+  ],
+  "argonaut-traversals": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-traversals.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-argonaut-traversals.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-traversals.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-argonaut-traversals.git"
+    }
+  ],
+  "arraybuffer": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-arraybuffer.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-arraybuffer.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-arraybuffer.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-arraybuffer.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-arraybuffer.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-arraybuffer.git"
+    }
+  ],
+  "arraybuffer-types": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-arraybuffer-types.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-arraybuffer-types.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-arraybuffer-types.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-arraybuffer-types.git"
+    }
+  ],
+  "avar": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-avar.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-avar.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-avar.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-avar.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-avar.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-avar.git"
+    }
+  ],
+  "colors": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-colors.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-colors.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-colors.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-colors.git"
+    }
+  ],
+  "concurrent-queues": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-concurrent-queues.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-concurrent-queues.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-concurrent-queues.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-concurrent-queues.git"
+    }
+  ],
+  "coroutines": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-coroutines.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-coroutines.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-coroutines.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-coroutines.git"
+    }
+  ],
+  "css": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-css.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-css.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-css.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-css.git"
+    }
+  ],
+  "fixed-points": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-fixed-points.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-fixed-points.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-fixed-points.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-fixed-points.git"
+    }
+  ],
+  "float32": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-float32.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-float32.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-float32.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-float32.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-float32.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-float32.git"
+    }
+  ],
+  "fork": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-fork.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-fork.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-fork.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-fork.git"
+    }
+  ],
+  "formatters": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-formatters.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-formatters.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-formatters.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-formatters.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-formatters.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-formatters.git"
+    }
+  ],
+  "form-urlencoded": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-form-urlencoded.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-form-urlencoded.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-form-urlencoded.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-form-urlencoded.git"
+    }
+  ],
+  "freet": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-freet.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-freet.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-freet.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-freet.git"
+    }
+  ],
+  "http-methods": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-http-methods.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-http-methods.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-http-methods.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-http-methods.git"
+    }
+  ],
+  "js-date": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-js-date.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-js-date.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-js-date.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-js-date.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-js-date.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-js-date.git"
+    }
+  ],
+  "js-timers": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-js-timers.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-js-timers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-js-timers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-js-timers.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-js-timers.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-js-timers.git"
+    }
+  ],
+  "js-uri": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-js-uri.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-js-uri.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-js-uri.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-js-uri.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-js-uri.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-js-uri.git"
+    }
+  ],
+  "machines": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-machines.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-machines.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-machines.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-machines.git"
+    }
+  ],
+  "matryoshka": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-matryoshka.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-matryoshka.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-matryoshka.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-matryoshka.git"
+    }
+  ],
+  "media-types": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-media-types.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-media-types.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-media-types.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-media-types.git"
+    }
+  ],
+  "now": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-now.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-now.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-now.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-now.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-now.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-now.git"
+    }
+  ],
+  "nullable": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-nullable.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-nullable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-nullable.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-nullable.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-nullable.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-nullable.git"
+    }
+  ],
+  "options": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-options.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-options.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-options.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-options.git"
+    }
+  ],
+  "parsing": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-parsing.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-parsing.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-parsing.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-parsing.git"
+    }
+  ],
+  "pathy": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-pathy.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-pathy.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-pathy.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-pathy.git"
+    }
+  ],
+  "precise": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-precise.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-precise.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-precise.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-precise.git"
+    }
+  ],
+  "profunctor-lenses": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-profunctor-lenses.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-profunctor-lenses.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-profunctor-lenses.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-profunctor-lenses.git"
+    }
+  ],
+  "quickcheck-laws": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-quickcheck-laws.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-quickcheck-laws.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-quickcheck-laws.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-quickcheck-laws.git"
+    }
+  ],
+  "react-dom": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-react-dom.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-react-dom.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-react-dom.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-react-dom.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-react-dom.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-react-dom.git"
+    }
+  ],
+  "react": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-react.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-react.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-react.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-react.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-react.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-react.git"
+    }
+  ],
+  "routing": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-routing.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-routing.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-routing.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-routing.git"
+    }
+  ],
+  "string-parsers": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-string-parsers.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-string-parsers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-string-parsers.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-string-parsers.git"
+    }
+  ],
+  "strings-extra": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-strings-extra.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-strings-extra.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-strings-extra.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-strings-extra.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-strings-extra.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-strings-extra.git"
+    }
+  ],
+  "these": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-these.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-these.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-these.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-these.git"
+    }
+  ],
+  "uint": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-uint.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-uint.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-uint.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-uint.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-uint.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-uint.git"
+    }
+  ],
+  "unicode": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-unicode.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-unicode.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unicode.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unicode.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unicode.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unicode.git"
+    }
+  ],
+  "unsafe-reference": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-unsafe-reference.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-unsafe-reference.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unsafe-reference.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-unsafe-reference.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unsafe-reference.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-unsafe-reference.git"
+    }
+  ],
+  "uri": [
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-uri.git"
+    },
+    {
+      "origin": "git@github.com:purescript-contrib/purescript-uri.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-uri.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-uri.git"
+    }
+  ],
+  "node-buffer": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-buffer.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-buffer.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-buffer.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-buffer.git"
+    }
+  ],
+  "node-child-process": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-child-process.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-child-process.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-child-process.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-child-process.git"
+    }
+  ],
+  "node-fs-aff": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-fs-aff.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-fs-aff.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-fs-aff.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-fs-aff.git"
+    }
+  ],
+  "node-fs": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-fs.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-fs.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-fs.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-fs.git"
+    }
+  ],
+  "node-http": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-http.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-http.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-http.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-http.git"
+    }
+  ],
+  "node-net": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-net.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-net.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-net.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-net.git"
+    }
+  ],
+  "node-path": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-path.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-path.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-path.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-path.git"
+    }
+  ],
+  "node-process": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-process.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-process.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-process.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-process.git"
+    }
+  ],
+  "node-readline": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-readline.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-readline.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-readline.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-readline.git"
+    }
+  ],
+  "node-streams": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-streams.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-streams.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-streams.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-streams.git"
+    }
+  ],
+  "node-url": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-url.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-node-url.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-url.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-node-url.git"
+    }
+  ],
+  "posix-types": [
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-posix-types.git"
+    },
+    {
+      "origin": "git@github.com:JordanMartinez/purescript-posix-types.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-posix-types.git"
+    },
+    {
+      "upstream": "git@github.com:purescript-node/purescript-posix-types.git"
+    }
+  ],
+  "canvas": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-canvas.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-canvas.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-canvas.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-canvas.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-canvas.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-canvas.git"
+    }
+  ],
+  "web-clipboard": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-clipboard.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-clipboard.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-clipboard.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-clipboard.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-clipboard.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-clipboard.git"
+    }
+  ],
+  "web-cssom": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-cssom.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-cssom.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-cssom.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-cssom.git"
+    },
+    {
+      "the": "git@github.com:theqp/purescript-web-cssom.git"
+    },
+    {
+      "the": "git@github.com:theqp/purescript-web-cssom.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-cssom.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-cssom.git"
+    }
+  ],
+  "web-dom": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-dom.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-dom.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-dom.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-dom.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-dom.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-dom.git"
+    }
+  ],
+  "web-dom-parser": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-dom-parser.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-dom-parser.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-dom-parser.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-dom-parser.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-dom-parser.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-dom-parser.git"
+    }
+  ],
+  "web-dom-xpath": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-dom-xpath.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-dom-xpath.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-dom-xpath.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-dom-xpath.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-dom-xpath.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-dom-xpath.git"
+    }
+  ],
+  "web-encoding": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-encoding.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-encoding.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-encoding.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-encoding.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-encoding.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-encoding.git"
+    }
+  ],
+  "web-events": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-events.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-events.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-events.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-events.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-events.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-events.git"
+    }
+  ],
+  "web-fetch": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-fetch.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-fetch.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-fetch.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-fetch.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-fetch.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-fetch.git"
+    }
+  ],
+  "web-file": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-file.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-file.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-file.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-file.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-file.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-file.git"
+    }
+  ],
+  "web-html": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-html.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-html.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-html.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-html.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-html.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-html.git"
+    }
+  ],
+  "web-promise": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-promise.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-promise.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-promise.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-promise.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-promise.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-promise.git"
+    }
+  ],
+  "web-socket": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-socket.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-socket.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-socket.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-socket.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-socket.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-socket.git"
+    }
+  ],
+  "web-storage": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-storage.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-storage.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-storage.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-storage.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-storage.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-storage.git"
+    }
+  ],
+  "web-streams": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-streams.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-streams.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-streams.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-streams.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-streams.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-streams.git"
+    }
+  ],
+  "web-touchevents": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-touchevents.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-touchevents.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-touchevents.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-touchevents.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-touchevents.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-touchevents.git"
+    }
+  ],
+  "web-uievents": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-uievents.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-uievents.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-uievents.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-uievents.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-uievents.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-uievents.git"
+    }
+  ],
+  "web-xhr": [
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-xhr.git"
+    },
+    {
+      "origin": "git@github.com:purescript-web/purescript-web-xhr.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-xhr.git"
+    },
+    {
+      "self": "git@github.com:JordanMartinez/purescript-web-xhr.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-xhr.git"
+    },
+    {
+      "wg": "git@github.com:working-group-purescript-es/purescript-web-xhr.git"
+    }
+  ]
+}

@@ -24,8 +24,8 @@ const repoNode = readTextFileLines(path.join(filesDir.repos, "purescript-node.tx
 const repoWeb = readTextFileLines(path.join(filesDir.repos, "purescript-web.txt"));
 
 const getRepoInfo = (content) => {
-  const repoUrl = content.replace(/git@github\.com:([^.]+).git$/g, "$1");
-  const ghRepoParts = repoUrl.split("/");
+  const repoUrl = content;
+  const ghRepoParts = content.replace(/git@github\.com:([^.]+).git$/g, "$1").split("/");
   const repoOrg = ghRepoParts[0];
   const repoProj = ghRepoParts[1];
   const pkg = repoProj.slice("purescript-".length);

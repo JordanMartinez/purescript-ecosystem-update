@@ -2,6 +2,7 @@
 , dependencies =
   [ "aff"
   , "affjax"
+  , "argonaut-codecs"
   , "argparse-basic"
   , "arrays"
   , "avar"
@@ -14,24 +15,32 @@
   , "exceptions"
   , "filterable"
   , "foldable-traversable"
+  , "foreign-object"
+  , "functions"
   , "integers"
   , "lists"
   , "maybe"
   , "newtype"
   , "node-buffer"
   , "node-child-process"
+  , "node-fs"
   , "node-fs-aff"
   , "node-path"
   , "node-process"
   , "node-streams"
+  , "nullable"
+  , "partial"
   , "posix-types"
   , "prelude"
   , "refs"
   , "safe-coerce"
   , "strings"
+  , "stringutils"
+  , "tailrec"
   , "transformers"
+  , "unordered-collections"
   , "versions"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/**/*.purs" ]
+, sources = [ "src/purescript/**/*.purs" ]
 }

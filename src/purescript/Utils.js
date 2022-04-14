@@ -1,6 +1,14 @@
 const process = require("process");
 const fs = require("fs");
 
+exports.mkdirImpl = function(path) {
+  return function(opt) {
+    return function (cb) {
+      fs.mkdir(path, opt, cb);
+    };
+  };
+};
+
 exports.setProcessExitCode = function (code) {
   return function () {
     process.exitCode = code;
