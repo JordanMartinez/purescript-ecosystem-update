@@ -32,6 +32,7 @@
   , "partial"
   , "posix-types"
   , "prelude"
+  , "record"
   , "refs"
   , "safe-coerce"
   , "strings"

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "release-order": "spago run -m Scripts.Release",
+    "release-order": "spago run -m Scripts.ReleaseOrder",
     "noop": "echo 'nothing to see here'"
   },
   "dependencies": {
