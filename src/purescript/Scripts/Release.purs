@@ -108,7 +108,7 @@ main = launchAff_ do
           , inBowerRegistry
           , dependencies: Set.toArray v
           }
-  let
+
     jqScriptUpdateBowerWithReleaseVersion = do
       let
         header = "if has(\"dependencies\") then .dependencies |= ("
@@ -174,11 +174,7 @@ jqScriptUpdateBowerToReleasedVersionFile =
 
 updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff Unit
 updateBowerToReleasedVersions owner repo = whenM (liftEffect $ exists bowerFile) do
-  let
-    inRepoDir :: ExecOptions -> ExecOptions
-    inRepoDir r = r { cwd = Just repoDir }
-
-  original <- readTextFile UTF8 bowerJsonFile
+  original <- readTextFile UTF8 bowerFile
   result <- withSpawnResult =<< spawnAff "jq" ["--from-file", jqScriptUpdateBowerToReleasedVersionFile, "--", bowerFile ]
   let new = result.stdout
   -- easiest way to check whether a change has occurred
@@ -192,6 +188,8 @@ updateBowerToReleasedVersions owner repo = whenM (liftEffect $ exists bowerFile)
   owner' = unwrap owner
   repo' = unwrap repo
   repoDir = Path.concat ["..", owner', repo']
+  inRepoDir :: ExecOptions -> ExecOptions
+  inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, bowerJsonFile ]
 
 updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff Unit
