@@ -50,3 +50,6 @@ jqScriptsDir = Path.concat [ "src", "jq" ]
 updateBowerJsonReleaseVersionsFile :: String
 updateBowerJsonReleaseVersionsFile =
   Path.concat [ jqScriptsDir, "update-bower-json-release-versions.txt"]
+
+bodyOfReleasePrFile :: String
+bodyOfReleasePrFile = Path.concat [ "files", "pr", "body-of-release-pr.txt" ]

@@ -2,7 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (bowerJsonFile, changelogFile, updateBowerJsonReleaseVersionsFile)
+import Constants (bodyOfReleasePrFile, bowerJsonFile, changelogFile, updateBowerJsonReleaseVersionsFile)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Foldable (foldl, for_)
@@ -24,10 +24,11 @@ import Node.ChildProcess (ExecOptions)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile, writeTextFile)
 import Node.FS.Sync (exists)
+import Node.Path (FilePath)
 import Node.Path as Path
 import Partial.Unsafe (unsafeCrashWith)
 import Types (GitHubOwner, GitHubProject)
-import Utils (execAff', spawnAff, withSpawnResult)
+import Utils (execAff', spawnAff, spawnAff', withSpawnResult)
 
 createPrForNextReleaseBatch :: Aff Unit
 createPrForNextReleaseBatch = do
@@ -80,7 +81,7 @@ createPrForNextReleaseBatch = do
   for_ pkgsInNextBatch \info -> do
     log $ "Doing release changes for '" <> unwrap info.pkg <> "'"
     let
-      inRepoDir :: ExecOptions -> ExecOptions
+      inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
       inRepoDir r = r { cwd = Just $ Path.concat [ "..", unwrap info.owner, unwrap info.repo ]}
     log $ "... resetting to clean state"
     void $ execAff' "git reset --hard HEAD" inRepoDir
@@ -91,7 +92,22 @@ createPrForNextReleaseBatch = do
     updateBowerToReleasedVersions info.owner info.repo
     log $ "... updating changelog file (if any)"
     updateChangelog info.owner info.repo info.version
+    log $ "... submitting a PR"
+    void $ execAff' "git push -u origin test-next-release" inRepoDir
+    void $ spawnAff' "gh" (ghPrCreateArgs info) inRepoDir
     log $ ""
+  where
+  ghPrCreateArgs info =
+    [ "pr"
+    , "create"
+    , "--title"
+    , "\"Prepare v" <> Version.showVersion info.version <> " release, a PS 0.15.0-compatible release\""
+    , "--body-file"
+    -- TODO: make it so this path works regardless of project structure...
+    , Path.concat [ "..", "..", "0.15.x", bodyOfReleasePrFile ]
+    , "--label"
+    , "purs-0.15"
+    ]
 
 updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff Unit
 updateBowerToReleasedVersions owner repo = whenM (liftEffect $ exists bowerFile) do
