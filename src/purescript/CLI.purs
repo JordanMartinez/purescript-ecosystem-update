@@ -43,6 +43,7 @@ parseCliArgs =
       , ciCmd
       , checkCmd
       , makePrCmd
+      , makeNextReleaseBatchCmd
       , releaseOrderCmd
       , showExamplesCmd
       ]
@@ -185,6 +186,11 @@ parseCliArgs =
       <* ArgParse.flagHelp
     where
     description = "Create a PR for a single package"
+
+  makeNextReleaseBatchCmd = ArgParse.command [ "release" ] description do
+    MakeNextReleaseBatch <$ ArgParse.flagHelp
+    where
+    description = "Make the next batch of release PRs."
 
   releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
     ReleaseOrder <$ ArgParse.flagHelp

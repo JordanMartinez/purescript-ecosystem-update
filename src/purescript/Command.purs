@@ -35,5 +35,6 @@ data Command
   -- | Create a PR
   | MakePr { package :: Package }
   | ReleaseOrder
+  | MakeNextReleaseBatch
   -- | Show examples
   | ShowExamples

@@ -9,7 +9,8 @@ import Command.Bower as BowerCmd
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
 import Command.Init as InitCmd
-import Command.ReleaseOrder as ReleaseCmd
+import Command.Release as ReleaseCmd
+import Command.ReleaseOrder as ReleaseOrderCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
 import Effect (Effect)
@@ -51,5 +52,8 @@ main = do
             BowerCmd.updateDependenciesToMain package
         ReleaseOrder ->
           runAff_ (either throwException $ const $ pure unit) do
-            ReleaseCmd.generateReleaseOrder
+            ReleaseOrderCmd.generateReleaseOrder
+        MakeNextReleaseBatch ->
+          runAff_ (either throwException $ const $ pure unit) do
+            ReleaseCmd.createPrForNextReleaseBatch
         _ -> Console.log "Command not yet implemented"
