@@ -32,12 +32,12 @@ import Utils (execAff', spawnAff, spawnAff', withSpawnResult)
 
 createPrForNextReleaseBatch :: Aff Unit
 createPrForNextReleaseBatch = do
-  dependencyGraphWithMeta <- generateAllReleaseInfo useNextMajorVersion
+  { fullGraph, unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
 
   let
     jqScriptUpdateBowerWithReleaseVersion = do
       let
-        updates = dependencyGraphWithMeta # flip foldl [] \acc info -> do
+        updates = fullGraph # flip foldl [] \acc info -> do
           -- if in registry
           --  "if has("purescript-node-fs") then ."purescript-node-fs" |= "^4.2.0" else . end |"
           -- if not:
@@ -76,7 +76,7 @@ createPrForNextReleaseBatch = do
     jqScriptUpdateBowerWithReleaseVersion
 
   let
-    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) dependencyGraphWithMeta
+    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
 
   for_ pkgsInNextBatch \info -> do
     log $ "Doing release changes for '" <> unwrap info.pkg <> "'"

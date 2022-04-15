@@ -10,6 +10,6 @@ import Node.FS.Aff (writeTextFile)
 
 generateReleaseOrder :: Aff Unit
 generateReleaseOrder = do
-  dependencyGraphWithMeta <- generateAllReleaseInfo useNextMajorVersion
+  { unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
   writeTextFile UTF8 libraryReleaseOrderFile
-    $ linearizePackageDependencyOrder dependencyGraphWithMeta
+    $ linearizePackageDependencyOrder unfinishedPkgsGraph

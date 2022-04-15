@@ -102,7 +102,10 @@ useBranchName b _ = b
 generateAllReleaseInfo
   :: forall version
   . (BranchName -> Array String -> version)
-  -> Aff (HashMap Package (DependenciesWithMeta version))
+  -> Aff
+      { fullGraph :: HashMap Package (DependenciesWithMeta version)
+      , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
+      }
 generateAllReleaseInfo f = do
   let
     nextReleaseInfo = Path.concat [ filesReleaseDir, "next-release-info_2022-04-15T13:28:12.552Z.json" ]
@@ -117,7 +120,10 @@ generateAllReleaseInfo'
    . FilePath
   -> FilePath
   -> (BranchName -> Array String -> version)
-  -> Aff (HashMap Package (DependenciesWithMeta version))
+  -> Aff
+      { fullGraph :: HashMap Package (DependenciesWithMeta version)
+      , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
+      }
 generateAllReleaseInfo' nextReleaseInfoJsonFile releasedPkgs extractVersion = do
   releaseInfoContent <- readTextFile UTF8 nextReleaseInfoJsonFile
   (releaseInfo :: Object NextReleaseInfo) <- do
@@ -147,24 +153,37 @@ generateAllReleaseInfo' nextReleaseInfoJsonFile releasedPkgs extractVersion = do
         )
         acc
 
-  pure $ fullPackageGraph
-    # removeFinishedDeps depsToRemove
-    # findAllTransitiveDeps
-    # mapWithIndex \k v -> do
-        case Object.lookup (unwrap k) releaseInfoWithVersion of
-          Nothing -> unsafeCrashWith $
-            "Impossible happened: '" <> unwrap k <> "' does not exist in object map."
-          Just { pkg, repoUrl, repoOrg, repoProj, defaultBranch, version, inBowerRegistry } ->
-            { pkg
-            , repoUrl
-            , owner: repoOrg
-            , repo: repoProj
-            , defaultBranch
-            , version
-            , inBowerRegistry
-            , dependencies: Set.toArray v
-            , depCount: Set.size v
-            }
+    fullGraphWithMeta = fullPackageGraph
+      # findAllTransitiveDeps
+      # mapWithIndex \k v -> do
+          case Object.lookup (unwrap k) releaseInfoWithVersion of
+            Nothing -> unsafeCrashWith $
+              "Impossible happened: '" <> unwrap k <> "' does not exist in object map."
+            Just { pkg, repoUrl, repoOrg, repoProj, defaultBranch, version, inBowerRegistry } ->
+              { pkg
+              , repoUrl
+              , owner: repoOrg
+              , repo: repoProj
+              , defaultBranch
+              , version
+              , inBowerRegistry
+              , dependencies: v
+              }
+
+    finalVal
+      { pkg, repoUrl, owner, repo, defaultBranch, version, inBowerRegistry } dependencies depCount =
+      { pkg, repoUrl, owner, repo, defaultBranch, version, inBowerRegistry, dependencies, depCount }
+
+    fullGraph = fullGraphWithMeta
+      <#> \v -> finalVal v (Set.toArray v.dependencies) (Set.size v.dependencies)
+
+    unfinishedPkgsGraph =
+      (foldl (flip HashMap.delete) fullGraphWithMeta depsToRemove)
+        <#> \v -> do
+          let newDeps = foldl (flip Set.delete) v.dependencies depsToRemove
+          finalVal v (Set.toArray newDeps) (Set.size newDeps)
+
+  pure { fullGraph, unfinishedPkgsGraph }
 
 findAllTransitiveDeps :: HashMap Package (HashSet Package) -> HashMap Package (HashSet Package)
 findAllTransitiveDeps packageMap = foldl buildMap HashMap.empty $ Array.filter ((/=) "" <<< unwrap) $ HashMap.keys packageMap
