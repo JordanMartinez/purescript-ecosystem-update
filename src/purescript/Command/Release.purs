@@ -94,17 +94,17 @@ createPrForNextReleaseBatch = do
     updateChangelog info.owner info.repo info.version
     log $ "... submitting a PR"
     void $ execAff' "git push -u origin test-next-release" inRepoDir
-    void $ spawnAff' "gh" (ghPrCreateArgs info) inRepoDir
+    absBodyOfReleasePrFile <- liftEffect $ Path.resolve [] bodyOfReleasePrFile
+    void $ spawnAff' "gh" (ghPrCreateArgs info absBodyOfReleasePrFile) inRepoDir
     log $ ""
   where
-  ghPrCreateArgs info =
+  ghPrCreateArgs info bodyFilePath =
     [ "pr"
     , "create"
     , "--title"
     , "\"Prepare v" <> Version.showVersion info.version <> " release, a PS 0.15.0-compatible release\""
     , "--body-file"
-    -- TODO: make it so this path works regardless of project structure...
-    , Path.concat [ "..", "..", "0.15.x", bodyOfReleasePrFile ]
+    , bodyFilePath
     , "--label"
     , "purs-0.15"
     ]
