@@ -95,8 +95,8 @@ createPrForNextReleaseBatch = do
     log $ "... updating changelog file (if any)"
     updateChangelog info.owner info.repo info.version
     log $ "... submitting a PR"
-    void $ execAff' "git push -u origin test-next-release" inRepoDir
-    void $ spawnAff' "gh" (ghPrCreateArgs info absBodyOfReleasePrFile) inRepoDir
+    -- void $ execAff' "git push -u origin test-next-release" inRepoDir
+    -- void $ spawnAff' "gh" (ghPrCreateArgs info absBodyOfReleasePrFile) inRepoDir
     log $ ""
   where
   ghPrCreateArgs info bodyFilePath =
