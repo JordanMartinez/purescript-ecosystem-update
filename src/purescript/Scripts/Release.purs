@@ -46,7 +46,7 @@ main :: Effect Unit
 main = launchAff_ do
   let
     releaseDir = Path.concat [ "files", "release" ]
-  content <- readTextFile UTF8 $ Path.concat [ releaseDir, "next-release-info_2022-04-14T22:49:25.771Z.json" ]
+  content <- readTextFile UTF8 $ Path.concat [ releaseDir, "next-release-info_2022-04-15T13:28:12.552Z.json" ]
   (releaseInfo :: Object ReleaseInfo) <- either (liftEffect <<< throw <<< printJsonDecodeError) pure $ parseJson content >>= decodeJson
   let
     depsToRemove = []

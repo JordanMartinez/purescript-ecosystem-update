@@ -6812,5 +6812,55 @@
     "spagoDependencies": [],
     "hasTestDhallFile": false,
     "spagoTestDependencies": []
+  },
+  "aff-promise": {
+    "repoUrl": "git@github.com:nwolverson/purescript-aff-promise.git",
+    "repoOrg": "nwolverson",
+    "repoProj": "purescript-aff-promise",
+    "pkg": "aff-promise",
+    "defaultBranch": "master",
+    "gitTags": [
+      "v0.0.1",
+      "v0.1.0",
+      "v0.2.0",
+      "v0.2.1",
+      "v0.3.0",
+      "v0.4.0",
+      "v0.5.0",
+      "v0.6.0",
+      "v0.7.0",
+      "v1.0.0",
+      "v2.0.0",
+      "v2.0.1",
+      "v2.1.0",
+      "v3.0.0"
+    ],
+    "inBowerRegistry": true,
+    "hasBowerJsonFile": true,
+    "bowerDependencies": [
+      "aff",
+      "foreign"
+    ],
+    "bowerDevDependencies": [
+      "assert",
+      "datetime"
+    ],
+    "hasSpagoDhallFile": true,
+    "spagoDependencies": [
+      "aff",
+      "assert",
+      "console",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "foreign",
+      "integers",
+      "prelude",
+      "transformers"
+    ],
+    "hasTestDhallFile": false,
+    "spagoTestDependencies": []
   }
 }

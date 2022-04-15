@@ -22,6 +22,7 @@ const repoPs = readTextFileLines(path.join(filesDir.repos, "purescript.txt"));
 const repoContrib = readTextFileLines(path.join(filesDir.repos, "purescript-contrib.txt"));
 const repoNode = readTextFileLines(path.join(filesDir.repos, "purescript-node.txt"));
 const repoWeb = readTextFileLines(path.join(filesDir.repos, "purescript-web.txt"));
+const repoNwolverson = readTextFileLines(path.join(filesDir.repos, "nwolverson.txt"));
 
 const getRepoInfo = (content) => {
   const repoUrl = content;
@@ -32,15 +33,14 @@ const getRepoInfo = (content) => {
   const defaultBranch =
     ["filterable", "js-uri"].some((p) => p === pkg)
       ? "main"
-      : ["purescript", "purescript-node", "purescript-web"].some((org) => org === repoOrg)
+      : ["purescript", "purescript-node", "purescript-web", "nwolverson"].some((org) => org === repoOrg)
         ? "master"
         : "main";
   const res = { repoUrl, repoOrg, repoProj, pkg, defaultBranch };
   return res;
 };
 
-// export const reposArray = [repoContrib]
-export const reposArray = [repoPs, repoContrib, repoNode, repoWeb]
+export const reposArray = [repoPs, repoContrib, repoNode, repoWeb, repoNwolverson]
   .reduce((acc, nextRepo) => acc.concat(nextRepo.map(getRepoInfo)), []);
 
 export const repos = reposArray.reduce((acc, next) => {
