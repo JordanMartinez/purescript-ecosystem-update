@@ -36,16 +36,6 @@ createPrForNextReleaseBatch = do
   let
     jqScriptUpdateBowerWithReleaseVersion = do
       let
-        header = "if has(\"dependencies\") then .dependencies |= ("
-        separatorLines =
-          [ "  ."
-          , ") else . end |"
-          , "if has (\"devDependencies\") then .devDependencies |= ("
-          ]
-        footer =
-          [ "  ."
-          , ") else . end"
-          ]
         updates = dependencyGraphWithMeta # flip foldl [] \acc info -> do
           -- if in registry
           --  "if has("purescript-node-fs") then ."purescript-node-fs" |= "^4.2.0" else . end |"
@@ -66,11 +56,18 @@ createPrForNextReleaseBatch = do
               , "\" else . end |"
               ]
       Array.intercalate "\n"
-        $ Array.singleton header
+        $ [ "if has(\"dependencies\") then .dependencies |= (" ]
         <> updates
-        <> separatorLines
+        <>
+          [ "  ."
+          , ") else . end |"
+          , "if has (\"devDependencies\") then .devDependencies |= ("
+          ]
         <> updates
-        <> footer
+        <>
+          [ "  ."
+          , ") else . end"
+          ]
 
   writeTextFile
     UTF8
