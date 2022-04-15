@@ -78,6 +78,8 @@ createPrForNextReleaseBatch = do
   let
     pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
 
+  absBodyOfReleasePrFile <- liftEffect $ Path.resolve [] bodyOfReleasePrFile
+
   for_ pkgsInNextBatch \info -> do
     log $ "Doing release changes for '" <> unwrap info.pkg <> "'"
     let
@@ -94,7 +96,6 @@ createPrForNextReleaseBatch = do
     updateChangelog info.owner info.repo info.version
     log $ "... submitting a PR"
     void $ execAff' "git push -u origin test-next-release" inRepoDir
-    absBodyOfReleasePrFile <- liftEffect $ Path.resolve [] bodyOfReleasePrFile
     void $ spawnAff' "gh" (ghPrCreateArgs info absBodyOfReleasePrFile) inRepoDir
     log $ ""
   where
