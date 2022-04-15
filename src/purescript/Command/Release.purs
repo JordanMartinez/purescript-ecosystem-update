@@ -76,7 +76,7 @@ createPrForNextReleaseBatch = do
     jqScriptUpdateBowerWithReleaseVersion
 
   let
-    pkgsInNextBatch = HM.filter (\r -> r.depCount /= 0) dependencyGraphWithMeta
+    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) dependencyGraphWithMeta
 
   for_ pkgsInNextBatch \info -> do
     log $ "Doing release changes for '" <> unwrap info.pkg <> "'"
