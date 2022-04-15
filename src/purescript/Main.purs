@@ -9,6 +9,7 @@ import Command.Bower as BowerCmd
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
 import Command.Init as InitCmd
+import Command.ReleaseOrder as ReleaseCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
 import Effect (Effect)
@@ -48,4 +49,7 @@ main = do
         Bower { package } ->
           runAff_ (either throwException $ const $ pure unit) do
             BowerCmd.updateDependenciesToMain package
+        ReleaseOrder ->
+          runAff_ (either throwException $ const $ pure unit) do
+            ReleaseCmd.generateReleaseOrder
         _ -> Console.log "Command not yet implemented"

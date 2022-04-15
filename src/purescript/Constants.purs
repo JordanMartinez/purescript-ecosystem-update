@@ -37,3 +37,16 @@ gitRemoteNameOriginal = "origin"
 
 gitRemoteNameFork :: String
 gitRemoteNameFork = "self"
+
+libraryReleaseOrderFile :: String
+libraryReleaseOrderFile = Path.concat [ filesReleaseDir, "library-release-order"]
+
+filesReleaseDir :: String
+filesReleaseDir = Path.concat [ "files", "release" ]
+
+jqScriptsDir :: String
+jqScriptsDir = Path.concat [ "src", "jq" ]
+
+updateBowerJsonReleaseVersionsFile :: String
+updateBowerJsonReleaseVersionsFile =
+  Path.concat [ jqScriptsDir, "update-bower-json-release-versions.txt"]

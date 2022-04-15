@@ -34,5 +34,6 @@ data Command
   | Check { package :: Package }
   -- | Create a PR
   | MakePr { package :: Package }
+  | ReleaseOrder
   -- | Show examples
   | ShowExamples

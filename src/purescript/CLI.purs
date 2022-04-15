@@ -2,7 +2,7 @@ module CLI where
 
 import Prelude
 
-import ArgParse.Basic (ArgError, fromRecord, optional, parseArgs)
+import ArgParse.Basic (ArgError, fromRecord, optional)
 import ArgParse.Basic as ArgParse
 import Command (Command(..))
 import Data.Array as Array
@@ -18,7 +18,7 @@ import Types (GitHubOwner(..), GitHubProject(..), Package(..))
 
 parseCliArgs :: Array String -> Either ArgError Command
 parseCliArgs =
-  parseArgs
+  ArgParse.parseArgs
     "peu"
     ( joinWith "\n"
         [ "PureScript Ecosystem Update - A CLI for updating the ecosystem."
@@ -43,6 +43,7 @@ parseCliArgs =
       , ciCmd
       , checkCmd
       , makePrCmd
+      , releaseOrderCmd
       , showExamplesCmd
       ]
     <* ArgParse.flagHelp
@@ -184,6 +185,11 @@ parseCliArgs =
       <* ArgParse.flagHelp
     where
     description = "Create a PR for a single package"
+
+  releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
+    ReleaseOrder <$ ArgParse.flagHelp
+    where
+    description = "Linearize the package dependency graph to see what to release next."
 
   showExamplesCmd = ArgParse.command ["cli-examples"] description do
     ShowExamples <$ ArgParse.flagHelp
