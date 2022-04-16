@@ -184,6 +184,7 @@ updateChangelog owner repo nextVersion = whenM (liftEffect $ exists clFilePath) 
     , "Breaking changes:"
     , ""
     , "New features:"
+    , ""
     , "Bugfixes:"
     , ""
     , "Other improvements:"
