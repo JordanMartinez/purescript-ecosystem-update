@@ -21,9 +21,11 @@ import Node.ChildProcess (ChildProcess, ExecOptions, Exit(..), SpawnOptions, def
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
 import Node.FS (FileDescriptor)
+import Node.FS.Aff (readFile, writeFile)
 import Node.FS.Async (Callback)
 import Node.FS.Internal (mkEffect)
 import Node.FS.Stats (Stats(..), StatsObj)
+import Node.Path (FilePath)
 import Node.Stream (Readable)
 import Node.Stream as Stream
 
@@ -205,3 +207,6 @@ fdStatAff fd = makeAff \cb -> do
   pure nonCanceler
 
 foreign import fdStatImpl :: Fn2 FileDescriptor (JSCallback StatsObj) Unit
+
+copyFile :: FilePath -> FilePath -> Aff Unit
+copyFile from to = readFile from >>= writeFile to

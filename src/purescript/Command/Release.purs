@@ -2,7 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (bowerJsonFile, changelogFile, ciYmlFile, spagoDhallFile, testDhallFile, tidyOperatorsFile, tidyRcJsonFile, tidyRcJsonWithOperatorsFile, updateBowerJsonReleaseVersionsFile)
+import Constants (bowerJsonFile, changelogFile, ciYmlFile, spagoDhallFile, testDhallFile, tidyOperatorsFile, tidyRcJsonFile, tidyRcJsonNoOperatorsFile, tidyRcJsonWithOperatorsFile, updateBowerJsonReleaseVersionsFile)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Either (either)
@@ -36,7 +36,7 @@ import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (GitHubOwner, GitHubProject)
-import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (SpawnExit(..), copyFile, execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { noDryRun :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { noDryRun } = do
@@ -171,17 +171,19 @@ createPrForNextReleaseBatch { noDryRun } = do
         ]
       where
       bowerPart = case bowerStatus of
-        FileDoesNotExist -> [ "- [x] Bower dependencies: `bower.json` file does not exist." ]
-        FileHadNoChanges -> [ "- [x] Bower dependencies: no changes needed." ]
+        FileDoesNotExist _ -> [ "- [x] Bower dependencies: `bower.json` file does not exist." ]
+        FileHadNoChanges _ -> [ "- [x] Bower dependencies: no changes needed." ]
         FileChanged _ -> [ "- [x] Updated bower dependencies to 0.15.0-compatible versions" ]
       tidyOpPart = case pursTidyStatus.tidyOpFileStatus of
-        NoChangesNeeded -> [ "- [x] .tidyoperators: No change needed" ]
-        FileRegenerated -> [ "- [x] .tidyoperators: File regenerated." ]
-        FileAdded -> [ "- [x] .tidyoperators: File added" ]
+        FileDoesNotExist x -> absurd x
+        FileHadNoChanges _ -> [ "- [x] .tidyoperators: No change needed" ]
+        FileChanged FileRegenerated -> [ "- [x] .tidyoperators: File regenerated." ]
+        FileChanged FileAdded -> [ "- [x] .tidyoperators: File added" ]
       tidyRcPart = case pursTidyStatus.tidyRcFileStatus of
-        NoChangesNeeded -> [ "- [x] .tidyrc.json: No change needed" ]
-        FileRegenerated -> [ "- [x] .tidyrc.json: File regenerated." ]
-        FileAdded -> [ "- [x] .tidyrc.json: File added" ]
+        FileDoesNotExist x -> absurd x
+        FileHadNoChanges _ -> [ "- [x] .tidyrc.json: No change needed" ]
+        FileChanged FileRegenerated -> [ "- [x] .tidyrc.json: File regenerated." ]
+        FileChanged FileAdded -> [ "- [x] .tidyrc.json: File added" ]
       formattingPart = case pursTidyStatus.formattingStatus of
         true -> [ "- [x] `purs-tidy`: formatted files." ]
         false -> [ "- [x] `purs-tidy`: formatting files did not cause a change." ]
@@ -189,8 +191,8 @@ createPrForNextReleaseBatch { noDryRun } = do
         true -> [ "- [x] `purs-tidy`: check formatting step added to CI." ]
         false -> [ "- [x] `purs-tidy`: CI already checks formatting" ]
       changelogPart = case changelogStatus of
-        FileDoesNotExist -> [ "- [x] Changelog: `CHANGELOG.md` file does not exist. This should be investigated further." ]
-        FileHadNoChanges -> [ "- [x] Changelog: file had no changes. This should be investigated further if not `aff-promise`." ]
+        FileDoesNotExist _ -> [ "- [x] Changelog: `CHANGELOG.md` file does not exist. This should be investigated further." ]
+        FileHadNoChanges _ -> [ "- [x] Changelog: file had no changes. This should be investigated further if not `aff-promise`." ]
         FileChanged _ -> [ "- [x] Updated changelog" ]
     newReleaseUrl releaseBodyUri = fold
       [ "https://github.com/"
@@ -205,20 +207,19 @@ createPrForNextReleaseBatch { noDryRun } = do
       , releaseBodyUri
       ]
 
-data FileStatus a
-  = FileDoesNotExist
-  | FileHadNoChanges
-  | FileChanged a
+data FileStatus exist noChanges changed
+  = FileDoesNotExist exist
+  | FileHadNoChanges noChanges
+  | FileChanged changed
 
-data PursTidyFileStatus
-  = NoChangesNeeded
+data ChangeReason
+  = FileAdded
   | FileRegenerated
-  | FileAdded
 
-derive instance Eq a => Eq (FileStatus a)
-derive instance Ord a => Ord (FileStatus a)
+derive instance (Eq a, Eq b, Eq c) => Eq (FileStatus a b c)
+derive instance (Ord a, Ord b, Ord c) => Ord (FileStatus a b c)
 
-updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff (FileStatus Unit)
+updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff (FileStatus Unit Unit Unit)
 updateBowerToReleasedVersions owner repo = do
   fileExists <- liftEffect $ exists bowerFile
   if fileExists then do
@@ -234,9 +235,9 @@ updateBowerToReleasedVersions owner repo = do
       throwIfExecErrored gitCommitResult
       pure $ FileChanged unit
     else do
-      pure FileHadNoChanges
+      pure $ FileHadNoChanges unit
   else do
-    pure FileDoesNotExist
+    pure $ FileDoesNotExist unit
   where
   owner' = unwrap owner
   repo' = unwrap repo
@@ -251,8 +252,8 @@ ensurePursTidyAdded
   -> Aff
     { ciFileStatus :: Boolean
     , formattingStatus :: Boolean
-    , tidyOpFileStatus :: PursTidyFileStatus
-    , tidyRcFileStatus :: PursTidyFileStatus
+    , tidyOpFileStatus :: FileStatus Void Boolean ChangeReason
+    , tidyRcFileStatus :: FileStatus Void Unit ChangeReason
     }
 ensurePursTidyAdded owner repo = do
   fileExists <- liftEffect $ exists ciFile
@@ -273,14 +274,20 @@ ensurePursTidyAdded owner repo = do
         [ Tuple (liftEffect $ exists $ Path.concat [ repoDir, bowerJsonFile ]) do
             void $ execAff' "bower cache clean" inRepoDir
             void $ execAff' "bower install" inRepoDir
-            bowerDirs <- readdir $ Path.concat [ repoDir, "bower_components"]
             let
-              depGlobs = bowerDirs <#> \s ->
-                Path.concat [ "bower_components", s, "src", "**", "*.purs" ]
-              srcGlob = Path.concat ["src", "**", "*.purs" ]
-              testGlob = Path.concat ["test", "**", "*.purs" ]
-            hasTestDir <- liftEffect $ exists $ Path.concat [ repoDir, "test" ]
-            pure if hasTestDir then depGlobs <> [ srcGlob, testGlob ] else depGlobs <> [ srcGlob ]
+              srcDir = [ Path.concat ["src", "**", "*.purs" ] ]
+            testDir <- do
+              hasTestDir <- liftEffect $ exists $ Path.concat [ repoDir, "test" ]
+              pure $ if not hasTestDir then [] else [ Path.concat ["test", "**", "*.purs" ] ]
+            bowerDirs <- do
+              hasBowerDir <- liftEffect $ exists $ Path.concat [ repoDir, "bower_components"]
+              if not hasBowerDir then do
+                pure []
+              else do
+                bowerDirs <- readdir $ Path.concat [ repoDir, "bower_components"]
+                pure $ bowerDirs <#> \s ->
+                  Path.concat [ "bower_components", s, "src", "**", "*.purs" ]
+            pure $ bowerDirs <> srcDir <> testDir
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, testDhallFile ]) do
             map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> testDhallFile <> " sources") inRepoDir
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, spagoDhallFile ]) do
@@ -301,14 +308,17 @@ ensurePursTidyAdded owner repo = do
       gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
       throwIfExecErrored gitCiCommitResult
     pure case hadTidyOpFile, contentChanged of
-      true, true -> FileRegenerated
-      true, false -> NoChangesNeeded
-      false, true -> FileAdded
-      false, false -> unsafeCrashWith "Impossible: `.tidyoperators` file must now exist."
+      true, true -> FileChanged FileRegenerated
+      false, true -> FileChanged FileAdded
+      _, false -> FileHadNoChanges hadTidyOpFile
 
   tidyRcFileStatus <- do
+    log tidyRcFile
+    log tidyRcJsonWithOperatorsFile
     hadTidyRcFile <- liftEffect $ exists tidyRcFile
-    readTextFile UTF8 tidyRcJsonWithOperatorsFile >>= writeTextFile UTF8 tidyRcFile
+    flip copyFile tidyRcFile case tidyOpFileStatus of
+      FileHadNoChanges false -> tidyRcJsonNoOperatorsFile
+      _ -> tidyRcJsonWithOperatorsFile
     gitDiff <- execAff' ("git diff --shortstat") inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
@@ -322,10 +332,10 @@ ensurePursTidyAdded owner repo = do
       gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
       throwIfExecErrored gitCiCommitResult
     pure case hadTidyRcFile, contentChanged of
-      true, true -> FileRegenerated
-      true, false -> NoChangesNeeded
-      false, true -> FileAdded
-      false, false -> unsafeCrashWith "Impossible: `.tidyrc.json` file must now exist."
+      true, true -> FileChanged FileRegenerated
+      false, true -> FileChanged FileAdded
+      true, false -> FileHadNoChanges unit
+      false, false -> unsafeCrashWith $ "Impossible: `.tidyrc.json` file must now exist in " <> repoDir
 
   formattingStatus <- do
     ptResult <- execAff' ("purs-tidy format-in-place src test") inRepoDir
@@ -414,7 +424,7 @@ ensurePursTidyAdded owner repo = do
   tidyRcFile = Path.concat [ repoDir, tidyRcJsonFile ]
   tidyOpFile = Path.concat [ repoDir, tidyOperatorsFile ]
 
-updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (FileStatus String)
+updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (FileStatus Unit Unit String)
 updateChangelog owner repo nextVersion = do
   fileExists <- liftEffect $ exists clFilePath
   if fileExists then do
@@ -422,7 +432,7 @@ updateChangelog owner repo nextVersion = do
     todayDateStr <- map (formatYYYYMMDD) $ liftEffect nowDateTime
     let
       updateChangeLogIfDifferent releaseContents newContent
-        | original == newContent = pure FileHadNoChanges
+        | original == newContent = pure $ FileHadNoChanges unit
         | otherwise = do
             writeTextFile UTF8 clFilePath newContent
             gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
@@ -469,7 +479,7 @@ updateChangelog owner repo nextVersion = do
 
         updateChangeLogIfDifferent releaseContents newContent
   else do
-    pure FileDoesNotExist
+    pure $ FileDoesNotExist unit
   where
   owner' = unwrap owner
   repo' = unwrap repo
