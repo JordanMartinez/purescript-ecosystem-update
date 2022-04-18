@@ -299,7 +299,10 @@ updateChangelog owner repo nextVersion = do
             throwIfExecErrored gitAddResult
             gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
             throwIfExecErrored gitCommitResult
-            pure $ Just $ Array.intercalate "\n" releaseContents
+            pure $ Just
+              $ Array.intercalate "\n"
+              $ Array.dropWhile (\s -> String.trim s == "")
+              $ releaseContents
 
       isVersionHeader = isJust <<< String.stripPrefix (String.Pattern "##")
       lines = String.split (String.Pattern "\n") original
