@@ -23,7 +23,7 @@ import DependencyGraph (generateAllReleaseInfo, useNextMajorVersion)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
-import Effect.Exception (throw, throwException)
+import Effect.Exception (throw)
 import Effect.Now (nowDateTime)
 import Node.ChildProcess (ExecOptions)
 import Node.ChildProcess as CP
@@ -35,7 +35,7 @@ import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (GitHubOwner, GitHubProject)
-import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', withSpawnResult)
+import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { noDryRun :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { noDryRun } = do
@@ -108,7 +108,7 @@ createPrForNextReleaseBatch { noDryRun } = do
       liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
       liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
       jqResult <- withSpawnResult cp
-      for_ jqResult.error (liftEffect <<< throw <<< show)
+      throwIfSpawnErrored  jqResult
       when (jqResult.exit /= Exited 0) do
         liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
       pure $ jqResult.stdout
@@ -154,7 +154,7 @@ createPrForNextReleaseBatch { noDryRun } = do
       , if bowerChanged then "- [x] Updated bower dependencies to 0.15.0-compatible versions"
         else "- [x] Bower dependencies: either no changes needed or `bower.json` file does not exist."
       ]
-      <> if pursTidyAdded then ["- [x] `purs-tidy` added and used to format `src` and `test` dirs (if applicable)"] else []
+      <> if pursTidyAdded then ["- [x] `purs-tidy` added to CI and used to format `src` and `test` dirs (if applicable)"] else []
       <> maybe [] (const ["- [x] Updated changelog"]) nextReleaseContents
       <>
       [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
@@ -184,9 +184,9 @@ updateBowerToReleasedVersions owner repo = do
     if (original /= new) then do
       writeTextFile UTF8 bowerFile result.stdout
       gitAddResult <- execAff' ("git add " <> bowerJsonFile) inRepoDir
-      for_ gitAddResult.error (liftEffect <<< throwException)
+      throwIfExecErrored gitAddResult
       gitCommitResult <- execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
-      for_ gitCommitResult.error (liftEffect <<< throwException)
+      throwIfExecErrored gitCommitResult
       pure true
     else do
       pure false
@@ -232,26 +232,41 @@ ensurePursTidyAdded owner repo = do
           firstBlankLineIdx <- Array.findIndex (\s -> String.trim s == "") postWith
           let { before, after } = Array.splitAt (setupPsIdx + withIdx + firstBlankLineIdx) lines
           withLine <- Array.index postSetup withIdx
-          let numOfSpaces = String.length $ String.takeWhile (\cp -> cp == codePointFromChar ' ') withLine
+          let
+            numOfSpaces = String.length $ String.takeWhile (\cp -> cp == codePointFromChar ' ') withLine
+            firstEntryIndent = power " " (numOfSpaces - 2)
+            entryIndent = firstEntryIndent <> "  "
           pure $ Array.intercalate "\n"
             $ before
-            <> Array.singleton ((power " " numOfSpaces) <> "purs-tidy: \"stable\"")
+            <> Array.singleton (entryIndent <> "purs-tidy: \"stable\"")
             <> after
+            <>
+              [""
+              , firstEntryIndent <> "- name: Check formatting"
+              , entryIndent <> "run: purs-tidy check src test"
+              ]
 
       -- easiest way to check whether a change has occurred
       if (original /= new) then do
         writeTextFile UTF8 ciFile new
         gitCiAddResult <- execAff' ("git add " <> ciYmlFile) inRepoDir
-        for_ gitCiAddResult.error (liftEffect <<< throwException)
+        throwIfExecErrored gitCiAddResult
         gitCiCommitResult <- execAff' "git commit -m \"Add purs-tidy\"" inRepoDir
-        for_ gitCiCommitResult.error (liftEffect <<< throwException)
+        throwIfExecErrored gitCiCommitResult
 
         ptResult <- execAff' ("purs-tidy format-in-place src test") inRepoDir
-        for_ ptResult.error (liftEffect <<< throwException)
-        gitAddPtResult <- execAff' ("git add src/ test/") inRepoDir
-        for_ gitAddPtResult.error (liftEffect <<< throwException)
-        gitCommitPtResult <- execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
-        for_ gitCommitPtResult.error (liftEffect <<< throwException)
+        throwIfExecErrored ptResult
+
+        gitDiff <- execAff' ("git diff --shortstat") inRepoDir
+        throwIfExecErrored gitDiff
+        when (String.trim gitDiff.stdout /= "") do
+          gitAddSrcResult <- execAff' ("git add src/") inRepoDir
+          throwIfExecErrored gitAddSrcResult
+          whenM (liftEffect $ exists $ Path.concat [ repoDir, "test"]) do
+            gitAddTestResult <- execAff' ("git add test/") inRepoDir
+            throwIfExecErrored gitAddTestResult
+          gitCommitPtResult <- execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
+          throwIfExecErrored gitCommitPtResult
         pure true
       else do
         pure false
@@ -277,9 +292,9 @@ updateChangelog owner repo nextVersion = do
         | otherwise = do
             writeTextFile UTF8 clFilePath new
             gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
-            for_ gitAddResult.error (liftEffect <<< throwException)
+            throwIfExecErrored gitAddResult
             gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
-            for_ gitCommitResult.error (liftEffect <<< throwException)
+            throwIfExecErrored gitCommitResult
             pure $ Just $ Array.intercalate "\n" releaseSection
 
       isVersionHeader = isJust <<< String.stripPrefix (String.Pattern "##")

@@ -3,6 +3,7 @@ module Utils where
 import Prelude
 
 import Data.Either (Either(..))
+import Data.Foldable (for_)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Data.Maybe (Maybe(..))
 import Data.Nullable (Nullable)
@@ -11,6 +12,7 @@ import Data.String as String
 import Effect (Effect)
 import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
 import Effect.Class (liftEffect)
+import Effect.Class.Console (log)
 import Effect.Ref (Ref)
 import Effect.Ref as Ref
 import Node.Buffer (Buffer)
@@ -157,6 +159,23 @@ streamToRef stream = do
     finalBuf <- Ref.read buffs >>= Buffer.concat
     Ref.write finalBuf finalRef
   pure finalRef
+
+throwIfExecErrored :: { stdout :: String, stderr :: String, error :: Maybe Error } -> Aff Unit
+throwIfExecErrored r = for_ r.error \e -> do
+  liftEffect do
+    log "Spawn result error:"
+    log $ show e
+    log $ "Stderr:"
+    log $ r.stderr
+
+throwIfSpawnErrored :: SpawnResult String -> Aff Unit
+throwIfSpawnErrored r = for_ r.error \e -> do
+  liftEffect do
+    log "Spawn result error:"
+    log $ show e
+    log $ show r.exit
+    log $ "Stderr:"
+    log $ r.stderr
 
 foreign import onSpawn :: ChildProcess -> Effect Unit -> Effect Unit
 
