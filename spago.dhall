@@ -41,6 +41,7 @@
   , "stringutils"
   , "tailrec"
   , "transformers"
+  , "tuples"
   , "unordered-collections"
   , "versions"
   ]
