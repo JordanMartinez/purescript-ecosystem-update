@@ -142,7 +142,7 @@ createPrForNextReleaseBatch { noDryRun } = do
       [ "pr"
       , "create"
       , "--title"
-      , "Prepare v" <> Version.showVersion info.version <> " release, (1st PS 0.15.0-compatible release)"
+      , "Prepare v" <> Version.showVersion info.version <> " release (1st PS 0.15.0-compatible release)"
       , "--body-file"
       , bodyFilePath
       , "--label"
