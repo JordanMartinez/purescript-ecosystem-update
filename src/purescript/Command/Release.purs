@@ -2,8 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (bodyOfReleasePrFile, bowerJsonFile, changelogFile, ciYmlFile, updateBowerJsonReleaseVersionsFile)
-import Control.Monad.Writer (WriterT)
+import Constants (bowerJsonFile, changelogFile, ciYmlFile, updateBowerJsonReleaseVersionsFile)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Either (either)
@@ -36,7 +35,7 @@ import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (GitHubOwner, GitHubProject)
-import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', withSpawnResult)
+import Utils (SpawnExit(..), execAff', spawnAff, withSpawnResult)
 
 createPrForNextReleaseBatch :: Aff Unit
 createPrForNextReleaseBatch = do
