@@ -241,7 +241,7 @@ ensurePursTidyAdded owner repo = do
             entryIndent = firstEntryIndent <> "  "
           pure $ Array.intercalate "\n"
             $ before
-            <> Array.singleton (entryIndent <> "purs-tidy: \"stable\"")
+            <> Array.singleton (entryIndent <> "purs-tidy: \"latest\"")
             <> after
             <>
               [""
