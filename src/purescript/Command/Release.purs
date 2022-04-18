@@ -34,7 +34,7 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
-import Types (GitHubOwner, GitHubProject, Package(..))
+import Types (GitHubOwner, GitHubProject)
 import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { noDryRun :: Boolean } -> Aff Unit
@@ -83,7 +83,8 @@ createPrForNextReleaseBatch { noDryRun } = do
     jqScriptUpdateBowerWithReleaseVersion
 
   let
-    pkgsInNextBatch = HM.filter (\r -> r.pkg == Package "prelude") unfinishedPkgsGraph
+    -- pkgsInNextBatch = HM.filter (\r -> r.pkg == Package "prelude") unfinishedPkgsGraph
+    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
 
   for_ pkgsInNextBatch makeRelease
   where
