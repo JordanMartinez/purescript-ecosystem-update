@@ -240,9 +240,10 @@ ensurePursTidyAdded owner repo = do
             numOfSpaces = String.length $ String.takeWhile (\cp -> cp == codePointFromChar ' ') withLine
             firstEntryIndent = power " " (numOfSpaces - 2)
             entryIndent = firstEntryIndent <> "  "
+            optionIndent = entryIndent <> "  "
           pure $ Array.intercalate "\n"
             $ before
-            <> Array.singleton (entryIndent <> "purs-tidy: \"latest\"")
+            <> Array.singleton (optionIndent <> "purs-tidy: \"latest\"")
             <> (Array.reverse $ Array.dropWhile (\s -> String.trim s == "") $ Array.reverse after)
             <>
               [""
