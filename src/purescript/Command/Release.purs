@@ -243,7 +243,7 @@ ensurePursTidyAdded owner repo = do
           pure $ Array.intercalate "\n"
             $ before
             <> Array.singleton (entryIndent <> "purs-tidy: \"latest\"")
-            <> after
+            <> (Array.reverse $ Array.dropWhile (\s -> String.trim s == "") $ Array.reverse after)
             <>
               [""
               , firstEntryIndent <> "- name: Check formatting"
