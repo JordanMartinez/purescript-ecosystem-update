@@ -302,6 +302,9 @@ updateChangelog owner repo nextVersion = do
             throwIfExecErrored gitCommitResult
             pure $ Just
               $ Array.intercalate "\n"
+              $ Array.reverse
+              $ Array.dropWhile (\s -> String.trim s == "")
+              $ Array.reverse
               $ Array.dropWhile (\s -> String.trim s == "")
               $ releaseContents
 
