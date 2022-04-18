@@ -20,6 +20,9 @@ packagesDhallFile = "packages.dhall"
 spagoDhallFile :: String
 spagoDhallFile = "spago.dhall"
 
+testDhallFile :: String
+testDhallFile = "test.dhall"
+
 pursJsonFile :: String
 pursJsonFile = "purs.json"
 
@@ -53,3 +56,18 @@ updateBowerJsonReleaseVersionsFile =
 
 bodyOfReleasePrFile :: String
 bodyOfReleasePrFile = Path.concat [ "files", "pr", "body-of-release-pr.txt" ]
+
+tidyRcJsonNoOperatorsFile :: String
+tidyRcJsonNoOperatorsFile = Path.concat [ "files", "purs-tidy", ".tidyrc-no-operators-file.json" ]
+
+tidyRcJsonWithOperatorsFile :: String
+tidyRcJsonWithOperatorsFile = Path.concat [ "files", "purs-tidy", ".tidyrc-with-operators-file.json" ]
+
+tidyRcJsonFile :: String
+tidyRcJsonFile = ".tidyrc.json"
+
+tidyOperatorsFile :: String
+tidyOperatorsFile = ".tidyoperators"
+
+spagoDir :: String
+spagoDir = ".spago"

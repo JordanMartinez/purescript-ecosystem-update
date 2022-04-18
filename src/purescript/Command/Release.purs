@@ -2,7 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (bowerJsonFile, changelogFile, ciYmlFile, updateBowerJsonReleaseVersionsFile)
+import Constants (bowerJsonFile, changelogFile, ciYmlFile, spagoDhallFile, testDhallFile, tidyOperatorsFile, tidyRcJsonFile, tidyRcJsonWithOperatorsFile, updateBowerJsonReleaseVersionsFile)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Either (either)
@@ -10,13 +10,14 @@ import Data.Foldable (foldl, for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
-import Data.Maybe (Maybe(..), fromMaybe, isJust, maybe, maybe')
+import Data.Maybe (Maybe(..), isJust, maybe')
 import Data.Monoid (power)
 import Data.Newtype (unwrap)
 import Data.String (codePointFromChar)
 import Data.String as String
 import Data.String.Regex (regex, test)
 import Data.String.Regex.Flags (multiline)
+import Data.Tuple (Tuple(..))
 import Data.Version (Version)
 import Data.Version as Version
 import DependencyGraph (generateAllReleaseInfo, useNextMajorVersion)
@@ -28,7 +29,7 @@ import Effect.Now (nowDateTime)
 import Node.ChildProcess (ExecOptions)
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
-import Node.FS.Aff (readTextFile, unlink, writeTextFile)
+import Node.FS.Aff (readTextFile, readdir, unlink, writeTextFile)
 import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
@@ -96,16 +97,18 @@ createPrForNextReleaseBatch { noDryRun } = do
     void $ execAff' "git reset --hard HEAD" inRepoDir
     void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
     void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
-    log $ "... updating bower.json file (if any)"
-    bowerUpdated <- updateBowerToReleasedVersions info.owner info.repo
     log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
-    pursTidyAdded <- ensurePursTidyAdded info.owner info.repo
+    pursTidyStatus <- ensurePursTidyAdded info.owner info.repo
+    log $ "... updating bower.json file (if any)"
+    bowerStatus <- updateBowerToReleasedVersions info.owner info.repo
     log $ "... updating changelog file (if any)"
-    releaseBody <- updateChangelog info.owner info.repo info.version
+    changelogStatus <- updateChangelog info.owner info.repo info.version
     log $ "... preparing PR"
     releaseBodyUri <- do
       let
-        content = fromMaybe "First release compatible with PureScript 0.15.0" releaseBody
+        content = case changelogStatus of
+          FileChanged x -> x
+          _ -> "First release compatible with PureScript 0.15.0"
       cp <- spawnAff "jq" ["--slurp", "--raw-input", "--raw-output", "@uri" ]
       liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
       liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
@@ -114,7 +117,7 @@ createPrForNextReleaseBatch { noDryRun } = do
       when (jqResult.exit /= Exited 0) do
         liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
       pure $ jqResult.stdout
-    withBodyPrFile bowerUpdated pursTidyAdded releaseBody releaseBodyUri \bodyPrFilePath -> do
+    withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
       log $ "... submitting PR"
       if noDryRun then do
         void $ execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
@@ -133,9 +136,9 @@ createPrForNextReleaseBatch { noDryRun } = do
     inRepoDir r = r { cwd = Just repoDir }
     releaseBranchName = "test-next-release"
 
-    withBodyPrFile bowerChanged pursTidyAdded releaseBody releaseBodyUri runAction = do
+    withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri runAction = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
-      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerChanged pursTidyAdded releaseBody releaseBodyUri
+      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerStatus pursTidyStatus changelogStatus releaseBodyUri
       runAction absPath
       unlink absPath
     ghPrCreateArgs bodyFilePath =
@@ -148,7 +151,7 @@ createPrForNextReleaseBatch { noDryRun } = do
       , "--label"
       , "purs-0.15"
       ]
-    prBodyLines bowerChanged pursTidyAdded releaseBody releaseBodyUri =
+    prBodyLines bowerStatus pursTidyStatus changelogStatus releaseBodyUri =
       [ "**Description of the change**"
       , ""
       , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
@@ -156,14 +159,39 @@ createPrForNextReleaseBatch { noDryRun } = do
       , ":robot: This is an automated pull request to prepare the next release of this library. PR was created via the [Release.purs](https://github.com/JordanMartinez/purescript-ecosystem-update/blob/master/src/purescript/Command/Release.purs) file. Some of the following steps are already done; others should be performed by a human once the pull request is merged:"
       , ""
       ]
-      <> (Array.singleton $ if bowerChanged then "- [x] Updated bower dependencies to 0.15.0-compatible versions"
-        else "- [x] Bower dependencies: either no changes needed or `bower.json` file does not exist.")
-      <> (if pursTidyAdded then ["- [x] `purs-tidy` added to CI and used to format `src` and `test` dirs (if applicable)"] else [])
-      <> (maybe [] (const ["- [x] Updated changelog"]) releaseBody)
+      <> tidyOpPart
+      <> tidyRcPart
+      <> formattingPart
+      <> pursTidyCiPart
+      <> bowerPart
+      <> changelogPart
       <>
         [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
         , "- [ ] Upload the release to Pursuit with `pulp publish`."
         ]
+      where
+      bowerPart = case bowerStatus of
+        FileDoesNotExist -> [ "- [x] Bower dependencies: `bower.json` file does not exist." ]
+        FileHadNoChanges -> [ "- [x] Bower dependencies: no changes needed." ]
+        FileChanged _ -> [ "- [x] Updated bower dependencies to 0.15.0-compatible versions" ]
+      tidyOpPart = case pursTidyStatus.tidyOpFileStatus of
+        NoChangesNeeded -> [ "- [x] .tidyoperators: No change needed" ]
+        FileRegenerated -> [ "- [x] .tidyoperators: File regenerated." ]
+        FileAdded -> [ "- [x] .tidyoperators: File added" ]
+      tidyRcPart = case pursTidyStatus.tidyRcFileStatus of
+        NoChangesNeeded -> [ "- [x] .tidyrc.json: No change needed" ]
+        FileRegenerated -> [ "- [x] .tidyrc.json: File regenerated." ]
+        FileAdded -> [ "- [x] .tidyrc.json: File added" ]
+      formattingPart = case pursTidyStatus.formattingStatus of
+        true -> [ "- [x] `purs-tidy`: formatted files." ]
+        false -> [ "- [x] `purs-tidy`: formatting files did not cause a change." ]
+      pursTidyCiPart = case pursTidyStatus.ciFileStatus of
+        true -> [ "- [x] `purs-tidy`: check formatting step added to CI." ]
+        false -> [ "- [x] `purs-tidy`: CI already checks formatting" ]
+      changelogPart = case changelogStatus of
+        FileDoesNotExist -> [ "- [x] Changelog: `CHANGELOG.md` file does not exist. This should be investigated further." ]
+        FileHadNoChanges -> [ "- [x] Changelog: file had no changes. This should be investigated further if not `aff-promise`." ]
+        FileChanged _ -> [ "- [x] Updated changelog" ]
     newReleaseUrl releaseBodyUri = fold
       [ "https://github.com/"
       , owner'
@@ -177,7 +205,20 @@ createPrForNextReleaseBatch { noDryRun } = do
       , releaseBodyUri
       ]
 
-updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff Boolean
+data FileStatus a
+  = FileDoesNotExist
+  | FileHadNoChanges
+  | FileChanged a
+
+data PursTidyFileStatus
+  = NoChangesNeeded
+  | FileRegenerated
+  | FileAdded
+
+derive instance Eq a => Eq (FileStatus a)
+derive instance Ord a => Ord (FileStatus a)
+
+updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff (FileStatus Unit)
 updateBowerToReleasedVersions owner repo = do
   fileExists <- liftEffect $ exists bowerFile
   if fileExists then do
@@ -186,16 +227,16 @@ updateBowerToReleasedVersions owner repo = do
     let new = result.stdout
     -- easiest way to check whether a change has occurred
     if (original /= new) then do
-      writeTextFile UTF8 bowerFile result.stdout
+      writeTextFile UTF8 bowerFile new
       gitAddResult <- execAff' ("git add " <> bowerJsonFile) inRepoDir
       throwIfExecErrored gitAddResult
       gitCommitResult <- execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
       throwIfExecErrored gitCommitResult
-      pure true
+      pure $ FileChanged unit
     else do
-      pure false
+      pure FileHadNoChanges
   else do
-    pure false
+    pure FileDoesNotExist
   where
   owner' = unwrap owner
   repo' = unwrap repo
@@ -204,17 +245,117 @@ updateBowerToReleasedVersions owner repo = do
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, bowerJsonFile ]
 
-ensurePursTidyAdded :: GitHubOwner -> GitHubProject -> Aff Boolean
+ensurePursTidyAdded
+  :: GitHubOwner
+  -> GitHubProject
+  -> Aff
+    { ciFileStatus :: Boolean
+    , formattingStatus :: Boolean
+    , tidyOpFileStatus :: PursTidyFileStatus
+    , tidyRcFileStatus :: PursTidyFileStatus
+    }
 ensurePursTidyAdded owner repo = do
   fileExists <- liftEffect $ exists ciFile
-  if fileExists then do
+  unless fileExists do
+    liftEffect $ throw $ ciYmlFile <> " did not exist for repo: " <> repoDir
+  tidyOpFileStatus <- do
+    hadTidyOpFile <- liftEffect $ exists tidyOpFile
+    dirGlobs <- do
+      let
+        getGlobs arr = case Array.uncons arr of
+          Just { head: Tuple checkFile getDirGlobs, tail } -> do
+            ifM checkFile getDirGlobs (getGlobs tail)
+          Nothing -> do
+            liftEffect $ throw
+              $ "Could not determine source globs for `purs-tidy generate-operators`.\n"
+              <> "bower.json, spago.dhall, or test.dhall files not found for " <> repoDir
+      getGlobs
+        [ Tuple (liftEffect $ exists $ Path.concat [ repoDir, bowerJsonFile ]) do
+            void $ execAff' "bower cache clean" inRepoDir
+            void $ execAff' "bower install" inRepoDir
+            bowerDirs <- readdir $ Path.concat [ repoDir, "bower_components"]
+            let
+              depGlobs = bowerDirs <#> \s ->
+                Path.concat [ "bower_components", s, "src", "**", "*.purs" ]
+              srcGlob = Path.concat ["src", "**", "*.purs" ]
+              testGlob = Path.concat ["test", "**", "*.purs" ]
+            hasTestDir <- liftEffect $ exists $ Path.concat [ repoDir, "test" ]
+            pure if hasTestDir then depGlobs <> [ srcGlob, testGlob ] else depGlobs <> [ srcGlob ]
+        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, testDhallFile ]) do
+            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> testDhallFile <> " sources") inRepoDir
+        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, spagoDhallFile ]) do
+            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> spagoDhallFile <> " sources") inRepoDir
+        ]
+    genCmd <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
+    throwIfSpawnErrored genCmd
+    gitDiff <- execAff' ("git diff --shortstat") inRepoDir
+    throwIfExecErrored gitDiff
+    let contentChanged = String.trim gitDiff.stdout /= ""
+    when contentChanged do
+      gitCiAddResult <- execAff' ("git add " <> tidyOperatorsFile) inRepoDir
+      throwIfExecErrored gitCiAddResult
+      let
+        msg
+          | hadTidyOpFile = "Added .tidyoperators file"
+          | otherwise = "Regenerated .tidyoperators file"
+      gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
+      throwIfExecErrored gitCiCommitResult
+    pure case hadTidyOpFile, contentChanged of
+      true, true -> FileRegenerated
+      true, false -> NoChangesNeeded
+      false, true -> FileAdded
+      false, false -> unsafeCrashWith "Impossible: `.tidyoperators` file must now exist."
+
+  tidyRcFileStatus <- do
+    hadTidyRcFile <- liftEffect $ exists tidyRcFile
+    readTextFile UTF8 tidyRcJsonWithOperatorsFile >>= writeTextFile UTF8 tidyRcFile
+    gitDiff <- execAff' ("git diff --shortstat") inRepoDir
+    throwIfExecErrored gitDiff
+    let contentChanged = String.trim gitDiff.stdout /= ""
+    when contentChanged do
+      gitCiAddResult <- execAff' ("git add " <> tidyRcJsonFile) inRepoDir
+      throwIfExecErrored gitCiAddResult
+      let
+        msg
+          | hadTidyRcFile = "Added .tidyrc.json file"
+          | otherwise = "Regenerated .tidyrc.json file"
+      gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
+      throwIfExecErrored gitCiCommitResult
+    pure case hadTidyRcFile, contentChanged of
+      true, true -> FileRegenerated
+      true, false -> NoChangesNeeded
+      false, true -> FileAdded
+      false, false -> unsafeCrashWith "Impossible: `.tidyrc.json` file must now exist."
+
+  formattingStatus <- do
+    ptResult <- execAff' ("purs-tidy format-in-place src test") inRepoDir
+    throwIfExecErrored ptResult
+
+    gitDiff <- execAff' ("git diff --shortstat") inRepoDir
+    throwIfExecErrored gitDiff
+    let contentChanged = String.trim gitDiff.stdout /= ""
+    when contentChanged do
+      gitAddSrcResult <- execAff' ("git add src/") inRepoDir
+      throwIfExecErrored gitAddSrcResult
+      whenM (liftEffect $ exists $ Path.concat [ repoDir, "test"]) do
+        gitAddTestResult <- execAff' ("git add test/") inRepoDir
+        throwIfExecErrored gitAddTestResult
+      gitCommitPtResult <- execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
+      throwIfExecErrored gitCommitPtResult
+    pure contentChanged
+
+  ciFileStatus <- do
     original <- readTextFile UTF8 ciFile
     let
       -- the colon below is what separates the configuration of purs-tidy
       -- from its usage
       pursTidyConfigLine = either (\_ -> unsafeCrashWith "invalid regex") identity
         $ regex "^( +)purs-tidy: \"[^\"]+\"( +)?$" multiline
-    if test pursTidyConfigLine original then do
+      -- the colon below is what separates the configuration of purs-tidy
+      -- from its usage
+      pursTidyUsageLine = either (\_ -> unsafeCrashWith "invalid regex") identity
+        $ regex "^( +)purs-tidy check" multiline
+    if test pursTidyConfigLine original && test pursTidyUsageLine original then do
       pure false
     else do
       let
@@ -257,36 +398,23 @@ ensurePursTidyAdded owner repo = do
         writeTextFile UTF8 ciFile new
         gitCiAddResult <- execAff' ("git add " <> ciYmlFile) inRepoDir
         throwIfExecErrored gitCiAddResult
-        gitCiCommitResult <- execAff' "git commit -m \"Add purs-tidy\"" inRepoDir
+        gitCiCommitResult <- execAff' "git commit -m \"Added purs-tidy and check formatting step\"" inRepoDir
         throwIfExecErrored gitCiCommitResult
-
-        ptResult <- execAff' ("purs-tidy format-in-place src test") inRepoDir
-        throwIfExecErrored ptResult
-
-        gitDiff <- execAff' ("git diff --shortstat") inRepoDir
-        throwIfExecErrored gitDiff
-        when (String.trim gitDiff.stdout /= "") do
-          gitAddSrcResult <- execAff' ("git add src/") inRepoDir
-          throwIfExecErrored gitAddSrcResult
-          whenM (liftEffect $ exists $ Path.concat [ repoDir, "test"]) do
-            gitAddTestResult <- execAff' ("git add test/") inRepoDir
-            throwIfExecErrored gitAddTestResult
-          gitCommitPtResult <- execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
-          throwIfExecErrored gitCommitPtResult
         pure true
       else do
         pure false
-  else do
-    pure false
+  pure { tidyOpFileStatus, tidyRcFileStatus, formattingStatus, ciFileStatus }
   where
   owner' = unwrap owner
   repo' = unwrap repo
   repoDir = Path.concat ["..", owner', repo']
-  inRepoDir :: ExecOptions -> ExecOptions
+  inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
   ciFile = Path.concat [ repoDir, ciYmlFile ]
+  tidyRcFile = Path.concat [ repoDir, tidyRcJsonFile ]
+  tidyOpFile = Path.concat [ repoDir, tidyOperatorsFile ]
 
-updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (Maybe String)
+updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (FileStatus String)
 updateChangelog owner repo nextVersion = do
   fileExists <- liftEffect $ exists clFilePath
   if fileExists then do
@@ -294,14 +422,14 @@ updateChangelog owner repo nextVersion = do
     todayDateStr <- map (formatYYYYMMDD) $ liftEffect nowDateTime
     let
       updateChangeLogIfDifferent releaseContents newContent
-        | original == newContent = pure Nothing
+        | original == newContent = pure FileHadNoChanges
         | otherwise = do
             writeTextFile UTF8 clFilePath newContent
             gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
             throwIfExecErrored gitAddResult
             gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
             throwIfExecErrored gitCommitResult
-            pure $ Just
+            pure $ FileChanged
               $ Array.intercalate "\n"
               $ Array.reverse
               $ Array.dropWhile (\s -> String.trim s == "")
@@ -341,7 +469,7 @@ updateChangelog owner repo nextVersion = do
 
         updateChangeLogIfDifferent releaseContents newContent
   else do
-    pure Nothing
+    pure FileDoesNotExist
   where
   owner' = unwrap owner
   repo' = unwrap repo
@@ -368,14 +496,15 @@ updateChangelog owner repo nextVersion = do
     ]
   versionStr = Version.showVersion nextVersion
 
-  unreleasedSectionContent =
-    [ ""
-    , "Breaking changes:"
-    , ""
-    , "New features:"
-    , ""
-    , "Bugfixes:"
-    , ""
-    , "Other improvements:"
-    , ""
-    ]
+unreleasedSectionContent :: Array String
+unreleasedSectionContent =
+  [ ""
+  , "Breaking changes:"
+  , ""
+  , "New features:"
+  , ""
+  , "Bugfixes:"
+  , ""
+  , "Other improvements:"
+  , ""
+  ]
