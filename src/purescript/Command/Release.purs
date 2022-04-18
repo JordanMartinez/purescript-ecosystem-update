@@ -3,13 +3,14 @@ module Command.Release where
 import Prelude
 
 import Constants (bodyOfReleasePrFile, bowerJsonFile, changelogFile, updateBowerJsonReleaseVersionsFile)
+import Control.Monad.Writer (WriterT)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Foldable (foldl, for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
-import Data.Maybe (Maybe(..), isJust, maybe')
+import Data.Maybe (Maybe(..), fromMaybe, isJust, maybe, maybe')
 import Data.Newtype (unwrap)
 import Data.String as String
 import Data.Version (Version)
@@ -18,17 +19,19 @@ import DependencyGraph (generateAllReleaseInfo, useNextMajorVersion)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
-import Effect.Exception (throwException)
+import Effect.Exception (throw, throwException)
 import Effect.Now (nowDateTime)
 import Node.ChildProcess (ExecOptions)
+import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
-import Node.FS.Aff (readTextFile, writeTextFile)
+import Node.FS.Aff (readTextFile, unlink, writeTextFile)
 import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
+import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (GitHubOwner, GitHubProject)
-import Utils (execAff', spawnAff, spawnAff', withSpawnResult)
+import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', withSpawnResult)
 
 createPrForNextReleaseBatch :: Aff Unit
 createPrForNextReleaseBatch = do
@@ -78,50 +81,107 @@ createPrForNextReleaseBatch = do
   let
     pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
 
-  absBodyOfReleasePrFile <- liftEffect $ Path.resolve [] bodyOfReleasePrFile
-
-  for_ pkgsInNextBatch \info -> do
-    log $ "Doing release changes for '" <> unwrap info.pkg <> "'"
-    let
-      inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
-      inRepoDir r = r { cwd = Just $ Path.concat [ "..", unwrap info.owner, unwrap info.repo ]}
+  for_ pkgsInNextBatch makeRelease
+  where
+  makeRelease info = do
+    log $ "## Doing release changes for '" <> unwrap info.pkg <> "'"
     log $ "... resetting to clean state"
     void $ execAff' "git reset --hard HEAD" inRepoDir
     void $ execAff' ("git checkout origin/" <> unwrap info.defaultBranch) inRepoDir
-    void $ execAff' "git branch -D test-next-release" inRepoDir
-    void $ execAff' "git switch -c test-next-release" inRepoDir
+    void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
+    void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating bower.json file (if any)"
-    updateBowerToReleasedVersions info.owner info.repo
+    bowerWasUpdated <- updateBowerToReleasedVersions info.owner info.repo
     log $ "... updating changelog file (if any)"
-    updateChangelog info.owner info.repo info.version
-    log $ "... submitting a PR"
-    -- void $ execAff' "git push -u origin test-next-release" inRepoDir
-    -- void $ spawnAff' "gh" (ghPrCreateArgs info absBodyOfReleasePrFile) inRepoDir
+    nextReleaseContents <- updateChangelog info.owner info.repo info.version
+    log $ "... preparing PR"
+    releaseBodyUri <- do
+      let
+        content = fromMaybe "First release compatible with PureScript 0.15.0" nextReleaseContents
+      cp <- spawnAff "jq" ["--slurp", "--raw-input", "--raw-output", "@uri" ]
+      liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
+      liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
+      jqResult <- withSpawnResult cp
+      for_ jqResult.error (liftEffect <<< throw <<< show)
+      when (jqResult.exit /= Exited 0) do
+        liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
+      pure $ jqResult.stdout
+    withBodyPrFile bowerWasUpdated nextReleaseContents releaseBodyUri \bodyPrFilePath -> do
+      log $ "... submitting PR"
+      -- void $ execAff' ("git push -u origin " <> releaseBranchName) inRepoDir
+      -- void $ spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
     log $ ""
-  where
-  ghPrCreateArgs info bodyFilePath =
-    [ "pr"
-    , "create"
-    , "--title"
-    , "\"Prepare v" <> Version.showVersion info.version <> " release, a PS 0.15.0-compatible release\""
-    , "--body-file"
-    , bodyFilePath
-    , "--label"
-    , "purs-0.15"
-    ]
+    where
+    owner' = unwrap info.owner
+    repo' = unwrap info.repo
+    version' = "v" <> Version.showVersion info.version
+    repoDir = Path.concat [ "..", owner', repo' ]
+    inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
+    inRepoDir r = r { cwd = Just repoDir }
+    releaseBranchName = "test-next-release"
 
-updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff Unit
-updateBowerToReleasedVersions owner repo = whenM (liftEffect $ exists bowerFile) do
-  original <- readTextFile UTF8 bowerFile
-  result <- withSpawnResult =<< spawnAff "jq" ["--from-file", updateBowerJsonReleaseVersionsFile, "--", bowerFile ]
-  let new = result.stdout
-  -- easiest way to check whether a change has occurred
-  when (original /= new) do
-    writeTextFile UTF8 bowerFile result.stdout
-    gitAddResult <- execAff' ("git add " <> bowerJsonFile) inRepoDir
-    for_ gitAddResult.error (liftEffect <<< throwException)
-    gitCommitResult <- execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
-    for_ gitCommitResult.error (liftEffect <<< throwException)
+    withBodyPrFile bowerChanged nextReleaseContents releaseBodyUri runAction = do
+      absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
+      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerChanged nextReleaseContents releaseBodyUri
+      runAction absPath
+      unlink absPath
+    ghPrCreateArgs bodyFilePath =
+      [ "pr"
+      , "create"
+      , "--title"
+      , "\"Prepare v" <> Version.showVersion info.version <> " release, (1st PS 0.15.0-compatible release)\""
+      , "--body-file"
+      , bodyFilePath
+      , "--label"
+      , "purs-0.15"
+      ]
+    prBodyLines bowerChanged nextReleaseContents releaseBodyUri =
+      [ "**Description of the change**"
+      , ""
+      , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
+      , ""
+      , ":robot: This is an automated pull request to prepare the next release of this library. PR was created via the [Release.purs](https://github.com/JordanMartinez/purescript-ecosystem-update/blob/master/src/purescript/Command/Release.purs) file. Some of the following steps are already done; others should be performed by a human once the pull request is merged:"
+      , ""
+      , if bowerChanged then "- [x] Updated bower dependencies to 0.15.0-compatible versions"
+        else "- [x] Bower dependencies: either no changes needed or `bower.json` file does not exist."
+      ]
+      <> maybe [] (const ["- [x] Updated changelog"]) nextReleaseContents
+      <>
+      [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
+      , "- [ ] Upload the release to Pursuit with `pulp publish`."
+      ]
+    newReleaseUrl releaseBodyUri = fold
+      [ "https://github.com/"
+      , owner'
+      , "/"
+      , repo'
+      , "/releases/new?tag="
+      , version'
+      , "&title="
+      , version'
+      , "&body="
+      , releaseBodyUri
+      ]
+
+updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff Boolean
+updateBowerToReleasedVersions owner repo = do
+  fileExists <- liftEffect $ exists bowerFile
+  if fileExists then do
+    original <- readTextFile UTF8 bowerFile
+    result <- withSpawnResult =<< spawnAff "jq" ["--from-file", updateBowerJsonReleaseVersionsFile, "--", bowerFile ]
+    let new = result.stdout
+    -- easiest way to check whether a change has occurred
+    if (original /= new) then do
+      writeTextFile UTF8 bowerFile result.stdout
+      gitAddResult <- execAff' ("git add " <> bowerJsonFile) inRepoDir
+      for_ gitAddResult.error (liftEffect <<< throwException)
+      gitCommitResult <- execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
+      for_ gitCommitResult.error (liftEffect <<< throwException)
+      pure true
+    else do
+      pure false
+  else do
+    pure false
   where
   owner' = unwrap owner
   repo' = unwrap repo
@@ -130,29 +190,59 @@ updateBowerToReleasedVersions owner repo = whenM (liftEffect $ exists bowerFile)
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, bowerJsonFile ]
 
-updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff Unit
-updateChangelog owner repo nextVersion = whenM (liftEffect $ exists clFilePath) do
-  original <- readTextFile UTF8 clFilePath
-  let
-    lines = String.split (String.Pattern "\n") original
-    unreleasedHeaderIdx = maybe' (\_ -> unsafeCrashWith $ "Could not find unreleased header for " <> repoDir) identity do
-      Array.findIndex (isJust <<< String.stripPrefix (String.Pattern "##")) lines
-    { before, after } = Array.splitAt (unreleasedHeaderIdx + 1) lines
+updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (Maybe String)
+updateChangelog owner repo nextVersion = do
+  fileExists <- liftEffect $ exists clFilePath
+  if fileExists then do
+    original <- readTextFile UTF8 clFilePath
+    todayDateStr <- map (formatYYYYMMDD) $ liftEffect nowDateTime
+    let
+      updateChangeLogIfDifferent releaseSection new
+        | original == new = pure Nothing
+        | otherwise = do
+            writeTextFile UTF8 clFilePath new
+            gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
+            for_ gitAddResult.error (liftEffect <<< throwException)
+            gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
+            for_ gitCommitResult.error (liftEffect <<< throwException)
+            pure $ Just $ Array.intercalate "\n" releaseSection
 
-  todayDateStr <- map (formatYYYYMMDD) $ liftEffect nowDateTime
-  let
-    new = Array.intercalate "\n"
-      $ before
-      <> unreleasedSectionContent
-      <> nextReleaseHeader todayDateStr
-      <> after
+      isVersionHeader = isJust <<< String.stripPrefix (String.Pattern "##")
+      lines = String.split (String.Pattern "\n") original
+      { before: prefaceAndUnreleasedHdr, after: changeLogContent } =
+        maybe' (\_ -> unsafeCrashWith $ "Could not find unreleased header for " <> repoDir) identity do
+          unreleasedHeaderIdx <- Array.findIndex isVersionHeader lines
+          pure $ Array.splitAt (unreleasedHeaderIdx + 1) lines
 
-  when (original /= new) do
-    writeTextFile UTF8 clFilePath new
-    gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
-    for_ gitAddResult.error (liftEffect <<< throwException)
-    gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
-    for_ gitCommitResult.error (liftEffect <<< throwException)
+    case map (\idx -> Array.splitAt idx changeLogContent) $ Array.findIndex isVersionHeader changeLogContent of
+      Nothing -> do
+        let
+          releaseSection =
+            nextReleaseHeader todayDateStr
+            <>
+              [ ""
+              , "Initial release"
+              ]
+          new = Array.intercalate "\n"
+            $ prefaceAndUnreleasedHdr
+            <> unreleasedSectionContent
+            <> releaseSection
+
+        updateChangeLogIfDifferent releaseSection new
+      Just { before: newReleaseContent, after: remainingChangeLogContent } -> do
+        let
+          releaseSection =
+            nextReleaseHeader todayDateStr
+            <> newReleaseContent
+          new = Array.intercalate "\n"
+            $ prefaceAndUnreleasedHdr
+            <> unreleasedSectionContent
+            <> releaseSection
+            <> remainingChangeLogContent
+
+        updateChangeLogIfDifferent releaseSection new
+  else do
+    pure Nothing
   where
   owner' = unwrap owner
   repo' = unwrap repo
