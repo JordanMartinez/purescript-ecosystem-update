@@ -34,7 +34,7 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
-import Types (GitHubOwner, GitHubProject)
+import Types (GitHubOwner, GitHubProject, Package(..))
 import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { noDryRun :: Boolean } -> Aff Unit
@@ -83,7 +83,7 @@ createPrForNextReleaseBatch { noDryRun } = do
     jqScriptUpdateBowerWithReleaseVersion
 
   let
-    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
+    pkgsInNextBatch = HM.filter (\r -> r.pkg == Package "prelude") unfinishedPkgsGraph
 
   for_ pkgsInNextBatch makeRelease
   where
@@ -115,8 +115,10 @@ createPrForNextReleaseBatch { noDryRun } = do
     withBodyPrFile bowerUpdated pursTidyAdded releaseBody releaseBodyUri \bodyPrFilePath -> do
       log $ "... submitting PR"
       if noDryRun then do
-        void $ execAff' ("git push -u origin " <> releaseBranchName) inRepoDir
-        void $ spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
+        void $ execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
+        result <- withSpawnResult =<< spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
+        log $ result.stdout
+        log $ result.stderr
       else do
         log "....... Ran `peu` without the `--no-dry-run` flag. So, no PR will be submitted."
     log $ ""
@@ -244,6 +246,7 @@ ensurePursTidyAdded owner repo = do
               [""
               , firstEntryIndent <> "- name: Check formatting"
               , entryIndent <> "run: purs-tidy check src test"
+              , ""
               ]
 
       -- easiest way to check whether a change has occurred
