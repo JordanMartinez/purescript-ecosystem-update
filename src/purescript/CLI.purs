@@ -188,9 +188,16 @@ parseCliArgs =
     description = "Create a PR for a single package"
 
   makeNextReleaseBatchCmd = ArgParse.command [ "release" ] description do
-    MakeNextReleaseBatch <$ ArgParse.flagHelp
+    MakeNextReleaseBatch <$> fromRecord
+        { noDryRun: parseNoDryRun
+        }
+      <* ArgParse.flagHelp
     where
     description = "Make the next batch of release PRs."
+    parseNoDryRun = ArgParse.flag [ "--no-dry-run" ] flagDesc
+      # ArgParse.boolean
+      where
+      flagDesc = "By default, no prepared PRs are submitted on GitHub unless this flag is set."
 
   releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
     ReleaseOrder <$ ArgParse.flagHelp

@@ -53,7 +53,7 @@ main = do
         ReleaseOrder ->
           runAff_ (either throwException $ const $ pure unit) do
             ReleaseOrderCmd.generateReleaseOrder
-        MakeNextReleaseBatch ->
+        MakeNextReleaseBatch opts ->
           runAff_ (either throwException $ const $ pure unit) do
-            ReleaseCmd.createPrForNextReleaseBatch
+            ReleaseCmd.createPrForNextReleaseBatch opts
         _ -> Console.log "Command not yet implemented"

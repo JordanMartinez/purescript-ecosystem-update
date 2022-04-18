@@ -35,10 +35,10 @@ import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (GitHubOwner, GitHubProject)
-import Utils (SpawnExit(..), execAff', spawnAff, withSpawnResult)
+import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', withSpawnResult)
 
-createPrForNextReleaseBatch :: Aff Unit
-createPrForNextReleaseBatch = do
+createPrForNextReleaseBatch :: { noDryRun :: Boolean } -> Aff Unit
+createPrForNextReleaseBatch { noDryRun } = do
   { fullGraph, unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
 
   let
@@ -114,8 +114,11 @@ createPrForNextReleaseBatch = do
       pure $ jqResult.stdout
     withBodyPrFile bowerUpdated pursTidyAdded releaseBody releaseBodyUri \bodyPrFilePath -> do
       log $ "... submitting PR"
-      -- void $ execAff' ("git push -u origin " <> releaseBranchName) inRepoDir
-      -- void $ spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
+      if noDryRun then do
+        void $ execAff' ("git push -u origin " <> releaseBranchName) inRepoDir
+        void $ spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
+      else do
+        log "....... Ran `peu` without the `--no-dry-run` flag. So, no PR will be submitted."
     log $ ""
     where
     owner' = unwrap info.owner
