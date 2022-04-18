@@ -2,17 +2,22 @@ module Command.Release where
 
 import Prelude
 
-import Constants (bodyOfReleasePrFile, bowerJsonFile, changelogFile, updateBowerJsonReleaseVersionsFile)
+import Constants (bodyOfReleasePrFile, bowerJsonFile, changelogFile, ciYmlFile, updateBowerJsonReleaseVersionsFile)
 import Control.Monad.Writer (WriterT)
 import Data.Array (fold)
 import Data.Array as Array
+import Data.Either (either)
 import Data.Foldable (foldl, for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
 import Data.Maybe (Maybe(..), fromMaybe, isJust, maybe, maybe')
+import Data.Monoid (power)
 import Data.Newtype (unwrap)
+import Data.String (codePointFromChar)
 import Data.String as String
+import Data.String.Regex (regex, test)
+import Data.String.Regex.Flags (multiline)
 import Data.Version (Version)
 import Data.Version as Version
 import DependencyGraph (generateAllReleaseInfo, useNextMajorVersion)
@@ -91,13 +96,15 @@ createPrForNextReleaseBatch = do
     void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
     void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating bower.json file (if any)"
-    bowerWasUpdated <- updateBowerToReleasedVersions info.owner info.repo
+    bowerUpdated <- updateBowerToReleasedVersions info.owner info.repo
+    log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
+    pursTidyAdded <- ensurePursTidyAdded info.owner info.repo
     log $ "... updating changelog file (if any)"
-    nextReleaseContents <- updateChangelog info.owner info.repo info.version
+    releaseBody <- updateChangelog info.owner info.repo info.version
     log $ "... preparing PR"
     releaseBodyUri <- do
       let
-        content = fromMaybe "First release compatible with PureScript 0.15.0" nextReleaseContents
+        content = fromMaybe "First release compatible with PureScript 0.15.0" releaseBody
       cp <- spawnAff "jq" ["--slurp", "--raw-input", "--raw-output", "@uri" ]
       liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
       liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
@@ -106,7 +113,7 @@ createPrForNextReleaseBatch = do
       when (jqResult.exit /= Exited 0) do
         liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
       pure $ jqResult.stdout
-    withBodyPrFile bowerWasUpdated nextReleaseContents releaseBodyUri \bodyPrFilePath -> do
+    withBodyPrFile bowerUpdated pursTidyAdded releaseBody releaseBodyUri \bodyPrFilePath -> do
       log $ "... submitting PR"
       -- void $ execAff' ("git push -u origin " <> releaseBranchName) inRepoDir
       -- void $ spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
@@ -120,9 +127,9 @@ createPrForNextReleaseBatch = do
     inRepoDir r = r { cwd = Just repoDir }
     releaseBranchName = "test-next-release"
 
-    withBodyPrFile bowerChanged nextReleaseContents releaseBodyUri runAction = do
+    withBodyPrFile bowerChanged pursTidyAdded nextReleaseContents releaseBodyUri runAction = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
-      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerChanged nextReleaseContents releaseBodyUri
+      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerChanged pursTidyAdded nextReleaseContents releaseBodyUri
       runAction absPath
       unlink absPath
     ghPrCreateArgs bodyFilePath =
@@ -135,7 +142,7 @@ createPrForNextReleaseBatch = do
       , "--label"
       , "purs-0.15"
       ]
-    prBodyLines bowerChanged nextReleaseContents releaseBodyUri =
+    prBodyLines bowerChanged pursTidyAdded nextReleaseContents releaseBodyUri =
       [ "**Description of the change**"
       , ""
       , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
@@ -145,6 +152,7 @@ createPrForNextReleaseBatch = do
       , if bowerChanged then "- [x] Updated bower dependencies to 0.15.0-compatible versions"
         else "- [x] Bower dependencies: either no changes needed or `bower.json` file does not exist."
       ]
+      <> if pursTidyAdded then ["- [x] `purs-tidy` added and used to format `src` and `test` dirs (if applicable)"] else []
       <> maybe [] (const ["- [x] Updated changelog"]) nextReleaseContents
       <>
       [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
@@ -189,6 +197,71 @@ updateBowerToReleasedVersions owner repo = do
   inRepoDir :: ExecOptions -> ExecOptions
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, bowerJsonFile ]
+
+ensurePursTidyAdded :: GitHubOwner -> GitHubProject -> Aff Boolean
+ensurePursTidyAdded owner repo = do
+  fileExists <- liftEffect $ exists ciFile
+  if fileExists then do
+    original <- readTextFile UTF8 ciFile
+    let
+      -- the colon below is what separates the configuration of purs-tidy
+      -- from its usage
+      pursTidyConfigLine = either (\_ -> unsafeCrashWith "invalid regex") identity
+        $ regex "^( +)purs-tidy: \"[^\"]+\"( +)?$" multiline
+    if test pursTidyConfigLine original then do
+      pure false
+    else do
+      let
+        justOrCrash :: forall a. String -> Maybe a -> a
+        justOrCrash msg = maybe' (\_ -> unsafeCrashWith msg) identity
+        rightOrCrash msg = either (\_ -> unsafeCrashWith msg) identity
+        lines = String.split (String.Pattern "\n") original
+        setupPsLineRegex = rightOrCrash "invalid regex for setupPsLine"
+          $ regex "^( +)(- )?uses: purescript-contrib/setup-purescript" multiline
+        withLineRegex = rightOrCrash "invalid regex for withLine"
+          $ regex "^( +)with:" multiline
+
+        new :: String
+        new = justOrCrash "" do
+          setupPsIdx <- Array.findIndex (test setupPsLineRegex) lines
+          let { after: postSetup } = Array.splitAt setupPsIdx lines
+          withIdx <- Array.findIndex (test withLineRegex) postSetup
+          let { after: postWith } = Array.splitAt withIdx postSetup
+          firstBlankLineIdx <- Array.findIndex (\s -> String.trim s == "") postWith
+          let { before, after } = Array.splitAt (setupPsIdx + withIdx + firstBlankLineIdx) lines
+          withLine <- Array.index postSetup withIdx
+          let numOfSpaces = String.length $ String.takeWhile (\cp -> cp == codePointFromChar ' ') withLine
+          pure $ Array.intercalate "\n"
+            $ before
+            <> Array.singleton ((power " " numOfSpaces) <> "purs-tidy: \"stable\"")
+            <> after
+
+      -- easiest way to check whether a change has occurred
+      if (original /= new) then do
+        writeTextFile UTF8 ciFile new
+        gitCiAddResult <- execAff' ("git add " <> ciYmlFile) inRepoDir
+        for_ gitCiAddResult.error (liftEffect <<< throwException)
+        gitCiCommitResult <- execAff' "git commit -m \"Add purs-tidy\"" inRepoDir
+        for_ gitCiCommitResult.error (liftEffect <<< throwException)
+
+        ptResult <- execAff' ("purs-tidy format-in-place src test") inRepoDir
+        for_ ptResult.error (liftEffect <<< throwException)
+        gitAddPtResult <- execAff' ("git add src/ test/") inRepoDir
+        for_ gitAddPtResult.error (liftEffect <<< throwException)
+        gitCommitPtResult <- execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
+        for_ gitCommitPtResult.error (liftEffect <<< throwException)
+        pure true
+      else do
+        pure false
+  else do
+    pure false
+  where
+  owner' = unwrap owner
+  repo' = unwrap repo
+  repoDir = Path.concat ["..", owner', repo']
+  inRepoDir :: ExecOptions -> ExecOptions
+  inRepoDir r = r { cwd = Just repoDir }
+  ciFile = Path.concat [ repoDir, ciYmlFile ]
 
 updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (Maybe String)
 updateChangelog owner repo nextVersion = do
