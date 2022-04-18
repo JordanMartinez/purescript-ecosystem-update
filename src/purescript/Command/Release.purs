@@ -92,6 +92,7 @@ createPrForNextReleaseBatch { noDryRun } = do
     log $ "... resetting to clean state"
     void $ execAff' "git reset --hard HEAD" inRepoDir
     void $ execAff' ("git checkout origin/" <> unwrap info.defaultBranch) inRepoDir
+    void $ execAff' "git reset --hard HEAD" inRepoDir
     void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
     void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating bower.json file (if any)"
@@ -108,7 +109,7 @@ createPrForNextReleaseBatch { noDryRun } = do
       liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
       liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
       jqResult <- withSpawnResult cp
-      throwIfSpawnErrored  jqResult
+      throwIfSpawnErrored jqResult
       when (jqResult.exit /= Exited 0) do
         liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
       pure $ jqResult.stdout
@@ -131,9 +132,9 @@ createPrForNextReleaseBatch { noDryRun } = do
     inRepoDir r = r { cwd = Just repoDir }
     releaseBranchName = "test-next-release"
 
-    withBodyPrFile bowerChanged pursTidyAdded nextReleaseContents releaseBodyUri runAction = do
+    withBodyPrFile bowerChanged pursTidyAdded releaseBody releaseBodyUri runAction = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
-      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerChanged pursTidyAdded nextReleaseContents releaseBodyUri
+      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerChanged pursTidyAdded releaseBody releaseBodyUri
       runAction absPath
       unlink absPath
     ghPrCreateArgs bodyFilePath =
@@ -146,22 +147,22 @@ createPrForNextReleaseBatch { noDryRun } = do
       , "--label"
       , "purs-0.15"
       ]
-    prBodyLines bowerChanged pursTidyAdded nextReleaseContents releaseBodyUri =
+    prBodyLines bowerChanged pursTidyAdded releaseBody releaseBodyUri =
       [ "**Description of the change**"
       , ""
       , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
       , ""
       , ":robot: This is an automated pull request to prepare the next release of this library. PR was created via the [Release.purs](https://github.com/JordanMartinez/purescript-ecosystem-update/blob/master/src/purescript/Command/Release.purs) file. Some of the following steps are already done; others should be performed by a human once the pull request is merged:"
       , ""
-      , if bowerChanged then "- [x] Updated bower dependencies to 0.15.0-compatible versions"
-        else "- [x] Bower dependencies: either no changes needed or `bower.json` file does not exist."
       ]
-      <> if pursTidyAdded then ["- [x] `purs-tidy` added to CI and used to format `src` and `test` dirs (if applicable)"] else []
-      <> maybe [] (const ["- [x] Updated changelog"]) nextReleaseContents
+      <> (Array.singleton $ if bowerChanged then "- [x] Updated bower dependencies to 0.15.0-compatible versions"
+        else "- [x] Bower dependencies: either no changes needed or `bower.json` file does not exist.")
+      <> (if pursTidyAdded then ["- [x] `purs-tidy` added to CI and used to format `src` and `test` dirs (if applicable)"] else [])
+      <> (maybe [] (const ["- [x] Updated changelog"]) releaseBody)
       <>
-      [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
-      , "- [ ] Upload the release to Pursuit with `pulp publish`."
-      ]
+        [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
+        , "- [ ] Upload the release to Pursuit with `pulp publish`."
+        ]
     newReleaseUrl releaseBodyUri = fold
       [ "https://github.com/"
       , owner'
@@ -290,15 +291,15 @@ updateChangelog owner repo nextVersion = do
     original <- readTextFile UTF8 clFilePath
     todayDateStr <- map (formatYYYYMMDD) $ liftEffect nowDateTime
     let
-      updateChangeLogIfDifferent releaseSection new
-        | original == new = pure Nothing
+      updateChangeLogIfDifferent releaseContents newContent
+        | original == newContent = pure Nothing
         | otherwise = do
-            writeTextFile UTF8 clFilePath new
+            writeTextFile UTF8 clFilePath newContent
             gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
             throwIfExecErrored gitAddResult
             gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
             throwIfExecErrored gitCommitResult
-            pure $ Just $ Array.intercalate "\n" releaseSection
+            pure $ Just $ Array.intercalate "\n" releaseContents
 
       isVersionHeader = isJust <<< String.stripPrefix (String.Pattern "##")
       lines = String.split (String.Pattern "\n") original
@@ -310,30 +311,27 @@ updateChangelog owner repo nextVersion = do
     case map (\idx -> Array.splitAt idx changeLogContent) $ Array.findIndex isVersionHeader changeLogContent of
       Nothing -> do
         let
-          releaseSection =
-            nextReleaseHeader todayDateStr
-            <>
-              [ ""
-              , "Initial release"
-              ]
-          new = Array.intercalate "\n"
+          releaseContents =
+            [ ""
+            , "Initial release"
+            ]
+          newContent = Array.intercalate "\n"
             $ prefaceAndUnreleasedHdr
             <> unreleasedSectionContent
-            <> releaseSection
+            <> nextReleaseHeader todayDateStr
+            <> releaseContents
 
-        updateChangeLogIfDifferent releaseSection new
-      Just { before: newReleaseContent, after: remainingChangeLogContent } -> do
+        updateChangeLogIfDifferent releaseContents newContent
+      Just { before: releaseContents, after: remainingChangeLogContent } -> do
         let
-          releaseSection =
-            nextReleaseHeader todayDateStr
-            <> newReleaseContent
-          new = Array.intercalate "\n"
+          newContent = Array.intercalate "\n"
             $ prefaceAndUnreleasedHdr
             <> unreleasedSectionContent
-            <> releaseSection
+            <> nextReleaseHeader todayDateStr
+            <> releaseContents
             <> remainingChangeLogContent
 
-        updateChangeLogIfDifferent releaseSection new
+        updateChangeLogIfDifferent releaseContents newContent
   else do
     pure Nothing
   where
