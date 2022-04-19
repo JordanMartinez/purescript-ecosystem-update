@@ -94,7 +94,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
     log $ "## Doing release changes for '" <> unwrap info.pkg <> "'"
     log $ "... resetting to clean state"
     void $ execAff' "git reset --hard HEAD" inRepoDir
-    void $ execAff' ("git checkout origin/" <> unwrap info.defaultBranch) inRepoDir
+    void $ execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
     void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
     pursTidyStatus <- ensurePursTidyAdded info.pkg
@@ -119,7 +119,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
     withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
       if submitPr then do
         log $ "... submitting PR"
-        void $ execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
+        void $ execAff' ("git push -f -u upstream " <> releaseBranchName) inRepoDir
         result <- withSpawnResult =<< spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
         log $ result.stdout
         log $ result.stderr
