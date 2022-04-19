@@ -372,7 +372,7 @@ ensurePursTidyAdded pkg = do
       -- the colon below is what separates the configuration of purs-tidy
       -- from its usage
       pursTidyUsageLine = either (\_ -> unsafeCrashWith "invalid regex") identity
-        $ regex "^( +)purs-tidy check" multiline
+        $ regex "purs-tidy check" multiline
     if test pursTidyConfigLine original && test pursTidyUsageLine original then do
       pure false
     else do
