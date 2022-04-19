@@ -2,7 +2,6 @@ module Tools.Gh where
 
 import Prelude
 
-import Constants (gitRemoteNameFork)
 import Data.Array as Array
 import Data.Maybe (Maybe, maybe)
 import Data.Newtype (unwrap)
@@ -60,5 +59,5 @@ ghRepoFork { owner, repo, orgName: mbOrgName, cloneLocallyTo: directory } = do
     -- by default, do fork for user, but if org is specified, do fork for org
     , maybe "" (append " --org " <<< unwrap) mbOrgName
     -- whether to clone the repo as well or just do the fork
-    , maybe " --clone=false" (\dir -> " --clone --remote --remote-name " <> gitRemoteNameFork <> " -- " <> dir) directory
+    , maybe " --clone=false" (\dir -> " --clone -- " <> dir) directory
     ]

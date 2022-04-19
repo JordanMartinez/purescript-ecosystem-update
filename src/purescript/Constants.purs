@@ -1,76 +1,82 @@
+-- | Constants for a given package's files/directories
+-- | will always appear in `repoFiles`. Everything else
+-- | refers to either files/directories in this repo
+-- | or its given domain (e.g. `gitRemotes`).
 module Constants where
 
 import Node.Path as Path
 
-ciYmlFile :: String
-ciYmlFile = Path.concat [ ".github", "workflows", "ci.yml" ]
+repoFiles
+  :: { bowerComponentsDir :: String
+     , bowerJsonFile :: String
+     , changelogFile :: String
+     , ciYmlFile :: String
+     , eslintFile :: String
+     , gitIgnoreFile :: String
+     , packagesJsonFile :: String
+     , pursJsonFile :: String
+     , spagoDhallFile :: String
+     , spagoDir :: String
+     , testDhallFile :: String
+     , tidyOperatorsFile :: String
+     , tidyRcJsonFile :: String
+     }
+repoFiles =
+  { ciYmlFile: Path.concat [ ".github", "workflows", "ci.yml" ]
+  , eslintFile: ".eslintrc.json"
+  , bowerJsonFile: "bower.json"
+  , packagesJsonFile: "packages.json"
+  , spagoDhallFile: "spago.dhall"
+  , testDhallFile: "test.dhall"
+  , pursJsonFile: "purs.json"
+  , gitIgnoreFile: ".gitignore"
+  , changelogFile: "CHANGELOG.md"
+  , tidyRcJsonFile: ".tidyrc.json"
+  , tidyOperatorsFile: ".tidyoperators"
+  , spagoDir: ".spago"
+  , bowerComponentsDir: "bower_components"
+  }
 
-eslintFile :: String
-eslintFile = ".eslintrc.json"
+gitRemotes
+  :: { origin :: String
+     , self :: String
+     , upstream :: String
+     }
+gitRemotes =
+  { origin: "origin"
+  , upstream: "upstream"
+  , self: "self"
+  }
 
-bowerJsonFile :: String
-bowerJsonFile = "bower.json"
+releaseFiles
+  :: { nextReleaseInfo :: String
+     , releaseOrderFile :: String
+     , releasedPkgsFile :: String
+     }
+releaseFiles = do
+  { releaseOrderFile: Path.concat [ "files", "release", "library-release-order" ]
+  , releasedPkgsFile: Path.concat [ "files", "release", "released-pkgs" ]
+  , nextReleaseInfo: Path.concat [ "files", "release", "next-release-info_2022-04-15T13:28:12.552Z.json" ]
+  }
 
-packagesJsonFile :: String
-packagesJsonFile = "packages.json"
-
-packagesDhallFile :: String
-packagesDhallFile = "packages.dhall"
-
-spagoDhallFile :: String
-spagoDhallFile = "spago.dhall"
-
-testDhallFile :: String
-testDhallFile = "test.dhall"
-
-pursJsonFile :: String
-pursJsonFile = "purs.json"
-
-gitIgnoreFile :: String
-gitIgnoreFile = ".gitignore"
-
-changelogFile :: String
-changelogFile = "CHANGELOG.md"
+pursTidyFiles
+  :: { tidyRcNoOperatorsFile :: String
+     , tidyRcWithOperatorsFile :: String
+     }
+pursTidyFiles =
+  { tidyRcNoOperatorsFile: Path.concat [ "files", "purs-tidy", ".tidyrc-no-operators-file.json" ]
+  , tidyRcWithOperatorsFile: Path.concat [ "files", "purs-tidy", ".tidyrc-with-operators-file.json" ]
+  }
 
 purescriptTarGzFile :: String
 purescriptTarGzFile = "purescript.tar.gz"
 
-gitRemoteNameOriginal :: String
-gitRemoteNameOriginal = "origin"
-
-gitRemoteNameFork :: String
-gitRemoteNameFork = "self"
-
-libraryReleaseOrderFile :: String
-libraryReleaseOrderFile = Path.concat [ filesReleaseDir, "library-release-order"]
-
-filesReleaseDir :: String
-filesReleaseDir = Path.concat [ "files", "release" ]
-
-jqScriptsDir :: String
-jqScriptsDir = Path.concat [ "src", "jq" ]
-
-updateBowerJsonReleaseVersionsFile :: String
-updateBowerJsonReleaseVersionsFile =
-  Path.concat [ jqScriptsDir, "update-bower-json-release-versions.txt"]
-
-bodyOfReleasePrFile :: String
-bodyOfReleasePrFile = Path.concat [ "files", "pr", "body-of-release-pr.txt" ]
-
-tidyRcJsonNoOperatorsFile :: String
-tidyRcJsonNoOperatorsFile = Path.concat [ "files", "purs-tidy", ".tidyrc-no-operators-file.json" ]
-
-tidyRcJsonWithOperatorsFile :: String
-tidyRcJsonWithOperatorsFile = Path.concat [ "files", "purs-tidy", ".tidyrc-with-operators-file.json" ]
-
-tidyRcJsonFile :: String
-tidyRcJsonFile = ".tidyrc.json"
-
-tidyOperatorsFile :: String
-tidyOperatorsFile = ".tidyoperators"
-
-spagoDir :: String
-spagoDir = ".spago"
+jqScripts
+  :: { updateBowerDepsToReleaseVersion :: String
+     }
+jqScripts =
+  { updateBowerDepsToReleaseVersion: Path.concat [ "src", "jq", "update-bower-json-release-versions.txt" ]
+  }
 
 libDir :: String
 libDir = Path.concat [ "..", "lib" ]

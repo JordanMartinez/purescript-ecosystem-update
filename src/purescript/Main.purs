@@ -5,7 +5,6 @@ import Prelude
 import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
 import Command (Command(..))
-import Command.Bower as BowerCmd
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
 import Command.Init as InitCmd

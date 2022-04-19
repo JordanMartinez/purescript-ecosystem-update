@@ -2,7 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (bowerJsonFile, changelogFile, ciYmlFile, spagoDhallFile, testDhallFile, tidyOperatorsFile, tidyRcJsonFile, tidyRcJsonNoOperatorsFile, tidyRcJsonWithOperatorsFile, updateBowerJsonReleaseVersionsFile)
+import Constants (jqScripts, pursTidyFiles, repoFiles)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Either (either)
@@ -80,7 +80,7 @@ createPrForNextReleaseBatch { noDryRun } = do
 
   writeTextFile
     UTF8
-    updateBowerJsonReleaseVersionsFile
+    jqScripts.updateBowerDepsToReleaseVersion
     jqScriptUpdateBowerWithReleaseVersion
 
   let
@@ -224,12 +224,12 @@ updateBowerToReleasedVersions owner repo = do
   fileExists <- liftEffect $ exists bowerFile
   if fileExists then do
     original <- readTextFile UTF8 bowerFile
-    result <- withSpawnResult =<< spawnAff "jq" ["--from-file", updateBowerJsonReleaseVersionsFile, "--", bowerFile ]
+    result <- withSpawnResult =<< spawnAff "jq" ["--from-file", jqScripts.updateBowerDepsToReleaseVersion, "--", bowerFile ]
     let new = result.stdout
     -- easiest way to check whether a change has occurred
     if (original /= new) then do
       writeTextFile UTF8 bowerFile new
-      gitAddResult <- execAff' ("git add " <> bowerJsonFile) inRepoDir
+      gitAddResult <- execAff' ("git add " <> repoFiles.bowerJsonFile) inRepoDir
       throwIfExecErrored gitAddResult
       gitCommitResult <- execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
       throwIfExecErrored gitCommitResult
@@ -244,7 +244,7 @@ updateBowerToReleasedVersions owner repo = do
   repoDir = Path.concat ["..", owner', repo']
   inRepoDir :: ExecOptions -> ExecOptions
   inRepoDir r = r { cwd = Just repoDir }
-  bowerFile = Path.concat [ repoDir, bowerJsonFile ]
+  bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
 
 ensurePursTidyAdded
   :: GitHubOwner
@@ -258,7 +258,7 @@ ensurePursTidyAdded
 ensurePursTidyAdded owner repo = do
   fileExists <- liftEffect $ exists ciFile
   unless fileExists do
-    liftEffect $ throw $ ciYmlFile <> " did not exist for repo: " <> repoDir
+    liftEffect $ throw $ repoFiles.ciYmlFile <> " did not exist for repo: " <> repoDir
   tidyOpFileStatus <- do
     hadTidyOpFile <- liftEffect $ exists tidyOpFile
     dirGlobs <- do
@@ -271,7 +271,7 @@ ensurePursTidyAdded owner repo = do
               $ "Could not determine source globs for `purs-tidy generate-operators`.\n"
               <> "bower.json, spago.dhall, or test.dhall files not found for " <> repoDir
       getGlobs
-        [ Tuple (liftEffect $ exists $ Path.concat [ repoDir, bowerJsonFile ]) do
+        [ Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.bowerJsonFile ]) do
             void $ execAff' "bower cache clean" inRepoDir
             void $ execAff' "bower install" inRepoDir
             let
@@ -288,10 +288,10 @@ ensurePursTidyAdded owner repo = do
                 pure $ bowerDirs <#> \s ->
                   Path.concat [ "bower_components", s, "src", "**", "*.purs" ]
             pure $ bowerDirs <> srcDir <> testDir
-        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, testDhallFile ]) do
-            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> testDhallFile <> " sources") inRepoDir
-        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, spagoDhallFile ]) do
-            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> spagoDhallFile <> " sources") inRepoDir
+        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.testDhallFile ]) do
+            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> repoFiles.testDhallFile <> " sources") inRepoDir
+        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.spagoDhallFile ]) do
+            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> repoFiles.spagoDhallFile <> " sources") inRepoDir
         ]
     genCmd <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
     throwIfSpawnErrored genCmd
@@ -299,7 +299,7 @@ ensurePursTidyAdded owner repo = do
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
-      gitCiAddResult <- execAff' ("git add " <> tidyOperatorsFile) inRepoDir
+      gitCiAddResult <- execAff' ("git add " <> repoFiles.tidyOperatorsFile) inRepoDir
       throwIfExecErrored gitCiAddResult
       let
         msg
@@ -314,16 +314,16 @@ ensurePursTidyAdded owner repo = do
 
   tidyRcFileStatus <- do
     log tidyRcFile
-    log tidyRcJsonWithOperatorsFile
+    log pursTidyFiles.tidyRcWithOperatorsFile
     hadTidyRcFile <- liftEffect $ exists tidyRcFile
     flip copyFile tidyRcFile case tidyOpFileStatus of
-      FileHadNoChanges false -> tidyRcJsonNoOperatorsFile
-      _ -> tidyRcJsonWithOperatorsFile
+      FileHadNoChanges false -> pursTidyFiles.tidyRcNoOperatorsFile
+      _ -> pursTidyFiles.tidyRcWithOperatorsFile
     gitDiff <- execAff' ("git diff --shortstat") inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
-      gitCiAddResult <- execAff' ("git add " <> tidyRcJsonFile) inRepoDir
+      gitCiAddResult <- execAff' ("git add " <> repoFiles.tidyRcJsonFile) inRepoDir
       throwIfExecErrored gitCiAddResult
       let
         msg
@@ -406,7 +406,7 @@ ensurePursTidyAdded owner repo = do
       -- easiest way to check whether a change has occurred
       if (original /= new) then do
         writeTextFile UTF8 ciFile new
-        gitCiAddResult <- execAff' ("git add " <> ciYmlFile) inRepoDir
+        gitCiAddResult <- execAff' ("git add " <> repoFiles.ciYmlFile) inRepoDir
         throwIfExecErrored gitCiAddResult
         gitCiCommitResult <- execAff' "git commit -m \"Added purs-tidy and check formatting step\"" inRepoDir
         throwIfExecErrored gitCiCommitResult
@@ -420,9 +420,9 @@ ensurePursTidyAdded owner repo = do
   repoDir = Path.concat ["..", owner', repo']
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
-  ciFile = Path.concat [ repoDir, ciYmlFile ]
-  tidyRcFile = Path.concat [ repoDir, tidyRcJsonFile ]
-  tidyOpFile = Path.concat [ repoDir, tidyOperatorsFile ]
+  ciFile = Path.concat [ repoDir, repoFiles.ciYmlFile ]
+  tidyRcFile = Path.concat [ repoDir, repoFiles.tidyRcJsonFile ]
+  tidyOpFile = Path.concat [ repoDir, repoFiles.tidyOperatorsFile ]
 
 updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (FileStatus Unit Unit String)
 updateChangelog owner repo nextVersion = do
@@ -435,7 +435,7 @@ updateChangelog owner repo nextVersion = do
         | original == newContent = pure $ FileHadNoChanges unit
         | otherwise = do
             writeTextFile UTF8 clFilePath newContent
-            gitAddResult <- execAff' ("git add " <> changelogFile) (_ { cwd = Just repoDir })
+            gitAddResult <- execAff' ("git add " <> repoFiles.changelogFile) (_ { cwd = Just repoDir })
             throwIfExecErrored gitAddResult
             gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
             throwIfExecErrored gitCommitResult
@@ -484,7 +484,7 @@ updateChangelog owner repo nextVersion = do
   owner' = unwrap owner
   repo' = unwrap repo
   repoDir = Path.concat ["..", owner', repo']
-  clFilePath = Path.concat [ repoDir, changelogFile ]
+  clFilePath = Path.concat [ repoDir, repoFiles.changelogFile ]
   formatYYYYMMDD = format
     $ YearFull
     : Placeholder "-"

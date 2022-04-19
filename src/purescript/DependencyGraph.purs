@@ -2,7 +2,7 @@ module DependencyGraph where
 
 import Prelude
 
-import Constants (filesReleaseDir)
+import Constants (releaseFiles)
 import Control.Monad.Rec.Class (Step(..), tailRec)
 import Data.Argonaut.Decode (decodeJson, parseJson, printJsonDecodeError)
 import Data.Array (sortBy)
@@ -33,8 +33,7 @@ import Foreign.Object as Object
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile, writeTextFile)
 import Node.FS.Sync (exists)
-import Node.Path (FilePath)
-import Node.Path as Path
+import Node.Path (FilePath, dirname)
 import Partial.Unsafe (unsafeCrashWith)
 import Record as Record
 import Safe.Coerce (coerce)
@@ -107,13 +106,10 @@ generateAllReleaseInfo
       , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
       }
 generateAllReleaseInfo f = do
-  let
-    nextReleaseInfo = Path.concat [ filesReleaseDir, "next-release-info_2022-04-15T13:28:12.552Z.json" ]
-    releasedPkgs = Path.concat [ filesReleaseDir, "released-pkgs" ]
-  unlessM (liftEffect $ exists releasedPkgs) do
-    mkdir filesReleaseDir { recursive: true }
-    writeTextFile UTF8 releasedPkgs ""
-  generateAllReleaseInfo' nextReleaseInfo releasedPkgs f
+  unlessM (liftEffect $ exists releaseFiles.releasedPkgsFile) do
+    mkdir (dirname releaseFiles.releasedPkgsFile) { recursive: true }
+    writeTextFile UTF8 releaseFiles.releasedPkgsFile ""
+  generateAllReleaseInfo' releaseFiles.nextReleaseInfo releaseFiles.releasedPkgsFile f
 
 generateAllReleaseInfo'
   :: forall version
