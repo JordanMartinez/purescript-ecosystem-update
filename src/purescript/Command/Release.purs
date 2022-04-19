@@ -302,8 +302,8 @@ ensurePursTidyAdded pkg = do
       throwIfExecErrored gitCiAddResult
       let
         msg
-          | hadTidyOpFile = "Added .tidyoperators file"
-          | otherwise = "Regenerated .tidyoperators file"
+          | hadTidyOpFile = "Regenerated .tidyoperators file"
+          | otherwise = "Added .tidyoperators file"
       gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
       throwIfExecErrored gitCiCommitResult
     pure case hadTidyOpFile, contentChanged of
@@ -326,8 +326,8 @@ ensurePursTidyAdded pkg = do
       throwIfExecErrored gitCiAddResult
       let
         msg
-          | hadTidyRcFile = "Added .tidyrc.json file"
-          | otherwise = "Regenerated .tidyrc.json file"
+          | hadTidyRcFile = "Regenerated .tidyrc.json file"
+          | otherwise = "Added .tidyrc.json file"
       gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
       throwIfExecErrored gitCiCommitResult
     pure case hadTidyRcFile, contentChanged of
