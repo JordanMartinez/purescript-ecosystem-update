@@ -47,9 +47,6 @@ main = do
         CloneAll org ->
           runAff_ (either throwException $ const $ pure unit) do
             CloneCmd.cloneAll org
-        Bower { package } ->
-          runAff_ (either throwException $ const $ pure unit) do
-            BowerCmd.updateDependenciesToMain package
         ReleaseOrder ->
           runAff_ (either throwException $ const $ pure unit) do
             ReleaseOrderCmd.generateReleaseOrder
