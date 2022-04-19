@@ -185,12 +185,6 @@ packages =
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-lists.git"
     , defaultBranch: BranchName "master"
     }
-  , { name: Package "math"
-    , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-math"
-    , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-math.git"
-    , defaultBranch: BranchName "master"
-    }
   , { name: Package "maybe"
     , owner: GitHubOwner "purescript"
     , project: GitHubProject "purescript-maybe"
