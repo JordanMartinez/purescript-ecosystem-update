@@ -168,6 +168,8 @@ throwIfExecErrored r = for_ r.error \e -> do
   liftEffect do
     log "Spawn result error:"
     log $ show e
+    log $ "Stdout:"
+    log $ r.stdout
     log $ "Stderr:"
     log $ r.stderr
     throw $ show e
@@ -178,6 +180,8 @@ throwIfSpawnErrored r = for_ r.error \e -> do
     log "Spawn result error:"
     log $ show e
     log $ show r.exit
+    log $ "Stdout:"
+    log $ r.stdout
     log $ "Stderr:"
     log $ r.stderr
     throw $ show e
