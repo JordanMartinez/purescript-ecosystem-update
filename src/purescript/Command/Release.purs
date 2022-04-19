@@ -296,7 +296,7 @@ ensurePursTidyAdded pkg = do
     throwIfSpawnErrored genCmd
     nowHasTidyOpFile <- liftEffect $ exists tidyOpFile
     when (not hadTidyOpFile && nowHasTidyOpFile) do
-      appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "!.tidyoperators\n"
+      appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyoperators\n"
       void $ execAff' "git add .gitignore" inRepoDir
       void $ execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
     gitDiff <- execAff' ("git diff --shortstat") inRepoDir
