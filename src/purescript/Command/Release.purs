@@ -116,6 +116,8 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       when (jqResult.exit /= Exited 0) do
         liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
       pure $ jqResult.stdout
+        # String.replaceAll (String.Pattern "(") (String.Replacement "%28")
+        # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
     withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
       if submitPr then do
         log $ "... submitting PR"
