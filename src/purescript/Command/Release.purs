@@ -10,7 +10,7 @@ import Data.Foldable (foldl, for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
-import Data.Maybe (Maybe(..), isJust, maybe')
+import Data.Maybe (Maybe(..), isJust, maybe, maybe')
 import Data.Monoid (power)
 import Data.Newtype (unwrap)
 import Data.String (codePointFromChar)
@@ -35,11 +35,11 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
-import Types (GitHubOwner, GitHubProject)
+import Types (BranchName, GitHubOwner, GitHubProject, Package)
 import Utils (SpawnExit(..), copyFile, execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
-createPrForNextReleaseBatch :: { noDryRun :: Boolean } -> Aff Unit
-createPrForNextReleaseBatch { noDryRun } = do
+createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName } -> Aff Unit
+createPrForNextReleaseBatch { submitPr, branchName } = do
   { fullGraph, unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
 
   let
@@ -89,20 +89,19 @@ createPrForNextReleaseBatch { noDryRun } = do
 
   for_ pkgsInNextBatch makeRelease
   where
+  releaseBranchName = maybe "next-release" unwrap branchName
   makeRelease info = do
     log $ "## Doing release changes for '" <> unwrap info.pkg <> "'"
     log $ "... resetting to clean state"
     void $ execAff' "git reset --hard HEAD" inRepoDir
     void $ execAff' ("git checkout origin/" <> unwrap info.defaultBranch) inRepoDir
-    void $ execAff' "git reset --hard HEAD" inRepoDir
-    void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
     void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
-    pursTidyStatus <- ensurePursTidyAdded info.owner info.repo
+    pursTidyStatus <- ensurePursTidyAdded info.pkg
     log $ "... updating bower.json file (if any)"
-    bowerStatus <- updateBowerToReleasedVersions info.owner info.repo
+    bowerStatus <- updateBowerToReleasedVersions info.pkg
     log $ "... updating changelog file (if any)"
-    changelogStatus <- updateChangelog info.owner info.repo info.version
+    changelogStatus <- updateChangelog info.owner info.repo info.pkg info.version
     log $ "... preparing PR"
     releaseBodyUri <- do
       let
@@ -118,23 +117,23 @@ createPrForNextReleaseBatch { noDryRun } = do
         liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
       pure $ jqResult.stdout
     withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
-      log $ "... submitting PR"
-      if noDryRun then do
+      if submitPr then do
+        log $ "... submitting PR"
         void $ execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
         result <- withSpawnResult =<< spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
         log $ result.stdout
         log $ result.stderr
       else do
-        log "....... Ran `peu` without the `--no-dry-run` flag. So, no PR will be submitted."
+        log "... not submitting PR. Rerun with the `--submit-pr` flag."
     log $ ""
     where
     owner' = unwrap info.owner
     repo' = unwrap info.repo
+    pkg' = unwrap info.pkg
     version' = "v" <> Version.showVersion info.version
-    repoDir = Path.concat [ libDir, repo' ]
+    repoDir = Path.concat [ libDir, pkg' ]
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
-    releaseBranchName = "test-next-release"
 
     withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri runAction = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
@@ -219,8 +218,8 @@ data ChangeReason
 derive instance (Eq a, Eq b, Eq c) => Eq (FileStatus a b c)
 derive instance (Ord a, Ord b, Ord c) => Ord (FileStatus a b c)
 
-updateBowerToReleasedVersions :: GitHubOwner -> GitHubProject -> Aff (FileStatus Unit Unit Unit)
-updateBowerToReleasedVersions owner repo = do
+updateBowerToReleasedVersions :: Package -> Aff (FileStatus Unit Unit Unit)
+updateBowerToReleasedVersions pkg = do
   fileExists <- liftEffect $ exists bowerFile
   if fileExists then do
     original <- readTextFile UTF8 bowerFile
@@ -239,23 +238,21 @@ updateBowerToReleasedVersions owner repo = do
   else do
     pure $ FileDoesNotExist unit
   where
-  owner' = unwrap owner
-  repo' = unwrap repo
-  repoDir = Path.concat [ libDir, repo']
+  pkg' = unwrap pkg
+  repoDir = Path.concat [ libDir, pkg']
   inRepoDir :: ExecOptions -> ExecOptions
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
 
 ensurePursTidyAdded
-  :: GitHubOwner
-  -> GitHubProject
+  :: Package
   -> Aff
     { ciFileStatus :: Boolean
     , formattingStatus :: Boolean
     , tidyOpFileStatus :: FileStatus Void Boolean ChangeReason
     , tidyRcFileStatus :: FileStatus Void Unit ChangeReason
     }
-ensurePursTidyAdded owner repo = do
+ensurePursTidyAdded pkg = do
   fileExists <- liftEffect $ exists ciFile
   unless fileExists do
     liftEffect $ throw $ repoFiles.ciYmlFile <> " did not exist for repo: " <> repoDir
@@ -415,17 +412,16 @@ ensurePursTidyAdded owner repo = do
         pure false
   pure { tidyOpFileStatus, tidyRcFileStatus, formattingStatus, ciFileStatus }
   where
-  owner' = unwrap owner
-  repo' = unwrap repo
-  repoDir = Path.concat [ libDir, repo']
+  pkg' = unwrap pkg
+  repoDir = Path.concat [ libDir, pkg']
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
   ciFile = Path.concat [ repoDir, repoFiles.ciYmlFile ]
   tidyRcFile = Path.concat [ repoDir, repoFiles.tidyRcJsonFile ]
   tidyOpFile = Path.concat [ repoDir, repoFiles.tidyOperatorsFile ]
 
-updateChangelog :: GitHubOwner -> GitHubProject -> Version -> Aff (FileStatus Unit Unit String)
-updateChangelog owner repo nextVersion = do
+updateChangelog :: GitHubOwner -> GitHubProject -> Package -> Version -> Aff (FileStatus Unit Unit String)
+updateChangelog owner repo pkg nextVersion = do
   fileExists <- liftEffect $ exists clFilePath
   if fileExists then do
     original <- readTextFile UTF8 clFilePath
@@ -483,7 +479,8 @@ updateChangelog owner repo nextVersion = do
   where
   owner' = unwrap owner
   repo' = unwrap repo
-  repoDir = Path.concat [ libDir, repo']
+  pkg' = unwrap pkg
+  repoDir = Path.concat [ libDir, pkg']
   clFilePath = Path.concat [ repoDir, repoFiles.changelogFile ]
   formatYYYYMMDD = format
     $ YearFull

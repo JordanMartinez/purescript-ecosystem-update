@@ -8,13 +8,13 @@ import Command (Command(..))
 import Data.Array as Array
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (Maybe(..))
 import Data.Newtype (unwrap)
 import Data.String (Pattern(..), joinWith)
 import Data.String as String
 import Data.Version as Version
 import Packages (packages)
-import Types (GitHubOwner(..), GitHubProject(..), Package(..))
+import Types (BranchName(..), GitHubOwner(..), GitHubProject(..), Package(..))
 
 parseCliArgs :: Array String -> Either ArgError Command
 parseCliArgs =
@@ -186,15 +186,19 @@ parseCliArgs =
 
   makeNextReleaseBatchCmd = ArgParse.command [ "release" ] description do
     MakeNextReleaseBatch <$> fromRecord
-        { noDryRun: parseNoDryRun
+        { submitPr: parseSubmitPr
+        , branchName: parseBranchName
         }
       <* ArgParse.flagHelp
     where
     description = "Make the next batch of release PRs."
-    parseNoDryRun = ArgParse.flag [ "--no-dry-run" ] flagDesc
+    parseSubmitPr = ArgParse.flag [ "--submit-pr" ] flagDesc
       # ArgParse.boolean
       where
       flagDesc = "By default, no prepared PRs are submitted on GitHub unless this flag is set."
+    parseBranchName = ArgParse.optional $ map BranchName $ ArgParse.argument [ "--branch-name" ] flagDesc
+      where
+      flagDesc = "The name of the branch in which to do the release changes."
 
   releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
     ReleaseOrder <$ ArgParse.flagHelp

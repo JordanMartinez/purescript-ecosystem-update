@@ -4,7 +4,7 @@ module Command where
 import Data.Either (Either)
 import Data.Maybe (Maybe)
 import Data.Version (Version)
-import Types (GitHubOwner, GitHubProject, Package, PackageInfo)
+import Types (BranchName, GitHubOwner, GitHubProject, Package, PackageInfo)
 
 data Command
   -- | Initializes the project structure
@@ -34,6 +34,6 @@ data Command
   -- | Create a PR
   | MakePr { package :: Package }
   | ReleaseOrder
-  | MakeNextReleaseBatch { noDryRun :: Boolean }
+  | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName }
   -- | Show examples
   | ShowExamples
