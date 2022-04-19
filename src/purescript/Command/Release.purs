@@ -118,6 +118,8 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       pure $ jqResult.stdout
         # String.replaceAll (String.Pattern "(") (String.Replacement "%28")
         # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
+        # String.replaceAll (String.Pattern "[") (String.Replacement "%5B")
+        # String.replaceAll (String.Pattern "]") (String.Replacement "%5D")
     withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
       if submitPr then do
         log $ "... submitting PR"
