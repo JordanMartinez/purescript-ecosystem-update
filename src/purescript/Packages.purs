@@ -4,6 +4,7 @@ import Types (Package(..), PackageInfo, GitHubOwner(..), GitHubProject(..), GitC
 
 packages :: Array PackageInfo
 packages =
+  -- core libs
   [ { name: Package "arrays"
     , owner: GitHubOwner "purescript"
     , project: GitHubProject "purescript-arrays"
@@ -358,6 +359,7 @@ packages =
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-validation.git"
     , defaultBranch: BranchName "master"
     }
+  -- contrib libs
   , { name: Package "ace"
     , owner: GitHubOwner "purescript-contrib"
     , project: GitHubProject "purescript-ace"
@@ -658,6 +660,7 @@ packages =
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-uri.git"
     , defaultBranch: BranchName "main"
     }
+  -- web libs
   , { name: Package "canvas"
     , owner: GitHubOwner "purescript-web"
     , project: GitHubProject "purescript-canvas"
@@ -766,6 +769,7 @@ packages =
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-xhr.git"
     , defaultBranch: BranchName "master"
     }
+  -- node libs
   , { name: Package "node-buffer"
     , owner: GitHubOwner "purescript-node"
     , project: GitHubProject "purescript-node-buffer"
@@ -836,6 +840,13 @@ packages =
     , owner: GitHubOwner "purescript-node"
     , project: GitHubProject "purescript-posix-types"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-posix-types.git"
+    , defaultBranch: BranchName "master"
+    }
+  -- other libs
+  , { name: Package "aff-promise"
+    , owner: GitHubOwner "nwolverson"
+    , project: GitHubProject "purescript-aff-promise"
+    , gitUrl: GitCloneUrl "git@github.com:nwolverson/purescript-aff-promise.git"
     , defaultBranch: BranchName "master"
     }
   ]
