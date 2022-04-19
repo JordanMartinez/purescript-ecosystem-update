@@ -292,12 +292,12 @@ ensurePursTidyAdded pkg = do
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.testDhallFile ]) do
             throwIfExecErrored =<< execAff' ("spago -x " <> repoFiles.testDhallFile <> " install") inRepoDir
             spagoSourcesResult <- execAff' ("spago -x " <> repoFiles.testDhallFile <> " sources") inRepoDir
-            throwIfSpawnErrored spagoSourcesResult
+            throwIfExecErrored spagoSourcesResult
             pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.spagoDhallFile ]) do
             throwIfExecErrored =<< execAff' "spago install" inRepoDir
             spagoSourcesResult <- execAff' ("spago sources") inRepoDir
-            throwIfSpawnErrored spagoSourcesResult
+            throwIfExecErrored spagoSourcesResult
             pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
         ]
     throwIfSpawnErrored =<< withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
