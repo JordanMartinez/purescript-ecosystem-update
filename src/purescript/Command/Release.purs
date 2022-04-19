@@ -95,7 +95,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
     log $ "... resetting to clean state"
     throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
     throwIfExecErrored =<< execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
-    throwIfExecErrored =<< execAff' ("git branch -D " <> releaseBranchName) inRepoDir
+    void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
     throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
     pursTidyStatus <- ensurePursTidyAdded info.pkg
