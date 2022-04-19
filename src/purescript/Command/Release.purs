@@ -2,7 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (jqScripts, pursTidyFiles, repoFiles)
+import Constants (jqScripts, libDir, pursTidyFiles, repoFiles)
 import Data.Array (fold)
 import Data.Array as Array
 import Data.Either (either)
@@ -131,7 +131,7 @@ createPrForNextReleaseBatch { noDryRun } = do
     owner' = unwrap info.owner
     repo' = unwrap info.repo
     version' = "v" <> Version.showVersion info.version
-    repoDir = Path.concat [ "..", owner', repo' ]
+    repoDir = Path.concat [ libDir, repo' ]
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
     releaseBranchName = "test-next-release"
@@ -241,7 +241,7 @@ updateBowerToReleasedVersions owner repo = do
   where
   owner' = unwrap owner
   repo' = unwrap repo
-  repoDir = Path.concat ["..", owner', repo']
+  repoDir = Path.concat [ libDir, repo']
   inRepoDir :: ExecOptions -> ExecOptions
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
@@ -417,7 +417,7 @@ ensurePursTidyAdded owner repo = do
   where
   owner' = unwrap owner
   repo' = unwrap repo
-  repoDir = Path.concat ["..", owner', repo']
+  repoDir = Path.concat [ libDir, repo']
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
   ciFile = Path.concat [ repoDir, repoFiles.ciYmlFile ]
@@ -483,7 +483,7 @@ updateChangelog owner repo nextVersion = do
   where
   owner' = unwrap owner
   repo' = unwrap repo
-  repoDir = Path.concat ["..", owner', repo']
+  repoDir = Path.concat [ libDir, repo']
   clFilePath = Path.concat [ repoDir, repoFiles.changelogFile ]
   formatYYYYMMDD = format
     $ YearFull
