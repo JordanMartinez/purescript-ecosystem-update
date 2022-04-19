@@ -71,3 +71,6 @@ tidyOperatorsFile = ".tidyoperators"
 
 spagoDir :: String
 spagoDir = ".spago"
+
+libDir :: String
+libDir = Path.concat [ "..", "lib" ]

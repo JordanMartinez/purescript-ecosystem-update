@@ -88,8 +88,7 @@ parseCliArgs =
         [ Right <$> parseRegularPackage
         , ado
           { owner, repo, package } <- parseIrregularPackage
-          dir <- optional parseDir
-          in Left { owner, repo, package, directory: fromMaybe (unwrap package) dir }
+          in Left { owner, repo, package }
         ]
       <*> optional parseCloneToGhOrg
       <* ArgParse.flagHelp
@@ -102,17 +101,15 @@ parseCliArgs =
 
     parseIrregularPackage = ArgParse.argument [ "--repo" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
       # ArgParse.unformat "OWNER/REPO" case _ of
-        s | [ owner, repo ] <- String.split (Pattern "/") s -> Right
-              { owner: GitHubOwner owner
-              , repo: GitHubProject repo
-              , package: Package $ fromMaybe repo $ String.stripPrefix (Pattern "purescript-") repo
-              }
+        s | [ owner, repo ] <- String.split (Pattern "/") s ->
+              case String.stripPrefix (Pattern "purescript-") repo of
+                Nothing -> Left "Repo does not start with 'purescript-', so cannot identify package name."
+                Just pkg -> Right
+                  { owner: GitHubOwner owner
+                  , repo: GitHubProject repo
+                  , package: Package pkg
+                  }
           | otherwise -> Left $ "Splitting '" <> s <> "' by the first `/` did not produce `OWNER/REPO`."
-
-    parseDir = ArgParse.argument [ "--directory" ] "The directory into which to `git clone`. If not provided, the package name will be used."
-      # ArgParse.unformat "DIR" case _ of
-        "" -> Left $ "Directory was empty"
-        s -> Right s
 
   bowerCmd = ArgParse.command ["bower"] description do
     Bower
