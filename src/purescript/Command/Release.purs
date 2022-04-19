@@ -29,7 +29,7 @@ import Effect.Now (nowDateTime)
 import Node.ChildProcess (ExecOptions)
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
-import Node.FS.Aff (readTextFile, readdir, unlink, writeTextFile)
+import Node.FS.Aff (appendTextFile, readTextFile, readdir, unlink, writeTextFile)
 import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
@@ -294,6 +294,11 @@ ensurePursTidyAdded pkg = do
         ]
     genCmd <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
     throwIfSpawnErrored genCmd
+    nowHasTidyOpFile <- liftEffect $ exists tidyOpFile
+    when (not hadTidyOpFile && nowHasTidyOpFile) do
+      appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "!.tidyoperators\n"
+      void $ execAff' "git add .gitignore" inRepoDir
+      void $ execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
     gitDiff <- execAff' ("git diff --shortstat") inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
@@ -312,12 +317,16 @@ ensurePursTidyAdded pkg = do
       _, false -> FileHadNoChanges hadTidyOpFile
 
   tidyRcFileStatus <- do
-    log tidyRcFile
-    log pursTidyFiles.tidyRcWithOperatorsFile
     hadTidyRcFile <- liftEffect $ exists tidyRcFile
     flip copyFile tidyRcFile case tidyOpFileStatus of
       FileHadNoChanges false -> pursTidyFiles.tidyRcNoOperatorsFile
       _ -> pursTidyFiles.tidyRcWithOperatorsFile
+    nowHasTidyRcFile <- liftEffect $ exists tidyRcFile
+    when (not hadTidyRcFile && nowHasTidyRcFile) do
+      -- add file to gitignore
+      appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyrc.json\n"
+      void $ execAff' "git add .gitignore" inRepoDir
+      void $ execAff' "git commit -m \"Stop ignoring '.tidyrc.json'\"" inRepoDir
     gitDiff <- execAff' ("git diff --shortstat") inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
