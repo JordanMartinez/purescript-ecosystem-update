@@ -286,9 +286,11 @@ ensurePursTidyAdded pkg = do
                   Path.concat [ "bower_components", s, "src", "**", "*.purs" ]
             pure $ bowerDirs <> srcDir <> testDir
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.testDhallFile ]) do
+            throwIfExecErrored =<< execAff' ("spago -x " <> repoFiles.testDhallFile <> " install") inRepoDir
             map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> repoFiles.testDhallFile <> " sources") inRepoDir
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.spagoDhallFile ]) do
-            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> repoFiles.spagoDhallFile <> " sources") inRepoDir
+            throwIfExecErrored =<< execAff' "spago install" inRepoDir
+            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago sources") inRepoDir
         ]
     genCmd <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
     throwIfSpawnErrored genCmd
