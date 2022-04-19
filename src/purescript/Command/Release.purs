@@ -93,9 +93,10 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
   makeRelease info = do
     log $ "## Doing release changes for '" <> unwrap info.pkg <> "'"
     log $ "... resetting to clean state"
-    void $ execAff' "git reset --hard HEAD" inRepoDir
-    void $ execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
-    void $ execAff' ("git switch -c " <> releaseBranchName) inRepoDir
+    throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
+    throwIfExecErrored =<< execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
+    throwIfExecErrored =<< execAff' ("git branch -D " <> releaseBranchName) inRepoDir
+    throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
     log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
     pursTidyStatus <- ensurePursTidyAdded info.pkg
     log $ "... updating bower.json file (if any)"
@@ -123,7 +124,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
     withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
       if submitPr then do
         log $ "... submitting PR"
-        void $ execAff' ("git push -f -u upstream " <> releaseBranchName) inRepoDir
+        throwIfExecErrored =<< execAff' ("git push -f -u upstream " <> releaseBranchName) inRepoDir
         result <- withSpawnResult =<< spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
         log $ result.stdout
         log $ result.stderr
@@ -228,14 +229,13 @@ updateBowerToReleasedVersions pkg = do
   if fileExists then do
     original <- readTextFile UTF8 bowerFile
     result <- withSpawnResult =<< spawnAff "jq" ["--from-file", jqScripts.updateBowerDepsToReleaseVersion, "--", bowerFile ]
+    throwIfSpawnErrored result
     let new = result.stdout
     -- easiest way to check whether a change has occurred
     if (original /= new) then do
       writeTextFile UTF8 bowerFile new
-      gitAddResult <- execAff' ("git add " <> repoFiles.bowerJsonFile) inRepoDir
-      throwIfExecErrored gitAddResult
-      gitCommitResult <- execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
-      throwIfExecErrored gitCommitResult
+      throwIfExecErrored =<< execAff' ("git add " <> repoFiles.bowerJsonFile) inRepoDir
+      throwIfExecErrored =<< execAff' "git commit -m \"Update the bower dependencies\"" inRepoDir
       pure $ FileChanged unit
     else do
       pure $ FileHadNoChanges unit
@@ -273,8 +273,8 @@ ensurePursTidyAdded pkg = do
               <> "bower.json, spago.dhall, or test.dhall files not found for " <> repoDir
       getGlobs
         [ Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.bowerJsonFile ]) do
-            void $ execAff' "bower cache clean" inRepoDir
-            void $ execAff' "bower install" inRepoDir
+            throwIfExecErrored =<< execAff' "bower cache clean" inRepoDir
+            throwIfExecErrored =<< execAff' "bower install" inRepoDir
             let
               srcDir = [ Path.concat ["src", "**", "*.purs" ] ]
             testDir <- do
@@ -291,30 +291,31 @@ ensurePursTidyAdded pkg = do
             pure $ bowerDirs <> srcDir <> testDir
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.testDhallFile ]) do
             throwIfExecErrored =<< execAff' ("spago -x " <> repoFiles.testDhallFile <> " install") inRepoDir
-            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago -x " <> repoFiles.testDhallFile <> " sources") inRepoDir
+            spagoSourcesResult <- execAff' ("spago -x " <> repoFiles.testDhallFile <> " sources") inRepoDir
+            throwIfSpawnErrored spagoSourcesResult
+            pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
         , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.spagoDhallFile ]) do
             throwIfExecErrored =<< execAff' "spago install" inRepoDir
-            map (String.split (String.Pattern "\n") <<< _.stdout) $ execAff' ("spago sources") inRepoDir
+            spagoSourcesResult <- execAff' ("spago sources") inRepoDir
+            throwIfSpawnErrored spagoSourcesResult
+            pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
         ]
-    genCmd <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
-    throwIfSpawnErrored genCmd
+    throwIfSpawnErrored =<< withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
     nowHasTidyOpFile <- liftEffect $ exists tidyOpFile
     when (not hadTidyOpFile && nowHasTidyOpFile) do
       appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyoperators\n"
-      void $ execAff' "git add .gitignore" inRepoDir
-      void $ execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
+      throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
+      throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
     gitDiff <- execAff' ("git status --short " <> repoFiles.tidyOperatorsFile) inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
-      gitCiAddResult <- execAff' ("git add " <> repoFiles.tidyOperatorsFile) inRepoDir
-      throwIfExecErrored gitCiAddResult
+      throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyOperatorsFile) inRepoDir
       let
         msg
           | hadTidyOpFile = "Regenerated .tidyoperators file"
           | otherwise = "Added .tidyoperators file"
-      gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
-      throwIfExecErrored gitCiCommitResult
+      throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
     pure case hadTidyOpFile, contentChanged of
       true, true -> FileChanged FileRegenerated
       false, true -> FileChanged FileAdded
@@ -327,22 +328,19 @@ ensurePursTidyAdded pkg = do
       _ -> pursTidyFiles.tidyRcWithOperatorsFile
     nowHasTidyRcFile <- liftEffect $ exists tidyRcFile
     when (not hadTidyRcFile && nowHasTidyRcFile) do
-      -- add file to gitignore
       appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyrc.json\n"
-      void $ execAff' "git add .gitignore" inRepoDir
-      void $ execAff' "git commit -m \"Stop ignoring '.tidyrc.json'\"" inRepoDir
+      throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
+      throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyrc.json'\"" inRepoDir
     gitDiff <- execAff' ("git status --short " <> repoFiles.tidyRcJsonFile) inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
-      gitCiAddResult <- execAff' ("git add " <> repoFiles.tidyRcJsonFile) inRepoDir
-      throwIfExecErrored gitCiAddResult
+      throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyRcJsonFile) inRepoDir
       let
         msg
           | hadTidyRcFile = "Regenerated .tidyrc.json file"
           | otherwise = "Added .tidyrc.json file"
-      gitCiCommitResult <- execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
-      throwIfExecErrored gitCiCommitResult
+      throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
     pure case hadTidyRcFile, contentChanged of
       true, true -> FileChanged FileRegenerated
       false, true -> FileChanged FileAdded
@@ -350,20 +348,16 @@ ensurePursTidyAdded pkg = do
       false, false -> unsafeCrashWith $ "Impossible: `.tidyrc.json` file must now exist in " <> repoDir
 
   formattingStatus <- do
-    ptResult <- execAff' ("purs-tidy format-in-place src test") inRepoDir
-    throwIfExecErrored ptResult
+    throwIfExecErrored =<< execAff' ("purs-tidy format-in-place src test") inRepoDir
 
     gitDiff <- execAff' ("git diff --shortstat") inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
-      gitAddSrcResult <- execAff' ("git add src/") inRepoDir
-      throwIfExecErrored gitAddSrcResult
+      throwIfExecErrored =<< execAff' ("git add src/") inRepoDir
       whenM (liftEffect $ exists $ Path.concat [ repoDir, "test"]) do
-        gitAddTestResult <- execAff' ("git add test/") inRepoDir
-        throwIfExecErrored gitAddTestResult
-      gitCommitPtResult <- execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
-      throwIfExecErrored gitCommitPtResult
+        throwIfExecErrored =<< execAff' ("git add test/") inRepoDir
+      throwIfExecErrored =<< execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
     pure contentChanged
 
   ciFileStatus <- do
@@ -446,10 +440,8 @@ updateChangelog owner repo pkg nextVersion = do
         | original == newContent = pure $ FileHadNoChanges unit
         | otherwise = do
             writeTextFile UTF8 clFilePath newContent
-            gitAddResult <- execAff' ("git add " <> repoFiles.changelogFile) (_ { cwd = Just repoDir })
-            throwIfExecErrored gitAddResult
-            gitCommitResult <- execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
-            throwIfExecErrored gitCommitResult
+            throwIfExecErrored =<< execAff' ("git add " <> repoFiles.changelogFile) (_ { cwd = Just repoDir })
+            throwIfExecErrored =<< execAff' "git commit -m \"Update the changelog\"" (_ { cwd = Just repoDir })
             pure $ FileChanged
               $ Array.intercalate "\n"
               $ Array.reverse
