@@ -303,7 +303,7 @@ ensurePursTidyAdded pkg = do
       appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyoperators\n"
       void $ execAff' "git add .gitignore" inRepoDir
       void $ execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
-    gitDiff <- execAff' ("git diff --shortstat") inRepoDir
+    gitDiff <- execAff' ("git status --short " <> repoFiles.tidyOperatorsFile) inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
@@ -331,7 +331,7 @@ ensurePursTidyAdded pkg = do
       appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyrc.json\n"
       void $ execAff' "git add .gitignore" inRepoDir
       void $ execAff' "git commit -m \"Stop ignoring '.tidyrc.json'\"" inRepoDir
-    gitDiff <- execAff' ("git diff --shortstat") inRepoDir
+    gitDiff <- execAff' ("git status --short " <> repoFiles.tidyRcJsonFile) inRepoDir
     throwIfExecErrored gitDiff
     let contentChanged = String.trim gitDiff.stdout /= ""
     when contentChanged do
