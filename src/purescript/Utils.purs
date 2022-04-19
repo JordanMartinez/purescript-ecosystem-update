@@ -13,6 +13,7 @@ import Effect (Effect)
 import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
+import Effect.Exception (throw)
 import Effect.Ref (Ref)
 import Effect.Ref as Ref
 import Node.Buffer (Buffer)
@@ -169,6 +170,7 @@ throwIfExecErrored r = for_ r.error \e -> do
     log $ show e
     log $ "Stderr:"
     log $ r.stderr
+    throw $ show e
 
 throwIfSpawnErrored :: SpawnResult String -> Aff Unit
 throwIfSpawnErrored r = for_ r.error \e -> do
@@ -178,6 +180,7 @@ throwIfSpawnErrored r = for_ r.error \e -> do
     log $ show r.exit
     log $ "Stderr:"
     log $ r.stderr
+    throw $ show e
 
 foreign import onSpawn :: ChildProcess -> Effect Unit -> Effect Unit
 
