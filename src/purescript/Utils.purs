@@ -2,10 +2,10 @@ module Utils where
 
 import Prelude
 
-import Data.Either (Either(..))
+import Data.Either (Either(..), either)
 import Data.Foldable (for_)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), maybe')
 import Data.Nullable (Nullable)
 import Data.Posix.Signal (Signal(..))
 import Data.String as String
@@ -29,6 +29,7 @@ import Node.FS.Stats (Stats(..), StatsObj)
 import Node.Path (FilePath)
 import Node.Stream (Readable)
 import Node.Stream as Stream
+import Partial.Unsafe (unsafeCrashWith)
 
 foreign import mkdirImpl :: String -> { recursive :: Boolean } -> Effect Unit -> Effect Unit
 
@@ -217,3 +218,9 @@ foreign import fdStatImpl :: Fn2 FileDescriptor (JSCallback StatsObj) Unit
 
 copyFile :: FilePath -> FilePath -> Aff Unit
 copyFile from to = readFile from >>= writeFile to
+
+justOrCrash :: forall a. String -> Maybe a -> a
+justOrCrash msg = maybe' (\_ -> unsafeCrashWith msg) identity
+
+rightOrCrash :: forall l r. String -> Either l r -> r
+rightOrCrash msg = either (\_ -> unsafeCrashWith msg) identity

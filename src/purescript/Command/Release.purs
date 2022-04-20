@@ -11,6 +11,7 @@ import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
 import Data.Maybe (Maybe(..), isJust, maybe, maybe')
 import Data.Newtype (unwrap)
+import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Data.Version (Version)
 import Data.Version as Version
@@ -111,6 +112,8 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
       log $ "... updating bower.json file (if any)"
       bowerStatus <- updateBowerToReleasedVersions info.pkg
+      log $ "... updating CI's node version to 14 (if needed)"
+      nodeStatus <- updateNode info.pkg
       log $ "... updating changelog file (if any)"
       changelogStatus <- updateChangelog info.owner info.repo info.pkg info.version
       log $ "... preparing PR"
@@ -131,7 +134,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
           # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
           # String.replaceAll (String.Pattern "[") (String.Replacement "%5B")
           # String.replaceAll (String.Pattern "]") (String.Replacement "%5D")
-      withBodyPrFile bowerStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
+      withBodyPrFile bowerStatus nodeStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
         if submitPr then do
           log $ "... submitting PR"
           throwIfExecErrored =<< execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
@@ -150,9 +153,9 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
 
-    withBodyPrFile bowerStatus changelogStatus releaseBodyUri runAction = do
+    withBodyPrFile bowerStatus nodeStatus changelogStatus releaseBodyUri runAction = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
-      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerStatus changelogStatus releaseBodyUri
+      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerStatus nodeStatus changelogStatus releaseBodyUri
       runAction absPath
       unless keepPrBody $ unlink absPath
     ghPrCreateArgs bodyFilePath =
@@ -165,7 +168,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       , "--label"
       , "purs-0.15"
       ]
-    prBodyLines bowerStatus changelogStatus releaseBodyUri =
+    prBodyLines bowerStatus nodeStatus changelogStatus releaseBodyUri =
       [ "**Description of the change**"
       , ""
       , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
@@ -174,6 +177,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       , ""
       ]
       <> bowerPart
+      <> nodePart
       <> changelogPart
       <>
         [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
@@ -184,6 +188,10 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
         FileDoesNotExist _ -> [ "- [x] Bower dependencies: `bower.json` file does not exist." ]
         FileHadNoChanges _ -> [ "- [x] Bower dependencies: no changes needed." ]
         FileChanged _ -> [ "- [x] Updated bower dependencies to 0.15.0-compatible versions" ]
+      nodePart = case nodeStatus of
+        FileDoesNotExist x -> absurd x
+        FileHadNoChanges _ -> [ "- [x] ci.yml: Node already set to 14." ]
+        FileChanged _ -> [ "- [x] ci.yml: Node updated to 14." ]
       changelogPart = case changelogStatus of
         FileDoesNotExist _ -> [ "- [x] Changelog: `CHANGELOG.md` file does not exist. This should be investigated further." ]
         FileHadNoChanges _ -> [ "- [x] Changelog: file had no changes. This should be investigated further if not `aff-promise`." ]
@@ -238,6 +246,30 @@ updateBowerToReleasedVersions pkg = do
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
 
+updateNode :: Package -> Aff (FileStatus Void Unit Unit)
+updateNode pkg = do
+  fileExists <- liftEffect $ exists ciFile
+  unless fileExists do
+    liftEffect $ throw $ ciFile <> " does not exist."
+  original <- readTextFile UTF8 ciFile
+  let
+    new =
+      original
+        # String.replace (Pattern "uses: actions/setup-node@v1") (Replacement "uses: actions/setup-node@v2")
+        # String.replace (Pattern "node-version: \"12\"") (Replacement "node-version: \"14.x\"")
+  if original == new then do
+    pure $ FileHadNoChanges unit
+  else do
+    writeTextFile UTF8 ciFile new
+    throwIfExecErrored =<< execAff' ("git add " <> repoFiles.ciYmlFile) inRepoDir
+    throwIfExecErrored =<< execAff' "git commit -m \"Update Node to 14 in CI\"" inRepoDir
+    pure $ FileChanged unit
+  where
+  pkg' = unwrap pkg
+  repoDir = Path.concat [ libDir, pkg']
+  ciFile = Path.concat [ repoDir, repoFiles.ciYmlFile ]
+  inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
+  inRepoDir r = r { cwd = Just repoDir }
 
 updateChangelog :: GitHubOwner -> GitHubProject -> Package -> Version -> Aff (FileStatus Unit Unit String)
 updateChangelog owner repo pkg nextVersion = do
