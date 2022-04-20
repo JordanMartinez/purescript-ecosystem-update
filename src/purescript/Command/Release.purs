@@ -3,7 +3,7 @@ module Command.Release where
 import Prelude
 
 import Constants (jqScripts, libDir, pursTidyFiles, repoFiles)
-import Data.Array (fold)
+import Data.Array (elem, fold)
 import Data.Array as Array
 import Data.Either (either)
 import Data.Foldable (foldl, for_)
@@ -92,45 +92,58 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
   releaseBranchName = maybe "next-release" unwrap branchName
   makeRelease info = do
     log $ "## Doing release changes for '" <> unwrap info.pkg <> "'"
-    log $ "... resetting to clean state"
-    throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
-    throwIfExecErrored =<< execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
-    void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
-    throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
-    log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
-    pursTidyStatus <- ensurePursTidyAdded info.pkg
-    log $ "... updating bower.json file (if any)"
-    bowerStatus <- updateBowerToReleasedVersions info.pkg
-    log $ "... updating changelog file (if any)"
-    changelogStatus <- updateChangelog info.owner info.repo info.pkg info.version
-    log $ "... preparing PR"
-    releaseBodyUri <- do
-      let
-        content = case changelogStatus of
-          FileChanged x -> x
-          _ -> "First release compatible with PureScript 0.15.0"
-      cp <- spawnAff "jq" ["--slurp", "--raw-input", "--raw-output", "@uri" ]
-      liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
-      liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
-      jqResult <- withSpawnResult cp
-      throwIfSpawnErrored jqResult
-      when (jqResult.exit /= Exited 0) do
-        liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
-      pure $ jqResult.stdout
-        # String.replaceAll (String.Pattern "(") (String.Replacement "%28")
-        # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
-        # String.replaceAll (String.Pattern "[") (String.Replacement "%5B")
-        # String.replaceAll (String.Pattern "]") (String.Replacement "%5D")
-    withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
-      if submitPr then do
-        log $ "... submitting PR"
-        throwIfExecErrored =<< execAff' ("git push -f -u upstream " <> releaseBranchName) inRepoDir
-        result <- withSpawnResult =<< spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
-        log $ result.stdout
-        log $ result.stderr
-      else do
-        log "... not submitting PR. Rerun with the `--submit-pr` flag."
-    log $ ""
+    -- only prepare and submit PR if branch name doesn't already exist on remote
+    -- as we may have already submitted a PR but not gotten it merged yet.
+    branchResult <- execAff' "git branch -r" inRepoDir
+    throwIfExecErrored branchResult
+    let
+      prAlreadySubmitted =
+        branchResult.stdout
+          # String.split (String.Pattern "\n")
+          # map String.trim
+          # elem ("origin/" <> releaseBranchName)
+    if prAlreadySubmitted then do
+      log "... PR already submitted. Skipping."
+    else do
+      log $ "... resetting to clean state"
+      throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
+      throwIfExecErrored =<< execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
+      void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
+      throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
+      log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
+      pursTidyStatus <- ensurePursTidyAdded info.pkg
+      log $ "... updating bower.json file (if any)"
+      bowerStatus <- updateBowerToReleasedVersions info.pkg
+      log $ "... updating changelog file (if any)"
+      changelogStatus <- updateChangelog info.owner info.repo info.pkg info.version
+      log $ "... preparing PR"
+      releaseBodyUri <- do
+        let
+          content = case changelogStatus of
+            FileChanged x -> x
+            _ -> "First release compatible with PureScript 0.15.0"
+        cp <- spawnAff "jq" ["--slurp", "--raw-input", "--raw-output", "@uri" ]
+        liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
+        liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
+        jqResult <- withSpawnResult cp
+        throwIfSpawnErrored jqResult
+        when (jqResult.exit /= Exited 0) do
+          liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
+        pure $ jqResult.stdout
+          # String.replaceAll (String.Pattern "(") (String.Replacement "%28")
+          # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
+          # String.replaceAll (String.Pattern "[") (String.Replacement "%5B")
+          # String.replaceAll (String.Pattern "]") (String.Replacement "%5D")
+      withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
+        if submitPr then do
+          log $ "... submitting PR"
+          throwIfExecErrored =<< execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
+          result <- withSpawnResult =<< spawnAff' "gh" (ghPrCreateArgs bodyPrFilePath) inRepoDir
+          log $ result.stdout
+          log $ result.stderr
+        else do
+          log "... not submitting PR. Rerun with the `--submit-pr` flag."
+      log $ ""
     where
     owner' = unwrap info.owner
     repo' = unwrap info.repo
