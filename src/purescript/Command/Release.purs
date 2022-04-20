@@ -78,8 +78,9 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
     jqScriptUpdateBowerWithReleaseVersion
 
   let
-    -- pkgsInNextBatch = HM.filter (\r -> r.pkg == Package "prelude") unfinishedPkgsGraph
+    -- pkgsInNextBatch = HM.filter (\r -> Array.elem (unwrap r.pkg) ["now", "web-touchevents"]) unfinishedPkgsGraph
     pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
+    -- pkgsInNextBatch = unfinishedPkgsGraph
 
   for_ pkgsInNextBatch makeRelease
   where
