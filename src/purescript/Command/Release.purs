@@ -193,7 +193,8 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
         FileChanged _ -> [ "- [x] Updated bower dependencies to 0.15.0-compatible versions" ]
       tidyOpPart = case pursTidyStatus.tidyOpFileStatus of
         FileDoesNotExist x -> absurd x
-        FileHadNoChanges _ -> [ "- [x] .tidyoperators: No change needed" ]
+        FileHadNoChanges false -> [ "- [x] .tidyoperators: file not needed" ]
+        FileHadNoChanges true -> [ "- [x] .tidyoperators: No change needed" ]
         FileChanged FileRegenerated -> [ "- [x] .tidyoperators: File regenerated." ]
         FileChanged FileAdded -> [ "- [x] .tidyoperators: File added" ]
       tidyRcPart = case pursTidyStatus.tidyRcFileStatus of
@@ -274,7 +275,6 @@ ensurePursTidyAdded pkg = do
   unless fileExists do
     liftEffect $ throw $ repoFiles.ciYmlFile <> " did not exist for repo: " <> repoDir
   tidyOpFileStatus <- do
-    hadTidyOpFile <- liftEffect $ exists tidyOpFile
     dirGlobs <- do
       let
         getGlobs arr = case Array.uncons arr of
@@ -313,35 +313,44 @@ ensurePursTidyAdded pkg = do
             throwIfExecErrored spagoSourcesResult
             pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
         ]
-    throwIfSpawnErrored =<< withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
-    nowHasTidyOpFile <- liftEffect $ exists tidyOpFile
-    when (not hadTidyOpFile && nowHasTidyOpFile) do
-      appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyoperators\n"
-      throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
-      throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
-    gitDiff <- execAff' ("git status --short " <> repoFiles.tidyOperatorsFile) inRepoDir
-    throwIfExecErrored gitDiff
-    let contentChanged = String.trim gitDiff.stdout /= ""
-    when contentChanged do
-      throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyOperatorsFile) inRepoDir
-      let
-        msg
-          | hadTidyOpFile = "Regenerated .tidyoperators file"
-          | otherwise = "Added .tidyoperators file"
-      throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
-    pure case hadTidyOpFile, contentChanged of
-      true, true -> FileChanged FileRegenerated
-      false, true -> FileChanged FileAdded
-      _, false -> FileHadNoChanges hadTidyOpFile
+    genResult <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
+    throwIfSpawnErrored genResult
+    if genResult.stdout == "" then do
+      pure $ FileHadNoChanges false
+    else do
+      writeTextFile UTF8 tidyOpFile genResult.stdout
+      isTrackedResult <- execAff' "git ls-files" inRepoDir
+      throwIfExecErrored isTrackedResult
+      let isTracked = elem repoFiles.tidyRcJsonFile $ map String.trim $ String.split (String.Pattern "\n") isTrackedResult.stdout
+      unless isTracked do
+        appendTextFile UTF8 (Path.concat [ repoDir, repoFiles.gitIgnoreFile ]) "\n!.tidyoperators\n"
+        throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
+        throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
+      gitDiff <- execAff' ("git status --short " <> repoFiles.tidyOperatorsFile) inRepoDir
+      throwIfExecErrored gitDiff
+      let contentChanged = String.trim gitDiff.stdout /= ""
+      if not contentChanged then do
+        pure $ FileHadNoChanges true
+      else do
+        throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyOperatorsFile) inRepoDir
+        let
+          msg
+            | isTracked = "Regenerated .tidyoperators file"
+            | otherwise = "Added .tidyoperators file"
+        throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
+        pure case isTracked of
+          true -> FileChanged FileRegenerated
+          false -> FileChanged FileAdded
 
   tidyRcFileStatus <- do
-    hadTidyRcFile <- liftEffect $ exists tidyRcFile
     flip copyFile tidyRcFile case tidyOpFileStatus of
       FileHadNoChanges false -> pursTidyFiles.tidyRcNoOperatorsFile
       _ -> pursTidyFiles.tidyRcWithOperatorsFile
-    nowHasTidyRcFile <- liftEffect $ exists tidyRcFile
-    when (not hadTidyRcFile && nowHasTidyRcFile) do
-      appendTextFile UTF8 (Path.concat [ libDir, repoFiles.gitIgnoreFile ]) "\n!.tidyrc.json\n"
+    isTrackedResult <- execAff' "git ls-files" inRepoDir
+    throwIfExecErrored isTrackedResult
+    let isTracked = elem repoFiles.tidyRcJsonFile $ String.split (String.Pattern "\n") isTrackedResult.stdout
+    unless isTracked do
+      appendTextFile UTF8 (Path.concat [ repoDir, repoFiles.gitIgnoreFile ]) "\n!.tidyrc.json\n"
       throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
       throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyrc.json'\"" inRepoDir
     gitDiff <- execAff' ("git status --short " <> repoFiles.tidyRcJsonFile) inRepoDir
@@ -351,10 +360,10 @@ ensurePursTidyAdded pkg = do
       throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyRcJsonFile) inRepoDir
       let
         msg
-          | hadTidyRcFile = "Regenerated .tidyrc.json file"
+          | isTracked = "Regenerated .tidyrc.json file"
           | otherwise = "Added .tidyrc.json file"
       throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
-    pure case hadTidyRcFile, contentChanged of
+    pure case isTracked, contentChanged of
       true, true -> FileChanged FileRegenerated
       false, true -> FileChanged FileAdded
       true, false -> FileHadNoChanges unit
