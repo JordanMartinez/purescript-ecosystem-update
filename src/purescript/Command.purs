@@ -34,6 +34,6 @@ data Command
   -- | Create a PR
   | MakePr { package :: Package }
   | ReleaseOrder
-  | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName }
+  | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
   -- | Show examples
   | ShowExamples

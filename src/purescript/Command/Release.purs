@@ -3,7 +3,7 @@ module Command.Release where
 import Prelude
 
 import Constants (jqScripts, libDir, repoFiles)
-import Data.Array (elem, fold)
+import Data.Array (elem, find, fold)
 import Data.Array as Array
 import Data.Foldable (foldl, for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
@@ -32,8 +32,8 @@ import Partial.Unsafe (unsafeCrashWith)
 import Types (BranchName, GitHubOwner, GitHubProject, Package)
 import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
-createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName } -> Aff Unit
-createPrForNextReleaseBatch { submitPr, branchName } = do
+createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean } -> Aff Unit
+createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrBody } = do
   { fullGraph, unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
 
   let
@@ -102,7 +102,11 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       log $ "... resetting to clean state"
       throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
       throwIfExecErrored =<< execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
-      void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
+      when deleteBranchIfExist do
+        localBranchResult <- execAff' "git branch" inRepoDir
+        throwIfExecErrored localBranchResult
+        when (isJust $ find ((==) releaseBranchName <<< String.drop 2) $ String.split (String.Pattern "\n") localBranchResult.stdout) do
+          void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
       throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
       log $ "... updating bower.json file (if any)"
       bowerStatus <- updateBowerToReleasedVersions info.pkg
@@ -149,7 +153,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
       writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerStatus changelogStatus releaseBodyUri
       runAction absPath
-      unlink absPath
+      unless keepPrBody $ unlink absPath
     ghPrCreateArgs bodyFilePath =
       [ "pr"
       , "create"

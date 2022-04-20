@@ -188,6 +188,8 @@ parseCliArgs =
     MakeNextReleaseBatch <$> fromRecord
         { submitPr: parseSubmitPr
         , branchName: parseBranchName
+        , deleteBranchIfExist: parseReplace
+        , keepPrBody: parseKeepPrBody
         }
       <* ArgParse.flagHelp
     where
@@ -199,6 +201,14 @@ parseCliArgs =
     parseBranchName = ArgParse.optional $ map BranchName $ ArgParse.argument [ "--branch-name" ] flagDesc
       where
       flagDesc = "The name of the branch in which to do the release changes."
+    parseReplace = ArgParse.flag [ "--replace" ] flagDesc
+      # ArgParse.boolean
+      where
+      flagDesc = "If the branch name already exists locally, this will delete it and reapply all the script's actions. Useful for testing the script."
+    parseKeepPrBody = ArgParse.flag [ "--keep-pr-body" ] flagDesc
+      # ArgParse.boolean
+      where
+      flagDesc = "If set, does not delete the `pr-body.txt` file used as the content for the PR's body."
 
   releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
     ReleaseOrder <$ ArgParse.flagHelp
