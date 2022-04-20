@@ -8,6 +8,7 @@ import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Data.Maybe (Maybe(..), maybe')
 import Data.Nullable (Nullable)
 import Data.Posix.Signal (Signal(..))
+import Data.String (Pattern(..))
 import Data.String as String
 import Effect (Effect)
 import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
@@ -224,3 +225,6 @@ justOrCrash msg = maybe' (\_ -> unsafeCrashWith msg) identity
 
 rightOrCrash :: forall l r. String -> Either l r -> r
 rightOrCrash msg = either (\_ -> unsafeCrashWith msg) identity
+
+splitLines :: String -> Array String
+splitLines = String.split (Pattern "\n")

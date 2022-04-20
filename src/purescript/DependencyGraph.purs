@@ -39,7 +39,7 @@ import Record as Record
 import Safe.Coerce (coerce)
 import Type.Proxy (Proxy(..))
 import Types (BranchName, GitCloneUrl, GitHubOwner, GitHubProject, Package(..))
-import Utils (mkdir)
+import Utils (mkdir, splitLines)
 
 type NextReleaseInfo =
   { pkg :: Package
@@ -129,7 +129,7 @@ generateAllReleaseInfo' nextReleaseInfoJsonFile releasedPkgs extractVersion = do
   let
     depsToRemove :: Array Package
     depsToRemove = releasedPkgsContent
-      # String.split (String.Pattern "\n")
+      # splitLines
       # map String.trim
       # Array.filter ((/=) "")
       # (coerce :: Array String -> Array Package)

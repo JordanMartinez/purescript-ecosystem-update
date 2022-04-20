@@ -31,7 +31,7 @@ import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (BranchName, GitHubOwner, GitHubProject, Package)
-import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrBody } = do
@@ -95,7 +95,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
     let
       prAlreadySubmitted =
         branchResult.stdout
-          # String.split (String.Pattern "\n")
+          # splitLines
           # map String.trim
           # elem ("origin/" <> releaseBranchName)
     if prAlreadySubmitted then do
@@ -107,7 +107,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       when deleteBranchIfExist do
         localBranchResult <- execAff' "git branch" inRepoDir
         throwIfExecErrored localBranchResult
-        when (isJust $ find ((==) releaseBranchName <<< String.drop 2) $ String.split (String.Pattern "\n") localBranchResult.stdout) do
+        when (isJust $ find ((==) releaseBranchName <<< String.drop 2) $ splitLines localBranchResult.stdout) do
           void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
       throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
       log $ "... updating bower.json file (if any)"
@@ -130,10 +130,10 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
         when (jqResult.exit /= Exited 0) do
           liftEffect $ throw $ "jq exited with error: " <> show jqResult.exit
         pure $ jqResult.stdout
-          # String.replaceAll (String.Pattern "(") (String.Replacement "%28")
-          # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
-          # String.replaceAll (String.Pattern "[") (String.Replacement "%5B")
-          # String.replaceAll (String.Pattern "]") (String.Replacement "%5D")
+          # String.replaceAll (Pattern "(") (Replacement "%28")
+          # String.replaceAll (Pattern ")") (Replacement "%29")
+          # String.replaceAll (Pattern "[") (Replacement "%5B")
+          # String.replaceAll (Pattern "]") (Replacement "%5D")
       withBodyPrFile bowerStatus nodeStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
         if submitPr then do
           log $ "... submitting PR"
@@ -292,8 +292,8 @@ updateChangelog owner repo pkg nextVersion = do
               $ Array.dropWhile (\s -> String.trim s == "")
               $ releaseContents
 
-      isVersionHeader = isJust <<< String.stripPrefix (String.Pattern "##")
-      lines = String.split (String.Pattern "\n") original
+      isVersionHeader = isJust <<< String.stripPrefix (Pattern "##")
+      lines = splitLines original
       { before: prefaceAndUnreleasedHdr, after: changeLogContent } =
         maybe' (\_ -> unsafeCrashWith $ "Could not find unreleased header for " <> repoDir) identity do
           unreleasedHeaderIdx <- Array.findIndex isVersionHeader lines
