@@ -2,22 +2,16 @@ module Command.Release where
 
 import Prelude
 
-import Constants (jqScripts, libDir, pursTidyFiles, repoFiles)
+import Constants (jqScripts, libDir, repoFiles)
 import Data.Array (elem, fold)
 import Data.Array as Array
-import Data.Either (either)
 import Data.Foldable (foldl, for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
 import Data.Maybe (Maybe(..), isJust, maybe, maybe')
-import Data.Monoid (power)
 import Data.Newtype (unwrap)
-import Data.String (codePointFromChar)
 import Data.String as String
-import Data.String.Regex (regex, test)
-import Data.String.Regex.Flags (multiline)
-import Data.Tuple (Tuple(..))
 import Data.Version (Version)
 import Data.Version as Version
 import DependencyGraph (generateAllReleaseInfo, useNextMajorVersion)
@@ -29,14 +23,14 @@ import Effect.Now (nowDateTime)
 import Node.ChildProcess (ExecOptions)
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
-import Node.FS.Aff (appendTextFile, readTextFile, readdir, unlink, writeTextFile)
+import Node.FS.Aff (readTextFile, unlink, writeTextFile)
 import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
 import Types (BranchName, GitHubOwner, GitHubProject, Package)
-import Utils (SpawnExit(..), copyFile, execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName } -> Aff Unit
 createPrForNextReleaseBatch { submitPr, branchName } = do
@@ -110,8 +104,6 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       throwIfExecErrored =<< execAff' ("git checkout upstream/" <> unwrap info.defaultBranch) inRepoDir
       void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
       throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
-      log $ "... updating `ci.yml` file to include `purs-tidy` (if needed)"
-      pursTidyStatus <- ensurePursTidyAdded info.pkg
       log $ "... updating bower.json file (if any)"
       bowerStatus <- updateBowerToReleasedVersions info.pkg
       log $ "... updating changelog file (if any)"
@@ -134,7 +126,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
           # String.replaceAll (String.Pattern ")") (String.Replacement "%29")
           # String.replaceAll (String.Pattern "[") (String.Replacement "%5B")
           # String.replaceAll (String.Pattern "]") (String.Replacement "%5D")
-      withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
+      withBodyPrFile bowerStatus changelogStatus releaseBodyUri \bodyPrFilePath -> do
         if submitPr then do
           log $ "... submitting PR"
           throwIfExecErrored =<< execAff' ("git push -f -u origin " <> releaseBranchName) inRepoDir
@@ -153,9 +145,9 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
 
-    withBodyPrFile bowerStatus pursTidyStatus changelogStatus releaseBodyUri runAction = do
+    withBodyPrFile bowerStatus changelogStatus releaseBodyUri runAction = do
       absPath <- liftEffect $ Path.resolve [] $ Path.concat [ repoDir, "pr-body.txt" ]
-      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerStatus pursTidyStatus changelogStatus releaseBodyUri
+      writeTextFile UTF8 absPath $ Array.intercalate "\n" $ prBodyLines bowerStatus changelogStatus releaseBodyUri
       runAction absPath
       unlink absPath
     ghPrCreateArgs bodyFilePath =
@@ -168,7 +160,7 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       , "--label"
       , "purs-0.15"
       ]
-    prBodyLines bowerStatus pursTidyStatus changelogStatus releaseBodyUri =
+    prBodyLines bowerStatus changelogStatus releaseBodyUri =
       [ "**Description of the change**"
       , ""
       , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
@@ -176,10 +168,6 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
       , ":robot: This is an automated pull request to prepare the next release of this library. PR was created via the [Release.purs](https://github.com/JordanMartinez/purescript-ecosystem-update/blob/master/src/purescript/Command/Release.purs) file. Some of the following steps are already done; others should be performed by a human once the pull request is merged:"
       , ""
       ]
-      <> tidyOpPart
-      <> tidyRcPart
-      <> formattingPart
-      <> pursTidyCiPart
       <> bowerPart
       <> changelogPart
       <>
@@ -191,23 +179,6 @@ createPrForNextReleaseBatch { submitPr, branchName } = do
         FileDoesNotExist _ -> [ "- [x] Bower dependencies: `bower.json` file does not exist." ]
         FileHadNoChanges _ -> [ "- [x] Bower dependencies: no changes needed." ]
         FileChanged _ -> [ "- [x] Updated bower dependencies to 0.15.0-compatible versions" ]
-      tidyOpPart = case pursTidyStatus.tidyOpFileStatus of
-        FileDoesNotExist x -> absurd x
-        FileHadNoChanges false -> [ "- [x] .tidyoperators: file not needed" ]
-        FileHadNoChanges true -> [ "- [x] .tidyoperators: No change needed" ]
-        FileChanged FileRegenerated -> [ "- [x] .tidyoperators: File regenerated." ]
-        FileChanged FileAdded -> [ "- [x] .tidyoperators: File added" ]
-      tidyRcPart = case pursTidyStatus.tidyRcFileStatus of
-        FileDoesNotExist x -> absurd x
-        FileHadNoChanges _ -> [ "- [x] .tidyrc.json: No change needed" ]
-        FileChanged FileRegenerated -> [ "- [x] .tidyrc.json: File regenerated." ]
-        FileChanged FileAdded -> [ "- [x] .tidyrc.json: File added" ]
-      formattingPart = case pursTidyStatus.formattingStatus of
-        true -> [ "- [x] `purs-tidy`: formatted files." ]
-        false -> [ "- [x] `purs-tidy`: formatting files did not cause a change." ]
-      pursTidyCiPart = case pursTidyStatus.ciFileStatus of
-        true -> [ "- [x] `purs-tidy`: check formatting step added to CI." ]
-        false -> [ "- [x] `purs-tidy`: CI already checks formatting" ]
       changelogPart = case changelogStatus of
         FileDoesNotExist _ -> [ "- [x] Changelog: `CHANGELOG.md` file does not exist. This should be investigated further." ]
         FileHadNoChanges _ -> [ "- [x] Changelog: file had no changes. This should be investigated further if not `aff-promise`." ]
@@ -262,194 +233,6 @@ updateBowerToReleasedVersions pkg = do
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
 
-ensurePursTidyAdded
-  :: Package
-  -> Aff
-    { ciFileStatus :: Boolean
-    , formattingStatus :: Boolean
-    , tidyOpFileStatus :: FileStatus Void Boolean ChangeReason
-    , tidyRcFileStatus :: FileStatus Void Unit ChangeReason
-    }
-ensurePursTidyAdded pkg = do
-  fileExists <- liftEffect $ exists ciFile
-  unless fileExists do
-    liftEffect $ throw $ repoFiles.ciYmlFile <> " did not exist for repo: " <> repoDir
-  tidyOpFileStatus <- do
-    dirGlobs <- do
-      let
-        getGlobs arr = case Array.uncons arr of
-          Just { head: Tuple checkFile getDirGlobs, tail } -> do
-            ifM checkFile getDirGlobs (getGlobs tail)
-          Nothing -> do
-            liftEffect $ throw
-              $ "Could not determine source globs for `purs-tidy generate-operators`.\n"
-              <> "bower.json, spago.dhall, or test.dhall files not found for " <> repoDir
-      getGlobs
-        [ Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.bowerJsonFile ]) do
-            throwIfExecErrored =<< execAff' "bower cache clean" inRepoDir
-            throwIfExecErrored =<< execAff' "bower install" inRepoDir
-            let
-              srcDir = [ Path.concat ["src", "**", "*.purs" ] ]
-            testDir <- do
-              hasTestDir <- liftEffect $ exists $ Path.concat [ repoDir, "test" ]
-              pure $ if not hasTestDir then [] else [ Path.concat ["test", "**", "*.purs" ] ]
-            bowerDirs <- do
-              hasBowerDir <- liftEffect $ exists $ Path.concat [ repoDir, "bower_components"]
-              if not hasBowerDir then do
-                pure []
-              else do
-                bowerDirs <- readdir $ Path.concat [ repoDir, "bower_components"]
-                pure $ bowerDirs <#> \s ->
-                  Path.concat [ "bower_components", s, "src", "**", "*.purs" ]
-            pure $ bowerDirs <> srcDir <> testDir
-        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.testDhallFile ]) do
-            throwIfExecErrored =<< execAff' ("spago -x " <> repoFiles.testDhallFile <> " install") inRepoDir
-            spagoSourcesResult <- execAff' ("spago -x " <> repoFiles.testDhallFile <> " sources") inRepoDir
-            throwIfExecErrored spagoSourcesResult
-            pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
-        , Tuple (liftEffect $ exists $ Path.concat [ repoDir, repoFiles.spagoDhallFile ]) do
-            throwIfExecErrored =<< execAff' "spago install" inRepoDir
-            spagoSourcesResult <- execAff' ("spago sources") inRepoDir
-            throwIfExecErrored spagoSourcesResult
-            pure $ String.split (String.Pattern "\n") spagoSourcesResult.stdout
-        ]
-    genResult <- withSpawnResult =<< spawnAff' "purs-tidy" (Array.cons "generate-operators" dirGlobs) inRepoDir
-    throwIfSpawnErrored genResult
-    if genResult.stdout == "" then do
-      pure $ FileHadNoChanges false
-    else do
-      writeTextFile UTF8 tidyOpFile genResult.stdout
-      isTrackedResult <- execAff' "git ls-files" inRepoDir
-      throwIfExecErrored isTrackedResult
-      let isTracked = elem repoFiles.tidyRcJsonFile $ map String.trim $ String.split (String.Pattern "\n") isTrackedResult.stdout
-      unless isTracked do
-        appendTextFile UTF8 (Path.concat [ repoDir, repoFiles.gitIgnoreFile ]) "\n!.tidyoperators\n"
-        throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
-        throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyoperators'\"" inRepoDir
-      gitDiff <- execAff' ("git status --short " <> repoFiles.tidyOperatorsFile) inRepoDir
-      throwIfExecErrored gitDiff
-      let contentChanged = String.trim gitDiff.stdout /= ""
-      if not contentChanged then do
-        pure $ FileHadNoChanges true
-      else do
-        throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyOperatorsFile) inRepoDir
-        let
-          msg
-            | isTracked = "Regenerated .tidyoperators file"
-            | otherwise = "Added .tidyoperators file"
-        throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
-        pure case isTracked of
-          true -> FileChanged FileRegenerated
-          false -> FileChanged FileAdded
-
-  tidyRcFileStatus <- do
-    flip copyFile tidyRcFile case tidyOpFileStatus of
-      FileHadNoChanges false -> pursTidyFiles.tidyRcNoOperatorsFile
-      _ -> pursTidyFiles.tidyRcWithOperatorsFile
-    isTrackedResult <- execAff' "git ls-files" inRepoDir
-    throwIfExecErrored isTrackedResult
-    let isTracked = elem repoFiles.tidyRcJsonFile $ String.split (String.Pattern "\n") isTrackedResult.stdout
-    unless isTracked do
-      appendTextFile UTF8 (Path.concat [ repoDir, repoFiles.gitIgnoreFile ]) "\n!.tidyrc.json\n"
-      throwIfExecErrored =<< execAff' "git add .gitignore" inRepoDir
-      throwIfExecErrored =<< execAff' "git commit -m \"Stop ignoring '.tidyrc.json'\"" inRepoDir
-    gitDiff <- execAff' ("git status --short " <> repoFiles.tidyRcJsonFile) inRepoDir
-    throwIfExecErrored gitDiff
-    let contentChanged = String.trim gitDiff.stdout /= ""
-    when contentChanged do
-      throwIfExecErrored =<< execAff' ("git add " <> repoFiles.tidyRcJsonFile) inRepoDir
-      let
-        msg
-          | isTracked = "Regenerated .tidyrc.json file"
-          | otherwise = "Added .tidyrc.json file"
-      throwIfExecErrored =<< execAff' ("git commit -m \"" <> msg <> "\"") inRepoDir
-    pure case isTracked, contentChanged of
-      true, true -> FileChanged FileRegenerated
-      false, true -> FileChanged FileAdded
-      true, false -> FileHadNoChanges unit
-      false, false -> unsafeCrashWith $ "Impossible: `.tidyrc.json` file must now exist in " <> repoDir
-
-  formattingStatus <- do
-    throwIfExecErrored =<< execAff' ("purs-tidy format-in-place src test") inRepoDir
-
-    gitDiff <- execAff' ("git diff --shortstat") inRepoDir
-    throwIfExecErrored gitDiff
-    let contentChanged = String.trim gitDiff.stdout /= ""
-    when contentChanged do
-      throwIfExecErrored =<< execAff' ("git add src/") inRepoDir
-      whenM (liftEffect $ exists $ Path.concat [ repoDir, "test"]) do
-        throwIfExecErrored =<< execAff' ("git add test/") inRepoDir
-      throwIfExecErrored =<< execAff' "git commit -m \"Formatted code via purs-tidy\"" inRepoDir
-    pure contentChanged
-
-  ciFileStatus <- do
-    original <- readTextFile UTF8 ciFile
-    let
-      -- the colon below is what separates the configuration of purs-tidy
-      -- from its usage
-      pursTidyConfigLine = either (\_ -> unsafeCrashWith "invalid regex") identity
-        $ regex "^( +)purs-tidy: \"[^\"]+\"( +)?$" multiline
-      -- the colon below is what separates the configuration of purs-tidy
-      -- from its usage
-      pursTidyUsageLine = either (\_ -> unsafeCrashWith "invalid regex") identity
-        $ regex "purs-tidy check" multiline
-    if test pursTidyConfigLine original && test pursTidyUsageLine original then do
-      pure false
-    else do
-      let
-        justOrCrash :: forall a. String -> Maybe a -> a
-        justOrCrash msg = maybe' (\_ -> unsafeCrashWith msg) identity
-        rightOrCrash msg = either (\_ -> unsafeCrashWith msg) identity
-        lines = String.split (String.Pattern "\n") original
-        setupPsLineRegex = rightOrCrash "invalid regex for setupPsLine"
-          $ regex "^( +)(- )?uses: purescript-contrib/setup-purescript" multiline
-        withLineRegex = rightOrCrash "invalid regex for withLine"
-          $ regex "^( +)with:" multiline
-
-        new :: String
-        new = justOrCrash "" do
-          setupPsIdx <- Array.findIndex (test setupPsLineRegex) lines
-          let { after: postSetup } = Array.splitAt setupPsIdx lines
-          withIdx <- Array.findIndex (test withLineRegex) postSetup
-          let { after: postWith } = Array.splitAt withIdx postSetup
-          firstBlankLineIdx <- Array.findIndex (\s -> String.trim s == "") postWith
-          let { before, after } = Array.splitAt (setupPsIdx + withIdx + firstBlankLineIdx) lines
-          withLine <- Array.index postSetup withIdx
-          let
-            numOfSpaces = String.length $ String.takeWhile (\cp -> cp == codePointFromChar ' ') withLine
-            firstEntryIndent = power " " (numOfSpaces - 2)
-            entryIndent = firstEntryIndent <> "  "
-            optionIndent = entryIndent <> "  "
-          pure $ Array.intercalate "\n"
-            $ before
-            <> Array.singleton (optionIndent <> "purs-tidy: \"latest\"")
-            <> (Array.reverse $ Array.dropWhile (\s -> String.trim s == "") $ Array.reverse after)
-            <>
-              [""
-              , firstEntryIndent <> "- name: Check formatting"
-              , entryIndent <> "run: purs-tidy check src test"
-              , ""
-              ]
-
-      -- easiest way to check whether a change has occurred
-      if (original /= new) then do
-        writeTextFile UTF8 ciFile new
-        gitCiAddResult <- execAff' ("git add " <> repoFiles.ciYmlFile) inRepoDir
-        throwIfExecErrored gitCiAddResult
-        gitCiCommitResult <- execAff' "git commit -m \"Added purs-tidy and check formatting step\"" inRepoDir
-        throwIfExecErrored gitCiCommitResult
-        pure true
-      else do
-        pure false
-  pure { tidyOpFileStatus, tidyRcFileStatus, formattingStatus, ciFileStatus }
-  where
-  pkg' = unwrap pkg
-  repoDir = Path.concat [ libDir, pkg']
-  inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
-  inRepoDir r = r { cwd = Just repoDir }
-  ciFile = Path.concat [ repoDir, repoFiles.ciYmlFile ]
-  tidyRcFile = Path.concat [ repoDir, repoFiles.tidyRcJsonFile ]
-  tidyOpFile = Path.concat [ repoDir, repoFiles.tidyOperatorsFile ]
 
 updateChangelog :: GitHubOwner -> GitHubProject -> Package -> Version -> Aff (FileStatus Unit Unit String)
 updateChangelog owner repo pkg nextVersion = do
