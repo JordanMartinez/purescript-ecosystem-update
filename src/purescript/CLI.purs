@@ -46,6 +46,7 @@ parseCliArgs =
       , makeNextReleaseBatchCmd
       , releaseOrderCmd
       , genReleaseInfoCmd
+      , getFileCmd
       , showExamplesCmd
       ]
     <* ArgParse.flagHelp
@@ -220,6 +221,14 @@ parseCliArgs =
     GenReleaseInfo <$ ArgParse.flagHelp
     where
     description = "Generates the information needed to produce the release order and make library releases."
+
+  getFileCmd = ArgParse.command [ "getFile" ] description do
+    GetFile
+      <$> parseSingleFile
+      <* ArgParse.flagHelp
+    where
+    description = "Generates the information needed to produce the release order and make library releases."
+    parseSingleFile = ArgParse.any "FILE" "The file to collect across all repos" Just
 
   showExamplesCmd = ArgParse.command ["cli-examples"] description do
     ShowExamples <$ ArgParse.flagHelp

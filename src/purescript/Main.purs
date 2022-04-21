@@ -7,6 +7,7 @@ import CLI (parseCliArgs)
 import Command (Command(..))
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
+import Command.GetFile as GetFileCmd
 import Command.Init as InitCmd
 import Command.Release as ReleaseCmd
 import Command.ReleaseInfo as RelaseInfoCmd
@@ -56,4 +57,7 @@ main = do
         GenReleaseInfo ->
           runAff_ (either throwException $ const $ pure unit) do
             RelaseInfoCmd.generateReleaseInfo
+        GetFile file ->
+          runAff_ (either throwException $ const $ pure unit) do
+            GetFileCmd.getFile file
         _ -> Console.log "Command not yet implemented"

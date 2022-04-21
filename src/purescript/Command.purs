@@ -4,6 +4,7 @@ module Command where
 import Data.Either (Either)
 import Data.Maybe (Maybe)
 import Data.Version (Version)
+import Node.Path (FilePath)
 import Types (BranchName, GitHubOwner, GitHubProject, Package, PackageInfo)
 
 data Command
@@ -36,5 +37,6 @@ data Command
   | GenReleaseInfo
   | ReleaseOrder
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
+  | GetFile FilePath
   -- | Show examples
   | ShowExamples
