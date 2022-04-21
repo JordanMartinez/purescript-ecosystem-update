@@ -37,6 +37,7 @@ getFile file = do
     : Placeholder "-"
     : DayOfMonthTwoDigits
     : Nil
+  lineSeparator = power "-" 45
   getFile' :: PackageInfo -> Aff String
   getFile' info = do
     log $ "Getting file for '" <> pkg' <> "'"
@@ -47,9 +48,9 @@ getFile file = do
     pure $ Array.intercalate "\n"
       [ "## " <> pkg'
       , ""
-      , power "-" 45
+      , lineSeparator
       , content
-      , power "-" 45
+      , lineSeparator
       , ""
       ]
     where
