@@ -45,6 +45,7 @@ parseCliArgs =
       , makePrCmd
       , makeNextReleaseBatchCmd
       , releaseOrderCmd
+      , genReleaseInfoCmd
       , showExamplesCmd
       ]
     <* ArgParse.flagHelp
@@ -214,6 +215,11 @@ parseCliArgs =
     ReleaseOrder <$ ArgParse.flagHelp
     where
     description = "Linearize the package dependency graph to see what to release next."
+
+  genReleaseInfoCmd = ArgParse.command [ "releaseInfo" ] description do
+    GenReleaseInfo <$ ArgParse.flagHelp
+    where
+    description = "Generates the information needed to produce the release order and make library releases."
 
   showExamplesCmd = ArgParse.command ["cli-examples"] description do
     ShowExamples <$ ArgParse.flagHelp

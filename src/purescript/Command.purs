@@ -33,6 +33,7 @@ data Command
   | Check { package :: Package }
   -- | Create a PR
   | MakePr { package :: Package }
+  | GenReleaseInfo
   | ReleaseOrder
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
   -- | Show examples

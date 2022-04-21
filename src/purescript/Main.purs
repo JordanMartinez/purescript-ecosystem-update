@@ -9,6 +9,7 @@ import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
 import Command.Init as InitCmd
 import Command.Release as ReleaseCmd
+import Command.ReleaseInfo as RelaseInfoCmd
 import Command.ReleaseOrder as ReleaseOrderCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
@@ -52,4 +53,7 @@ main = do
         MakeNextReleaseBatch opts ->
           runAff_ (either throwException $ const $ pure unit) do
             ReleaseCmd.createPrForNextReleaseBatch opts
+        GenReleaseInfo ->
+          runAff_ (either throwException $ const $ pure unit) do
+            RelaseInfoCmd.generateReleaseInfo
         _ -> Console.log "Command not yet implemented"

@@ -4,6 +4,8 @@
 -- | or its given domain (e.g. `gitRemotes`).
 module Constants where
 
+import Prelude
+
 import Node.Path as Path
 
 repoFiles
@@ -52,11 +54,13 @@ releaseFiles
   :: { nextReleaseInfo :: String
      , releaseOrderFile :: String
      , releasedPkgsFile :: String
+     , releaseInfoPath :: String -> String
      }
 releaseFiles = do
   { releaseOrderFile: Path.concat [ "files", "release", "library-release-order" ]
   , releasedPkgsFile: Path.concat [ "files", "release", "released-pkgs" ]
   , nextReleaseInfo: Path.concat [ "files", "release", "next-release-info_2022-04-15T13:28:12.552Z.json" ]
+  , releaseInfoPath: \s -> Path.concat [ "files", "release", "next-release-info_" <> s <> ".json" ]
   }
 
 pursTidyFiles
