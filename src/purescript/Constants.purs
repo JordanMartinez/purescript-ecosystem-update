@@ -13,7 +13,7 @@ repoFiles
      , ciYmlFile :: String
      , eslintFile :: String
      , gitIgnoreFile :: String
-     , packagesJsonFile :: String
+     , packageJsonFile :: String
      , pursJsonFile :: String
      , spagoDhallFile :: String
      , spagoDir :: String
@@ -25,7 +25,7 @@ repoFiles =
   { ciYmlFile: Path.concat [ ".github", "workflows", "ci.yml" ]
   , eslintFile: ".eslintrc.json"
   , bowerJsonFile: "bower.json"
-  , packagesJsonFile: "packages.json"
+  , packageJsonFile: "package.json"
   , spagoDhallFile: "spago.dhall"
   , testDhallFile: "test.dhall"
   , pursJsonFile: "purs.json"
