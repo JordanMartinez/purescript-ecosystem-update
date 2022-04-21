@@ -48,4 +48,5 @@ type PackageInfo =
   , project :: GitHubProject
   , gitUrl :: GitCloneUrl
   , defaultBranch :: BranchName
+  , inBowerRegistry :: Boolean
   }
