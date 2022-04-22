@@ -3,6 +3,7 @@ module Command.Init where
 import Prelude
 
 import Command.DownloadPurs (downloadPursBinary)
+import Constants (getFileDir)
 import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Enum (enumFromTo)
@@ -169,6 +170,6 @@ mkInitialDirectories = do
   liftAff $ mkdir (Path.concat [ files, "changelogs" ]) { recursive: true }
   liftAff $ mkdir (Path.concat [ files, "pr" ]) { recursive: true }
   liftAff $ mkdir (Path.concat [ files, "release" ]) { recursive: true }
-  liftAff $ mkdir (Path.concat [ files, "getFile" ]) { recursive: true }
+  liftAff $ mkdir getFileDir { recursive: true }
   liftAff $ mkdir (Path.concat [ files, "purs-tidy" ]) { recursive: true }
   liftAff $ mkdir (Path.concat [ files, "package-graph" ]) { recursive: true }

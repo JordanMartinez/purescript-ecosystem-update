@@ -50,6 +50,9 @@ gitRemotes =
   , self: "self"
   }
 
+getFileDir :: String
+getFileDir = Path.concat [ "files", "getFile" ]
+
 releaseFiles
   :: { nextReleaseInfo :: String
      , releaseOrderFile :: String
