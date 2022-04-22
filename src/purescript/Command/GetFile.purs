@@ -54,6 +54,7 @@ getFile filePaths = do
       , content
       , lineSeparator
       , ""
+      , ""
       ]
     where
     pkg' = unwrap info.name
