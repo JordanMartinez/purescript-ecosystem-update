@@ -13,6 +13,7 @@ import Data.Newtype (unwrap)
 import Data.String (Pattern(..), joinWith)
 import Data.String as String
 import Data.Version as Version
+import Node.Path as Path
 import Packages (packages)
 import Types (BranchName(..), GitHubOwner(..), GitHubProject(..), Package(..))
 
@@ -228,7 +229,8 @@ parseCliArgs =
       <* ArgParse.flagHelp
     where
     description = "Generates the information needed to produce the release order and make library releases."
-    parseSingleFile = ArgParse.any "FILE" "The file to collect across all repos" Just
+    parseSingleFile = (ArgParse.any "FILE" "The file to collect across all repos" Just)
+      <#> (String.split (Pattern Path.sep) >>> Array.filter ((/=) ""))
 
   showExamplesCmd = ArgParse.command ["cli-examples"] description do
     ShowExamples <$ ArgParse.flagHelp

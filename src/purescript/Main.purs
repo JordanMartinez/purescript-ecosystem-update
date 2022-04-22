@@ -57,7 +57,7 @@ main = do
         GenReleaseInfo ->
           runAff_ (either throwException $ const $ pure unit) do
             RelaseInfoCmd.generateReleaseInfo
-        GetFile file ->
+        GetFile filePaths ->
           runAff_ (either throwException $ const $ pure unit) do
-            GetFileCmd.getFile file
+            GetFileCmd.getFile filePaths
         _ -> Console.log "Command not yet implemented"

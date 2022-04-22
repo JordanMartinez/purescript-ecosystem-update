@@ -22,13 +22,13 @@ import Packages (packages)
 import Types (PackageInfo)
 import Utils (execAff', throwIfExecErrored)
 
-getFile :: FilePath -> Aff Unit
-getFile file = do
+getFile :: Array FilePath -> Aff Unit
+getFile filePaths = do
   files <- traverse getFile' packages
   let
-    content = "All repo's '" <> file <> "':\n\n" <> Array.fold files
+    content = "All repo's '" <> fullFilePath <> "':\n\n" <> Array.fold files
   dt <- liftEffect nowDateTime
-  writeTextFile UTF8 (Path.concat [ "files", file <> "_" <> formatYYYYMMDD dt <> ".md"]) content
+  writeTextFile UTF8 (Path.concat [ "files", filePathName <> "_" <> formatYYYYMMDD dt <> ".md"]) content
   where
   formatYYYYMMDD = format
     $ YearFull
@@ -38,13 +38,15 @@ getFile file = do
     : DayOfMonthTwoDigits
     : Nil
   lineSeparator = power "-" 45
+  fullFilePath = Path.concat filePaths
+  filePathName = Array.intercalate "_" filePaths
   getFile' :: PackageInfo -> Aff String
   getFile' info = do
     log $ "Getting file for '" <> pkg' <> "'"
     throwIfExecErrored =<< execAff' "git fetch upstream" inRepoDir
     throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
     throwIfExecErrored =<< execAff' ("git checkout upstream/" <> defaultBranch') inRepoDir
-    content <- readTextFile UTF8 $ Path.concat [ repoDir, file ]
+    content <- readTextFile UTF8 $ Path.concat $ Array.cons repoDir filePaths
     pure $ Array.intercalate "\n"
       [ "## " <> pkg'
       , ""

@@ -37,6 +37,6 @@ data Command
   | GenReleaseInfo
   | ReleaseOrder
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
-  | GetFile FilePath
+  | GetFile (Array FilePath)
   -- | Show examples
   | ShowExamples
