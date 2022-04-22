@@ -3,13 +3,15 @@ module Command.GetFile where
 import Prelude
 
 import Constants (libDir)
+import Control.Alternative (guard)
 import Data.Array as Array
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.List (List(..), (:))
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (power)
 import Data.Newtype (unwrap)
 import Data.Traversable (traverse)
+import Data.Tuple (Tuple(..), fst, snd)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
@@ -37,9 +39,20 @@ getFile filePaths = do
     : Placeholder "-"
     : DayOfMonthTwoDigits
     : Nil
-  lineSeparator = power "-" 45
+  lineSeparator = power "`" 12
   fullFilePath = Path.concat filePaths
   filePathName = Array.intercalate "_" filePaths
+  syntaxHighlighter = fromMaybe "" do
+    let
+      extension = Path.extname fullFilePath
+    snd <$> Array.find (fst >>> (==) extension)
+      [ Tuple "json" "json"
+      , Tuple "js" "javascript"
+      , Tuple "yml" "yml"
+      , Tuple "purs" "purs"
+      , Tuple "dhall" "dhall"
+      , Tuple "md" "markdown"
+      ]
   getFile' :: PackageInfo -> Aff String
   getFile' info = do
     log $ "Getting file for '" <> pkg' <> "'"
@@ -50,7 +63,7 @@ getFile filePaths = do
     pure $ Array.intercalate "\n"
       [ "## " <> pkg'
       , ""
-      , lineSeparator
+      , lineSeparator <> syntaxHighlighter
       , content
       , lineSeparator
       , ""

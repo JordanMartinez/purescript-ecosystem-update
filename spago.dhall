@@ -9,6 +9,7 @@
   , "avar"
   , "bifunctors"
   , "console"
+  , "control"
   , "debug"
   , "effect"
   , "either"
