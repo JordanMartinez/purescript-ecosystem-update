@@ -19,8 +19,9 @@ import Effect.Aff.Class (class MonadAff, liftAff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
 import Effect.Exception (throw)
+import Node.Path as Path
 import Tools.Gh (checkGhGitProtocol, checkLoggedIntoGh)
-import Utils (execAff)
+import Utils (execAff, mkdir, mkdirImpl)
 
 init :: Aff Unit
 init = do
@@ -28,6 +29,7 @@ init = do
   checkLoggedIntoGh
   checkGhGitProtocol
   downloadPursBinary Nothing
+  mkInitialDirectories
 
 -- | Verifies that a given tool with the minimum version is installed
 -- | and throws an error otherwise.
@@ -159,3 +161,14 @@ verifyToolConstraints = do
         , fixupVersionStr: \s -> s <> ".0"
         }
     ]
+
+mkInitialDirectories :: forall m. MonadAff m => m Unit
+mkInitialDirectories = do
+  let
+    files = "files"
+  liftAff $ mkdir (Path.concat [ files, "changelogs" ]) { recursive: true }
+  liftAff $ mkdir (Path.concat [ files, "pr" ]) { recursive: true }
+  liftAff $ mkdir (Path.concat [ files, "release" ]) { recursive: true }
+  liftAff $ mkdir (Path.concat [ files, "getFile" ]) { recursive: true }
+  liftAff $ mkdir (Path.concat [ files, "purs-tidy" ]) { recursive: true }
+  liftAff $ mkdir (Path.concat [ files, "package-graph" ]) { recursive: true }
