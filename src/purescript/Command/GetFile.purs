@@ -47,12 +47,12 @@ getFile filePaths = do
     let
       extension = Path.extname fullFilePath
     snd <$> Array.find (fst >>> (==) extension)
-      [ Tuple "json" "json"
-      , Tuple "js" "javascript"
-      , Tuple "yml" "yml"
-      , Tuple "purs" "purs"
-      , Tuple "dhall" "dhall"
-      , Tuple "md" "markdown"
+      [ Tuple ".json" "json"
+      , Tuple ".js" "javascript"
+      , Tuple ".yml" "yml"
+      , Tuple ".purs" "purs"
+      , Tuple ".dhall" "dhall"
+      , Tuple ".md" "markdown"
       ]
   getFile' :: PackageInfo -> Aff String
   getFile' info = do
