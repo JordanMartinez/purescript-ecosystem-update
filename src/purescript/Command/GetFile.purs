@@ -2,7 +2,7 @@ module Command.GetFile where
 
 import Prelude
 
-import Constants (libDir)
+import Constants (getFileDir, libDir)
 import Data.Array as Array
 import Data.Array.NonEmpty as NEA
 import Data.FoldableWithIndex as FI
@@ -62,7 +62,7 @@ getFile filePaths = do
       }
 
   dt <- liftEffect nowDateTime
-  writeTextFile UTF8 (Path.concat [ "files", filePathName <> "_" <> formatYYYYMMDD dt <> ".md"])
+  writeTextFile UTF8 (Path.concat [ getFileDir, filePathName <> "_" <> formatYYYYMMDD dt <> ".md"])
     $ "All repo's '" <> fullFilePath <> "':\n\n" <> Array.intercalate "\n" fileContent.arr
   where
   formatYYYYMMDD = format
