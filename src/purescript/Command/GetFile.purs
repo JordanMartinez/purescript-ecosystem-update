@@ -3,14 +3,16 @@ module Command.GetFile where
 import Prelude
 
 import Constants (libDir)
-import Control.Alternative (guard)
 import Data.Array as Array
+import Data.Array.NonEmpty as NEA
+import Data.FoldableWithIndex as FI
 import Data.Formatter.DateTime (FormatterCommand(..), format)
+import Data.HashMap as HM
+import Data.HashSet as HashSet
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (power)
 import Data.Newtype (unwrap)
-import Data.Traversable (traverse)
 import Data.Tuple (Tuple(..), fst, snd)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
@@ -22,16 +24,46 @@ import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
 import Packages (packages)
-import Types (PackageInfo)
-import Utils (execAff', throwIfExecErrored)
+import Safe.Coerce (coerce)
+import Types (Package(..), PackageInfo)
+import Utils (execAff', justOrCrash, throwIfExecErrored)
 
 getFile :: Array FilePath -> Aff Unit
 getFile filePaths = do
-  files <- traverse getFile' packages
+  fileToPkgMap <- Array.foldM getFile' HM.empty packages
   let
-    content = "All repo's '" <> fullFilePath <> "':\n\n" <> Array.fold files
+    fileContent = fileToPkgMap # flip FI.foldlWithIndex { count: 1, arr: [] } \fileStatus acc pkgSet -> do
+      { count: acc.count + 1
+      , arr: acc.arr <>
+          [ "## Entry " <> show acc.count
+          , ""
+          , "Packages with this file:"
+          , NEA.foldr1 (\l r -> l <> ", " <> r)
+              $ (coerce :: _ Package -> _ String)
+              $ NEA.sort
+              $ justOrCrash "Package set must be non-empty"
+              $ NEA.fromArray
+              $ Array.fromFoldable pkgSet
+          , ""
+          ]
+          <>
+          (case fileStatus of
+            Nothing -> [ "No such content" ]
+            Just content ->
+              [ lineSeparator <> syntaxHighlighter
+              , content
+              , lineSeparator
+              ]
+          )
+          <>
+          [ ""
+          , ""
+          ]
+      }
+
   dt <- liftEffect nowDateTime
-  writeTextFile UTF8 (Path.concat [ "files", filePathName <> "_" <> formatYYYYMMDD dt <> ".md"]) content
+  writeTextFile UTF8 (Path.concat [ "files", filePathName <> "_" <> formatYYYYMMDD dt <> ".md"])
+    $ "All repo's '" <> fullFilePath <> "':\n\n" <> Array.intercalate "\n" fileContent.arr
   where
   formatYYYYMMDD = format
     $ YearFull
@@ -54,30 +86,25 @@ getFile filePaths = do
       , Tuple ".dhall" "dhall"
       , Tuple ".md" "markdown"
       ]
-  getFile' :: PackageInfo -> Aff String
-  getFile' info = do
+  getFile'
+    :: HM.HashMap (Maybe String) (HashSet.HashSet Package)
+    -> PackageInfo
+    -> Aff (HM.HashMap (Maybe String) (HashSet.HashSet Package))
+  getFile' hashMap info = do
     log $ "Getting file for '" <> pkg' <> "'"
     throwIfExecErrored =<< execAff' "git fetch upstream" inRepoDir
     throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
     throwIfExecErrored =<< execAff' ("git checkout upstream/" <> defaultBranch') inRepoDir
     fileExists <- liftEffect $ exists filePathFromPeu
-    content <-
-      if fileExists then do
-        fileContent <- readTextFile UTF8 filePathFromPeu
-        pure $ Array.intercalate "\n"
-          [ lineSeparator <> syntaxHighlighter
-          , fileContent
-          , lineSeparator
-          ]
-      else do
-        pure "No such file"
-    pure $ Array.intercalate "\n"
-      [ "## " <> pkg'
-      , ""
-      , content
-      , ""
-      , ""
-      ]
+    let
+      insertPkg = case _ of
+        Nothing -> Just $ HashSet.singleton info.name
+        Just s -> Just $ HashSet.insert info.name s
+    if fileExists then do
+      content <- readTextFile UTF8 filePathFromPeu
+      pure $ HM.alter insertPkg (Just content) hashMap
+    else do
+      pure $ HM.alter insertPkg Nothing hashMap
     where
     filePathFromPeu = Path.concat $ Array.cons repoDir filePaths
     pkg' = unwrap info.name
