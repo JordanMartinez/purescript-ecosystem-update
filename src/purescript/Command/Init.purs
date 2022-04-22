@@ -22,7 +22,7 @@ import Effect.Class.Console (log)
 import Effect.Exception (throw)
 import Node.Path as Path
 import Tools.Gh (checkGhGitProtocol, checkLoggedIntoGh)
-import Utils (execAff, mkdir, mkdirImpl)
+import Utils (execAff, mkdir)
 
 init :: Aff Unit
 init = do
