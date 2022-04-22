@@ -18,6 +18,7 @@ import Effect.Class.Console (log)
 import Effect.Now (nowDateTime)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile, writeTextFile)
+import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
 import Packages (packages)
@@ -59,17 +60,26 @@ getFile filePaths = do
     throwIfExecErrored =<< execAff' "git fetch upstream" inRepoDir
     throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
     throwIfExecErrored =<< execAff' ("git checkout upstream/" <> defaultBranch') inRepoDir
-    content <- readTextFile UTF8 $ Path.concat $ Array.cons repoDir filePaths
+    fileExists <- liftEffect $ exists filePathFromPeu
+    content <-
+      if fileExists then do
+        fileContent <- readTextFile UTF8 filePathFromPeu
+        pure $ Array.intercalate "\n"
+          [ lineSeparator <> syntaxHighlighter
+          , fileContent
+          , lineSeparator
+          ]
+      else do
+        pure "No such file"
     pure $ Array.intercalate "\n"
       [ "## " <> pkg'
       , ""
-      , lineSeparator <> syntaxHighlighter
       , content
-      , lineSeparator
       , ""
       , ""
       ]
     where
+    filePathFromPeu = Path.concat $ Array.cons repoDir filePaths
     pkg' = unwrap info.name
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
