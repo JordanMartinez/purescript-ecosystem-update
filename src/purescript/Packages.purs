@@ -1,6 +1,6 @@
 module Packages where
 
-import Types (Package(..), PackageInfo, GitHubOwner(..), GitHubProject(..), GitCloneUrl(..), BranchName(..))
+import Types (BranchName(..), GitCloneUrl(..), GitHubOwner(..), GitHubProject(..), Package(..), PackageInfo)
 
 packages :: Array PackageInfo
 packages =

@@ -10,6 +10,7 @@ import Data.Nullable (Nullable)
 import Data.Posix.Signal (Signal(..))
 import Data.String (Pattern(..))
 import Data.String as String
+import Data.String.Regex (Regex)
 import Effect (Effect)
 import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
 import Effect.Class (liftEffect)
@@ -228,3 +229,5 @@ rightOrCrash msg = either (\_ -> unsafeCrashWith msg) identity
 
 splitLines :: String -> Array String
 splitLines = String.split (Pattern "\n")
+
+foreign import replaceAll :: Regex -> String -> String -> String

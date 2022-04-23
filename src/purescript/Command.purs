@@ -38,5 +38,6 @@ data Command
   | ReleaseOrder
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
   | GetFile (Array FilePath)
+  | EcosystemChangelog
   -- | Show examples
   | ShowExamples

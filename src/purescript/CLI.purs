@@ -48,6 +48,7 @@ parseCliArgs =
       , releaseOrderCmd
       , genReleaseInfoCmd
       , getFileCmd
+      , genEcosystemChangelogCmd
       , showExamplesCmd
       ]
     <* ArgParse.flagHelp
@@ -231,6 +232,11 @@ parseCliArgs =
     description = "Generates the information needed to produce the release order and make library releases."
     parseSingleFile = (ArgParse.any "FILE" "The file to collect across all repos" Just)
       <#> (String.split (Pattern Path.sep) >>> Array.filter ((/=) ""))
+
+  genEcosystemChangelogCmd = ArgParse.command [ "ecosystemChangelog" ] description do
+    EcosystemChangelog <$ ArgParse.flagHelp
+    where
+    description = "Generates an ecosystem-wide changelog with repeated entries and empty sections removed."
 
   showExamplesCmd = ArgParse.command ["cli-examples"] description do
     ShowExamples <$ ArgParse.flagHelp

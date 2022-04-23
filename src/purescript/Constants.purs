@@ -75,6 +75,17 @@ pursTidyFiles =
   , tidyRcWithOperatorsFile: Path.concat [ "files", "purs-tidy", ".tidyrc-with-operators-file.json" ]
   }
 
+changelogFiles
+  :: { nextReleaseNotes :: String
+     , nextReleaseMissing :: String
+     , nextReleaseUninteresting :: String
+     }
+changelogFiles =
+  { nextReleaseNotes: Path.concat [ "files", "changelogs", "next-release-notes.md" ]
+  , nextReleaseMissing: Path.concat [ "files", "changelogs", "next-release-missing.md" ]
+  , nextReleaseUninteresting: Path.concat [ "files", "changelogs", "next-release-uninteresting.md" ]
+  }
+
 purescriptTarGzFile :: String
 purescriptTarGzFile = "purescript.tar.gz"
 

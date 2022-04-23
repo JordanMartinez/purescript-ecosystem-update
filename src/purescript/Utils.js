@@ -36,3 +36,5 @@ exports.handleCallbackImpl = function (left, right, f) {
 };
 
 exports.fdStatImpl = fs.fdStat;
+
+exports.replaceAll = (r) => (s) => (str) => str.replaceAll(r, s);

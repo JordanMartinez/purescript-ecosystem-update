@@ -7,6 +7,7 @@ import CLI (parseCliArgs)
 import Command (Command(..))
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
+import Command.Ecosystem as EcosystemCmd
 import Command.GetFile as GetFileCmd
 import Command.Init as InitCmd
 import Command.Release as ReleaseCmd
@@ -60,4 +61,7 @@ main = do
         GetFile filePaths ->
           runAff_ (either throwException $ const $ pure unit) do
             GetFileCmd.getFile filePaths
+        EcosystemChangelog ->
+          runAff_ (either throwException $ const $ pure unit) do
+            EcosystemCmd.generateEcosystemChangelog
         _ -> Console.log "Command not yet implemented"
