@@ -6,6 +6,7 @@ import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
 import Command (Command(..))
 import Command.Bower as BowerCmd
+import Command.CheckForDeprecated as CheckForDeprecatedCmd
 import Command.Clone as CloneCmd
 import Command.Compile as CompileCmd
 import Command.DownloadPurs as DownloadPursCmd
@@ -55,6 +56,8 @@ main = do
           SpagoCmd.updatePackageSet opts
         Compile opts -> do
           CompileCmd.compile opts
+        CheckForDeprecated opts -> do
+          CheckForDeprecatedCmd.checkForDeprecated opts
         ReleaseOrder ->
           ReleaseOrderCmd.generateReleaseOrder
         MakeNextReleaseBatch opts ->

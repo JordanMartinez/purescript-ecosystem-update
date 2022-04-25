@@ -268,3 +268,25 @@ hasFFI pkg = do
     , "examples"
     , "bench"
     ]
+
+-- | Gets all files (recursively) within the given directory
+-- | in the package's root directory.
+getFilesIn :: Package -> FilePath -> Aff (Array FilePath)
+getFilesIn pkg dir = do
+  let fullPath = Path.concat [ libDir, unwrap pkg, dir ]
+  pathExists <- liftEffect $ exists fullPath
+  if pathExists then do
+    go fullPath
+  else do
+    pure []
+  where
+  go :: FilePath -> Aff (Array FilePath)
+  go path = do
+    stats <- stat path
+    if isFile stats then do
+      pure [ path ]
+    else if isDirectory stats then do
+      children <- readdir path
+      map join $ for children \c -> go $ Path.concat [ path, c ]
+    else do
+      pure []

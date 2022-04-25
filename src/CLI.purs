@@ -198,7 +198,7 @@ parseCliArgs =
         }
       <* ArgParse.flagHelp
     where
-    description = "Search for deprecations and other old code and fail if any are found"
+    description = "Search for deprecations and other old code. Warn or fail depending on the type found."
 
   makePrCmd = ArgParse.command ["pr"] description do
     MakePr
