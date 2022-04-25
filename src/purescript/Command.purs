@@ -11,17 +11,21 @@ data Command
   = Init
   -- | Gets a local copy of the purs binary from GitHub
   | DownloadPurs (Maybe Version)
+  -- | Clone a repo locally with the option of making a fork
+  | Clone (Either { owner :: GitHubOwner, repo :: GitHubProject, package :: Package } PackageInfo) (Maybe GitHubOwner)
   -- | Clone all packages
   | CloneAll (Maybe GitHubOwner)
   -- | Runs all update actions across all repos
-  | UpdateAll
-  -- | Clone a repo locally with the option of making a fork
-  | Clone (Either { owner :: GitHubOwner, repo :: GitHubProject, package :: Package } PackageInfo) (Maybe GitHubOwner)
-  -- | Update bower.json file
   | Bower { package :: PackageInfo }
-  -- | Update spago.dhall and packages.dhall files
-  | Spago { package :: Package }
-  -- | Compile the package
+  -- -- | Update spago.dhall and packages.dhall files
+  | Spago { package :: PackageInfo }
+  -- | Update package.json file
+  | PackageJson { package :: PackageInfo }
+  -- | Update ci.yml file
+  | CI { package :: PackageInfo }
+  -- | Check for any deprecations
+  | Check { package :: PackageInfo }
+  -- | Install dependencies, compile package, test it, and run lints
   | Compile
       { clearBowerCache :: Boolean
       , package :: PackageInfo
@@ -33,20 +37,12 @@ data Command
       , skipSpagoInstall :: Boolean
       , skipTests :: Boolean
       }
-  -- | Update package.json file
-  | PackageJson { package :: Package }
-  -- | Update eslintrc.json file
-  | Eslint { package :: Package }
-  -- | Update ci.yml file
-  | CI { package :: Package }
-  -- | Check for any deprecations
-  | Check { package :: Package }
   -- | Create a PR
-  | MakePr { package :: Package }
+  | MakePr { package :: PackageInfo }
   | GenReleaseInfo
   | ReleaseOrder
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
-  | GetFile (Array FilePath)
   | EcosystemChangelog
+  | GetFile (Array FilePath)
   -- | Show examples
   | ShowExamples

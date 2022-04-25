@@ -34,15 +34,13 @@ parseCliArgs =
     ArgParse.choose "COMMAND"
       [ initCmd
       , cloneAllCmd
-      , updateAllCmd
       , downloadPursCmd
       , cloneCmd
       , bowerCmd
       , spagoCmd
-      , compileCmd
       , packageJsonCmd
-      , eslintCmd
       , ciCmd
+      , compileCmd
       , checkCmd
       , makePrCmd
       , makeNextReleaseBatchCmd
@@ -66,11 +64,6 @@ parseCliArgs =
       <* ArgParse.flagHelp
     where
     description = "git clone all packages locally"
-
-  updateAllCmd = ArgParse.command [ "updateAll" ] description do
-    UpdateAll <$ ArgParse.flagHelp
-    where
-    description = "Run all available scripts across all repos."
 
   downloadPursCmd = ArgParse.command ["downloadPurs"] description do
     DownloadPurs
@@ -133,7 +126,12 @@ parseCliArgs =
   spagoCmd = ArgParse.command ["spago"] description do
     Spago
       <$> fromRecord
-        { package: parsePackage
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
         }
       <* ArgParse.flagHelp
     where
@@ -164,25 +162,26 @@ parseCliArgs =
   packageJsonCmd = ArgParse.command ["packageJson"] description do
     PackageJson
       <$> fromRecord
-        { package: parsePackage
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
         }
       <* ArgParse.flagHelp
     where
     description = "Run `package.json`-related operations on a single package"
 
-  eslintCmd = ArgParse.command ["eslint"] description do
-    Eslint
-      <$> fromRecord
-        { package: parsePackage
-        }
-      <* ArgParse.flagHelp
-    where
-    description = "Run `.eslintrc.json`-related operations on a single package"
-
   ciCmd = ArgParse.command ["ci"] description do
     CI
       <$> fromRecord
-        { package: parsePackage
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
         }
       <* ArgParse.flagHelp
     where
@@ -191,7 +190,12 @@ parseCliArgs =
   checkCmd = ArgParse.command ["check"] description do
     Check
       <$> fromRecord
-        { package: parsePackage
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
         }
       <* ArgParse.flagHelp
     where
@@ -200,7 +204,12 @@ parseCliArgs =
   makePrCmd = ArgParse.command ["pr"] description do
     MakePr
       <$> fromRecord
-        { package: parsePackage
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
         }
       <* ArgParse.flagHelp
     where
@@ -260,11 +269,6 @@ parseCliArgs =
     ShowExamples <$ ArgParse.flagHelp
     where
     description = "Show examples of how to use this CLI correctly"
-
-  parsePackage = ArgParse.anyNotFlag "PACKAGE" "The package to operate on (e.g. `prelude`)"
-    # ArgParse.unformat "PACKAGE" case _ of
-      "" -> Left "PACKAGE must not be empty"
-      x -> Right $ Package x
 
   parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
     # ArgParse.unformat "GITHUB_ORG" case _ of
