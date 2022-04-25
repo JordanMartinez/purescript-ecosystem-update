@@ -5,6 +5,7 @@ import Prelude
 import ArgParse.Basic as Arg
 import CLI (parseCliArgs)
 import Command (Command(..))
+import Command.Bower as BowerCmd
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
 import Command.Compile as CompileCmd
@@ -50,6 +51,9 @@ main = do
         CloneAll org ->
           runAff_ (either throwException $ const $ pure unit) do
             CloneCmd.cloneAll org
+        Bower opts -> do
+          runAff_ (either throwException $ const $ pure unit) do
+            BowerCmd.updatePackageDepsToBranchVersion opts
         Compile opts -> do
           runAff_ (either throwException $ const $ pure unit) do
             CompileCmd.compile opts

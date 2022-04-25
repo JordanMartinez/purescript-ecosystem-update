@@ -119,11 +119,16 @@ parseCliArgs =
   bowerCmd = ArgParse.command ["bower"] description do
     Bower
       <$> fromRecord
-        { package: parsePackage
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
         }
       <* ArgParse.flagHelp
     where
-    description = "Run Bower-related operations on a single package"
+    description = "Updates a single package's `bower.json` dependencies to their default branches."
 
   spagoCmd = ArgParse.command ["spago"] description do
     Spago

@@ -5,7 +5,7 @@ import Prelude
 import Constants (jqScripts, libDir, repoFiles)
 import Data.Array (elem, find, fold)
 import Data.Array as Array
-import Data.Foldable (foldl, for_)
+import Data.Foldable (for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.HashMap as HM
 import Data.List.Types (List(..), (:))
@@ -30,53 +30,15 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
+import Tools.Jq (updateBowerDepsJqScript)
 import Types (BranchName, GitHubOwner, GitHubProject, Package)
 import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrBody } = do
   { fullGraph, unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
-
-  let
-    jqScriptUpdateBowerWithReleaseVersion = do
-      let
-        updates = fullGraph # flip foldl [] \acc info -> do
-          -- if in registry
-          --  "if has("purescript-node-fs") then ."purescript-node-fs" |= "^4.2.0" else . end |"
-          -- if not:
-          --  "if has("purescript-web-streams") then ."purescript-web-streams" |= "https://github.com/purescript-web/purescript-web-streams.git#^4.2.0" else . end |"
-          let
-            repo = unwrap info.repo
-            owner = unwrap info.owner
-            versionStr = Version.showVersion info.version
-          Array.snoc acc $ fold
-              [ "  if has(\""
-              , repo
-              , "\") then .\""
-              , repo
-              , "\" |= \""
-              , if info.inBowerRegistry then "^" <> versionStr
-                else "https://github.com/" <> owner <> "/" <> repo <> ".git#^" <> versionStr
-              , "\" else . end |"
-              ]
-      Array.intercalate "\n"
-        $ [ "if has(\"dependencies\") then .dependencies |= (" ]
-        <> updates
-        <>
-          [ "  ."
-          , ") else . end |"
-          , "if has (\"devDependencies\") then .devDependencies |= ("
-          ]
-        <> updates
-        <>
-          [ "  ."
-          , ") else . end"
-          ]
-
-  writeTextFile
-    UTF8
-    jqScripts.updateBowerDepsToReleaseVersion
-    jqScriptUpdateBowerWithReleaseVersion
+  writeTextFile UTF8 jqScripts.updateBowerDepsToReleaseVersion
+    $ updateBowerDepsJqScript (append "v" <<< Version.showVersion) fullGraph
 
   let
     -- pkgsInNextBatch = HM.filter (\r -> Array.elem (unwrap r.pkg) ["now", "web-touchevents"]) unfinishedPkgsGraph

@@ -18,7 +18,7 @@ data Command
   -- | Clone a repo locally with the option of making a fork
   | Clone (Either { owner :: GitHubOwner, repo :: GitHubProject, package :: Package } PackageInfo) (Maybe GitHubOwner)
   -- | Update bower.json file
-  | Bower { package :: Package }
+  | Bower { package :: PackageInfo }
   -- | Update spago.dhall and packages.dhall files
   | Spago { package :: Package }
   -- | Compile the package

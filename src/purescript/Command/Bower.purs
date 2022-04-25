@@ -1,72 +1,48 @@
 module Command.Bower where
 
--- import Prelude
+import Prelude
 
--- import Data.Array (foldMap)
--- import Data.Array as Array
--- import Data.Int (floor)
--- import Data.Maybe (Maybe(..))
--- import Data.Newtype (unwrap)
--- import Effect.Aff (bracket)
--- import Effect.Aff.Class (class MonadAff, liftAff)
--- import Effect.Class (liftEffect)
--- import Effect.Class.Console (log)
--- import Effect.Ref as Ref
--- import Node.Buffer as Buffer
--- import Node.ChildProcess as CP
--- import Node.FS (FileFlags(..))
--- import Node.FS.Aff (fdClose, fdNext, fdOpen, fdWrite)
--- import Node.FS.Stats (Stats(..))
--- import Node.Path as Path
--- import Node.Stream as Stream
--- import Packages (packages)
--- import Types (Package)
--- import Utils (fdStatAff, spawnAff', withSpawnResult')
+import Constants (jqScripts, libDir, repoFiles)
+import Data.Maybe (Maybe(..))
+import Data.Newtype (unwrap)
+import Effect.Aff (Aff)
+import Effect.Class (liftEffect)
+import Effect.Class.Console (log)
+import Node.Encoding (Encoding(..))
+import Node.FS.Aff (readTextFile)
+import Node.FS.Sync (exists)
+import Node.Path (FilePath)
+import Node.Path as Path
+import Tools.Jq (regenerateJqScriptBranchVersions)
+import Types (PackageInfo)
+import Utils (execAff', spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
--- updateDependenciesToMain :: forall m. MonadAff m => Package -> m Unit
--- updateDependenciesToMain pkg = do
---   fileExistsRef <- liftEffect $ Ref.new false
---   liftAff $ bracket (fdOpen bowerJsonFile W_PLUS Nothing) fdClose \fd -> do
---     liftEffect $ Ref.write true fileExistsRef
---     fileByteSize <- liftAff $ (\(Stats s) -> floor s.size) <$> fdStatAff fd
---     buf <- liftEffect $ Buffer.create fileByteSize
---     void $ liftAff $ fdNext fd buf
---     let
---       inPkgDir opt = opt { cwd = Just $ Path.concat [ "..", unwrap pkg ] }
---     jqProcess <- liftAff $ spawnAff' "jq" [ jqScriptUpdateDepsToMain ] inPkgDir
+-- | Updates a single package's bower deps to their default branch
+updatePackageDepsToBranchVersion :: { package :: PackageInfo } -> Aff Unit
+updatePackageDepsToBranchVersion { package: info } = do
+  regenerateJqScriptBranchVersions
+  jqScriptAbsPath <- liftEffect $ Path.resolve [] jqScripts.updateBowerDepsToBranchNameVersion
+  updateBowerDepsToBranchVersion jqScriptAbsPath info
 
---     -- We're losing possible debug info here:
---     --   - whether `write` returned true/false
---     --   - whether the callback was evoked with an error or not
---     -- but I'm going with this for the time being...
---     liftEffect $ void $ Stream.write (CP.stdin jqProcess) buf (pure unit)
---     { stdout: newFileContentBuf } <- liftAff $ withSpawnResult' jqProcess
---     len <- liftEffect $ Buffer.size newFileContentBuf
---     void $ liftAff $ fdWrite fd newFileContentBuf 0 len Nothing
-
---     -- we could just run these commands trust that they work...
---     -- ... or we could parse their output and verify that the file
---     -- is the only one added, and only run `git commit` if so.
---     -- void $ execAff "git add " <> bowerJsonFile
---     -- void $ execAff "git commit -m " <> message
-
---   fileExisted <- liftEffect $ Ref.read fileExistsRef
---   unless fileExisted do
---     log $ "Cannot update " <> bowerJsonFile <> " since file does not exist."
-
--- jqScriptUpdateDepsToMain :: String
--- jqScriptUpdateDepsToMain = wrapS "'" $ packages # foldMap \p -> do
---   Array.fold
---     [ "if has"
---     , wrapParens $ wrapQuotes $ unwrap p.project
---     , " then ."
---     , wrapQuotes $ unwrap p.project
---     , " |= "
---     , wrapQuotes $ unwrap p.defaultBranch
---     , " else . end |\n"
---     ]
---   where
---   wrapQuotes = wrapS "\""
---   wrapS bound = wrap bound bound
---   wrapParens = wrap "(" ")"
---   wrap l r s = l <> s <> r
+-- | Code for updating a package's bower.json deps to default branch.
+-- | Can be used to update a single package or multiple ones via traverse.
+updateBowerDepsToBranchVersion :: FilePath -> PackageInfo -> Aff Unit
+updateBowerDepsToBranchVersion jqScriptAbsPath info = do
+  bowerExists <- liftEffect $ exists bowerFile
+  if bowerExists then do
+    before <- readTextFile UTF8 bowerFile
+    throwIfSpawnErrored =<< withSpawnResult =<< spawnAff' "jq" [ "--from-file", jqScriptAbsPath, repoFiles.bowerJsonFile ] inRepoDir
+    after <- readTextFile UTF8 bowerFile
+    if before /= after then do
+      throwIfExecErrored =<< execAff' "git add bower.json" inRepoDir
+      throwIfExecErrored =<< execAff' "git commit -m \"Update bower deps to default branch versions\"" inRepoDir
+    else do
+      log $ unwrap info.name <> ": `bower.json` file had no changes."
+  else do
+    log $ unwrap info.name <> ": `bower.json` file does not exist"
+  where
+  pkg' = unwrap info.name
+  repoDir = Path.concat [ libDir, pkg' ]
+  inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
+  inRepoDir r = r { cwd = Just repoDir }
+  bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
