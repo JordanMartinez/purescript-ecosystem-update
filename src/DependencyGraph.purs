@@ -33,7 +33,7 @@ import Foreign.Object as Object
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile, writeTextFile)
 import Node.FS.Sync (exists)
-import Node.Path (FilePath, dirname)
+import Node.Path (dirname)
 import Partial.Unsafe (unsafeCrashWith)
 import Record as Record
 import Safe.Coerce (coerce)
@@ -109,23 +109,27 @@ generateAllReleaseInfo f = do
   unlessM (liftEffect $ exists releaseFiles.releasedPkgsFile) do
     mkdir (dirname releaseFiles.releasedPkgsFile) { recursive: true }
     writeTextFile UTF8 releaseFiles.releasedPkgsFile ""
-  generateAllReleaseInfo' releaseFiles.nextReleaseInfo releaseFiles.releasedPkgsFile f
+  generateAllReleaseInfo'
+    { nextReleaseInfo: releaseFiles.nextReleaseInfo
+    , releasedPkgsFile: releaseFiles.releasedPkgsFile
+    } f
 
 generateAllReleaseInfo'
   :: forall version
-   . FilePath
-  -> FilePath
+   . { nextReleaseInfo :: String
+     , releasedPkgsFile :: String
+     }
   -> (BranchName -> Array String -> version)
   -> Aff
       { fullGraph :: HashMap Package (DependenciesWithMeta version)
       , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
       }
-generateAllReleaseInfo' nextReleaseInfoJsonFile releasedPkgs extractVersion = do
-  releaseInfoContent <- readTextFile UTF8 nextReleaseInfoJsonFile
+generateAllReleaseInfo' { nextReleaseInfo, releasedPkgsFile } extractVersion = do
+  releaseInfoContent <- readTextFile UTF8 nextReleaseInfo
   (releaseInfo :: Object NextReleaseInfo) <- do
     either (liftEffect <<< throw <<< printJsonDecodeError) pure
       $ parseJson releaseInfoContent >>= decodeJson
-  releasedPkgsContent <- readTextFile UTF8 releasedPkgs
+  releasedPkgsContent <- readTextFile UTF8 releasedPkgsFile
   let
     depsToRemove :: Array Package
     depsToRemove = releasedPkgsContent
