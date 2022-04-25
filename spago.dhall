@@ -49,5 +49,5 @@
   , "versions"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/purescript/**/*.purs" ]
+, sources = [ "src/**/*.purs" ]
 }
