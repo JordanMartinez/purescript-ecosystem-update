@@ -9,17 +9,21 @@ import Prelude
 import Node.Path as Path
 
 repoFiles
-  :: { bowerComponentsDir :: String
+  :: { benchDir :: String
+     , bowerComponentsDir :: String
      , bowerJsonFile :: String
      , changelogFile :: String
      , ciYmlFile :: String
      , eslintFile :: String
+     , examplesDir :: String
      , gitIgnoreFile :: String
      , packageJsonFile :: String
      , pursJsonFile :: String
      , spagoDhallFile :: String
      , spagoDir :: String
+     , srcDir :: String
      , testDhallFile :: String
+     , testDir :: String
      , tidyOperatorsFile :: String
      , tidyRcJsonFile :: String
      }
@@ -37,6 +41,10 @@ repoFiles =
   , tidyOperatorsFile: ".tidyoperators"
   , spagoDir: ".spago"
   , bowerComponentsDir: "bower_components"
+  , srcDir: "src"
+  , testDir: "test"
+  , examplesDir: "examples"
+  , benchDir: "bench"
   }
 
 gitRemotes

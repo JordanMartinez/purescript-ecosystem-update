@@ -2,15 +2,22 @@ module Utils where
 
 import Prelude
 
+import Constants (libDir)
+import Data.Array (fold)
+import Data.Array as Array
 import Data.Either (Either(..), either)
 import Data.Foldable (for_)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
-import Data.Maybe (Maybe(..), maybe')
+import Data.Maybe (Maybe(..), isJust, maybe, maybe')
+import Data.Monoid.Disj (Disj(..))
+import Data.Newtype (unwrap)
 import Data.Nullable (Nullable)
 import Data.Posix.Signal (Signal(..))
-import Data.String (Pattern(..))
+import Data.String (Pattern(..), stripSuffix)
 import Data.String as String
 import Data.String.Regex (Regex)
+import Data.Traversable (for, traverse)
+import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
 import Effect.Class (liftEffect)
@@ -24,14 +31,17 @@ import Node.ChildProcess (ChildProcess, ExecOptions, Exit(..), SpawnOptions, def
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
 import Node.FS (FileDescriptor)
-import Node.FS.Aff (readFile, writeFile)
+import Node.FS.Aff (readFile, readdir, stat, writeFile)
 import Node.FS.Async (Callback)
 import Node.FS.Internal (mkEffect)
-import Node.FS.Stats (Stats(..), StatsObj)
-import Node.Path (FilePath)
+import Node.FS.Stats (Stats(..), StatsObj, isDirectory, isFile)
+import Node.FS.Sync (exists)
+import Node.Path (FilePath, basename)
+import Node.Path as Path
 import Node.Stream (Readable)
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
+import Types (Package(..), PackageInfo)
 
 foreign import mkdirImpl :: String -> { recursive :: Boolean } -> Effect Unit -> Effect Unit
 
@@ -231,3 +241,31 @@ splitLines :: String -> Array String
 splitLines = String.split (Pattern "\n")
 
 foreign import replaceAll :: Regex -> String -> String -> String
+
+hasFFI :: Package -> Aff (Array (Tuple String Boolean))
+hasFFI pkg = do
+  for checkDirs \dir -> do
+    let fullPath = Path.concat [ libDir, unwrap pkg, dir ]
+    pathExists <- liftEffect $ exists fullPath
+    if pathExists then do
+      (Tuple dir <<< unwrap) <$> go fullPath
+    else do
+      pure $ Tuple dir false
+  where
+  go :: FilePath -> Aff (Disj Boolean)
+  go path = do
+    stats <- stat path
+    if isFile stats then do
+      pure $ Disj $ isJust $ stripSuffix (Pattern ".js") $ basename path
+    else if isDirectory stats then do
+      children <- readdir path
+      map fold $ for children \c -> go $ Path.concat [ path, c ]
+    else do
+      pure $ Disj false
+
+  checkDirs =
+    [ "src"
+    , "test"
+    , "examples"
+    , "bench"
+    ]

@@ -7,6 +7,7 @@ import CLI (parseCliArgs)
 import Command (Command(..))
 import Command.Clone as CloneCmd
 import Command.DownloadPurs as DownloadPursCmd
+import Command.Compile as CompileCmd
 import Command.Ecosystem as EcosystemCmd
 import Command.GetFile as GetFileCmd
 import Command.Init as InitCmd
@@ -49,6 +50,9 @@ main = do
         CloneAll org ->
           runAff_ (either throwException $ const $ pure unit) do
             CloneCmd.cloneAll org
+        Compile opts -> do
+          runAff_ (either throwException $ const $ pure unit) do
+            CompileCmd.compile opts
         ReleaseOrder ->
           runAff_ (either throwException $ const $ pure unit) do
             ReleaseOrderCmd.generateReleaseOrder

@@ -1,6 +1,5 @@
 module Command where
 
-
 import Data.Either (Either)
 import Data.Maybe (Maybe)
 import Data.Version (Version)
@@ -23,7 +22,17 @@ data Command
   -- | Update spago.dhall and packages.dhall files
   | Spago { package :: Package }
   -- | Compile the package
-  | Compile { package :: Package, clearBowerCache :: Boolean }
+  | Compile
+      { clearBowerCache :: Boolean
+      , package :: PackageInfo
+      , skipBowerInstall :: Boolean
+      , skipEslint :: Boolean
+      , skipFormat :: Boolean
+      , skipPulp :: Boolean
+      , skipSpago :: Boolean
+      , skipSpagoInstall :: Boolean
+      , skipTests :: Boolean
+      }
   -- | Update package.json file
   | PackageJson { package :: Package }
   -- | Update eslintrc.json file

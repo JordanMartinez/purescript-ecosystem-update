@@ -3,11 +3,12 @@ module CLI where
 import Prelude
 
 import ArgParse.Basic (ArgError, fromRecord, optional)
+import ArgParse.Basic as Arg
 import ArgParse.Basic as ArgParse
 import Command (Command(..))
 import Data.Array as Array
 import Data.Bifunctor (lmap)
-import Data.Either (Either(..))
+import Data.Either (Either(..), note)
 import Data.Maybe (Maybe(..))
 import Data.Newtype (unwrap)
 import Data.String (Pattern(..), joinWith)
@@ -136,8 +137,20 @@ parseCliArgs =
   compileCmd = ArgParse.command ["compile"] description do
     Compile
       <$> fromRecord
-        { package: parsePackage
-        , clearBowerCache: parseClearBowerCacheOption
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+            # Arg.unformat
+                "PACKAGE"
+                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                )
+        , skipPulp: Arg.flag [ "--skip-pulp" ] "Does not install, build, or run tests with bower/pulp" # Arg.boolean
+        , clearBowerCache: Arg.flag [ "--clear-bower" ] "Clears bower's cache (if any)." # Arg.boolean
+        , skipBowerInstall: Arg.flag [ "--skip-bower-install" ] "Does not install bower dependencies" # Arg.boolean
+        , skipSpago: Arg.flag [ "--skip-spago" ] "Does not install, build, or run tests via spago" # Arg.boolean
+        , skipSpagoInstall: Arg.flag [ "--skip-spago-install" ] "Does not install spago dependencies" # Arg.boolean
+        , skipTests: Arg.flag [ "--skip-tests" ] "Does not run tests with either spago or pulp" # Arg.boolean
+        , skipEslint: Arg.flag [ "--skip-eslint" ] "Skips `eslint` from running on `src`, `test`, `bench`, and `examples` dirs" # Arg.boolean
+        , skipFormat: Arg.flag [ "--skip-format" ] "Skips `purs-tidy check src/ test/'" # Arg.boolean
         }
       <* ArgParse.flagHelp
     where
@@ -247,11 +260,6 @@ parseCliArgs =
     # ArgParse.unformat "PACKAGE" case _ of
       "" -> Left "PACKAGE must not be empty"
       x -> Right $ Package x
-
-  parseClearBowerCacheOption = ArgParse.flag [ "--clear-cache" ] description
-    # ArgParse.boolean
-    where
-    description = "If set, clears the repo's local bower cache"
 
   parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
     # ArgParse.unformat "GITHUB_ORG" case _ of
