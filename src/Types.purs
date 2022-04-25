@@ -5,6 +5,7 @@ import Prelude
 import Data.Argonaut.Decode (class DecodeJson)
 import Data.Argonaut.Encode (class EncodeJson)
 import Data.Hashable (class Hashable)
+import Data.Maybe (Maybe)
 import Data.Newtype (class Newtype)
 
 newtype Package = Package String
@@ -59,7 +60,8 @@ type PackageInfo =
 
 type ReleaseInfo version =
   { pkg :: Package
-  , gitTags :: Array version
+  , lastVersion :: Maybe version
+  , nextVersion :: version
   , hasBowerJsonFile :: Boolean
   , bowerDependencies :: Array Package
   , bowerDevDependencies :: Array Package

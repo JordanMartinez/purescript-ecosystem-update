@@ -7,19 +7,23 @@ import Control.Monad.Except (runExcept)
 import Data.Argonaut.Core (stringifyWithIndent)
 import Data.Argonaut.Decode as Json
 import Data.Argonaut.Encode (encodeJson)
-import Data.Array (elem)
+import Data.Array (elem, null)
+import Data.Array as Array
+import Data.Bifunctor (lmap)
 import Data.Either (either)
-import Data.Filterable as Array
-import Data.Foldable (foldl)
+import Data.Filterable (filterMap, partitionMap)
+import Data.Foldable (foldl, for_, maximum)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
 import Data.List (List(..), (:))
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.Newtype (unwrap)
-import Data.String (Pattern(..))
+import Data.String (Pattern(..), stripPrefix)
 import Data.String as String
 import Data.String.Regex (regex, replace)
 import Data.String.Regex.Flags (dotAll, multiline, noFlags)
 import Data.Traversable (traverse)
+import Data.Tuple (Tuple(..))
+import Data.Version as Version
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
@@ -65,9 +69,26 @@ generateReleaseInfo = do
     gitTagResult <- withSpawnResult =<< spawnAff' "git" ["tag"] inRepoDir
     throwIfSpawnErrored gitTagResult
     let
+      parseVersion s = (fromMaybe s $ stripPrefix (Pattern "v") s)
+        # Version.parseVersion
+        # lmap \e -> Tuple s e
       tags = gitTagResult.stdout
         # splitLines
         # Array.filter ((/=) "")
+      { left, right } = partitionMap parseVersion tags
+    unless (null left) do
+      log $ "These tags could not be parsed: "
+      for_ left \(Tuple vStr e) -> do
+        log $ "   '" <> vStr <> "': " <> show e
+    let
+      mbMaxGitTag = right
+        -- drop any prerelease or build meta info
+        # map
+        (
+          Version.runVersion \mjr mnr p _ _ ->
+            Version.version mjr mnr p Nil Nil
+        )
+        # maximum
     throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
     throwIfExecErrored =<< execAff' ("git checkout upstream/" <> defaultBranch') inRepoDir
 
@@ -83,7 +104,10 @@ generateReleaseInfo = do
     } <- getDhallDependenciesField $ Path.concat [ repoDir, repoFiles.testDhallFile ]
     pure
       { pkg: info.name
-      , gitTags: tags
+      , lastVersion: Version.showVersion <$> mbMaxGitTag
+      , nextVersion: Version.showVersion
+          $ maybe (Version.version 1 0 0 Nil Nil) Version.bumpMajor
+          $ mbMaxGitTag
       , hasBowerJsonFile
       , bowerDependencies
       , bowerDevDependencies
@@ -123,7 +147,7 @@ generateReleaseInfo = do
                 dependencies = dependenciesObj
                   # unsafeFromForeign
                   # Object.keys
-                  # Array.filterMap (String.stripPrefix (Pattern "purescript-"))
+                  # filterMap (String.stripPrefix (Pattern "purescript-"))
                   # Array.filter ((/=) "")
                   # arrStrToArrPkg
               pure dependencies
