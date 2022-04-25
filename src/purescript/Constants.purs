@@ -104,8 +104,8 @@ jqScripts
      , updateBowerDepsToBranchNameVersion :: String
      }
 jqScripts =
-  { updateBowerDepsToReleaseVersion: Path.concat [ "src", "jq", "update-bower-json-release-versions.txt" ]
-  , updateBowerDepsToBranchNameVersion: Path.concat [ "src", "jq", "update-bower-json-branch-name-versions.txt" ]
+  { updateBowerDepsToReleaseVersion: Path.concat [ "files", "jq", "update-bower-json-release-versions.txt" ]
+  , updateBowerDepsToBranchNameVersion: Path.concat [ "files", "jq", "update-bower-json-branch-name-versions.txt" ]
   }
 
 spagoFiles :: { preparePackageSetFile :: String }
