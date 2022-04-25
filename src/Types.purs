@@ -54,23 +54,19 @@ derive newtype instance Show BranchName
 derive newtype instance EncodeJson BranchName
 derive newtype instance DecodeJson BranchName
 
-type PackageInfo =
-  { package :: Package
+type PackageInfoRows r =
+  ( package :: Package
   , owner :: GitHubOwner
   , repo :: GitHubProject
   , gitUrl :: GitCloneUrl
   , defaultBranch :: BranchName
   , inBowerRegistry :: Boolean
-  }
+  | r
+  )
+type PackageInfo = { | PackageInfoRows () }
 
-type ReleaseInfo lastVersion nextVersion =
-  { package :: Package
-  , owner :: GitHubOwner
-  , repo :: GitHubProject
-  , gitUrl :: GitCloneUrl
-  , defaultBranch :: BranchName
-  , inBowerRegistry :: Boolean
-  , lastVersion :: Maybe lastVersion
+type ReleaseInfoRows lastVersion nextVersion r =
+  ( lastVersion :: Maybe lastVersion
   , nextVersion :: nextVersion
   , hasBowerJsonFile :: Boolean
   , bowerDependencies :: Array Package
@@ -79,4 +75,7 @@ type ReleaseInfo lastVersion nextVersion =
   , spagoDependencies :: Array Package
   , hasTestDhallFile :: Boolean
   , spagoTestDependencies :: Array Package
-  }
+  | r
+  )
+type ReleaseInfo lastVersion nextVersion =
+  { | ReleaseInfoRows lastVersion nextVersion (PackageInfoRows ()) }
