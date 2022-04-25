@@ -48,7 +48,6 @@ parseCliArgs =
       , genReleaseInfoCmd
       , getFileCmd
       , genEcosystemChangelogCmd
-      , showExamplesCmd
       ]
     <* ArgParse.flagHelp
 
@@ -188,7 +187,7 @@ parseCliArgs =
     description = "Run `.github/workflows/ci.yml`-related operations on a single package"
 
   checkCmd = ArgParse.command ["check"] description do
-    Check
+    CheckForDeprecated
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
@@ -264,11 +263,6 @@ parseCliArgs =
     EcosystemChangelog <$ ArgParse.flagHelp
     where
     description = "Generates an ecosystem-wide changelog with repeated entries and empty sections removed."
-
-  showExamplesCmd = ArgParse.command ["cli-examples"] description do
-    ShowExamples <$ ArgParse.flagHelp
-    where
-    description = "Show examples of how to use this CLI correctly"
 
   parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
     # ArgParse.unformat "GITHUB_ORG" case _ of
