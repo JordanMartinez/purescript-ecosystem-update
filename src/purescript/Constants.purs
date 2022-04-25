@@ -18,6 +18,7 @@ repoFiles
      , examplesDir :: String
      , gitIgnoreFile :: String
      , packageJsonFile :: String
+     , packagesDhallFile :: String
      , pursJsonFile :: String
      , spagoDhallFile :: String
      , spagoDir :: String
@@ -32,6 +33,7 @@ repoFiles =
   , eslintFile: ".eslintrc.json"
   , bowerJsonFile: "bower.json"
   , packageJsonFile: "package.json"
+  , packagesDhallFile: "packages.dhall"
   , spagoDhallFile: "spago.dhall"
   , testDhallFile: "test.dhall"
   , pursJsonFile: "purs.json"
@@ -104,6 +106,11 @@ jqScripts
 jqScripts =
   { updateBowerDepsToReleaseVersion: Path.concat [ "src", "jq", "update-bower-json-release-versions.txt" ]
   , updateBowerDepsToBranchNameVersion: Path.concat [ "src", "jq", "update-bower-json-branch-name-versions.txt" ]
+  }
+
+spagoFiles :: { preparePackageSetFile :: String }
+spagoFiles =
+  { preparePackageSetFile: Path.concat [ "files", "spago", "packages.dhall" ]
   }
 
 libDir :: String

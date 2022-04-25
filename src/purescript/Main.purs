@@ -15,6 +15,7 @@ import Command.Init as InitCmd
 import Command.Release as ReleaseCmd
 import Command.ReleaseInfo as RelaseInfoCmd
 import Command.ReleaseOrder as ReleaseOrderCmd
+import Command.Spago as SpagoCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
 import Effect (Effect)
@@ -50,6 +51,8 @@ main = do
           CloneCmd.cloneAll org
         Bower opts -> do
           BowerCmd.updatePackageDepsToBranchVersion opts
+        Spago opts -> do
+          SpagoCmd.updatePackageSet opts
         Compile opts -> do
           CompileCmd.compile opts
         ReleaseOrder ->

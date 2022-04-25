@@ -134,7 +134,7 @@ parseCliArgs =
         }
       <* ArgParse.flagHelp
     where
-    description = "Run Spago-related operations on a single package"
+    description = "Updates a single package's `spago.dhall` and `packages.dhall` files."
 
   compileCmd = ArgParse.command ["compile"] description do
     Compile
