@@ -1,0 +1,3690 @@
+{
+  "arrays": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "arrays",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "const",
+      "minibench"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "control",
+      "foldable-traversable",
+      "maybe",
+      "nonempty",
+      "partial",
+      "prelude",
+      "st",
+      "tailrec",
+      "tuples",
+      "unfoldable",
+      "unsafe-coerce"
+    ]
+  },
+  "assert": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "assert",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "console",
+      "effect",
+      "prelude"
+    ]
+  },
+  "bifunctors": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "bifunctors",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "const",
+      "either",
+      "newtype",
+      "prelude",
+      "tuples"
+    ]
+  },
+  "catenable-lists": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "catenable-lists",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "control",
+      "foldable-traversable",
+      "lists",
+      "maybe",
+      "prelude",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "console": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "console",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "prelude"
+    ]
+  },
+  "const": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "const",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "invariant",
+      "newtype",
+      "prelude"
+    ]
+  },
+  "contravariant": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "contravariant",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "const",
+      "either",
+      "newtype",
+      "prelude",
+      "tuples"
+    ]
+  },
+  "control": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "control",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "effect"
+    ],
+    "bowerDependencies": [
+      "newtype",
+      "prelude"
+    ]
+  },
+  "datetime": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "datetime",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.2",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "strings"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "control",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "functions",
+      "gen",
+      "integers",
+      "lists",
+      "maybe",
+      "newtype",
+      "numbers",
+      "ordered-collections",
+      "partial",
+      "prelude",
+      "tuples"
+    ]
+  },
+  "distributive": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "distributive",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "identity",
+      "newtype",
+      "prelude",
+      "tuples",
+      "type-equality"
+    ]
+  },
+  "effect": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "effect",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "prelude"
+    ]
+  },
+  "either": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "either",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "control",
+      "invariant",
+      "maybe",
+      "prelude"
+    ]
+  },
+  "enums": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "enums",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "control",
+      "either",
+      "gen",
+      "maybe",
+      "newtype",
+      "nonempty",
+      "partial",
+      "prelude",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "exceptions": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "exceptions",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "either",
+      "maybe",
+      "prelude"
+    ]
+  },
+  "exists": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "exists",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "unsafe-coerce"
+    ]
+  },
+  "filterable": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "filterable",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "foldable-traversable",
+      "identity",
+      "arrays",
+      "either",
+      "lists",
+      "ordered-collections"
+    ]
+  },
+  "foldable-traversable": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "foldable-traversable",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "integers",
+      "math",
+      "unsafe-coerce"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "const",
+      "control",
+      "either",
+      "functors",
+      "identity",
+      "maybe",
+      "newtype",
+      "orders",
+      "prelude",
+      "tuples"
+    ]
+  },
+  "foreign": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "foreign",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "either",
+      "functions",
+      "identity",
+      "integers",
+      "lists",
+      "maybe",
+      "prelude",
+      "strings",
+      "transformers"
+    ]
+  },
+  "foreign-object": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "foreign-object",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "minibench",
+      "quickcheck"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "foldable-traversable",
+      "functions",
+      "gen",
+      "lists",
+      "maybe",
+      "prelude",
+      "st",
+      "tailrec",
+      "tuples",
+      "typelevel-prelude",
+      "unfoldable"
+    ]
+  },
+  "free": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "free",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.2.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "functors"
+    ],
+    "bowerDependencies": [
+      "catenable-lists",
+      "control",
+      "distributive",
+      "either",
+      "exists",
+      "foldable-traversable",
+      "invariant",
+      "lazy",
+      "maybe",
+      "prelude",
+      "tailrec",
+      "transformers",
+      "tuples",
+      "unsafe-coerce"
+    ]
+  },
+  "functions": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "functions",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "prelude"
+    ]
+  },
+  "functors": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "functors",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.1.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "const",
+      "contravariant",
+      "control",
+      "distributive",
+      "either",
+      "invariant",
+      "maybe",
+      "newtype",
+      "prelude",
+      "profunctor",
+      "tuples",
+      "unsafe-coerce"
+    ]
+  },
+  "gen": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "gen",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "arrays",
+      "assert",
+      "console",
+      "lcg",
+      "math",
+      "transformers"
+    ],
+    "bowerDependencies": [
+      "either",
+      "foldable-traversable",
+      "identity",
+      "maybe",
+      "newtype",
+      "nonempty",
+      "prelude",
+      "tailrec",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "graphs": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "graphs",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "catenable-lists",
+      "ordered-collections"
+    ]
+  },
+  "identity": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "identity",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "control",
+      "invariant",
+      "newtype",
+      "prelude"
+    ]
+  },
+  "integers": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "integers",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "partial"
+    ],
+    "bowerDependencies": [
+      "maybe",
+      "numbers",
+      "prelude"
+    ]
+  },
+  "invariant": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "invariant",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "control",
+      "prelude"
+    ]
+  },
+  "lazy": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "lazy",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "control",
+      "foldable-traversable",
+      "invariant",
+      "prelude"
+    ]
+  },
+  "lcg": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "lcg",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "integers",
+      "maybe",
+      "numbers",
+      "partial",
+      "prelude",
+      "random"
+    ]
+  },
+  "lists": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "lists",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "arrays",
+      "assert",
+      "console",
+      "math",
+      "minibench"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "control",
+      "foldable-traversable",
+      "lazy",
+      "maybe",
+      "newtype",
+      "nonempty",
+      "partial",
+      "prelude",
+      "tailrec",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "maybe": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "maybe",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "control",
+      "invariant",
+      "newtype",
+      "prelude"
+    ]
+  },
+  "minibench": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "minibench",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "console",
+      "effect",
+      "integers",
+      "numbers",
+      "partial",
+      "prelude",
+      "refs"
+    ]
+  },
+  "newtype": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "newtype",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "prelude",
+      "safe-coerce"
+    ]
+  },
+  "nonempty": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "nonempty",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "control",
+      "foldable-traversable",
+      "maybe",
+      "prelude",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "numbers": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "numbers",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "functions",
+      "maybe"
+    ]
+  },
+  "ordered-collections": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "ordered-collections",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.2",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "minibench",
+      "quickcheck"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "foldable-traversable",
+      "gen",
+      "lists",
+      "maybe",
+      "partial",
+      "prelude",
+      "st",
+      "tailrec",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "orders": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "orders",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "newtype",
+      "prelude"
+    ]
+  },
+  "parallel": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "parallel",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "functions"
+    ],
+    "bowerDependencies": [
+      "control",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "functors",
+      "maybe",
+      "newtype",
+      "prelude",
+      "profunctor",
+      "refs",
+      "transformers"
+    ]
+  },
+  "partial": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "partial",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": []
+  },
+  "prelude": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "prelude",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": []
+  },
+  "profunctor": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "profunctor",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "control",
+      "distributive",
+      "either",
+      "exists",
+      "invariant",
+      "newtype",
+      "prelude",
+      "tuples"
+    ]
+  },
+  "psci-support": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "psci-support",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "console",
+      "effect",
+      "prelude"
+    ]
+  },
+  "quickcheck": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "quickcheck",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "numbers"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "enums",
+      "exceptions",
+      "foldable-traversable",
+      "gen",
+      "identity",
+      "integers",
+      "lazy",
+      "lcg",
+      "lists",
+      "maybe",
+      "newtype",
+      "nonempty",
+      "numbers",
+      "partial",
+      "prelude",
+      "record",
+      "st",
+      "strings",
+      "tailrec",
+      "transformers",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "random": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "random",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "integers",
+      "math"
+    ]
+  },
+  "record": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "record",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert"
+    ],
+    "bowerDependencies": [
+      "functions",
+      "prelude",
+      "unsafe-coerce"
+    ]
+  },
+  "refs": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "refs",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "prelude"
+    ]
+  },
+  "safe-coerce": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "safe-coerce",
+    "nextVersion": "2.0.0",
+    "lastVersion": "1.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "unsafe-coerce"
+    ]
+  },
+  "semirings": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "semirings",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "foldable-traversable",
+      "lists",
+      "newtype",
+      "prelude"
+    ]
+  },
+  "st": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "st",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "partial",
+      "prelude",
+      "tailrec",
+      "unsafe-coerce"
+    ]
+  },
+  "strings": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "strings",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "minibench"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "control",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "gen",
+      "integers",
+      "maybe",
+      "newtype",
+      "nonempty",
+      "partial",
+      "prelude",
+      "tailrec",
+      "tuples",
+      "unfoldable",
+      "unsafe-coerce"
+    ]
+  },
+  "tailrec": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "tailrec",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "effect",
+      "either",
+      "identity",
+      "maybe",
+      "partial",
+      "prelude",
+      "refs"
+    ]
+  },
+  "transformers": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "transformers",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.2.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "arrays",
+      "console"
+    ],
+    "bowerDependencies": [
+      "control",
+      "distributive",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "identity",
+      "lazy",
+      "maybe",
+      "newtype",
+      "prelude",
+      "tailrec",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "tuples": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "tuples",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "control",
+      "invariant",
+      "prelude"
+    ]
+  },
+  "type-equality": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "type-equality",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "newtype"
+    ],
+    "bowerDependencies": []
+  },
+  "typelevel-prelude": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "typelevel-prelude",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "prelude",
+      "type-equality"
+    ]
+  },
+  "unfoldable": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "unfoldable",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "psci-support"
+    ],
+    "bowerDependencies": [
+      "foldable-traversable",
+      "maybe",
+      "partial",
+      "prelude",
+      "tuples"
+    ]
+  },
+  "unsafe-coerce": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "unsafe-coerce",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": []
+  },
+  "validation": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "validation",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "ordered-collections",
+      "psci-support",
+      "strings"
+    ],
+    "bowerDependencies": [
+      "bifunctors",
+      "control",
+      "either",
+      "foldable-traversable",
+      "newtype",
+      "prelude"
+    ]
+  },
+  "ace": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "console",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "foreign",
+      "functions",
+      "maybe",
+      "nullable",
+      "partial",
+      "prelude",
+      "refs",
+      "st",
+      "transformers",
+      "web-html",
+      "web-uievents"
+    ],
+    "pkg": "ace",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "refs"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "effect",
+      "foreign",
+      "nullable",
+      "prelude",
+      "web-html",
+      "web-uievents"
+    ]
+  },
+  "aff-bus": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "avar",
+      "console",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "lists",
+      "prelude",
+      "refs",
+      "tailrec",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "aff-bus",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "refs"
+    ],
+    "bowerDependencies": [
+      "avar",
+      "effect",
+      "prelude"
+    ]
+  },
+  "aff-coroutines": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "avar",
+      "console",
+      "coroutines",
+      "effect",
+      "either",
+      "freet",
+      "maybe",
+      "newtype",
+      "prelude",
+      "transformers"
+    ],
+    "pkg": "aff-coroutines",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "avar",
+      "coroutines",
+      "effect"
+    ]
+  },
+  "aff": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "functions",
+      "maybe",
+      "minibench",
+      "newtype",
+      "parallel",
+      "partial",
+      "prelude",
+      "refs",
+      "tailrec",
+      "transformers",
+      "unsafe-coerce"
+    ],
+    "pkg": "aff",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "minibench",
+      "assert"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "bifunctors",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "functions",
+      "maybe",
+      "newtype",
+      "parallel",
+      "prelude",
+      "refs",
+      "tailrec",
+      "transformers",
+      "unsafe-coerce"
+    ]
+  },
+  "affjax": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "argonaut-core",
+      "arraybuffer-types",
+      "arrays",
+      "console",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "foreign",
+      "foreign-object",
+      "form-urlencoded",
+      "functions",
+      "http-methods",
+      "lists",
+      "maybe",
+      "media-types",
+      "newtype",
+      "nullable",
+      "prelude",
+      "transformers",
+      "web-dom",
+      "web-file",
+      "web-xhr"
+    ],
+    "pkg": "affjax",
+    "nextVersion": "13.0.0",
+    "lastVersion": "12.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "psci-support"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "argonaut-core",
+      "arraybuffer-types",
+      "arrays",
+      "console",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "foreign",
+      "foreign-object",
+      "form-urlencoded",
+      "functions",
+      "http-methods",
+      "lists",
+      "maybe",
+      "media-types",
+      "newtype",
+      "nullable",
+      "prelude",
+      "transformers",
+      "web-dom",
+      "web-file",
+      "web-xhr"
+    ]
+  },
+  "affjax-web": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "affjax"
+    ],
+    "pkg": "affjax-web",
+    "nextVersion": "1.0.0",
+    "lastVersion": null,
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "psci-support"
+    ],
+    "bowerDependencies": [
+      "affjax"
+    ]
+  },
+  "affjax-node": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "affjax"
+    ],
+    "pkg": "affjax-node",
+    "nextVersion": "1.0.0",
+    "lastVersion": null,
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "psci-support"
+    ],
+    "bowerDependencies": [
+      "affjax"
+    ]
+  },
+  "argonaut-codecs": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "argonaut-core",
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "foreign-object",
+      "gen",
+      "identity",
+      "integers",
+      "lists",
+      "maybe",
+      "nonempty",
+      "ordered-collections",
+      "prelude",
+      "quickcheck",
+      "record",
+      "strings",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "argonaut-codecs",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "exceptions",
+      "gen",
+      "quickcheck",
+      "transformers"
+    ],
+    "bowerDependencies": [
+      "argonaut-core",
+      "arrays",
+      "bifunctors",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "foreign-object",
+      "identity",
+      "integers",
+      "lists",
+      "maybe",
+      "nonempty",
+      "ordered-collections",
+      "prelude",
+      "record",
+      "strings",
+      "tuples"
+    ]
+  },
+  "argonaut-core": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "foreign-object",
+      "functions",
+      "gen",
+      "maybe",
+      "nonempty",
+      "partial",
+      "prelude",
+      "quickcheck",
+      "strings",
+      "tailrec",
+      "tuples"
+    ],
+    "pkg": "argonaut-core",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "quickcheck"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "control",
+      "either",
+      "foreign-object",
+      "functions",
+      "gen",
+      "maybe",
+      "nonempty",
+      "prelude",
+      "strings",
+      "tailrec"
+    ]
+  },
+  "argonaut-generic": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "argonaut-codecs",
+      "argonaut-core",
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "exceptions",
+      "foreign-object",
+      "partial",
+      "prelude",
+      "strings"
+    ],
+    "pkg": "argonaut-generic",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "effect",
+      "exceptions"
+    ],
+    "bowerDependencies": [
+      "argonaut-codecs",
+      "argonaut-core",
+      "prelude",
+      "record"
+    ]
+  },
+  "argonaut": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "argonaut-codecs",
+      "argonaut-core",
+      "argonaut-traversals",
+      "console",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "maybe",
+      "prelude",
+      "quickcheck",
+      "strings"
+    ],
+    "pkg": "argonaut",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "maybe",
+      "prelude",
+      "quickcheck",
+      "strings"
+    ],
+    "bowerDependencies": [
+      "argonaut-codecs",
+      "argonaut-core",
+      "argonaut-traversals"
+    ]
+  },
+  "argonaut-traversals": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "argonaut-codecs",
+      "argonaut-core",
+      "arrays",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "foreign-object",
+      "gen",
+      "integers",
+      "lists",
+      "maybe",
+      "prelude",
+      "profunctor-lenses",
+      "quickcheck",
+      "strings",
+      "tailrec",
+      "tuples",
+      "unfoldable"
+    ],
+    "pkg": "argonaut-traversals",
+    "nextVersion": "10.0.0",
+    "lastVersion": "9.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect",
+      "quickcheck"
+    ],
+    "bowerDependencies": [
+      "argonaut-codecs",
+      "argonaut-core",
+      "arrays",
+      "control",
+      "either",
+      "foldable-traversable",
+      "foreign-object",
+      "gen",
+      "integers",
+      "lists",
+      "maybe",
+      "prelude",
+      "profunctor-lenses",
+      "strings",
+      "tailrec",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "arraybuffer": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arraybuffer-types",
+      "arrays",
+      "effect",
+      "float32",
+      "functions",
+      "gen",
+      "maybe",
+      "nullable",
+      "prelude",
+      "tailrec",
+      "uint",
+      "unfoldable"
+    ],
+    "pkg": "arraybuffer",
+    "nextVersion": "13.0.0",
+    "lastVersion": "12.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "quickcheck-laws"
+    ],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "arrays",
+      "effect",
+      "float32",
+      "functions",
+      "gen",
+      "maybe",
+      "nullable",
+      "prelude",
+      "tailrec",
+      "uint",
+      "unfoldable"
+    ]
+  },
+  "arraybuffer-types": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "arraybuffer-types",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "psci-support"
+    ],
+    "bowerDependencies": []
+  },
+  "avar": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "assert",
+      "console",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "functions",
+      "maybe",
+      "prelude",
+      "refs"
+    ],
+    "pkg": "avar",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "refs",
+      "transformers"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "effect",
+      "either",
+      "exceptions",
+      "functions",
+      "maybe"
+    ]
+  },
+  "colors": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "effect",
+      "console",
+      "control",
+      "either",
+      "foldable-traversable",
+      "integers",
+      "lists",
+      "maybe",
+      "numbers",
+      "partial",
+      "prelude",
+      "strings"
+    ],
+    "pkg": "colors",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "integers",
+      "numbers",
+      "lists",
+      "partial",
+      "strings"
+    ]
+  },
+  "concurrent-queues": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "arrays",
+      "assert",
+      "avar",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "integers",
+      "maybe",
+      "partial",
+      "prelude",
+      "transformers",
+      "tuples",
+      "unfoldable"
+    ],
+    "pkg": "concurrent-queues",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "assert"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "avar",
+      "effect"
+    ]
+  },
+  "coroutines": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "bifunctors",
+      "console",
+      "effect",
+      "either",
+      "freet",
+      "identity",
+      "maybe",
+      "newtype",
+      "parallel",
+      "prelude",
+      "profunctor",
+      "tailrec",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "coroutines",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "aff",
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "freet",
+      "parallel",
+      "profunctor"
+    ]
+  },
+  "css": {
+    "spagoTestDependencies": [
+      "aff",
+      "assert",
+      "control",
+      "exceptions",
+      "partial"
+    ],
+    "spagoDependencies": [
+      "arrays",
+      "colors",
+      "console",
+      "effect",
+      "either",
+      "exists",
+      "foldable-traversable",
+      "maybe",
+      "nonempty",
+      "prelude",
+      "profunctor",
+      "strings",
+      "these",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "css",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": true,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "aff",
+      "assert",
+      "control",
+      "exceptions",
+      "partial"
+    ],
+    "bowerDependencies": [
+      "colors",
+      "console",
+      "effect",
+      "nonempty",
+      "profunctor",
+      "strings",
+      "these",
+      "transformers"
+    ]
+  },
+  "fixed-points": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "control",
+      "exists",
+      "newtype",
+      "prelude",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "fixed-points",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "exists",
+      "newtype",
+      "prelude",
+      "transformers"
+    ]
+  },
+  "float32": {
+    "spagoTestDependencies": [
+      "effect",
+      "quickcheck",
+      "quickcheck-laws"
+    ],
+    "spagoDependencies": [
+      "gen",
+      "maybe",
+      "prelude"
+    ],
+    "pkg": "float32",
+    "nextVersion": "2.0.0",
+    "lastVersion": "1.0.0",
+    "hasTestDhallFile": true,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "psci-support",
+      "quickcheck-laws"
+    ],
+    "bowerDependencies": [
+      "gen",
+      "maybe",
+      "prelude"
+    ]
+  },
+  "fork": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "console",
+      "effect",
+      "prelude",
+      "transformers"
+    ],
+    "pkg": "fork",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "aff"
+    ]
+  },
+  "formatters": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "integers",
+      "lists",
+      "maybe",
+      "newtype",
+      "numbers",
+      "ordered-collections",
+      "parsing",
+      "partial",
+      "prelude",
+      "strings",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "formatters",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "aff",
+      "assert",
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "datetime",
+      "fixed-points",
+      "lists",
+      "numbers",
+      "parsing",
+      "prelude",
+      "transformers"
+    ]
+  },
+  "form-urlencoded": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "console",
+      "effect",
+      "foldable-traversable",
+      "js-uri",
+      "maybe",
+      "newtype",
+      "prelude",
+      "strings",
+      "tuples"
+    ],
+    "pkg": "form-urlencoded",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.2",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "foldable-traversable",
+      "maybe",
+      "newtype",
+      "prelude",
+      "strings",
+      "tuples",
+      "js-uri"
+    ]
+  },
+  "freet": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "bifunctors",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "exists",
+      "foldable-traversable",
+      "free",
+      "lists",
+      "maybe",
+      "prelude",
+      "tailrec",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "freet",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "bifunctors",
+      "effect",
+      "either",
+      "exists",
+      "free",
+      "prelude",
+      "tailrec",
+      "transformers",
+      "tuples"
+    ]
+  },
+  "http-methods": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "console",
+      "effect",
+      "either",
+      "prelude",
+      "strings"
+    ],
+    "pkg": "http-methods",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "either",
+      "prelude",
+      "strings"
+    ]
+  },
+  "js-date": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "console",
+      "datetime",
+      "effect",
+      "either",
+      "enums",
+      "foreign",
+      "functions",
+      "integers",
+      "maybe",
+      "numbers",
+      "partial",
+      "prelude",
+      "transformers"
+    ],
+    "pkg": "js-date",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "numbers"
+    ],
+    "bowerDependencies": [
+      "datetime",
+      "effect",
+      "foreign",
+      "integers"
+    ]
+  },
+  "js-timers": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "console",
+      "effect",
+      "prelude",
+      "refs"
+    ],
+    "pkg": "js-timers",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "refs"
+    ],
+    "bowerDependencies": [
+      "effect"
+    ]
+  },
+  "js-uri": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "effect",
+      "functions",
+      "maybe",
+      "prelude"
+    ],
+    "pkg": "js-uri",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "functions",
+      "maybe"
+    ]
+  },
+  "machines": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "console",
+      "control",
+      "effect",
+      "lists",
+      "maybe",
+      "prelude",
+      "profunctor",
+      "tuples",
+      "unfoldable"
+    ],
+    "pkg": "machines",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "control",
+      "effect",
+      "lists",
+      "maybe",
+      "prelude",
+      "profunctor",
+      "tuples",
+      "unfoldable"
+    ]
+  },
+  "matryoshka": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "bifunctors",
+      "console",
+      "control",
+      "distributive",
+      "effect",
+      "either",
+      "fixed-points",
+      "foldable-traversable",
+      "free",
+      "identity",
+      "lists",
+      "newtype",
+      "prelude",
+      "profunctor",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "matryoshka",
+    "nextVersion": "1.0.0",
+    "lastVersion": "0.5.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "fixed-points",
+      "free",
+      "prelude",
+      "profunctor",
+      "transformers"
+    ]
+  },
+  "media-types": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "newtype",
+      "prelude"
+    ],
+    "pkg": "media-types",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "newtype",
+      "prelude"
+    ]
+  },
+  "now": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "console",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "node-process",
+      "prelude",
+      "transformers"
+    ],
+    "pkg": "now",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "either",
+      "exceptions",
+      "node-process",
+      "prelude",
+      "transformers"
+    ],
+    "bowerDependencies": [
+      "datetime",
+      "effect"
+    ]
+  },
+  "nullable": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "effect",
+      "functions",
+      "maybe",
+      "prelude"
+    ],
+    "pkg": "nullable",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "functions",
+      "maybe",
+      "prelude"
+    ]
+  },
+  "options": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "assert",
+      "console",
+      "contravariant",
+      "effect",
+      "foreign",
+      "foreign-object",
+      "maybe",
+      "newtype",
+      "prelude",
+      "tuples"
+    ],
+    "pkg": "options",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "contravariant",
+      "foreign",
+      "foreign-object",
+      "maybe",
+      "tuples"
+    ]
+  },
+  "parsing": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "control",
+      "effect",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "functions",
+      "identity",
+      "integers",
+      "lazy",
+      "lists",
+      "maybe",
+      "newtype",
+      "numbers",
+      "nullable",
+      "partial",
+      "prelude",
+      "st",
+      "strings",
+      "tailrec",
+      "transformers",
+      "tuples",
+      "unfoldable",
+      "unicode",
+      "unsafe-coerce"
+    ],
+    "pkg": "parsing",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.4.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "effect",
+      "node-process"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "control",
+      "either",
+      "foldable-traversable",
+      "identity",
+      "integers",
+      "lists",
+      "maybe",
+      "newtype",
+      "numbers",
+      "nullable",
+      "prelude",
+      "strings",
+      "tailrec",
+      "transformers",
+      "tuples",
+      "unfoldable",
+      "unicode",
+      "unsafe-coerce"
+    ]
+  },
+  "pathy": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "console",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "gen",
+      "identity",
+      "lists",
+      "maybe",
+      "newtype",
+      "nonempty",
+      "partial",
+      "prelude",
+      "quickcheck",
+      "strings",
+      "tailrec",
+      "tuples",
+      "typelevel-prelude",
+      "unsafe-coerce"
+    ],
+    "pkg": "pathy",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "effect",
+      "quickcheck"
+    ],
+    "bowerDependencies": [
+      "console",
+      "exceptions",
+      "lists",
+      "partial",
+      "profunctor",
+      "strings",
+      "transformers",
+      "typelevel-prelude",
+      "unsafe-coerce"
+    ]
+  },
+  "precise": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "console",
+      "effect",
+      "exceptions",
+      "foldable-traversable",
+      "gen",
+      "integers",
+      "lists",
+      "maybe",
+      "numbers",
+      "partial",
+      "prelude",
+      "quickcheck",
+      "quickcheck-laws",
+      "strings",
+      "tuples",
+      "unfoldable"
+    ],
+    "pkg": "precise",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "quickcheck",
+      "quickcheck-laws"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "console",
+      "effect",
+      "exceptions",
+      "gen",
+      "integers",
+      "lists",
+      "numbers",
+      "prelude",
+      "strings"
+    ]
+  },
+  "profunctor-lenses": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "const",
+      "control",
+      "distributive",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "foreign-object",
+      "functors",
+      "identity",
+      "lists",
+      "maybe",
+      "newtype",
+      "ordered-collections",
+      "partial",
+      "prelude",
+      "profunctor",
+      "record",
+      "safe-coerce",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "profunctor-lenses",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect",
+      "assert"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "bifunctors",
+      "const",
+      "control",
+      "distributive",
+      "either",
+      "foldable-traversable",
+      "foreign-object",
+      "functors",
+      "identity",
+      "lists",
+      "maybe",
+      "newtype",
+      "ordered-collections",
+      "partial",
+      "prelude",
+      "profunctor",
+      "record",
+      "transformers",
+      "tuples"
+    ]
+  },
+  "quickcheck-laws": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "identity",
+      "lists",
+      "maybe",
+      "newtype",
+      "prelude",
+      "quickcheck",
+      "tuples"
+    ],
+    "pkg": "quickcheck-laws",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "prelude",
+      "enums",
+      "quickcheck"
+    ]
+  },
+  "react-dom": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "console",
+      "effect",
+      "functions",
+      "maybe",
+      "nullable",
+      "prelude",
+      "react",
+      "web-dom"
+    ],
+    "pkg": "react-dom",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "react",
+      "web-dom"
+    ]
+  },
+  "react": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "console",
+      "effect",
+      "exceptions",
+      "maybe",
+      "nullable",
+      "prelude",
+      "typelevel-prelude",
+      "unsafe-coerce"
+    ],
+    "pkg": "react",
+    "nextVersion": "10.0.0",
+    "lastVersion": "9.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "exceptions",
+      "maybe",
+      "nullable",
+      "prelude",
+      "typelevel-prelude",
+      "unsafe-coerce"
+    ]
+  },
+  "routing": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "bifunctors",
+      "control",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "foreign",
+      "integers",
+      "js-uri",
+      "lists",
+      "maybe",
+      "newtype",
+      "numbers",
+      "ordered-collections",
+      "partial",
+      "prelude",
+      "record",
+      "refs",
+      "semirings",
+      "strings",
+      "transformers",
+      "tuples",
+      "validation",
+      "web-dom",
+      "web-events",
+      "web-html"
+    ],
+    "pkg": "routing",
+    "nextVersion": "11.0.0",
+    "lastVersion": "10.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "record"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "foldable-traversable",
+      "integers",
+      "js-uri",
+      "lists",
+      "maybe",
+      "numbers",
+      "partial",
+      "prelude",
+      "semirings",
+      "tuples",
+      "validation",
+      "web-html"
+    ]
+  },
+  "string-parsers": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "lists",
+      "maybe",
+      "minibench",
+      "nonempty",
+      "partial",
+      "prelude",
+      "strings",
+      "tailrec",
+      "transformers",
+      "unfoldable"
+    ],
+    "pkg": "string-parsers",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "enums",
+      "foldable-traversable",
+      "lists",
+      "maybe",
+      "minibench",
+      "nonempty",
+      "partial",
+      "prelude",
+      "psci-support",
+      "strings",
+      "tailrec",
+      "transformers",
+      "unfoldable"
+    ]
+  },
+  "strings-extra": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "console",
+      "effect",
+      "foldable-traversable",
+      "integers",
+      "maybe",
+      "prelude",
+      "strings",
+      "unicode"
+    ],
+    "pkg": "strings-extra",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "foldable-traversable",
+      "maybe",
+      "prelude",
+      "strings",
+      "unicode"
+    ]
+  },
+  "these": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "bifunctors",
+      "console",
+      "control",
+      "effect",
+      "foldable-traversable",
+      "gen",
+      "invariant",
+      "lists",
+      "maybe",
+      "newtype",
+      "prelude",
+      "quickcheck",
+      "quickcheck-laws",
+      "tailrec",
+      "tuples"
+    ],
+    "pkg": "these",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "gen",
+      "lists",
+      "quickcheck",
+      "quickcheck-laws",
+      "tuples"
+    ]
+  },
+  "uint": {
+    "spagoTestDependencies": [
+      "effect",
+      "newtype",
+      "quickcheck",
+      "quickcheck-laws"
+    ],
+    "spagoDependencies": [
+      "prelude",
+      "maybe",
+      "numbers",
+      "enums",
+      "gen"
+    ],
+    "pkg": "uint",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.3",
+    "hasTestDhallFile": true,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "effect",
+      "psci-support",
+      "quickcheck",
+      "quickcheck-laws"
+    ],
+    "bowerDependencies": [
+      "enums",
+      "gen",
+      "numbers",
+      "maybe",
+      "prelude"
+    ]
+  },
+  "unicode": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "arrays",
+      "assert",
+      "console",
+      "effect",
+      "enums",
+      "foldable-traversable",
+      "integers",
+      "maybe",
+      "partial",
+      "prelude",
+      "quickcheck",
+      "random",
+      "strings",
+      "transformers",
+      "unsafe-coerce"
+    ],
+    "pkg": "unicode",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "effect",
+      "quickcheck",
+      "random"
+    ],
+    "bowerDependencies": [
+      "foldable-traversable",
+      "maybe",
+      "strings"
+    ]
+  },
+  "unsafe-reference": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "console",
+      "effect",
+      "exceptions",
+      "prelude"
+    ],
+    "pkg": "unsafe-reference",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "effect",
+      "exceptions"
+    ],
+    "bowerDependencies": [
+      "prelude"
+    ]
+  },
+  "uri": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "arrays",
+      "assert",
+      "bifunctors",
+      "console",
+      "control",
+      "effect",
+      "either",
+      "exceptions",
+      "foldable-traversable",
+      "gen",
+      "integers",
+      "js-uri",
+      "lists",
+      "maybe",
+      "newtype",
+      "parsing",
+      "partial",
+      "prelude",
+      "profunctor-lenses",
+      "quickcheck",
+      "strings",
+      "tailrec",
+      "these",
+      "transformers",
+      "tuples"
+    ],
+    "pkg": "uri",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "aff",
+      "assert",
+      "quickcheck"
+    ],
+    "bowerDependencies": [
+      "arrays",
+      "integers",
+      "js-uri",
+      "numbers",
+      "parsing",
+      "prelude",
+      "profunctor-lenses",
+      "these",
+      "transformers",
+      "unfoldable"
+    ]
+  },
+  "canvas": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "canvas",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "effect",
+      "exceptions",
+      "functions",
+      "maybe"
+    ]
+  },
+  "web-clipboard": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-clipboard",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "web-html"
+    ]
+  },
+  "web-cssom": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-cssom",
+    "nextVersion": "2.0.0",
+    "lastVersion": "1.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "web-dom",
+      "web-html",
+      "web-uievents"
+    ]
+  },
+  "web-dom": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-dom",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "web-events"
+    ]
+  },
+  "web-dom-parser": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-dom-parser",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "psci-support"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "partial",
+      "prelude",
+      "web-dom"
+    ]
+  },
+  "web-dom-xpath": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-dom-xpath",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "aff",
+      "assert",
+      "console",
+      "foreign",
+      "web-dom-parser"
+    ],
+    "bowerDependencies": [
+      "web-dom"
+    ]
+  },
+  "web-encoding": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-encoding",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "effect",
+      "newtype",
+      "prelude"
+    ]
+  },
+  "web-events": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-events",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "datetime",
+      "enums",
+      "nullable",
+      "foreign"
+    ]
+  },
+  "web-fetch": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-fetch",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "foreign-object",
+      "http-methods",
+      "prelude",
+      "record",
+      "typelevel-prelude",
+      "web-file",
+      "web-promise",
+      "web-streams"
+    ]
+  },
+  "web-file": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-file",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "foreign",
+      "media-types",
+      "web-dom"
+    ]
+  },
+  "web-html": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-html",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.2.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "js-date",
+      "web-dom",
+      "web-file",
+      "web-storage"
+    ]
+  },
+  "web-promise": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-promise",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "exceptions",
+      "functions",
+      "maybe",
+      "prelude",
+      "foldable-traversable"
+    ]
+  },
+  "web-socket": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-socket",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "web-file"
+    ]
+  },
+  "web-storage": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-storage",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "nullable",
+      "web-events"
+    ]
+  },
+  "web-streams": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-streams",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "effect",
+      "exceptions",
+      "nullable",
+      "prelude",
+      "tuples",
+      "web-promise"
+    ]
+  },
+  "web-touchevents": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-touchevents",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "web-uievents"
+    ]
+  },
+  "web-uievents": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-uievents",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "web-html"
+    ]
+  },
+  "web-xhr": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "web-xhr",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "datetime",
+      "http-methods",
+      "web-dom",
+      "web-file",
+      "web-html"
+    ]
+  },
+  "node-buffer": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-buffer",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "foldable-traversable"
+    ],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "effect",
+      "maybe",
+      "st",
+      "unsafe-coerce"
+    ]
+  },
+  "node-child-process": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-child-process",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.1.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "exceptions",
+      "foreign",
+      "foreign-object",
+      "functions",
+      "node-fs",
+      "node-streams",
+      "nullable",
+      "posix-types",
+      "unsafe-coerce"
+    ]
+  },
+  "node-fs-aff": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-fs-aff",
+    "nextVersion": "8.0.0",
+    "lastVersion": "7.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "either",
+      "node-fs",
+      "node-path"
+    ]
+  },
+  "node-fs": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-fs",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.2.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console",
+      "node-buffer"
+    ],
+    "bowerDependencies": [
+      "datetime",
+      "effect",
+      "either",
+      "enums",
+      "exceptions",
+      "functions",
+      "integers",
+      "js-date",
+      "maybe",
+      "node-buffer",
+      "node-path",
+      "node-streams",
+      "nullable",
+      "partial",
+      "prelude",
+      "strings",
+      "unsafe-coerce"
+    ]
+  },
+  "node-http": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-http",
+    "nextVersion": "7.0.0",
+    "lastVersion": "6.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "arraybuffer-types",
+      "contravariant",
+      "effect",
+      "foreign",
+      "foreign-object",
+      "maybe",
+      "node-buffer",
+      "node-net",
+      "node-streams",
+      "node-url",
+      "nullable",
+      "options",
+      "prelude",
+      "unsafe-coerce"
+    ]
+  },
+  "node-net": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-net",
+    "nextVersion": "3.0.0",
+    "lastVersion": "2.0.1",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "either",
+      "exceptions",
+      "foreign",
+      "maybe",
+      "node-buffer",
+      "node-fs",
+      "nullable",
+      "options",
+      "prelude",
+      "transformers"
+    ]
+  },
+  "node-path": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-path",
+    "nextVersion": "5.0.0",
+    "lastVersion": "4.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console"
+    ],
+    "bowerDependencies": [
+      "effect"
+    ]
+  },
+  "node-process": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-process",
+    "nextVersion": "9.0.0",
+    "lastVersion": "8.2.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [],
+    "bowerDependencies": [
+      "effect",
+      "foreign-object",
+      "maybe",
+      "node-streams",
+      "posix-types",
+      "prelude",
+      "unsafe-coerce"
+    ]
+  },
+  "node-readline": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-readline",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "foreign",
+      "node-process",
+      "node-streams",
+      "options",
+      "prelude"
+    ]
+  },
+  "node-streams": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-streams",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "console",
+      "partial"
+    ],
+    "bowerDependencies": [
+      "effect",
+      "either",
+      "exceptions",
+      "node-buffer",
+      "prelude"
+    ]
+  },
+  "node-url": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "node-url",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert"
+    ],
+    "bowerDependencies": [
+      "nullable"
+    ]
+  },
+  "posix-types": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [],
+    "pkg": "posix-types",
+    "nextVersion": "6.0.0",
+    "lastVersion": "5.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": false,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "console"
+    ],
+    "bowerDependencies": [
+      "maybe",
+      "prelude"
+    ]
+  },
+  "aff-promise": {
+    "spagoTestDependencies": [],
+    "spagoDependencies": [
+      "aff",
+      "assert",
+      "console",
+      "control",
+      "datetime",
+      "effect",
+      "either",
+      "exceptions",
+      "foreign",
+      "integers",
+      "prelude",
+      "transformers"
+    ],
+    "pkg": "aff-promise",
+    "nextVersion": "4.0.0",
+    "lastVersion": "3.0.0",
+    "hasTestDhallFile": false,
+    "hasSpagoDhallFile": true,
+    "hasBowerJsonFile": true,
+    "bowerDevDependencies": [
+      "assert",
+      "datetime"
+    ],
+    "bowerDependencies": [
+      "aff",
+      "foreign"
+    ]
+  }
+}
