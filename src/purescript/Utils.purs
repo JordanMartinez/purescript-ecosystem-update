@@ -4,11 +4,10 @@ import Prelude
 
 import Constants (libDir)
 import Data.Array (fold)
-import Data.Array as Array
 import Data.Either (Either(..), either)
 import Data.Foldable (for_)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
-import Data.Maybe (Maybe(..), isJust, maybe, maybe')
+import Data.Maybe (Maybe(..), isJust, maybe')
 import Data.Monoid.Disj (Disj(..))
 import Data.Newtype (unwrap)
 import Data.Nullable (Nullable)
@@ -16,7 +15,7 @@ import Data.Posix.Signal (Signal(..))
 import Data.String (Pattern(..), stripSuffix)
 import Data.String as String
 import Data.String.Regex (Regex)
-import Data.Traversable (for, traverse)
+import Data.Traversable (for)
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Aff (Aff, Error, effectCanceler, makeAff, nonCanceler)
@@ -41,7 +40,7 @@ import Node.Path as Path
 import Node.Stream (Readable)
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
-import Types (Package(..), PackageInfo)
+import Types (Package)
 
 foreign import mkdirImpl :: String -> { recursive :: Boolean } -> Effect Unit -> Effect Unit
 
