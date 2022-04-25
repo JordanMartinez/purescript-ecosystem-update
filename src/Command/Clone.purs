@@ -29,8 +29,8 @@ clone
   :: forall m
    . MonadAff m
   => Either
-      { owner :: GitHubOwner, repo :: GitHubProject, package :: Package }
-      PackageInfo
+       { owner :: GitHubOwner, repo :: GitHubProject, package :: Package }
+       PackageInfo
   -> Maybe GitHubOwner
   -> m Unit
 clone pkgInfo org = do

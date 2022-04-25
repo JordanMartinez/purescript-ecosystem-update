@@ -35,18 +35,20 @@ generateEcosystemChangelog = do
     { left: pkgsWithNoFile, right: pkgsWithFile } = partitionMap identity fileInfo
     { left: noInterestingChanges, right: interestingChanges } = partitionMap identity pkgsWithFile
     groups = groupBy (\l r -> l.owner == r.owner) interestingChanges
-    groupLines = groups <#> \pkgArr -> do
+    groupLines = groups <#> \pkgArr ->
       [ "## `" <> unwrap (NEA.head pkgArr).owner <> "` libraries"
       , ""
       ]
-      <> (join $ NEA.toArray $ pkgArr <#> \p -> do
-        [ "### `" <> p.pkg <> "`"
-        , ""
-        ]
-        <> p.lines
         <>
-        [ ""
-        ])
+          ( join $ NEA.toArray $ pkgArr <#> \p ->
+              [ "### `" <> p.pkg <> "`"
+              , ""
+              ]
+                <> p.lines
+                <>
+                  [ ""
+                  ]
+          )
     releaseNotes = Array.intercalate "\n" $ preface <> join groupLines
 
     asSortedPkgFileContent =
@@ -151,6 +153,7 @@ generateEcosystemChangelog = do
     repo' = unwrap info.project
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
+
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
 

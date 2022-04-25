@@ -16,17 +16,17 @@ import Node.Path as Path
 import Types (GitHubOwner(..), PackageInfo)
 import Utils (execAff', hasFFI, throwIfExecErrored)
 
-compile ::
-  { package :: PackageInfo
-  , clearBowerCache :: Boolean
-  , skipPulp :: Boolean
-  , skipBowerInstall :: Boolean
-  , skipEslint :: Boolean
-  , skipFormat :: Boolean
-  , skipSpago :: Boolean
-  , skipSpagoInstall :: Boolean
-  , skipTests :: Boolean
-  }
+compile
+  :: { package :: PackageInfo
+     , clearBowerCache :: Boolean
+     , skipPulp :: Boolean
+     , skipBowerInstall :: Boolean
+     , skipEslint :: Boolean
+     , skipFormat :: Boolean
+     , skipSpago :: Boolean
+     , skipSpagoInstall :: Boolean
+     , skipTests :: Boolean
+     }
   -> Aff Unit
 compile { package: info, clearBowerCache, skipPulp, skipBowerInstall, skipSpago, skipSpagoInstall, skipTests, skipEslint, skipFormat } = do
   bowerExists <- liftEffect $ exists bowerFile
@@ -75,6 +75,7 @@ compile { package: info, clearBowerCache, skipPulp, skipBowerInstall, skipSpago,
   where
   pkg' = unwrap info.name
   repoDir = Path.concat [ libDir, pkg' ]
+
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]

@@ -54,12 +54,12 @@ downloadPursBinary mbVersion = do
     , "\""
     ]
   void $ liftAff $ execAff $ Array.fold
-            [ "tar -xvzf "
-            , purescriptTarGzFile
-            , " --strip-components 1 'purescript/"
-            , pursFile
-            , "'"
-            ]
+    [ "tar -xvzf "
+    , purescriptTarGzFile
+    , " --strip-components 1 'purescript/"
+    , pursFile
+    , "'"
+    ]
   liftAff $ unlink purescriptTarGzFile
   { stdout } <- liftAff $ execAff $ "./" <> pursFile <> " --version"
   case parseVersion stdout of
@@ -69,4 +69,4 @@ downloadPursBinary mbVersion = do
       | otherwise ->
           liftEffect $ throw $ "Failed to parse version of download purs binary: " <> show e
     Right v ->
-        log $ "Downloaded purs binary with version: " <> showVersion v
+      log $ "Downloaded purs binary with version: " <> showVersion v

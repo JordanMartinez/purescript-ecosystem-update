@@ -77,7 +77,7 @@ execAff :: String -> Aff { stdout :: String, stderr :: String, error :: Maybe Er
 execAff cmd = execAff' cmd identity
 
 execAff' :: String -> (ExecOptions -> ExecOptions) -> Aff { stdout :: String, stderr :: String, error :: Maybe Error }
-execAff' cmd modifyOptions  = do
+execAff' cmd modifyOptions = do
   result@{ error } <- makeAff \cb -> do
     subProcess <- CP.exec cmd (modifyOptions CP.defaultExecOptions) (cb <<< Right)
     pure $ effectCanceler do
@@ -202,11 +202,12 @@ foreign import onSpawn :: ChildProcess -> Effect Unit -> Effect Unit
 
 type JSCallback a = Fn2 (Nullable Error) a Unit
 
-foreign import handleCallbackImpl ::
-  forall a. Fn3 (Error -> Either Error a)
-                (a -> Either Error a)
-                (Callback a)
-                (JSCallback a)
+foreign import handleCallbackImpl
+  :: forall a
+   . Fn3 (Error -> Either Error a)
+       (a -> Either Error a)
+       (Callback a)
+       (JSCallback a)
 
 handleCallback :: forall a. (Callback a) -> JSCallback a
 handleCallback cb = runFn3 handleCallbackImpl Left Right cb
@@ -216,7 +217,9 @@ fdStat
   -> Callback Stats
   -> Effect Unit
 fdStat fd cb = mkEffect $ \_ -> runFn2
-  fdStatImpl fd (handleCallback $ cb <<< (<$>) Stats)
+  fdStatImpl
+  fd
+  (handleCallback $ cb <<< (<$>) Stats)
 
 fdStatAff
   :: FileDescriptor

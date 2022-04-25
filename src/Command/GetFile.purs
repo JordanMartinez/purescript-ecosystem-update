@@ -34,44 +34,45 @@ getFile filePaths = do
   let
     fileContent = fileToPkgMap # flip FI.foldlWithIndex { count: 1, arr: [] } \fileStatus acc pkgSet -> do
       { count: acc.count + 1
-      , arr: acc.arr <>
-          [ "## Entry " <> show acc.count
-          , ""
-          , "Packages with this file:"
-          , NEA.foldr1 (\l r -> l <> ", " <> r)
-              $ (coerce :: _ Package -> _ String)
-              $ NEA.sort
-              $ justOrCrash "Package set must be non-empty"
-              $ NEA.fromArray
-              $ Array.fromFoldable pkgSet
-          , ""
-          ]
+      , arr: acc.arr
           <>
-          (case fileStatus of
-            Nothing -> [ "No such content" ]
-            Just content ->
-              [ lineSeparator <> syntaxHighlighter
-              , content
-              , lineSeparator
-              ]
-          )
+            [ "## Entry " <> show acc.count
+            , ""
+            , "Packages with this file:"
+            , NEA.foldr1 (\l r -> l <> ", " <> r)
+                $ (coerce :: _ Package -> _ String)
+                $ NEA.sort
+                $ justOrCrash "Package set must be non-empty"
+                $ NEA.fromArray
+                $ Array.fromFoldable pkgSet
+            , ""
+            ]
           <>
-          [ ""
-          , ""
-          ]
+            ( case fileStatus of
+                Nothing -> [ "No such content" ]
+                Just content ->
+                  [ lineSeparator <> syntaxHighlighter
+                  , content
+                  , lineSeparator
+                  ]
+            )
+          <>
+            [ ""
+            , ""
+            ]
       }
 
   dt <- liftEffect nowDateTime
-  writeTextFile UTF8 (Path.concat [ getFileDir, filePathName <> "_" <> formatYYYYMMDD dt <> ".md"])
+  writeTextFile UTF8 (Path.concat [ getFileDir, filePathName <> "_" <> formatYYYYMMDD dt <> ".md" ])
     $ "All repo's '" <> fullFilePath <> "':\n\n" <> Array.intercalate "\n" fileContent.arr
   where
   formatYYYYMMDD = format
     $ YearFull
-    : Placeholder "-"
-    : MonthTwoDigits
-    : Placeholder "-"
-    : DayOfMonthTwoDigits
-    : Nil
+        : Placeholder "-"
+        : MonthTwoDigits
+        : Placeholder "-"
+        : DayOfMonthTwoDigits
+        : Nil
   lineSeparator = power "`" 12
   fullFilePath = Path.concat filePaths
   filePathName = Array.intercalate "_" filePaths
@@ -86,6 +87,7 @@ getFile filePaths = do
       , Tuple ".dhall" "dhall"
       , Tuple ".md" "markdown"
       ]
+
   getFile'
     :: HM.HashMap (Maybe String) (HashSet.HashSet Package)
     -> PackageInfo
@@ -110,5 +112,6 @@ getFile filePaths = do
     pkg' = unwrap info.name
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
+
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }

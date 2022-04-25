@@ -84,7 +84,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
           content = case changelogStatus of
             FileChanged x -> x
             _ -> "First release compatible with PureScript 0.15.0"
-        cp <- spawnAff "jq" ["--slurp", "--raw-input", "--raw-output", "@uri" ]
+        cp <- spawnAff "jq" [ "--slurp", "--raw-input", "--raw-output", "@uri" ]
         liftEffect $ void $ Stream.writeString (CP.stdin cp) UTF8 content (pure unit)
         liftEffect $ void $ Stream.end (CP.stdin cp) (pure unit)
         jqResult <- withSpawnResult cp
@@ -112,6 +112,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
     pkg' = unwrap info.pkg
     version' = "v" <> Version.showVersion info.version
     repoDir = Path.concat [ libDir, pkg' ]
+
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
 
@@ -138,13 +139,13 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       , ":robot: This is an automated pull request to prepare the next release of this library. PR was created via the [Release.purs](https://github.com/JordanMartinez/purescript-ecosystem-update/blob/master/src/purescript/Command/Release.purs) file. Some of the following steps are already done; others should be performed by a human once the pull request is merged:"
       , ""
       ]
-      <> bowerPart
-      <> nodePart
-      <> changelogPart
-      <>
-        [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
-        , "- [ ] Upload the release to Pursuit with `pulp publish`."
-        ]
+        <> bowerPart
+        <> nodePart
+        <> changelogPart
+        <>
+          [ "- [ ] Publish a GitHub [release](" <> newReleaseUrl releaseBodyUri <> ")."
+          , "- [ ] Upload the release to Pursuit with `pulp publish`."
+          ]
       where
       bowerPart = case bowerStatus of
         FileDoesNotExist _ -> [ "- [x] Bower dependencies: `bower.json` file does not exist." ]
@@ -188,7 +189,7 @@ updateBowerToReleasedVersions pkg = do
   fileExists <- liftEffect $ exists bowerFile
   if fileExists then do
     original <- readTextFile UTF8 bowerFile
-    result <- withSpawnResult =<< spawnAff "jq" ["--from-file", jqScripts.updateBowerDepsToReleaseVersion, "--", bowerFile ]
+    result <- withSpawnResult =<< spawnAff "jq" [ "--from-file", jqScripts.updateBowerDepsToReleaseVersion, "--", bowerFile ]
     throwIfSpawnErrored result
     let new = result.stdout
     -- easiest way to check whether a change has occurred
@@ -203,7 +204,8 @@ updateBowerToReleasedVersions pkg = do
     pure $ FileDoesNotExist unit
   where
   pkg' = unwrap pkg
-  repoDir = Path.concat [ libDir, pkg']
+  repoDir = Path.concat [ libDir, pkg' ]
+
   inRepoDir :: ExecOptions -> ExecOptions
   inRepoDir r = r { cwd = Just repoDir }
   bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
@@ -228,8 +230,9 @@ updateNode pkg = do
     pure $ FileChanged unit
   where
   pkg' = unwrap pkg
-  repoDir = Path.concat [ libDir, pkg']
+  repoDir = Path.concat [ libDir, pkg' ]
   ciFile = Path.concat [ repoDir, repoFiles.ciYmlFile ]
+
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
 
@@ -270,19 +273,19 @@ updateChangelog owner repo pkg nextVersion = do
             ]
           newContent = Array.intercalate "\n"
             $ prefaceAndUnreleasedHdr
-            <> unreleasedSectionContent
-            <> nextReleaseHeader todayDateStr
-            <> releaseContents
+                <> unreleasedSectionContent
+                <> nextReleaseHeader todayDateStr
+                <> releaseContents
 
         updateChangeLogIfDifferent releaseContents newContent
       Just { before: releaseContents, after: remainingChangeLogContent } -> do
         let
           newContent = Array.intercalate "\n"
             $ prefaceAndUnreleasedHdr
-            <> unreleasedSectionContent
-            <> nextReleaseHeader todayDateStr
-            <> releaseContents
-            <> remainingChangeLogContent
+                <> unreleasedSectionContent
+                <> nextReleaseHeader todayDateStr
+                <> releaseContents
+                <> remainingChangeLogContent
 
         updateChangeLogIfDifferent releaseContents newContent
   else do
@@ -291,15 +294,15 @@ updateChangelog owner repo pkg nextVersion = do
   owner' = unwrap owner
   repo' = unwrap repo
   pkg' = unwrap pkg
-  repoDir = Path.concat [ libDir, pkg']
+  repoDir = Path.concat [ libDir, pkg' ]
   clFilePath = Path.concat [ repoDir, repoFiles.changelogFile ]
   formatYYYYMMDD = format
     $ YearFull
-    : Placeholder "-"
-    : MonthTwoDigits
-    : Placeholder "-"
-    : DayOfMonthTwoDigits
-    : Nil
+        : Placeholder "-"
+        : MonthTwoDigits
+        : Placeholder "-"
+        : DayOfMonthTwoDigits
+        : Nil
   nextReleaseHeader todayDateStr = Array.singleton $ fold
     [ "## [v"
     , versionStr

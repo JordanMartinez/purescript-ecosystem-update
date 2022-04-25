@@ -35,6 +35,7 @@ updatePackageSet { package: info } = do
   where
   pkg' = unwrap info.name
   repoDir = Path.concat [ libDir, pkg' ]
+
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
   packagesDhallFile = Path.concat [ repoDir, repoFiles.packagesDhallFile ]

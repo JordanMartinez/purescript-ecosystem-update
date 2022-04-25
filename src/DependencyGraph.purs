@@ -89,10 +89,9 @@ useNextMajorVersion _ gitTags = do
       # Version.parseVersion
       -- drop any prerelease or build meta info
       # map
-        (
-          Version.runVersion \mjr mnr p _ _ ->
-            Version.version mjr mnr p Nil Nil
-        )
+          ( Version.runVersion \mjr mnr p _ _ ->
+              Version.version mjr mnr p Nil Nil
+          )
       # hush
 
 useBranchName :: BranchName -> Array String -> BranchName
@@ -100,11 +99,11 @@ useBranchName b _ = b
 
 generateAllReleaseInfo
   :: forall version
-  . (BranchName -> Array String -> version)
+   . (BranchName -> Array String -> version)
   -> Aff
-      { fullGraph :: HashMap Package (DependenciesWithMeta version)
-      , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
-      }
+       { fullGraph :: HashMap Package (DependenciesWithMeta version)
+       , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
+       }
 generateAllReleaseInfo f = do
   unlessM (liftEffect $ exists releaseFiles.releasedPkgsFile) do
     mkdir (dirname releaseFiles.releasedPkgsFile) { recursive: true }
@@ -112,7 +111,8 @@ generateAllReleaseInfo f = do
   generateAllReleaseInfo'
     { nextReleaseInfo: releaseFiles.nextReleaseInfo
     , releasedPkgsFile: releaseFiles.releasedPkgsFile
-    } f
+    }
+    f
 
 generateAllReleaseInfo'
   :: forall version
@@ -121,9 +121,9 @@ generateAllReleaseInfo'
      }
   -> (BranchName -> Array String -> version)
   -> Aff
-      { fullGraph :: HashMap Package (DependenciesWithMeta version)
-      , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
-      }
+       { fullGraph :: HashMap Package (DependenciesWithMeta version)
+       , unfinishedPkgsGraph :: HashMap Package (DependenciesWithMeta version)
+       }
 generateAllReleaseInfo' { nextReleaseInfo, releasedPkgsFile } extractVersion = do
   releaseInfoContent <- readTextFile UTF8 nextReleaseInfo
   (releaseInfo :: Object NextReleaseInfo) <- do
@@ -146,10 +146,10 @@ generateAllReleaseInfo' { nextReleaseInfo, releasedPkgsFile } extractVersion = d
     fullPackageGraph = releaseInfo # flip foldl HM.empty \acc next -> do
       HM.insert
         next.pkg
-        (Set.fromFoldable $
-          if next.hasBowerJsonFile then next.bowerDependencies <> next.bowerDevDependencies
-          else if next.hasSpagoDhallFile then next.spagoDependencies <> next.spagoTestDependencies
-          else []
+        ( Set.fromFoldable $
+            if next.hasBowerJsonFile then next.bowerDependencies <> next.bowerDevDependencies
+            else if next.hasSpagoDhallFile then next.spagoDependencies <> next.spagoTestDependencies
+            else []
         )
         acc
 
@@ -171,7 +171,9 @@ generateAllReleaseInfo' { nextReleaseInfo, releasedPkgsFile } extractVersion = d
               }
 
     finalVal
-      { pkg, repoUrl, owner, repo, defaultBranch, version, inBowerRegistry } dependencies depCount =
+      { pkg, repoUrl, owner, repo, defaultBranch, version, inBowerRegistry }
+      dependencies
+      depCount =
       { pkg, repoUrl, owner, repo, defaultBranch, version, inBowerRegistry, dependencies, depCount }
 
     fullGraph = fullGraphWithMeta
@@ -189,15 +191,19 @@ findAllTransitiveDeps :: HashMap Package (HashSet Package) -> HashMap Package (H
 findAllTransitiveDeps packageMap = foldl buildMap HashMap.empty $ Array.filter ((/=) "" <<< unwrap) $ HashMap.keys packageMap
   where
   buildMap :: HashMap Package (HashSet Package) -> Package -> HashMap Package (HashSet Package)
-  buildMap mapSoFar packageName  = do
+  buildMap mapSoFar packageName = do
     case lookup packageName mapSoFar of
       Just _ ->
         mapSoFar
       Nothing ->
-        let { updatedMap } = getDepsRecursively packageName mapSoFar
-        in updatedMap
+        let
+          { updatedMap } = getDepsRecursively packageName mapSoFar
+        in
+          updatedMap
 
-  getDepsRecursively :: Package -> HashMap Package (HashSet Package)
+  getDepsRecursively
+    :: Package
+    -> HashMap Package (HashSet Package)
     -> { deps :: HashSet Package, updatedMap :: HashMap Package (HashSet Package) }
   getDepsRecursively packageName mapSoFar = do
     let
@@ -238,12 +244,13 @@ linearizePackageDependencyOrder
   -> String
 linearizePackageDependencyOrder =
   toArrayBy (\_ r -> r)
-  >>> sortBy (\l r ->
-      case compare l.depCount r.depCount of
-        EQ -> compare l.pkg r.pkg
-        x -> x
-  )
-  >>> mkOrderedContent
+    >>> sortBy
+      ( \l r ->
+          case compare l.depCount r.depCount of
+            EQ -> compare l.pkg r.pkg
+            x -> x
+      )
+    >>> mkOrderedContent
   where
   mkOrderedContent :: forall r. Array (LinearPackageDependencyInfo r) -> String
   mkOrderedContent arr = foldResult.str
@@ -251,11 +258,11 @@ linearizePackageDependencyOrder =
     githubRepo owner repo = "https://github.com/" <> unwrap owner <> "/" <> unwrap repo
     maxLength = foldl maxPartLength { dep: 0, package: 0, repo: 0 } arr
     maxPartLength acc r =
-      { dep:     max acc.dep     $ SCU.length $ show r.depCount
+      { dep: max acc.dep $ SCU.length $ show r.depCount
       , package: max acc.package $ SCU.length $ unwrap r.pkg
-      , repo:    max acc.repo    $ SCU.length $ githubRepo r.owner r.repo
+      , repo: max acc.repo $ SCU.length $ githubRepo r.owner r.repo
       }
-    foldResult = foldl buildLine {init: true, str: ""} arr
+    foldResult = foldl buildLine { init: true, str: "" } arr
     buildLine acc r = do
       let
         depCount = padEnd maxLength.dep $ show r.depCount

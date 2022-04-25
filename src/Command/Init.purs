@@ -53,11 +53,11 @@ verifyToolConstraints = do
     case error of
       Just err ->
         pure $ Left $ Array.fold
-            [ "Error when attempting to get version for '"
-            , toolName
-            , "':\n"
-            , message err
-            ]
+          [ "Error when attempting to get version for '"
+          , toolName
+          , "':\n"
+          , message err
+          ]
       Nothing -> do
         let
           versionStr = stdout
@@ -82,10 +82,10 @@ verifyToolConstraints = do
                 , showVersion minVersion
                 ]
             | otherwise -> pure $ Left $ String.joinWith "\n"
-              [ "`" <> toolName <> "` version is lower than minimum version required: "
-              , "Expected: " <> showVersion minVersion
-              , "Actual:   " <> showVersion v
-              ]
+                [ "`" <> toolName <> "` version is lower than minimum version required: "
+                , "Expected: " <> showVersion minVersion
+                , "Actual:   " <> showVersion v
+                ]
 
   dropWhileCharsNotDigits = String.dropWhile (\cp -> Array.all (\digitCp -> cp /= digitCp) digitsCodePoints)
     where

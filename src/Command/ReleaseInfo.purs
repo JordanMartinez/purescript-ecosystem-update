@@ -57,16 +57,17 @@ generateReleaseInfo = do
   where
   formatYYYYMMDD = format
     $ YearFull
-    : Placeholder "-"
-    : MonthTwoDigits
-    : Placeholder "-"
-    : DayOfMonthTwoDigits
-    : Nil
+        : Placeholder "-"
+        : MonthTwoDigits
+        : Placeholder "-"
+        : DayOfMonthTwoDigits
+        : Nil
+
   getReleaseInfo :: PackageInfo -> Aff (ReleaseInfo String)
   getReleaseInfo info = do
     log $ "Getting release info for '" <> pkg' <> "'"
     throwIfExecErrored =<< execAff' "git fetch --tags upstream" inRepoDir
-    gitTagResult <- withSpawnResult =<< spawnAff' "git" ["tag"] inRepoDir
+    gitTagResult <- withSpawnResult =<< spawnAff' "git" [ "tag" ] inRepoDir
     throwIfSpawnErrored gitTagResult
     let
       parseVersion s = (fromMaybe s $ stripPrefix (Pattern "v") s)
@@ -84,10 +85,9 @@ generateReleaseInfo = do
       mbMaxGitTag = right
         -- drop any prerelease or build meta info
         # map
-        (
-          Version.runVersion \mjr mnr p _ _ ->
-            Version.version mjr mnr p Nil Nil
-        )
+            ( Version.runVersion \mjr mnr p _ _ ->
+                Version.version mjr mnr p Nil Nil
+            )
         # maximum
     throwIfExecErrored =<< execAff' "git reset --hard HEAD" inRepoDir
     throwIfExecErrored =<< execAff' ("git checkout upstream/" <> defaultBranch') inRepoDir
@@ -121,8 +121,10 @@ generateReleaseInfo = do
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
     bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]
+
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
     inRepoDir r = r { cwd = Just repoDir }
+
     arrStrToArrPkg :: Array String -> Array Package
     arrStrToArrPkg = coerce
 

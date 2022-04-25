@@ -37,25 +37,25 @@ updateBowerDepsJqScript showVersion fullGraph = do
         -- versionStr = "^" <> Version.showVersion info.version
         versionStr = showVersion info.version
       Array.snoc acc $ Array.fold
-          [ "  if has(\""
-          , repo
-          , "\") then .\""
-          , repo
-          , "\" |= \""
-          , if info.inBowerRegistry then versionStr
-            else "https://github.com/" <> owner <> "/" <> repo <> ".git#" <> versionStr
-          , "\" else . end |"
-          ]
+        [ "  if has(\""
+        , repo
+        , "\") then .\""
+        , repo
+        , "\" |= \""
+        , if info.inBowerRegistry then versionStr
+          else "https://github.com/" <> owner <> "/" <> repo <> ".git#" <> versionStr
+        , "\" else . end |"
+        ]
   Array.intercalate "\n"
     $ [ "if has(\"dependencies\") then .dependencies |= (" ]
-    <> updates
-    <>
-      [ "  ."
-      , ") else . end |"
-      , "if has (\"devDependencies\") then .devDependencies |= ("
-      ]
-    <> updates
-    <>
-      [ "  ."
-      , ") else . end"
-      ]
+        <> updates
+        <>
+          [ "  ."
+          , ") else . end |"
+          , "if has (\"devDependencies\") then .devDependencies |= ("
+          ]
+        <> updates
+        <>
+          [ "  ."
+          , ") else . end"
+          ]

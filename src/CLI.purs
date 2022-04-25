@@ -49,7 +49,7 @@ parseCliArgs =
       , getFileCmd
       , genEcosystemChangelogCmd
       ]
-    <* ArgParse.flagHelp
+      <* ArgParse.flagHelp
 
   initCmd :: ArgParse.ArgParser Command
   initCmd = ArgParse.command [ "init" ] description do
@@ -64,7 +64,7 @@ parseCliArgs =
     where
     description = "git clone all packages locally"
 
-  downloadPursCmd = ArgParse.command ["downloadPurs"] description do
+  downloadPursCmd = ArgParse.command [ "downloadPurs" ] description do
     DownloadPurs
       <$> ArgParse.choose "version"
         [ Nothing <$ parseLatestFlag
@@ -79,13 +79,13 @@ parseCliArgs =
       ArgParse.argument [ "--version" ] "Download the specified version of PureScript"
         # ArgParse.unformat "VERSION" (lmap (append "Error when parsing version: " <<< show) <<< Version.parseVersion)
 
-  cloneCmd = ArgParse.command ["clone"] description do
+  cloneCmd = ArgParse.command [ "clone" ] description do
     Clone
       <$> ArgParse.choose "option"
         [ Right <$> parseRegularPackage
         , ado
-          { owner, repo, package } <- parseIrregularPackage
-          in Left { owner, repo, package }
+            { owner, repo, package } <- parseIrregularPackage
+            in Left { owner, repo, package }
         ]
       <*> optional parseCloneToGhOrg
       <* ArgParse.flagHelp
@@ -93,57 +93,59 @@ parseCliArgs =
     description = "git clone single package"
     parseRegularPackage = ArgParse.argument [ "--package" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
       # ArgParse.unformat "PACKAGE" case _ of
-        s | Just r <- Array.findMap (\rec -> if s == unwrap rec.name then Just rec else Nothing) packages -> Right r
-          | otherwise -> Left $ "'" <> s <> "' is not a core, contrib, node, or web package"
+          s
+            | Just r <- Array.findMap (\rec -> if s == unwrap rec.name then Just rec else Nothing) packages -> Right r
+            | otherwise -> Left $ "'" <> s <> "' is not a core, contrib, node, or web package"
 
     parseIrregularPackage = ArgParse.argument [ "--repo" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
       # ArgParse.unformat "OWNER/REPO" case _ of
-        s | [ owner, repo ] <- String.split (Pattern "/") s ->
-              case String.stripPrefix (Pattern "purescript-") repo of
-                Nothing -> Left "Repo does not start with 'purescript-', so cannot identify package name."
-                Just pkg -> Right
-                  { owner: GitHubOwner owner
-                  , repo: GitHubProject repo
-                  , package: Package pkg
-                  }
-          | otherwise -> Left $ "Splitting '" <> s <> "' by the first `/` did not produce `OWNER/REPO`."
+          s
+            | [ owner, repo ] <- String.split (Pattern "/") s ->
+                case String.stripPrefix (Pattern "purescript-") repo of
+                  Nothing -> Left "Repo does not start with 'purescript-', so cannot identify package name."
+                  Just pkg -> Right
+                    { owner: GitHubOwner owner
+                    , repo: GitHubProject repo
+                    , package: Package pkg
+                    }
+            | otherwise -> Left $ "Splitting '" <> s <> "' by the first `/` did not produce `OWNER/REPO`."
 
-  bowerCmd = ArgParse.command ["bower"] description do
+  bowerCmd = ArgParse.command [ "bower" ] description do
     Bower
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
     where
     description = "Updates a single package's `bower.json` dependencies to their default branches."
 
-  spagoCmd = ArgParse.command ["spago"] description do
+  spagoCmd = ArgParse.command [ "spago" ] description do
     Spago
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
     where
     description = "Updates a single package's `spago.dhall` and `packages.dhall` files."
 
-  compileCmd = ArgParse.command ["compile"] description do
+  compileCmd = ArgParse.command [ "compile" ] description do
     Compile
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         , skipPulp: Arg.flag [ "--skip-pulp" ] "Does not install, build, or run tests with bower/pulp" # Arg.boolean
         , clearBowerCache: Arg.flag [ "--clear-bower" ] "Clears bower's cache (if any)." # Arg.boolean
@@ -158,56 +160,56 @@ parseCliArgs =
     where
     description = "Compile a single package"
 
-  packageJsonCmd = ArgParse.command ["packageJson"] description do
+  packageJsonCmd = ArgParse.command [ "packageJson" ] description do
     PackageJson
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
     where
     description = "Run `package.json`-related operations on a single package"
 
-  ciCmd = ArgParse.command ["ci"] description do
+  ciCmd = ArgParse.command [ "ci" ] description do
     CI
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
     where
     description = "Run `.github/workflows/ci.yml`-related operations on a single package"
 
-  checkCmd = ArgParse.command ["check"] description do
+  checkCmd = ArgParse.command [ "check" ] description do
     CheckForDeprecated
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
     where
     description = "Search for deprecations and other old code. Warn or fail depending on the type found."
 
-  makePrCmd = ArgParse.command ["pr"] description do
+  makePrCmd = ArgParse.command [ "pr" ] description do
     MakePr
       <$> fromRecord
         { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
             # Arg.unformat
                 "PACKAGE"
-                (\s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                  $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
+                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
@@ -215,7 +217,8 @@ parseCliArgs =
     description = "Create a PR for a single package"
 
   makeNextReleaseBatchCmd = ArgParse.command [ "release" ] description do
-    MakeNextReleaseBatch <$> fromRecord
+    MakeNextReleaseBatch
+      <$> fromRecord
         { submitPr: parseSubmitPr
         , branchName: parseBranchName
         , deleteBranchIfExist: parseReplace
@@ -266,5 +269,5 @@ parseCliArgs =
 
   parseCloneToGhOrg = ArgParse.argument [ "--gh-org" ] "When specified, creates a fork of the repo under the given GitHub organization"
     # ArgParse.unformat "GITHUB_ORG" case _ of
-      "" -> Left $ "GitHub organization name was empty"
-      s -> Right $ GitHubOwner s
+        "" -> Left $ "GitHub organization name was empty"
+        s -> Right $ GitHubOwner s
