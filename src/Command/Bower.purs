@@ -37,11 +37,11 @@ updateBowerDepsToBranchVersion jqScriptAbsPath info = do
       throwIfExecErrored =<< execAff' "git add bower.json" inRepoDir
       throwIfExecErrored =<< execAff' "git commit -m \"Update bower deps to default branch versions\"" inRepoDir
     else do
-      log $ unwrap info.name <> ": `bower.json` file had no changes."
+      log $ pkg' <> ": `bower.json` file had no changes."
   else do
-    log $ unwrap info.name <> ": `bower.json` file does not exist"
+    log $ pkg' <> ": `bower.json` file does not exist"
   where
-  pkg' = unwrap info.name
+  pkg' = unwrap info.package
   repoDir = Path.concat [ libDir, pkg' ]
 
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }

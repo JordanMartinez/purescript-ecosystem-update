@@ -5,979 +5,979 @@ import Types (BranchName(..), GitCloneUrl(..), GitHubOwner(..), GitHubProject(..
 packages :: Array PackageInfo
 packages =
   -- core libs
-  [ { name: Package "arrays"
+  [ { package: Package "arrays"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-arrays"
+    , repo: GitHubProject "purescript-arrays"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-arrays.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "assert"
+  , { package: Package "assert"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-assert"
+    , repo: GitHubProject "purescript-assert"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-assert.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "bifunctors"
+  , { package: Package "bifunctors"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-bifunctors"
+    , repo: GitHubProject "purescript-bifunctors"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-bifunctors.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "catenable-lists"
+  , { package: Package "catenable-lists"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-catenable-lists"
+    , repo: GitHubProject "purescript-catenable-lists"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-catenable-lists.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "console"
+  , { package: Package "console"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-console"
+    , repo: GitHubProject "purescript-console"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-console.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "const"
+  , { package: Package "const"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-const"
+    , repo: GitHubProject "purescript-const"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-const.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "contravariant"
+  , { package: Package "contravariant"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-contravariant"
+    , repo: GitHubProject "purescript-contravariant"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-contravariant.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "control"
+  , { package: Package "control"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-control"
+    , repo: GitHubProject "purescript-control"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-control.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "datetime"
+  , { package: Package "datetime"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-datetime"
+    , repo: GitHubProject "purescript-datetime"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-datetime.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "distributive"
+  , { package: Package "distributive"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-distributive"
+    , repo: GitHubProject "purescript-distributive"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-distributive.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "effect"
+  , { package: Package "effect"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-effect"
+    , repo: GitHubProject "purescript-effect"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-effect.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "either"
+  , { package: Package "either"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-either"
+    , repo: GitHubProject "purescript-either"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-either.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "enums"
+  , { package: Package "enums"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-enums"
+    , repo: GitHubProject "purescript-enums"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-enums.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "exceptions"
+  , { package: Package "exceptions"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-exceptions"
+    , repo: GitHubProject "purescript-exceptions"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-exceptions.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "exists"
+  , { package: Package "exists"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-exists"
+    , repo: GitHubProject "purescript-exists"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-exists.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "filterable"
+  , { package: Package "filterable"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-filterable"
+    , repo: GitHubProject "purescript-filterable"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-filterable.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "foldable-traversable"
+  , { package: Package "foldable-traversable"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-foldable-traversable"
+    , repo: GitHubProject "purescript-foldable-traversable"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-foldable-traversable.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "foreign"
+  , { package: Package "foreign"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-foreign"
+    , repo: GitHubProject "purescript-foreign"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-foreign.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "foreign-object"
+  , { package: Package "foreign-object"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-foreign-object"
+    , repo: GitHubProject "purescript-foreign-object"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-foreign-object.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "free"
+  , { package: Package "free"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-free"
+    , repo: GitHubProject "purescript-free"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-free.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "functions"
+  , { package: Package "functions"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-functions"
+    , repo: GitHubProject "purescript-functions"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-functions.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "functors"
+  , { package: Package "functors"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-functors"
+    , repo: GitHubProject "purescript-functors"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-functors.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "gen"
+  , { package: Package "gen"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-gen"
+    , repo: GitHubProject "purescript-gen"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-gen.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "graphs"
+  , { package: Package "graphs"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-graphs"
+    , repo: GitHubProject "purescript-graphs"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-graphs.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "identity"
+  , { package: Package "identity"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-identity"
+    , repo: GitHubProject "purescript-identity"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-identity.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "integers"
+  , { package: Package "integers"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-integers"
+    , repo: GitHubProject "purescript-integers"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-integers.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "invariant"
+  , { package: Package "invariant"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-invariant"
+    , repo: GitHubProject "purescript-invariant"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-invariant.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "lazy"
+  , { package: Package "lazy"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-lazy"
+    , repo: GitHubProject "purescript-lazy"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-lazy.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "lcg"
+  , { package: Package "lcg"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-lcg"
+    , repo: GitHubProject "purescript-lcg"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-lcg.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "lists"
+  , { package: Package "lists"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-lists"
+    , repo: GitHubProject "purescript-lists"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-lists.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "maybe"
+  , { package: Package "maybe"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-maybe"
+    , repo: GitHubProject "purescript-maybe"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-maybe.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "minibench"
+  , { package: Package "minibench"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-minibench"
+    , repo: GitHubProject "purescript-minibench"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-minibench.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "newtype"
+  , { package: Package "newtype"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-newtype"
+    , repo: GitHubProject "purescript-newtype"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-newtype.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "nonempty"
+  , { package: Package "nonempty"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-nonempty"
+    , repo: GitHubProject "purescript-nonempty"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-nonempty.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "numbers"
+  , { package: Package "numbers"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-numbers"
+    , repo: GitHubProject "purescript-numbers"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-numbers.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "ordered-collections"
+  , { package: Package "ordered-collections"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-ordered-collections"
+    , repo: GitHubProject "purescript-ordered-collections"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-ordered-collections.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "orders"
+  , { package: Package "orders"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-orders"
+    , repo: GitHubProject "purescript-orders"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-orders.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "parallel"
+  , { package: Package "parallel"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-parallel"
+    , repo: GitHubProject "purescript-parallel"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-parallel.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "partial"
+  , { package: Package "partial"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-partial"
+    , repo: GitHubProject "purescript-partial"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-partial.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "prelude"
+  , { package: Package "prelude"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-prelude"
+    , repo: GitHubProject "purescript-prelude"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-prelude.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "profunctor"
+  , { package: Package "profunctor"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-profunctor"
+    , repo: GitHubProject "purescript-profunctor"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-profunctor.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "psci-support"
+  , { package: Package "psci-support"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-psci-support"
+    , repo: GitHubProject "purescript-psci-support"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-psci-support.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "quickcheck"
+  , { package: Package "quickcheck"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-quickcheck"
+    , repo: GitHubProject "purescript-quickcheck"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-quickcheck.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "random"
+  , { package: Package "random"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-random"
+    , repo: GitHubProject "purescript-random"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-random.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "record"
+  , { package: Package "record"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-record"
+    , repo: GitHubProject "purescript-record"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-record.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "refs"
+  , { package: Package "refs"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-refs"
+    , repo: GitHubProject "purescript-refs"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-refs.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "safe-coerce"
+  , { package: Package "safe-coerce"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-safe-coerce"
+    , repo: GitHubProject "purescript-safe-coerce"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-safe-coerce.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "semirings"
+  , { package: Package "semirings"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-semirings"
+    , repo: GitHubProject "purescript-semirings"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-semirings.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "st"
+  , { package: Package "st"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-st"
+    , repo: GitHubProject "purescript-st"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-st.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "strings"
+  , { package: Package "strings"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-strings"
+    , repo: GitHubProject "purescript-strings"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-strings.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "tailrec"
+  , { package: Package "tailrec"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-tailrec"
+    , repo: GitHubProject "purescript-tailrec"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-tailrec.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "transformers"
+  , { package: Package "transformers"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-transformers"
+    , repo: GitHubProject "purescript-transformers"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-transformers.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "tuples"
+  , { package: Package "tuples"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-tuples"
+    , repo: GitHubProject "purescript-tuples"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-tuples.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "type-equality"
+  , { package: Package "type-equality"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-type-equality"
+    , repo: GitHubProject "purescript-type-equality"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-type-equality.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "typelevel-prelude"
+  , { package: Package "typelevel-prelude"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-typelevel-prelude"
+    , repo: GitHubProject "purescript-typelevel-prelude"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-typelevel-prelude.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "unfoldable"
+  , { package: Package "unfoldable"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-unfoldable"
+    , repo: GitHubProject "purescript-unfoldable"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-unfoldable.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "unsafe-coerce"
+  , { package: Package "unsafe-coerce"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-unsafe-coerce"
+    , repo: GitHubProject "purescript-unsafe-coerce"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-unsafe-coerce.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "validation"
+  , { package: Package "validation"
     , owner: GitHubOwner "purescript"
-    , project: GitHubProject "purescript-validation"
+    , repo: GitHubProject "purescript-validation"
     , gitUrl: GitCloneUrl "git@github.com:purescript/purescript-validation.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
   -- contrib libs
-  , { name: Package "ace"
+  , { package: Package "ace"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-ace"
+    , repo: GitHubProject "purescript-ace"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-ace.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "aff-bus"
+  , { package: Package "aff-bus"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-aff-bus"
+    , repo: GitHubProject "purescript-aff-bus"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-aff-bus.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "aff-coroutines"
+  , { package: Package "aff-coroutines"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-aff-coroutines"
+    , repo: GitHubProject "purescript-aff-coroutines"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-aff-coroutines.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "aff"
+  , { package: Package "aff"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-aff"
+    , repo: GitHubProject "purescript-aff"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-aff.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "affjax"
+  , { package: Package "affjax"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-affjax"
+    , repo: GitHubProject "purescript-affjax"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-affjax.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "affjax-web"
+  , { package: Package "affjax-web"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-affjax-web"
+    , repo: GitHubProject "purescript-affjax-web"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-affjax-web.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: false
     }
-  , { name: Package "affjax-node"
+  , { package: Package "affjax-node"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-affjax-node"
+    , repo: GitHubProject "purescript-affjax-node"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-affjax-node.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: false
     }
-  , { name: Package "argonaut-codecs"
+  , { package: Package "argonaut-codecs"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-argonaut-codecs"
+    , repo: GitHubProject "purescript-argonaut-codecs"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-argonaut-codecs.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "argonaut-core"
+  , { package: Package "argonaut-core"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-argonaut-core"
+    , repo: GitHubProject "purescript-argonaut-core"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-argonaut-core.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "argonaut-generic"
+  , { package: Package "argonaut-generic"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-argonaut-generic"
+    , repo: GitHubProject "purescript-argonaut-generic"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-argonaut-generic.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "argonaut"
+  , { package: Package "argonaut"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-argonaut"
+    , repo: GitHubProject "purescript-argonaut"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-argonaut.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "argonaut-traversals"
+  , { package: Package "argonaut-traversals"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-argonaut-traversals"
+    , repo: GitHubProject "purescript-argonaut-traversals"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-argonaut-traversals.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "arraybuffer"
+  , { package: Package "arraybuffer"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-arraybuffer"
+    , repo: GitHubProject "purescript-arraybuffer"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-arraybuffer.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "arraybuffer-types"
+  , { package: Package "arraybuffer-types"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-arraybuffer-types"
+    , repo: GitHubProject "purescript-arraybuffer-types"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-arraybuffer-types.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "avar"
+  , { package: Package "avar"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-avar"
+    , repo: GitHubProject "purescript-avar"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-avar.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "colors"
+  , { package: Package "colors"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-colors"
+    , repo: GitHubProject "purescript-colors"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-colors.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "concurrent-queues"
+  , { package: Package "concurrent-queues"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-concurrent-queues"
+    , repo: GitHubProject "purescript-concurrent-queues"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-concurrent-queues.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "coroutines"
+  , { package: Package "coroutines"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-coroutines"
+    , repo: GitHubProject "purescript-coroutines"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-coroutines.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "css"
+  , { package: Package "css"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-css"
+    , repo: GitHubProject "purescript-css"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-css.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "fixed-points"
+  , { package: Package "fixed-points"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-fixed-points"
+    , repo: GitHubProject "purescript-fixed-points"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-fixed-points.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "float32"
+  , { package: Package "float32"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-float32"
+    , repo: GitHubProject "purescript-float32"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-float32.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "fork"
+  , { package: Package "fork"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-fork"
+    , repo: GitHubProject "purescript-fork"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-fork.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "formatters"
+  , { package: Package "formatters"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-formatters"
+    , repo: GitHubProject "purescript-formatters"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-formatters.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "form-urlencoded"
+  , { package: Package "form-urlencoded"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-form-urlencoded"
+    , repo: GitHubProject "purescript-form-urlencoded"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-form-urlencoded.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "freet"
+  , { package: Package "freet"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-freet"
+    , repo: GitHubProject "purescript-freet"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-freet.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "http-methods"
+  , { package: Package "http-methods"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-http-methods"
+    , repo: GitHubProject "purescript-http-methods"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-http-methods.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "js-date"
+  , { package: Package "js-date"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-js-date"
+    , repo: GitHubProject "purescript-js-date"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-js-date.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "js-timers"
+  , { package: Package "js-timers"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-js-timers"
+    , repo: GitHubProject "purescript-js-timers"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-js-timers.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "js-uri"
+  , { package: Package "js-uri"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-js-uri"
+    , repo: GitHubProject "purescript-js-uri"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-js-uri.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: false
     }
-  , { name: Package "machines"
+  , { package: Package "machines"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-machines"
+    , repo: GitHubProject "purescript-machines"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-machines.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "matryoshka"
+  , { package: Package "matryoshka"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-matryoshka"
+    , repo: GitHubProject "purescript-matryoshka"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-matryoshka.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "media-types"
+  , { package: Package "media-types"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-media-types"
+    , repo: GitHubProject "purescript-media-types"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-media-types.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "now"
+  , { package: Package "now"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-now"
+    , repo: GitHubProject "purescript-now"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-now.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "nullable"
+  , { package: Package "nullable"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-nullable"
+    , repo: GitHubProject "purescript-nullable"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-nullable.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "options"
+  , { package: Package "options"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-options"
+    , repo: GitHubProject "purescript-options"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-options.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "parsing"
+  , { package: Package "parsing"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-parsing"
+    , repo: GitHubProject "purescript-parsing"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-parsing.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "pathy"
+  , { package: Package "pathy"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-pathy"
+    , repo: GitHubProject "purescript-pathy"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-pathy.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "precise"
+  , { package: Package "precise"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-precise"
+    , repo: GitHubProject "purescript-precise"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-precise.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "profunctor-lenses"
+  , { package: Package "profunctor-lenses"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-profunctor-lenses"
+    , repo: GitHubProject "purescript-profunctor-lenses"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-profunctor-lenses.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "quickcheck-laws"
+  , { package: Package "quickcheck-laws"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-quickcheck-laws"
+    , repo: GitHubProject "purescript-quickcheck-laws"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-quickcheck-laws.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "react-dom"
+  , { package: Package "react-dom"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-react-dom"
+    , repo: GitHubProject "purescript-react-dom"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-react-dom.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "react"
+  , { package: Package "react"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-react"
+    , repo: GitHubProject "purescript-react"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-react.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "routing"
+  , { package: Package "routing"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-routing"
+    , repo: GitHubProject "purescript-routing"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-routing.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "string-parsers"
+  , { package: Package "string-parsers"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-string-parsers"
+    , repo: GitHubProject "purescript-string-parsers"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-string-parsers.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "strings-extra"
+  , { package: Package "strings-extra"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-strings-extra"
+    , repo: GitHubProject "purescript-strings-extra"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-strings-extra.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "these"
+  , { package: Package "these"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-these"
+    , repo: GitHubProject "purescript-these"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-these.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "uint"
+  , { package: Package "uint"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-uint"
+    , repo: GitHubProject "purescript-uint"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-uint.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "unicode"
+  , { package: Package "unicode"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-unicode"
+    , repo: GitHubProject "purescript-unicode"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-unicode.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "unsafe-reference"
+  , { package: Package "unsafe-reference"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-unsafe-reference"
+    , repo: GitHubProject "purescript-unsafe-reference"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-unsafe-reference.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
-  , { name: Package "uri"
+  , { package: Package "uri"
     , owner: GitHubOwner "purescript-contrib"
-    , project: GitHubProject "purescript-uri"
+    , repo: GitHubProject "purescript-uri"
     , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-uri.git"
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
   -- web libs
-  , { name: Package "canvas"
+  , { package: Package "canvas"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-canvas"
+    , repo: GitHubProject "purescript-canvas"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-canvas.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-clipboard"
+  , { package: Package "web-clipboard"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-clipboard"
+    , repo: GitHubProject "purescript-web-clipboard"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-clipboard.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-cssom"
+  , { package: Package "web-cssom"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-cssom"
+    , repo: GitHubProject "purescript-web-cssom"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-cssom.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-dom"
+  , { package: Package "web-dom"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-dom"
+    , repo: GitHubProject "purescript-web-dom"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-dom.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-dom-parser"
+  , { package: Package "web-dom-parser"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-dom-parser"
+    , repo: GitHubProject "purescript-web-dom-parser"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-dom-parser.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-dom-xpath"
+  , { package: Package "web-dom-xpath"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-dom-xpath"
+    , repo: GitHubProject "purescript-web-dom-xpath"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-dom-xpath.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-encoding"
+  , { package: Package "web-encoding"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-encoding"
+    , repo: GitHubProject "purescript-web-encoding"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-encoding.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: false
     }
-  , { name: Package "web-events"
+  , { package: Package "web-events"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-events"
+    , repo: GitHubProject "purescript-web-events"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-events.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-fetch"
+  , { package: Package "web-fetch"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-fetch"
+    , repo: GitHubProject "purescript-web-fetch"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-fetch.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: false
     }
-  , { name: Package "web-file"
+  , { package: Package "web-file"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-file"
+    , repo: GitHubProject "purescript-web-file"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-file.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-html"
+  , { package: Package "web-html"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-html"
+    , repo: GitHubProject "purescript-web-html"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-html.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-promise"
+  , { package: Package "web-promise"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-promise"
+    , repo: GitHubProject "purescript-web-promise"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-promise.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: false
     }
-  , { name: Package "web-socket"
+  , { package: Package "web-socket"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-socket"
+    , repo: GitHubProject "purescript-web-socket"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-socket.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-storage"
+  , { package: Package "web-storage"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-storage"
+    , repo: GitHubProject "purescript-web-storage"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-storage.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-streams"
+  , { package: Package "web-streams"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-streams"
+    , repo: GitHubProject "purescript-web-streams"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-streams.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: false
     }
-  , { name: Package "web-touchevents"
+  , { package: Package "web-touchevents"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-touchevents"
+    , repo: GitHubProject "purescript-web-touchevents"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-touchevents.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-uievents"
+  , { package: Package "web-uievents"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-uievents"
+    , repo: GitHubProject "purescript-web-uievents"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-uievents.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "web-xhr"
+  , { package: Package "web-xhr"
     , owner: GitHubOwner "purescript-web"
-    , project: GitHubProject "purescript-web-xhr"
+    , repo: GitHubProject "purescript-web-xhr"
     , gitUrl: GitCloneUrl "git@github.com:purescript-web/purescript-web-xhr.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
   -- node libs
-  , { name: Package "node-buffer"
+  , { package: Package "node-buffer"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-buffer"
+    , repo: GitHubProject "purescript-node-buffer"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-buffer.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-child-process"
+  , { package: Package "node-child-process"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-child-process"
+    , repo: GitHubProject "purescript-node-child-process"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-child-process.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-fs-aff"
+  , { package: Package "node-fs-aff"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-fs-aff"
+    , repo: GitHubProject "purescript-node-fs-aff"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-fs-aff.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-fs"
+  , { package: Package "node-fs"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-fs"
+    , repo: GitHubProject "purescript-node-fs"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-fs.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-http"
+  , { package: Package "node-http"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-http"
+    , repo: GitHubProject "purescript-node-http"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-http.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-net"
+  , { package: Package "node-net"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-net"
+    , repo: GitHubProject "purescript-node-net"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-net.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-path"
+  , { package: Package "node-path"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-path"
+    , repo: GitHubProject "purescript-node-path"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-path.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-process"
+  , { package: Package "node-process"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-process"
+    , repo: GitHubProject "purescript-node-process"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-process.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-readline"
+  , { package: Package "node-readline"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-readline"
+    , repo: GitHubProject "purescript-node-readline"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-readline.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-streams"
+  , { package: Package "node-streams"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-streams"
+    , repo: GitHubProject "purescript-node-streams"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-streams.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "node-url"
+  , { package: Package "node-url"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-node-url"
+    , repo: GitHubProject "purescript-node-url"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-node-url.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
-  , { name: Package "posix-types"
+  , { package: Package "posix-types"
     , owner: GitHubOwner "purescript-node"
-    , project: GitHubProject "purescript-posix-types"
+    , repo: GitHubProject "purescript-posix-types"
     , gitUrl: GitCloneUrl "git@github.com:purescript-node/purescript-posix-types.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true
     }
   -- other libs
-  , { name: Package "aff-promise"
+  , { package: Package "aff-promise"
     , owner: GitHubOwner "nwolverson"
-    , project: GitHubProject "purescript-aff-promise"
+    , repo: GitHubProject "purescript-aff-promise"
     , gitUrl: GitCloneUrl "git@github.com:nwolverson/purescript-aff-promise.git"
     , defaultBranch: BranchName "master"
     , inBowerRegistry: true

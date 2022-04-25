@@ -49,7 +49,7 @@ generateReleaseInfo = do
   releaseInfo <- traverse getReleaseInfo packages
   let
     obj = releaseInfo # flip foldl Object.empty \acc next -> do
-      Object.insert (unwrap next.pkg) next acc
+      Object.insert (unwrap next.package) next acc
   dt <- liftEffect nowDateTime
   writeTextFile UTF8 (releaseFiles.releaseInfoPath $ formatYYYYMMDD dt)
     $ stringifyWithIndent 2
@@ -63,7 +63,7 @@ generateReleaseInfo = do
         : DayOfMonthTwoDigits
         : Nil
 
-  getReleaseInfo :: PackageInfo -> Aff (ReleaseInfo String)
+  getReleaseInfo :: PackageInfo -> Aff (ReleaseInfo String String)
   getReleaseInfo info = do
     log $ "Getting release info for '" <> pkg' <> "'"
     throwIfExecErrored =<< execAff' "git fetch --tags upstream" inRepoDir
@@ -103,7 +103,12 @@ generateReleaseInfo = do
     , dependencies: spagoTestDependencies
     } <- getDhallDependenciesField $ Path.concat [ repoDir, repoFiles.testDhallFile ]
     pure
-      { pkg: info.name
+      { package: info.package
+      , owner: info.owner
+      , repo: info.repo
+      , defaultBranch: info.defaultBranch
+      , gitUrl: info.gitUrl
+      , inBowerRegistry: info.inBowerRegistry
       , lastVersion: Version.showVersion <$> mbMaxGitTag
       , nextVersion: Version.showVersion
           $ maybe (Version.version 1 0 0 Nil Nil) Version.bumpMajor
@@ -117,7 +122,7 @@ generateReleaseInfo = do
       , spagoTestDependencies
       }
     where
-    pkg' = unwrap info.name
+    pkg' = unwrap info.package
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
     bowerFile = Path.concat [ repoDir, repoFiles.bowerJsonFile ]

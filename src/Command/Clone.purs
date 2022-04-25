@@ -39,8 +39,8 @@ clone pkgInfo org = do
       Left { owner, repo, package } -> do
         let dir = Path.concat [ libDir, unwrap package ]
         Tuple dir { owner, repo, orgName: org, cloneLocallyTo: Just dir }
-      Right { owner, project, name } -> do
-        let dir = Path.concat [ libDir, unwrap name ]
-        Tuple dir { owner, repo: project, orgName: org, cloneLocallyTo: Just dir }
+      Right { owner, repo, package } -> do
+        let dir = Path.concat [ libDir, unwrap package ]
+        Tuple dir { owner, repo, orgName: org, cloneLocallyTo: Just dir }
   void $ ghRepoFork ghArgs
   log $ "Cloned '" <> unwrap owner <> "/" <> unwrap repo <> "' to " <> dir

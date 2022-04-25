@@ -94,7 +94,7 @@ parseCliArgs =
     parseRegularPackage = ArgParse.argument [ "--package" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
       # ArgParse.unformat "PACKAGE" case _ of
           s
-            | Just r <- Array.findMap (\rec -> if s == unwrap rec.name then Just rec else Nothing) packages -> Right r
+            | Just r <- Array.findMap (\rec -> if s == unwrap rec.package then Just rec else Nothing) packages -> Right r
             | otherwise -> Left $ "'" <> s <> "' is not a core, contrib, node, or web package"
 
     parseIrregularPackage = ArgParse.argument [ "--repo" ] "One of the core, contrib, node, or web packages (e.g. node-fs)"
@@ -117,7 +117,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
@@ -131,7 +131,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
@@ -145,7 +145,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         , skipPulp: Arg.flag [ "--skip-pulp" ] "Does not install, build, or run tests with bower/pulp" # Arg.boolean
         , clearBowerCache: Arg.flag [ "--clear-bower" ] "Clears bower's cache (if any)." # Arg.boolean
@@ -167,7 +167,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
@@ -181,7 +181,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
@@ -195,7 +195,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp
@@ -209,7 +209,7 @@ parseCliArgs =
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
-                    $ Array.findMap (\pkg@{ name } -> if unwrap name == s then Just pkg else Nothing) packages
+                    $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
         }
       <* ArgParse.flagHelp

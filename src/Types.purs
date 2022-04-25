@@ -55,18 +55,23 @@ derive newtype instance EncodeJson BranchName
 derive newtype instance DecodeJson BranchName
 
 type PackageInfo =
-  { name :: Package
+  { package :: Package
   , owner :: GitHubOwner
-  , project :: GitHubProject
+  , repo :: GitHubProject
   , gitUrl :: GitCloneUrl
   , defaultBranch :: BranchName
   , inBowerRegistry :: Boolean
   }
 
-type ReleaseInfo version =
-  { pkg :: Package
-  , lastVersion :: Maybe version
-  , nextVersion :: version
+type ReleaseInfo lastVersion nextVersion =
+  { package :: Package
+  , owner :: GitHubOwner
+  , repo :: GitHubProject
+  , gitUrl :: GitCloneUrl
+  , defaultBranch :: BranchName
+  , inBowerRegistry :: Boolean
+  , lastVersion :: Maybe lastVersion
+  , nextVersion :: nextVersion
   , hasBowerJsonFile :: Boolean
   , bowerDependencies :: Array Package
   , bowerDevDependencies :: Array Package

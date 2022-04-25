@@ -69,11 +69,11 @@ compile { package: info, clearBowerCache, skipPulp, skipBowerInstall, skipSpago,
   unless skipFormat do
     throwIfExecErrored =<< execAff' "purs-tidy check src/ test/" inRepoDir
   unless skipEslint do
-    ffiStatus <- hasFFI info.name
+    ffiStatus <- hasFFI info.package
     for_ (ffiStatus # filterMap \(Tuple dir hasFfi) -> if hasFfi then Just dir else Nothing) \dir -> do
       throwIfExecErrored =<< execAff' ("eslint " <> dir) inRepoDir
   where
-  pkg' = unwrap info.name
+  pkg' = unwrap info.package
   repoDir = Path.concat [ libDir, pkg' ]
 
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }

@@ -142,15 +142,15 @@ generateEcosystemChangelog = do
           # linesOrEmptyIfJustWhitespace
 
       pure $ case finalLines of
-        [] -> Right $ Left info.name
+        [] -> Right $ Left info.package
         _ -> Right $ Right { pkg: pkg', owner: info.owner, lines: finalLines }
     else do
-      pure $ Left info.name
+      pure $ Left info.package
     where
     filePathFromPeu = Path.concat [ repoDir, repoFiles.changelogFile ]
-    pkg' = unwrap info.name
+    pkg' = unwrap info.package
     owner' = unwrap info.owner
-    repo' = unwrap info.project
+    repo' = unwrap info.repo
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
 

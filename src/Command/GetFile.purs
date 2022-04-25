@@ -100,8 +100,8 @@ getFile filePaths = do
     fileExists <- liftEffect $ exists filePathFromPeu
     let
       insertPkg = case _ of
-        Nothing -> Just $ HashSet.singleton info.name
-        Just s -> Just $ HashSet.insert info.name s
+        Nothing -> Just $ HashSet.singleton info.package
+        Just s -> Just $ HashSet.insert info.package s
     if fileExists then do
       content <- readTextFile UTF8 filePathFromPeu
       pure $ HM.alter insertPkg (Just content) hashMap
@@ -109,7 +109,7 @@ getFile filePaths = do
       pure $ HM.alter insertPkg Nothing hashMap
     where
     filePathFromPeu = Path.concat $ Array.cons repoDir filePaths
-    pkg' = unwrap info.name
+    pkg' = unwrap info.package
     defaultBranch' = unwrap info.defaultBranch
     repoDir = Path.concat [ libDir, pkg' ]
 

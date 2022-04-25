@@ -23,10 +23,10 @@ import Utils (getFilesIn, rightOrCrash)
 
 checkForDeprecated :: { package :: PackageInfo } -> Aff Unit
 checkForDeprecated { package: info } = do
-  srcFiles <- getFilesIn info.name "src" >>= traverse printOrErrorIfPatternFound
-  testFiles <- getFilesIn info.name "test" >>= traverse printOrErrorIfPatternFound
+  srcFiles <- getFilesIn info.package "src" >>= traverse printOrErrorIfPatternFound
+  testFiles <- getFilesIn info.package "test" >>= traverse printOrErrorIfPatternFound
   unless (Array.null $ srcFiles <> testFiles) do
-    liftEffect $ throw $ "One or more files in " <> unwrap info.name <> " needs to be updated"
+    liftEffect $ throw $ "One or more files in " <> unwrap info.package <> " needs to be updated"
   where
   printOrErrorIfPatternFound filePath = do
     lns <- lines <$> readTextFile UTF8 filePath

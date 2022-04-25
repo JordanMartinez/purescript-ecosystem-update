@@ -29,11 +29,11 @@ updatePackageSet { package: info } = do
       throwIfExecErrored =<< execAff' "git add packages.dhall" inRepoDir
       throwIfExecErrored =<< execAff' "git commit -m \"Update packages.dhall to prepare package set\"" inRepoDir
     else do
-      log $ unwrap info.name <> ": `packages.dhall` file had no changes."
+      log $ pkg' <> ": `packages.dhall` file had no changes."
   else do
-    log $ unwrap info.name <> ": `packages.dhall` file does not exist"
+    log $ pkg' <> ": `packages.dhall` file does not exist"
   where
-  pkg' = unwrap info.name
+  pkg' = unwrap info.package
   repoDir = Path.concat [ libDir, pkg' ]
 
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
