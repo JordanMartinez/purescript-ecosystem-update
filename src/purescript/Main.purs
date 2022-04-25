@@ -7,8 +7,8 @@ import CLI (parseCliArgs)
 import Command (Command(..))
 import Command.Bower as BowerCmd
 import Command.Clone as CloneCmd
-import Command.DownloadPurs as DownloadPursCmd
 import Command.Compile as CompileCmd
+import Command.DownloadPurs as DownloadPursCmd
 import Command.Ecosystem as EcosystemCmd
 import Command.GetFile as GetFileCmd
 import Command.Init as InitCmd
@@ -19,6 +19,7 @@ import Data.Array as Array
 import Data.Either (Either(..), either)
 import Effect (Effect)
 import Effect.Aff (runAff_)
+import Effect.Class (liftEffect)
 import Effect.Console as Console
 import Effect.Exception (throwException)
 import Node.Process (argv)
@@ -37,39 +38,29 @@ main = do
           setProcessExitCode 0
         _ ->
           setProcessExitCode 1
-    Right cmd ->
+    Right cmd -> runAff_ (either throwException $ const $ pure unit) do
       case cmd of
         Init -> do
-          runAff_ (either throwException $ const $ pure unit) do
-            InitCmd.init
+          InitCmd.init
         DownloadPurs mbVersion -> do
-          runAff_ (either throwException $ const $ pure unit) do
-            DownloadPursCmd.downloadPursBinary mbVersion
+          DownloadPursCmd.downloadPursBinary mbVersion
         Clone info org -> do
-          runAff_ (either throwException $ const $ pure unit) do
-            CloneCmd.clone info org
+          CloneCmd.clone info org
         CloneAll org ->
-          runAff_ (either throwException $ const $ pure unit) do
-            CloneCmd.cloneAll org
+          CloneCmd.cloneAll org
         Bower opts -> do
-          runAff_ (either throwException $ const $ pure unit) do
-            BowerCmd.updatePackageDepsToBranchVersion opts
+          BowerCmd.updatePackageDepsToBranchVersion opts
         Compile opts -> do
-          runAff_ (either throwException $ const $ pure unit) do
-            CompileCmd.compile opts
+          CompileCmd.compile opts
         ReleaseOrder ->
-          runAff_ (either throwException $ const $ pure unit) do
-            ReleaseOrderCmd.generateReleaseOrder
+          ReleaseOrderCmd.generateReleaseOrder
         MakeNextReleaseBatch opts ->
-          runAff_ (either throwException $ const $ pure unit) do
-            ReleaseCmd.createPrForNextReleaseBatch opts
+          ReleaseCmd.createPrForNextReleaseBatch opts
         GenReleaseInfo ->
-          runAff_ (either throwException $ const $ pure unit) do
-            RelaseInfoCmd.generateReleaseInfo
+          RelaseInfoCmd.generateReleaseInfo
         GetFile filePaths ->
-          runAff_ (either throwException $ const $ pure unit) do
-            GetFileCmd.getFile filePaths
+          GetFileCmd.getFile filePaths
         EcosystemChangelog ->
-          runAff_ (either throwException $ const $ pure unit) do
-            EcosystemCmd.generateEcosystemChangelog
-        _ -> Console.log "Command not yet implemented"
+          EcosystemCmd.generateEcosystemChangelog
+        _ -> do
+          liftEffect $ Console.log "Command not yet implemented"
