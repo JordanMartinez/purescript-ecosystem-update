@@ -29,7 +29,7 @@ data Command
       , skipSpagoInstall :: Boolean
       , skipTests :: Boolean
       }
-  | MakePr { package :: PackageInfo }
+  | MakeUpdatePr { package :: PackageInfo, openWeb :: Boolean }
   | GenReleaseInfo
   | LibOrder DependencyStage
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }

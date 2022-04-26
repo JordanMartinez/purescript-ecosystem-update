@@ -13,10 +13,11 @@ import Command.DownloadPurs as DownloadPursCmd
 import Command.Ecosystem as EcosystemCmd
 import Command.GetFile as GetFileCmd
 import Command.Init as InitCmd
+import Command.LibOrder as LibOrderCmd
 import Command.Release as ReleaseCmd
 import Command.ReleaseInfo as RelaseInfoCmd
-import Command.LibOrder as LibOrderCmd
 import Command.Spago as SpagoCmd
+import Command.UpdatePr as MakeUpdatePrCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
 import Effect (Effect)
@@ -58,6 +59,8 @@ main = do
           CompileCmd.compile opts
         CheckForDeprecated opts -> do
           CheckForDeprecatedCmd.checkForDeprecated opts
+        MakeUpdatePr opts ->
+          MakeUpdatePrCmd.createPrForUpdate opts
         LibOrder depStage ->
           LibOrderCmd.generateLibOrder depStage
         MakeNextReleaseBatch opts ->

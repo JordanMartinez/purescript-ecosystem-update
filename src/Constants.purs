@@ -127,6 +127,17 @@ changelogFiles =
   , nextReleaseUninteresting: Path.concat [ "files", "changelogs", "next-release-uninteresting.md" ]
   }
 
+prFiles
+  :: { dir :: String
+     , readmeFile :: String
+     , updatePrBodyFile :: String
+     }
+prFiles =
+  { dir: Path.concat [ "files", "pr" ]
+  , readmeFile: Path.concat [ "files", "pr", "README.md" ]
+  , updatePrBodyFile: Path.concat [ "files", "pr", "update-pr-body.md" ]
+  }
+
 purescriptTarGzFile :: String
 purescriptTarGzFile = "purescript.tar.gz"
 

@@ -42,7 +42,7 @@ parseCliArgs =
       , ciCmd
       , compileCmd
       , checkCmd
-      , makePrCmd
+      , makeUpdatePrCmd
       , makeNextReleaseBatchCmd
       , updateOrderCmd
       , releaseOrderCmd
@@ -204,19 +204,21 @@ parseCliArgs =
     where
     description = "Search for deprecations and other old code. Warn or fail depending on the type found."
 
-  makePrCmd = ArgParse.command [ "pr" ] description do
-    MakePr
+  makeUpdatePrCmd = ArgParse.command [ "pr" ] description do
+    MakeUpdatePr
       <$> fromRecord
-        { package: Arg.anyNotFlag "PACKAGE" "The name of the package to compile"
+        { package: Arg.anyNotFlag "PACKAGE" "The name of the package"
             # Arg.unformat
                 "PACKAGE"
                 ( \s -> note "Must be a valid package name in core, contrib, node, or web libraries"
                     $ Array.findMap (\pkg@{ package } -> if unwrap package == s then Just pkg else Nothing) packages
                 )
+        , openWeb: Arg.flag [ "--web" ] "Whether to open the PR"
+            # Arg.boolean
         }
       <* ArgParse.flagHelp
     where
-    description = "Create a PR for a single package"
+    description = "Create the initial update PR for a single package"
 
   makeNextReleaseBatchCmd = ArgParse.command [ "release" ] description do
     MakeNextReleaseBatch
