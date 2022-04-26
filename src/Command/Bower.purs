@@ -16,7 +16,11 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Tools.Jq (regenerateJqBowerUpdateScripts)
 import Types (PackageInfo)
-import Utils (execAff', spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (execAff', mkdir, spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir jqScripts.dir { recursive: true }
 
 -- | Updates a single package's bower deps to their default branch
 updatePackageDepsToBranchVersion :: { package :: PackageInfo } -> Aff Unit

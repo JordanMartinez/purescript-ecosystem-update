@@ -8,12 +8,17 @@ import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..))
 import Data.Newtype (unwrap)
 import Data.Tuple (Tuple(..))
+import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class.Console (log)
 import Node.Path as Path
 import Packages (packages)
 import Tools.Gh (ghRepoFork)
 import Types (GitHubOwner, GitHubRepo, Package, PackageInfo)
+
+initCmd :: Aff Unit
+initCmd = do
+  pure unit
 
 cloneAll
   :: forall m

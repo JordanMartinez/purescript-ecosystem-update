@@ -21,6 +21,10 @@ import Node.FS.Aff (readTextFile)
 import Types (PackageInfo)
 import Utils (getFilesIn, rightOrCrash)
 
+initCmd :: Aff Unit
+initCmd = do
+  pure unit
+
 checkForDeprecated :: { package :: PackageInfo } -> Aff Unit
 checkForDeprecated { package: info } = do
   srcFiles <- getFilesIn info.package "src" >>= traverse printOrErrorIfPatternFound

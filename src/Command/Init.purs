@@ -2,13 +2,25 @@ module Command.Init where
 
 import Prelude
 
+import Command.Bower as Bower
+import Command.CheckForDeprecated as CheckForDeprecated
+import Command.Clone as Clone
+import Command.Compile as Compile
 import Command.DownloadPurs (downloadPursBinary)
+import Command.DownloadPurs as DownloadPurs
+import Command.Ecosystem as Ecosystem
+import Command.GetFile as GetFile
+import Command.LibOrder as LibOrder
+import Command.PackageJson as PackageJson
+import Command.Release as Release
+import Command.ReleaseInfo as ReleaseInfo
+import Command.Spago as Spago
 import Constants (getFileDir)
 import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Enum (enumFromTo)
 import Data.Filterable (partitionMap)
-import Data.Foldable (for_)
+import Data.Foldable (for_, sequence_)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
 import Data.String (codePointFromChar)
@@ -31,6 +43,21 @@ init = do
   checkGhGitProtocol
   downloadPursBinary Nothing
   mkInitialDirectories
+
+  sequence_
+    [ Bower.initCmd
+    , CheckForDeprecated.initCmd
+    , Clone.initCmd
+    , Compile.initCmd
+    , DownloadPurs.initCmd
+    , Ecosystem.initCmd
+    , GetFile.initCmd
+    , LibOrder.initCmd
+    , PackageJson.initCmd
+    , Release.initCmd
+    , ReleaseInfo.initCmd
+    , Spago.initCmd
+    ]
 
 -- | Verifies that a given tool with the minimum version is installed
 -- | and throws an error otherwise.

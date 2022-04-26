@@ -26,7 +26,11 @@ import Foreign.Object as Object
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile, writeTextFile)
 import Types (GitCloneUrl, Package(..), ReleaseInfo)
-import Utils (spawnAff, splitLines, throwIfSpawnErrored, withSpawnResult)
+import Utils (mkdir, spawnAff, splitLines, throwIfSpawnErrored, withSpawnResult)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir releaseFiles.dir { recursive: true }
 
 generateLibOrder :: DependencyStage -> Aff Unit
 generateLibOrder = case _ of

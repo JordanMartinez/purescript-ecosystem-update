@@ -26,7 +26,11 @@ import Node.Path as Path
 import Packages (packages)
 import Safe.Coerce (coerce)
 import Types (Package(..), PackageInfo)
-import Utils (execAff', justOrCrash, throwIfExecErrored)
+import Utils (execAff', justOrCrash, mkdir, throwIfExecErrored)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir getFileDir { recursive: true }
 
 getFile :: Array FilePath -> Aff Unit
 getFile filePaths = do

@@ -26,7 +26,11 @@ import Node.Path as Path
 import Packages (packages)
 import Safe.Coerce (coerce)
 import Types (GitHubOwner, Package(..), PackageInfo)
-import Utils (execAff', justOrCrash, replaceAll, rightOrCrash, splitLines, throwIfExecErrored)
+import Utils (execAff', justOrCrash, mkdir, replaceAll, rightOrCrash, splitLines, throwIfExecErrored)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir changelogFiles.dir { recursive: true }
 
 generateEcosystemChangelog :: Aff Unit
 generateEcosystemChangelog = do

@@ -14,7 +14,11 @@ import Node.FS.Sync (exists)
 import Node.Path (FilePath)
 import Node.Path as Path
 import Types (PackageInfo)
-import Utils (copyFile, execAff', throwIfExecErrored)
+import Utils (copyFile, execAff', mkdir, throwIfExecErrored)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir spagoFiles.dir { recursive: true }
 
 -- | Updates a given package's `packages.dhall` to the one stored
 -- | in `files/spago/packages.dhall`

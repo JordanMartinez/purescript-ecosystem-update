@@ -18,6 +18,10 @@ import Node.Path as Path
 import Types (Package)
 import Utils (execAff', spawnAff', throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
+initCmd :: Aff Unit
+initCmd = do
+  pure unit
+
 -- | Use to update `pulp` or `purescript-psa`
 -- | in the `package.json` file
 updateDevDepTo :: Package -> String -> Version -> Aff Unit

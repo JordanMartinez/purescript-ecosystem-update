@@ -64,7 +64,8 @@ getFileDir :: String
 getFileDir = Path.concat [ "files", "getFile" ]
 
 releaseFiles
-  :: { nextReleaseInfo :: String
+  :: { dir :: String
+     , nextReleaseInfo :: String
      , releaseInfoPath :: String -> String
      , releaseOrderFile :: String
      , releasedPkgsFile :: String
@@ -74,7 +75,8 @@ releaseFiles
      , deprecatedPkgsFile :: String
      }
 releaseFiles = do
-  { releaseOrderFile: Path.concat [ "files", "release", "library-release-order" ]
+  { dir: Path.concat [ "files", "release" ]
+  , releaseOrderFile: Path.concat [ "files", "release", "library-release-order" ]
   , releasedPkgsFile: Path.concat [ "files", "release", "released-pkgs" ]
   , updateOrderFile: Path.concat [ "files", "release", "library-update-order" ]
   , updatedPkgsFile: Path.concat [ "files", "release", "updated-pkgs" ]
@@ -85,21 +87,25 @@ releaseFiles = do
   }
 
 pursTidyFiles
-  :: { tidyRcNoOperatorsFile :: String
+  :: { dir :: String
+     , tidyRcNoOperatorsFile :: String
      , tidyRcWithOperatorsFile :: String
      }
 pursTidyFiles =
-  { tidyRcNoOperatorsFile: Path.concat [ "files", "purs-tidy", ".tidyrc-no-operators-file.json" ]
+  { dir: Path.concat ["files", "purs-tidy" ]
+  , tidyRcNoOperatorsFile: Path.concat [ "files", "purs-tidy", ".tidyrc-no-operators-file.json" ]
   , tidyRcWithOperatorsFile: Path.concat [ "files", "purs-tidy", ".tidyrc-with-operators-file.json" ]
   }
 
 changelogFiles
-  :: { nextReleaseNotes :: String
+  :: { dir :: String
+     , nextReleaseNotes :: String
      , nextReleaseMissing :: String
      , nextReleaseUninteresting :: String
      }
 changelogFiles =
-  { nextReleaseNotes: Path.concat [ "files", "changelogs", "next-release-notes.md" ]
+  { dir: Path.concat[ "files", "changelogs" ]
+  , nextReleaseNotes: Path.concat [ "files", "changelogs", "next-release-notes.md" ]
   , nextReleaseMissing: Path.concat [ "files", "changelogs", "next-release-missing.md" ]
   , nextReleaseUninteresting: Path.concat [ "files", "changelogs", "next-release-uninteresting.md" ]
   }
@@ -108,20 +114,24 @@ purescriptTarGzFile :: String
 purescriptTarGzFile = "purescript.tar.gz"
 
 jqScripts
-  :: { updateBowerDepsToReleaseVersion :: String
+  :: { dir :: String
+     , updateBowerDepsToReleaseVersion :: String
      , updateBowerDepsToBranchNameVersion :: String
      }
 jqScripts =
-  { updateBowerDepsToReleaseVersion: Path.concat [ "files", "jq", "update-bower-json-release-versions.txt" ]
+  { dir: Path.concat [ "files", "jq" ]
+  , updateBowerDepsToReleaseVersion: Path.concat [ "files", "jq", "update-bower-json-release-versions.txt" ]
   , updateBowerDepsToBranchNameVersion: Path.concat [ "files", "jq", "update-bower-json-branch-name-versions.txt" ]
   }
 
 spagoFiles
-  :: { lastStablePackageSet :: String
+  :: { dir :: String
+     , lastStablePackageSet :: String
      , preparePackageSetFile :: String
      }
 spagoFiles =
-  { preparePackageSetFile: Path.concat [ "files", "spago", "packages-prepare-set.dhall" ]
+  { dir: Path.concat [ "files", "spago" ]
+  , preparePackageSetFile: Path.concat [ "files", "spago", "packages-prepare-set.dhall" ]
   , lastStablePackageSet: Path.concat [ "files", "spago", "packages-last-stable-set.dhall" ]
   }
 

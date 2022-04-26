@@ -7,6 +7,7 @@ import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Data.Version (Version, parseVersion, showVersion)
+import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff, liftAff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
@@ -15,6 +16,10 @@ import Node.FS.Aff (unlink)
 import Node.Platform (Platform(..))
 import Node.Process as Process
 import Utils (execAff)
+
+initCmd :: Aff Unit
+initCmd = do
+  pure unit
 
 downloadPursBinary :: forall m. MonadAff m => Maybe Version -> m Unit
 downloadPursBinary mbVersion = do

@@ -16,6 +16,10 @@ import Node.Path as Path
 import Types (GitHubOwner(..), PackageInfo)
 import Utils (execAff', hasFFI, throwIfExecErrored)
 
+initCmd :: Aff Unit
+initCmd = do
+  pure unit
+
 compile
   :: { package :: PackageInfo
      , clearBowerCache :: Boolean

@@ -42,7 +42,11 @@ import Node.Stream as Stream
 import Packages (packages)
 import Safe.Coerce (coerce)
 import Types (Package(..), PackageInfo, ReleaseInfo)
-import Utils (execAff', rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (execAff', mkdir, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir releaseFiles.dir { recursive: true }
 
 generateReleaseInfo :: Aff Unit
 generateReleaseInfo = do

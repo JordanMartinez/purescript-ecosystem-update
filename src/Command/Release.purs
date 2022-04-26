@@ -37,7 +37,11 @@ import Record as Record
 import Tools.Jq (regenerateJqBowerUpdateScripts)
 import Type.Proxy (Proxy(..))
 import Types (BranchName, GitHubOwner, GitHubRepo, Package)
-import Utils (SpawnExit(..), execAff', justOrCrash, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (SpawnExit(..), execAff', justOrCrash, mkdir, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+
+initCmd :: Aff Unit
+initCmd = do
+  mkdir releaseFiles.dir { recursive: true }
 
 createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrBody } = do
