@@ -103,7 +103,7 @@ getFile desiredOutput filePaths = do
       dirExists <- liftEffect $ exists parentDir
       when dirExists do
         children <- readdir parentDir
-        if (not $ Array.null children) && replaceDir then do
+        if Array.null children || replaceDir then do
           rmRf parentDir
         else do
           liftEffect $ throw $ "directory at path " <> parentDir <> " already exists and contains files."
