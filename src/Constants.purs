@@ -72,6 +72,7 @@ releaseFiles
      , releasedPkgsFile :: String
      , updateOrderFile :: String
      , updatedPkgsFile :: String
+     , lastStablePackageSet :: String
      , spagoOrderFile :: String
      , deprecatedPkgsFile :: String
      }
@@ -83,6 +84,7 @@ releaseFiles = do
   , updateOrderFile: Path.concat [ "files", "release", "update-order" ]
   , updatedPkgsFile: Path.concat [ "files", "release", "updated-pkgs" ]
   , nextReleaseInfo: Path.concat [ "files", "release", "next-release-info_2022-04-26.json" ]
+  , lastStablePackageSet: Path.concat [ "files", "spago", "packages-last-stable-set.dhall" ]
   , spagoOrderFile: Path.concat [ "files", "release", "spago-order" ]
   , deprecatedPkgsFile: Path.concat [ "files", "release", "spago-deprecated-pkgs" ]
   , releaseInfoPath: \s -> Path.concat [ "files", "release", "next-release-info_" <> s <> ".json" ]
@@ -135,14 +137,12 @@ jqScripts =
 spagoFiles
   :: { dir :: String
      , readmeFile :: String
-     , lastStablePackageSet :: String
      , preparePackageSetFile :: String
      }
 spagoFiles =
   { dir: Path.concat [ "files", "spago" ]
   , readmeFile: Path.concat [ "files", "release", "README.md" ]
   , preparePackageSetFile: Path.concat [ "files", "spago", "packages-prepare-set.dhall" ]
-  , lastStablePackageSet: Path.concat [ "files", "spago", "packages-last-stable-set.dhall" ]
   }
 
 libDir :: String
