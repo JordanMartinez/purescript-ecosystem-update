@@ -2,7 +2,7 @@ module Command.Release where
 
 import Prelude
 
-import Constants (jqScripts, libDir, releaseFiles, repoFiles)
+import Constants (jqScripts, libDir, orderFiles, repoFiles)
 import Data.Array (elem, find, fold)
 import Data.Array as Array
 import Data.Foldable (for_)
@@ -37,16 +37,16 @@ import Record as Record
 import Tools.Jq (regenerateJqBowerUpdateScripts)
 import Type.Proxy (Proxy(..))
 import Types (BranchName, GitHubOwner, GitHubRepo, Package)
-import Utils (SpawnExit(..), execAff', justOrCrash, mkdir, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Utils (SpawnExit(..), execAff', justOrCrash, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 initCmd :: Aff Unit
 initCmd = do
-  mkdir releaseFiles.dir { recursive: true }
+  pure unit
 
 createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrBody } = do
   nextReleaseInfo <- getNextReleaseInfo
-  unreleasedPackages <- splitLines <$> readTextFile UTF8 releaseFiles.releasedPkgsFile
+  unreleasedPackages <- splitLines <$> readTextFile UTF8 orderFiles.releasedPkgsFile
   let { unfinishedPkgsGraph } = getDependencyGraph nextReleaseInfo unreleasedPackages
 
   regenerateJqBowerUpdateScripts nextReleaseInfo

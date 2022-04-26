@@ -2,7 +2,7 @@ module DependencyGraph where
 
 import Prelude
 
-import Constants (releaseFiles)
+import Constants (releaseInfoFiles)
 import Control.Monad.Rec.Class (Step(..), tailRec)
 import Data.Argonaut.Decode (decodeJson, parseJson, printJsonDecodeError)
 import Data.Array as Array
@@ -30,7 +30,7 @@ import Types (DependencyGraphRows, Package(..), ReleaseInfo, PackageRows)
 
 getNextReleaseInfo :: Aff (Object (ReleaseInfo String String))
 getNextReleaseInfo = do
-  releaseInfoContent <- readTextFile UTF8 releaseFiles.nextReleaseInfo
+  releaseInfoContent <- readTextFile UTF8 releaseInfoFiles.nextReleaseInfo
   either (liftEffect <<< throw <<< printJsonDecodeError) pure
     $ decodeJson =<< parseJson releaseInfoContent
 

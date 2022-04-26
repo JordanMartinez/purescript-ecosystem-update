@@ -63,31 +63,40 @@ gitRemotes =
 getFileDir :: String
 getFileDir = Path.concat [ "files", "getFile" ]
 
-releaseFiles
+orderFiles
   :: { dir :: String
      , readmeFile :: String
-     , nextReleaseInfo :: String
-     , releaseInfoPath :: String -> String
-     , releaseOrderFile :: String
-     , releasedPkgsFile :: String
      , updateOrderFile :: String
      , updatedPkgsFile :: String
+     , releaseOrderFile :: String
+     , releasedPkgsFile :: String
      , lastStablePackageSet :: String
      , spagoOrderFile :: String
      , deprecatedPkgsFile :: String
      }
-releaseFiles = do
-  { dir: Path.concat [ "files", "release" ]
-  , readmeFile: Path.concat [ "files", "release", "README.md" ]
-  , releaseOrderFile: Path.concat [ "files", "release", "release-order" ]
-  , releasedPkgsFile: Path.concat [ "files", "release", "released-pkgs" ]
-  , updateOrderFile: Path.concat [ "files", "release", "update-order" ]
-  , updatedPkgsFile: Path.concat [ "files", "release", "updated-pkgs" ]
-  , nextReleaseInfo: Path.concat [ "files", "release", "next-release-info_2022-04-26.json" ]
-  , lastStablePackageSet: Path.concat [ "files", "spago", "packages-last-stable-set.dhall" ]
-  , spagoOrderFile: Path.concat [ "files", "release", "spago-order" ]
-  , deprecatedPkgsFile: Path.concat [ "files", "release", "spago-deprecated-pkgs" ]
-  , releaseInfoPath: \s -> Path.concat [ "files", "release", "next-release-info_" <> s <> ".json" ]
+orderFiles =
+  { dir: Path.concat [ "files", "order" ]
+  , readmeFile: Path.concat [ "files", "order", "README.md" ]
+  , releaseOrderFile: Path.concat [ "files", "order", "release-order" ]
+  , releasedPkgsFile: Path.concat [ "files", "order", "released-pkgs" ]
+  , updateOrderFile: Path.concat [ "files", "order", "update-order" ]
+  , updatedPkgsFile: Path.concat [ "files", "order", "updated-pkgs" ]
+  , lastStablePackageSet: Path.concat [ "files", "order", "packages.dhall" ]
+  , spagoOrderFile: Path.concat [ "files", "order", "spago-order" ]
+  , deprecatedPkgsFile: Path.concat [ "files", "order", "spago-deprecated-pkgs" ]
+  }
+
+releaseInfoFiles
+  :: { dir :: String
+     , readmeFile :: String
+     , releaseInfoPath :: String -> String
+     , nextReleaseInfo :: String
+     }
+releaseInfoFiles = do
+  { dir: Path.concat [ "files", "releaseInfo" ]
+  , readmeFile: Path.concat [ "files", "releaseInfo", "README.md" ]
+  , releaseInfoPath: \s -> Path.concat [ "files", "releaseInfo", "next-release-info_" <> s <> ".json" ]
+  , nextReleaseInfo: Path.concat [ "files", "releaseInfo", "next-release-info_2022-04-26.json" ]
   }
 
 pursTidyFiles

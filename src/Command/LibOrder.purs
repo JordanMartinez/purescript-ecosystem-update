@@ -3,7 +3,7 @@ module Command.LibOrder where
 import Prelude
 
 import Command (DependencyStage(..))
-import Constants (releaseFiles)
+import Constants (orderFiles)
 import Data.Argonaut.Decode (decodeJson, parseJson, printJsonDecodeError)
 import Data.Array (catMaybes, foldl, sortBy)
 import Data.Array as Array
@@ -33,8 +33,8 @@ import Utils (execAff', mkdir, spawnAff, splitLines, throwIfSpawnErrored, withSp
 
 initCmd :: Aff Unit
 initCmd = do
-  mkdir releaseFiles.dir { recursive: true }
-  writeTextFile UTF8 releaseFiles.readmeFile $ Array.intercalate "\n"
+  mkdir orderFiles.dir { recursive: true }
+  writeTextFile UTF8 orderFiles.readmeFile $ Array.intercalate "\n"
     [ "## What is this?"
     , ""
     , Array.fold
@@ -72,18 +72,18 @@ initCmd = do
       ]
     , ""
     , Array.fold
-      [ "Moreover, the " <> releaseFiles.lastStablePackageSet <> " file needs to be updated "
+      [ "Moreover, the " <> orderFiles.lastStablePackageSet <> " file needs to be updated "
       , "to refer to the last stable package set before the breaking change."
       ]
     ]
-  writeTextFile UTF8 releaseFiles.lastStablePackageSet """
+  writeTextFile UTF8 orderFiles.lastStablePackageSet """
 let upstream =
       https://github.com/purescript/package-sets/releases/download/psc-0.14.7-20220418/packages.dhall
         sha256:2523a5659d0f3b198ffa2f800da147e0120578842e492a7148e4b44f357848b3
 
 in  upstream
 """
-  result <- execAff' "spago upgrade-set" (_ { cwd = Just releaseFiles.dir})
+  result <- execAff' "spago upgrade-set" (_ { cwd = Just orderFiles.dir})
   for_ result.error \e -> do
     log $ "Attempted to upgrade the package set to latest stable version, but command failed."
     log "Exec result error:"
@@ -93,26 +93,26 @@ in  upstream
     log $ "Stderr:"
     log $ result.stderr
     log ""
-    log $ "You will need to update the package set in '" <> releaseFiles.lastStablePackageSet <> "' manually."
+    log $ "You will need to update the package set in '" <> orderFiles.lastStablePackageSet <> "' manually."
 
 generateLibOrder :: DependencyStage -> Aff Unit
 generateLibOrder = case _ of
   UpdateOrder -> do
     nextReleaseInfo <- getNextReleaseInfo
-    updatedPackages <- splitLines <$> readTextFile UTF8 releaseFiles.updatedPkgsFile
+    updatedPackages <- splitLines <$> readTextFile UTF8 orderFiles.updatedPkgsFile
     let
       { unfinishedPkgsGraph } = getDependencyGraph nextReleaseInfo updatedPackages
-    writeTextFile UTF8 releaseFiles.updateOrderFile
+    writeTextFile UTF8 orderFiles.updateOrderFile
       $ linearizePackageDependencyOrder (simplifyReleaseInfoRecord nextReleaseInfo) unfinishedPkgsGraph
   ReleaseOrder -> do
     nextReleaseInfo <- getNextReleaseInfo
-    releasedPackages <- splitLines <$> readTextFile UTF8 releaseFiles.releasedPkgsFile
+    releasedPackages <- splitLines <$> readTextFile UTF8 orderFiles.releasedPkgsFile
     let
       { unfinishedPkgsGraph } = getDependencyGraph nextReleaseInfo releasedPackages
-    writeTextFile UTF8 releaseFiles.releaseOrderFile
+    writeTextFile UTF8 orderFiles.releaseOrderFile
       $ linearizePackageDependencyOrder (simplifyReleaseInfoRecord nextReleaseInfo) unfinishedPkgsGraph
   SpagoOrder -> do
-    dtjResult <- withSpawnResult =<< spawnAff "dhall-to-json" [ "--file", releaseFiles.lastStablePackageSet ]
+    dtjResult <- withSpawnResult =<< spawnAff "dhall-to-json" [ "--file", orderFiles.lastStablePackageSet ]
     throwIfSpawnErrored dtjResult
     (packageGraph :: Object { dependencies :: Array Package, repo :: GitCloneUrl }) <-
       either (liftEffect <<< throw <<< printJsonDecodeError) pure
@@ -132,11 +132,11 @@ generateLibOrder = case _ of
         let
           repo' = unwrap repo
         fromMaybe repo' $ stripSuffix (Pattern ".git") repo'
-    releasedPackages <- splitLines <$> readTextFile UTF8 releaseFiles.releasedPkgsFile
-    deprecatedPkgs <- splitLines <$> readTextFile UTF8 releaseFiles.deprecatedPkgsFile
+    releasedPackages <- splitLines <$> readTextFile UTF8 orderFiles.releasedPkgsFile
+    deprecatedPkgs <- splitLines <$> readTextFile UTF8 orderFiles.deprecatedPkgsFile
     let
       { unfinishedPkgsGraph } = getDependencyGraph nextReleaseInfo (releasedPackages <> deprecatedPkgs)
-    writeTextFile UTF8 releaseFiles.spagoOrderFile
+    writeTextFile UTF8 orderFiles.spagoOrderFile
       $ linearizePackageDependencyOrder simplifiedObj unfinishedPkgsGraph
   where
   simplifyReleaseInfoRecord

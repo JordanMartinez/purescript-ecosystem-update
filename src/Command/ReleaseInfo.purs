@@ -2,7 +2,7 @@ module Command.ReleaseInfo where
 
 import Prelude
 
-import Constants (getFileDir, libDir, releaseFiles, repoFiles)
+import Constants (getFileDir, libDir, releaseInfoFiles, repoFiles)
 import Control.Monad.Except (runExcept)
 import Data.Argonaut.Core (stringifyWithIndent)
 import Data.Argonaut.Decode as Json
@@ -46,7 +46,7 @@ import Utils (execAff', mkdir, rightOrCrash, spawnAff, spawnAff', splitLines, th
 
 initCmd :: Aff Unit
 initCmd = do
-  mkdir releaseFiles.dir { recursive: true }
+  mkdir releaseInfoFiles.dir { recursive: true }
   writeTextFile UTF8 (Path.concat [ getFileDir, "README.md" ]) $ Array.intercalate "\n"
     [ "## What is this?"
     , ""
@@ -69,7 +69,7 @@ generateReleaseInfo = do
     obj = releaseInfo # flip foldl Object.empty \acc next -> do
       Object.insert (unwrap next.package) next acc
   dt <- liftEffect nowDateTime
-  writeTextFile UTF8 (releaseFiles.releaseInfoPath $ formatYYYYMMDD dt)
+  writeTextFile UTF8 (releaseInfoFiles.releaseInfoPath $ formatYYYYMMDD dt)
     $ stringifyWithIndent 2
     $ encodeJson obj
   where
