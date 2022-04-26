@@ -12,7 +12,7 @@ Breaking changes made in libraries are done at the same time as when breaking ch
 
 ```sh
 # Create a separate folder for containing both the scripts
-# and the local copies of the repos under their org-specific folder
+# and the local copies of the repos
 mkdir ps-libs
 cd ps-libs
 
@@ -20,54 +20,57 @@ cd ps-libs
 git clone git@github.com:JordanMartinez/purescript-ecosystem-update.git 0.15
 cd 0.15
 
-./init.sh
-./forkall.sh
+spago build
 
+# Fix any errors produced by the init command
+./peu.js init
 
-# For each repo, the workflow looks like...
-./next.sh 1
+# Clone all repos locally using `gh` without getting rate-limited
+./peu.js cloneAll
+# Generate information used by most other commands
+./peu.js releaseInfo
+# Generate the order in which libraries need to be updated
+./peu.js updateOrder
 
-./compile.sh 1 prelude
-# If any fixes need to be done separately / after the fact
-# ./apply.sh 1 prelude ffi
-./pr.sh 1 prelude
-     # Q1: Choose the actual repo
-     # Q2: Choose your fork
-     # Q3: Choose 'Submit'
+# At this point, one can modify this program to do
+# release-specific changes across all repos.
+# If a single file is going to be changed, the `getFile`
+# command can help see what all the edge cases are immediately.
+./peu.js getFile .github/workflows/ci.yml
 
-# Once the PR is merged...
-echo "prelude" >> finished-dependencies.txt
-./mkLibDeps.sh
-# Do the next repo until finished
+# Once this program has been updated to do all changes,
+# one can start updating them by doing the following:
+
+# For each repo...
+  # See what the next library to update is
+./peu.js updateOrder
+head -n 5 files/order/updated-pkgs
+  # Verify that it compiles and will pass CI locally
+./peu.js compile prelude
+  # Submit a PR via `gh`
+./peu.js pr prelude
+  # Mark library as updated
+echo "prelude" >> files/order/updated-pkgs
+  # Loop
+
+# Once all libraries are updated,
+# this program will need to be updated once more
+# to do release-specific things
+./peu.js release
+
+# Once the scripts are tested and work across the repos,
+# one can easily open a PR for them
+./peu.js release --submit-pr
+echo "prelude" >> files/order/released-pkgs
+./peu.js release --submit-pr
+echo "effect" >> files/order/released-pkgs
+# ...
+
+# Once all libraries are releasd and an initial package set
+# is released, we can see which libraries are unblocked:
+./peu.js spagoOrder
+echo "interpolate" >> files/order/released-pkgs
 ```
-
-### Script Overview
-
-[./init.sh](./init.sh) sets up all the tools you need to make the scripts work.
-
-[./forkAll.sh](./forkAll.sh) forks all repos to your account, clones them to a local folder, and applies all updates to each repo in a consistent manner.
-
-[./next.sh](./next.sh) sees which package(s) can be updated since all their dependencies have been updated.
-
-[./compile.sh](./compile.sh) compiles one repo and verifies that it builds, its tests pass, and any linting is checked.
-
-[./apply.sh](./apply.sh) applies a single change to one repo. It's used to apply any one-time fixes if `forkAll.sh` missed it previously due to a bad script.
-
-[./pr.sh](./pr.sh) opens a PR using the [GitHub CLI tool, gh](https://github.com/cli/cli) with a consistent title, message body, labels, and backlinking to the tracking issue.
-
-[./mkLibDeps.sh](./mkLibDeps.sh) regenerates the `libDeps.txt` file via [`purescript-package-graph`](https://github.com/JordanMartinez/purescript-package-graph), so you can know which libraries have been unblocked now that their dependencies have been updated.
-
-### The `org-num` arg
-
-`compile.sh`, `apply.sh`, `pr.sh`, and `next.sh` all take an integer as their first argument. The integer corresponds to the directory and GitHub organization (except for `0`, which is used for testing) that stores the repo.
-
-| org-number | folder | purpose | Example |
-| - | - | - | - |
-| 0 | `purescript-test` | Used to test the various scripts on a subset of repos before `./forkAll.sh` is used | `./compile 0 prelude` |
-| 1 | `purescript` | Used to run a command on one of the core libraries |  `./compile 1 prelude` |
-| 2 | `purescript-contrib` | Used to run a command on one of the contrib libraries |  `./compile 2 aff` |
-| 3 | `purescript-node` | Used to run a command on one of the `purescript-node` libraries |  `./compile 3 node-buffer` |
-| 4 | `purescript-web` | Used to run a command on one of the `purescript-web` libraries |  `./compile 4 web-xhr` |
 
 ### Folder Structure
 
@@ -75,10 +78,11 @@ When setup correctly, the project structure should look like this:
 ```
 ps-libs/
   0.15/
-    init.sh
+    peu.js
     ...
-  purescript/
-  purescript-contrib/
-  purescript-node/
-  purescript-web/
+  lib/
+    prelude/
+    .../
+    node-fs/
+    .../
 ```
