@@ -67,8 +67,8 @@ main = do
           ReleaseCmd.createPrForNextReleaseBatch opts
         GenReleaseInfo ->
           RelaseInfoCmd.generateReleaseInfo
-        GetFile filePaths ->
-          GetFileCmd.getFile filePaths
+        GetFile outputType filePaths ->
+          GetFileCmd.getFile outputType filePaths
         EcosystemChangelog ->
           EcosystemCmd.generateEcosystemChangelog
         _ -> do

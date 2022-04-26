@@ -60,8 +60,18 @@ gitRemotes =
   , self: "self"
   }
 
-getFileDir :: String
-getFileDir = Path.concat [ "files", "getFile" ]
+getFileFiles
+  :: { dir :: String
+     , readmeFile :: String
+     , summaryDir :: String
+     , keyedDir :: String
+     }
+getFileFiles =
+  { dir: Path.concat [ "files", "getFile" ]
+  , readmeFile: Path.concat [ "files", "getFile", "README.md" ]
+  , summaryDir: Path.concat [ "files", "getFile", "summary" ]
+  , keyedDir: Path.concat [ "files", "getFile", "keyed" ]
+  }
 
 orderFiles
   :: { dir :: String

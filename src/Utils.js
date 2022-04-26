@@ -4,7 +4,19 @@ const fs = require("fs");
 exports.mkdirImpl = function(path) {
   return function(opt) {
     return function (cb) {
-      fs.mkdir(path, opt, cb);
+      return function () {
+        fs.mkdir(path, opt, cb);
+      };
+    };
+  };
+};
+
+exports.rmImpl = function(path) {
+  return function(opt) {
+    return function (cb) {
+      return function () {
+        fs.rm(path, opt, cb);
+      };
     };
   };
 };

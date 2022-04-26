@@ -8,12 +8,14 @@ import Data.Either (Either(..), either)
 import Data.Foldable (for_)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Data.Maybe (Maybe(..), isJust, maybe')
+import Data.Monoid (power)
 import Data.Monoid.Disj (Disj(..))
 import Data.Newtype (unwrap)
 import Data.Nullable (Nullable)
 import Data.Posix.Signal (Signal(..))
 import Data.String (Pattern(..), stripSuffix)
 import Data.String as String
+import Data.String.CodeUnits as SCU
 import Data.String.Regex (Regex)
 import Data.Traversable (for)
 import Data.Tuple (Tuple(..))
@@ -49,6 +51,17 @@ mkdir path opt = makeAff \cb -> do
   mkdirImpl path opt do
     cb $ Right unit
   pure nonCanceler
+
+foreign import rmImpl :: String -> { recursive :: Boolean, force :: Boolean } -> Effect Unit -> Effect Unit
+
+rm :: String -> { recursive :: Boolean, force :: Boolean } -> Aff Unit
+rm path opt = makeAff \cb -> do
+  rmImpl path opt do
+    cb $ Right unit
+  pure nonCanceler
+
+rmRf :: String -> Aff Unit
+rmRf path = rm path { recursive: true, force: true }
 
 -- | Per Node docs...
 -- | "Calling `process.exit()` will force the process to exit
@@ -293,3 +306,6 @@ getFilesIn pkg dir = do
       map join $ for children \c -> go $ Path.concat [ path, c ]
     else do
       pure []
+
+padWith :: Int -> Char -> String -> String
+padWith width ch str = power (SCU.singleton ch) (width - String.length str) <> str

@@ -34,7 +34,7 @@ data Command
   | LibOrder DependencyStage
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
   | EcosystemChangelog
-  | GetFile (Array FilePath)
+  | GetFile GetFileOutput (Array FilePath)
 
 data DependencyStage
   = UpdateOrder
@@ -43,3 +43,10 @@ data DependencyStage
 
 derive instance Eq DependencyStage
 derive instance Ord DependencyStage
+
+data GetFileOutput
+  = AsSummaryFile
+  | AsKeyedDirectory String Boolean
+
+derive instance Eq GetFileOutput
+derive instance Ord GetFileOutput

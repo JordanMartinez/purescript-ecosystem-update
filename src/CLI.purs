@@ -5,7 +5,7 @@ import Prelude
 import ArgParse.Basic (ArgError, fromRecord, optional)
 import ArgParse.Basic as Arg
 import ArgParse.Basic as ArgParse
-import Command (Command(..), DependencyStage(..))
+import Command (Command(..), DependencyStage(..), GetFileOutput(..))
 import Data.Array as Array
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
@@ -14,6 +14,7 @@ import Data.Newtype (unwrap)
 import Data.String (Pattern(..), joinWith)
 import Data.String as String
 import Data.Version as Version
+import Node.Path (sep)
 import Node.Path as Path
 import Packages (packages)
 import Types (BranchName(..), GitHubOwner(..), GitHubRepo(..), Package(..))
@@ -268,12 +269,35 @@ parseCliArgs =
     description = "Generates the information needed to produce the release order and make library releases."
 
   getFileCmd = ArgParse.command [ "getFile" ] description do
-    GetFile
-      <$> parseSingleFile
+    Arg.choose "outputType"
+      [ asFileCmd
+      , asDirCmd
+      ]
       <* ArgParse.flagHelp
     where
     description = "Generates the information needed to produce the release order and make library releases."
-    parseSingleFile = (ArgParse.any "FILE" "The file to collect across all repos" Just)
+    asFileCmd = Arg.command [ "asFile" ] "Outputs all content in one markdown file" do
+      (GetFile AsSummaryFile)
+        <$> parseSingleFile
+        <* Arg.flagHelp
+
+    asDirCmd = Arg.command [ "asDir" ] "Outputs each deduplicated file into a dir" do
+      (\d r p -> GetFile (AsKeyedDirectory d r) p)
+        <$> parseDirArg
+        <*> parseReplaceFlag
+        <*> parseSingleFile
+        <* Arg.flagHelp
+      where
+      parseReplaceFlag = Arg.flag [ "--replace" ] "When set, overwrites the directory if it already exists"
+        # Arg.boolean
+      parseDirArg = Arg.argument [ "--dir" ] "The dirctory to create and under which to store the files"
+        # Arg.unformat "DIR" case _ of
+            str
+              | arr <- String.split (Pattern sep) str
+              , Array.length arr /= 1 -> Left $ "Directory cannot contain your OS's directory separator: " <> sep
+              | str == "" -> Left $ "Directory arg cannot be empty"
+              | otherwise -> Right str
+    parseSingleFile = (ArgParse.any "FILE" "The file to collect across all repos") Just
       <#> (String.split (Pattern Path.sep) >>> Array.filter ((/=) ""))
 
   genEcosystemChangelogCmd = ArgParse.command [ "ecosystemChangelog" ] description do
