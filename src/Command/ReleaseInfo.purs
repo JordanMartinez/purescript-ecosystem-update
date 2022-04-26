@@ -2,7 +2,7 @@ module Command.ReleaseInfo where
 
 import Prelude
 
-import Constants (getFileDir, libDir, releaseInfoFiles, repoFiles)
+import Constants (libDir, releaseInfoFiles, repoFiles)
 import Control.Monad.Except (runExcept)
 import Data.Argonaut.Core (stringifyWithIndent)
 import Data.Argonaut.Decode as Json
@@ -47,7 +47,7 @@ import Utils (execAff', mkdir, rightOrCrash, spawnAff, spawnAff', splitLines, th
 initCmd :: Aff Unit
 initCmd = do
   mkdir releaseInfoFiles.dir { recursive: true }
-  writeTextFile UTF8 (Path.concat [ getFileDir, "README.md" ]) $ Array.intercalate "\n"
+  writeTextFile UTF8 releaseInfoFiles.readmeFile $ Array.intercalate "\n"
     [ "## What is this?"
     , ""
     , Array.fold
