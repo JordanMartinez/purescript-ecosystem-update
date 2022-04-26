@@ -4,7 +4,7 @@ import Prelude
 
 import Command (DependencyStage(..))
 import Constants (releaseFiles)
-import Data.Array (foldl, sortBy)
+import Data.Array (catMaybes, foldl, sortBy)
 import Data.HashMap (HashMap, toArrayBy)
 import Data.HashSet (HashSet)
 import Data.HashSet as Set
@@ -18,7 +18,7 @@ import Foreign.Object as Object
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile, writeTextFile)
 import Types (GitHubOwner, GitHubRepo, Package, ReleaseInfo)
-import Utils (justOrCrash, splitLines)
+import Utils (splitLines)
 
 generateLibOrder :: DependencyStage -> Aff Unit
 generateLibOrder depStage = do
@@ -44,16 +44,16 @@ generateLibOrder depStage = do
     -> String
   linearizePackageDependencyOrder releaseInfo =
     toArrayBy (\k v -> do
-      let
-        { owner, repo } = justOrCrash "Impossible. Package is not in release info JSON file"
-          $ Object.lookup (unwrap k) releaseInfo
-      { package: k
-      , depCount: Set.size v
-      , dependencies: Set.toArray v
-      , owner
-      , repo
-      }
+      { owner, repo } <- Object.lookup (unwrap k) releaseInfo
+      pure
+        { package: k
+        , depCount: Set.size v
+        , dependencies: Set.toArray v
+        , owner
+        , repo
+        }
     )
+      >>> catMaybes
       >>> sortBy
         ( \l r ->
             case compare l.depCount r.depCount of
