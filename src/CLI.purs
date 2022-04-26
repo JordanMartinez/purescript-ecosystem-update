@@ -46,6 +46,7 @@ parseCliArgs =
       , makeNextReleaseBatchCmd
       , updateOrderCmd
       , releaseOrderCmd
+      , spagoOrderCmd
       , genReleaseInfoCmd
       , getFileCmd
       , genEcosystemChangelogCmd
@@ -247,12 +248,17 @@ parseCliArgs =
   updateOrderCmd = ArgParse.command [ "updateOrder" ] description do
     LibOrder UpdateOrder <$ ArgParse.flagHelp
     where
-    description = "Linearize the package dependency graph to see which library to update next."
+    description = "When updating libraries initially, see which libraries to update next."
 
   releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
     LibOrder ReleaseOrder <$ ArgParse.flagHelp
     where
-    description = "Linearize the package dependency graph to see which library to release next."
+    description = "When releasing libraries after all are updated and compiler is frozen, see which libraries to release next."
+
+  spagoOrderCmd = ArgParse.command [ "spagoOrder" ] description do
+    LibOrder SpagoOrder <$ ArgParse.flagHelp
+    where
+    description = "When libraries are released and package set is being refilled, see which libraries are unblocked next."
 
   genReleaseInfoCmd = ArgParse.command [ "releaseInfo" ] description do
     GenReleaseInfo <$ ArgParse.flagHelp

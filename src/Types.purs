@@ -7,6 +7,7 @@ import Data.Argonaut.Encode (class EncodeJson)
 import Data.Hashable (class Hashable)
 import Data.Maybe (Maybe)
 import Data.Newtype (class Newtype)
+import Type.Row (type (+))
 
 newtype Package = Package String
 
@@ -54,21 +55,23 @@ derive newtype instance Show BranchName
 derive newtype instance EncodeJson BranchName
 derive newtype instance DecodeJson BranchName
 
-type PackageInfoRows r =
+type PackageRows r =
   ( package :: Package
-  , owner :: GitHubOwner
+  | r
+  )
+
+type PackageInfoRows r =
+  ( owner :: GitHubOwner
   , repo :: GitHubRepo
   , gitUrl :: GitCloneUrl
   , defaultBranch :: BranchName
   , inBowerRegistry :: Boolean
   | r
   )
-type PackageInfo = { | PackageInfoRows () }
+type PackageInfo = { | PackageRows + PackageInfoRows () }
 
-type ReleaseInfoRows lastVersion nextVersion r =
-  ( lastVersion :: Maybe lastVersion
-  , nextVersion :: nextVersion
-  , hasBowerJsonFile :: Boolean
+type DependencyGraphRows r =
+  ( hasBowerJsonFile :: Boolean
   , bowerDependencies :: Array Package
   , bowerDevDependencies :: Array Package
   , hasSpagoDhallFile :: Boolean
@@ -77,5 +80,17 @@ type ReleaseInfoRows lastVersion nextVersion r =
   , spagoTestDependencies :: Array Package
   | r
   )
+
+type VersionRows lastVersion nextVersion r =
+  ( lastVersion :: Maybe lastVersion
+  , nextVersion :: nextVersion
+  | r
+  )
+
 type ReleaseInfo lastVersion nextVersion =
-  { | ReleaseInfoRows lastVersion nextVersion (PackageInfoRows ()) }
+  { | PackageRows
+    + PackageInfoRows
+    + DependencyGraphRows
+    + VersionRows lastVersion nextVersion
+    + ()
+  }

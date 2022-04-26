@@ -39,6 +39,7 @@ data Command
 data DependencyStage
   = UpdateOrder
   | ReleaseOrder
+  | SpagoOrder
 
 derive instance Eq DependencyStage
 derive instance Ord DependencyStage

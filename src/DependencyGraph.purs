@@ -25,16 +25,18 @@ import Foreign.Object (Object)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile)
 import Safe.Coerce (coerce)
-import Types (Package(..), ReleaseInfo)
+import Type.Row (type (+))
+import Types (DependencyGraphRows, Package(..), ReleaseInfo, PackageRows)
 
 getNextReleaseInfo :: Aff (Object (ReleaseInfo String String))
 getNextReleaseInfo = do
   releaseInfoContent <- readTextFile UTF8 releaseFiles.nextReleaseInfo
   either (liftEffect <<< throw <<< printJsonDecodeError) pure
-    $ parseJson releaseInfoContent >>= decodeJson
+    $ decodeJson =<< parseJson releaseInfoContent
 
 getDependencyGraph
-  :: Object (ReleaseInfo String String)
+  :: forall r
+   . Object { | PackageRows + DependencyGraphRows r }
   -> Array String
   -> { fullGraph :: HashMap Package (HashSet Package)
      , unfinishedPkgsGraph :: HashMap Package (HashSet Package)

@@ -45,6 +45,7 @@
   , "tailrec"
   , "transformers"
   , "tuples"
+  , "typelevel-prelude"
   , "unordered-collections"
   , "versions"
   ]

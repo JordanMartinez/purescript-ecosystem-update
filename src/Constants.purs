@@ -70,6 +70,8 @@ releaseFiles
      , releasedPkgsFile :: String
      , updateOrderFile :: String
      , updatedPkgsFile :: String
+     , spagoOrderFile :: String
+     , deprecatedPkgsFile :: String
      }
 releaseFiles = do
   { releaseOrderFile: Path.concat [ "files", "release", "library-release-order" ]
@@ -77,6 +79,8 @@ releaseFiles = do
   , updateOrderFile: Path.concat [ "files", "release", "library-update-order" ]
   , updatedPkgsFile: Path.concat [ "files", "release", "updated-pkgs" ]
   , nextReleaseInfo: Path.concat [ "files", "release", "next-release-info_2022-04-26.json" ]
+  , spagoOrderFile: Path.concat [ "files", "release", "spago-update-order" ]
+  , deprecatedPkgsFile: Path.concat [ "files", "release", "deprecated-pkgs" ]
   , releaseInfoPath: \s -> Path.concat [ "files", "release", "next-release-info_" <> s <> ".json" ]
   }
 
@@ -112,9 +116,13 @@ jqScripts =
   , updateBowerDepsToBranchNameVersion: Path.concat [ "files", "jq", "update-bower-json-branch-name-versions.txt" ]
   }
 
-spagoFiles :: { preparePackageSetFile :: String }
+spagoFiles
+  :: { lastStablePackageSet :: String
+     , preparePackageSetFile :: String
+     }
 spagoFiles =
-  { preparePackageSetFile: Path.concat [ "files", "spago", "packages.dhall" ]
+  { preparePackageSetFile: Path.concat [ "files", "spago", "packages-prepare-set.dhall" ]
+  , lastStablePackageSet: Path.concat [ "files", "spago", "packages-last-stable-set.dhall" ]
   }
 
 libDir :: String
