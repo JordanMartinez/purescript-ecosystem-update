@@ -5,28 +5,43 @@ import Prelude
 import Constants (jqScripts)
 import Data.Array as Array
 import Data.Foldable (foldl)
-import Data.HashMap (HashMap)
 import Data.Newtype (unwrap)
-import DependencyGraph (DependenciesWithMeta, generateAllReleaseInfo, useBranchName)
+import Data.Version as Version
 import Effect.Aff (Aff)
+import Foreign.Object (Object)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (writeTextFile)
-import Types (Package)
+import Types (GitHubOwner, GitHubRepo, ReleaseInfo)
+import Utils (rightOrCrash)
 
-regenerateJqScriptBranchVersions :: Aff Unit
-regenerateJqScriptBranchVersions = do
-  { fullGraph } <- generateAllReleaseInfo useBranchName
+regenerateJqBowerUpdateScripts
+  :: Object (ReleaseInfo String String)
+  -> Aff Unit
+regenerateJqBowerUpdateScripts nextReleaseInfo = do
+  let
+    branchVersion = nextReleaseInfo # map \{ inBowerRegistry, owner, repo, defaultBranch } -> do
+      { inBowerRegistry, owner, repo, version: unwrap defaultBranch }
+
+    releaseVersion = nextReleaseInfo # map \{ inBowerRegistry, owner, repo, nextVersion } -> do
+      { inBowerRegistry
+      , owner
+      , repo
+      , version: append "^" $ Version.showVersion
+          -- santiy check
+          $ rightOrCrash "Invalid version" $ Version.parseVersion nextVersion
+      }
+
   writeTextFile UTF8 jqScripts.updateBowerDepsToBranchNameVersion
-    $ updateBowerDepsJqScript unwrap fullGraph
+    $ updateBowerDepsJqScript branchVersion
+  writeTextFile UTF8 jqScripts.updateBowerDepsToReleaseVersion
+    $ updateBowerDepsJqScript releaseVersion
 
 updateBowerDepsJqScript
-  :: forall version
-   . (version -> String)
-  -> HashMap Package (DependenciesWithMeta version)
+  :: Object { inBowerRegistry :: Boolean, owner :: GitHubOwner, repo :: GitHubRepo, version :: String }
   -> String
-updateBowerDepsJqScript showVersion fullGraph = do
+updateBowerDepsJqScript obj = do
   let
-    updates = fullGraph # flip foldl [] \acc info -> do
+    updates = obj # flip foldl [] \acc info -> do
       -- if in registry
       --  "if has("purescript-node-fs") then ."purescript-node-fs" |= "^4.2.0" else . end |"
       -- if not:
@@ -34,16 +49,14 @@ updateBowerDepsJqScript showVersion fullGraph = do
       let
         repo = unwrap info.repo
         owner = unwrap info.owner
-        -- versionStr = "^" <> Version.showVersion info.version
-        versionStr = showVersion info.version
       Array.snoc acc $ Array.fold
         [ "  if has(\""
         , repo
         , "\") then .\""
         , repo
         , "\" |= \""
-        , if info.inBowerRegistry then versionStr
-          else "https://github.com/" <> owner <> "/" <> repo <> ".git#" <> versionStr
+        , if info.inBowerRegistry then info.version
+          else "https://github.com/" <> owner <> "/" <> repo <> ".git#" <> info.version
         , "\" else . end |"
         ]
   Array.intercalate "\n"

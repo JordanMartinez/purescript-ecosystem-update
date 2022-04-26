@@ -1,15 +1,17 @@
 module Command where
 
+import Prelude
+
 import Data.Either (Either)
 import Data.Maybe (Maybe)
 import Data.Version (Version)
 import Node.Path (FilePath)
-import Types (BranchName, GitHubOwner, GitHubProject, Package, PackageInfo)
+import Types (BranchName, GitHubOwner, GitHubRepo, Package, PackageInfo)
 
 data Command
   = Init
   | DownloadPurs (Maybe Version)
-  | Clone (Either { owner :: GitHubOwner, repo :: GitHubProject, package :: Package } PackageInfo) (Maybe GitHubOwner)
+  | Clone (Either { owner :: GitHubOwner, repo :: GitHubRepo, package :: Package } PackageInfo) (Maybe GitHubOwner)
   | CloneAll (Maybe GitHubOwner)
   | Bower { package :: PackageInfo }
   | Spago { package :: PackageInfo }
@@ -29,7 +31,14 @@ data Command
       }
   | MakePr { package :: PackageInfo }
   | GenReleaseInfo
-  | ReleaseOrder
+  | LibOrder DependencyStage
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
   | EcosystemChangelog
   | GetFile (Array FilePath)
+
+data DependencyStage
+  = UpdateOrder
+  | ReleaseOrder
+
+derive instance Eq DependencyStage
+derive instance Ord DependencyStage

@@ -27,14 +27,14 @@ derive newtype instance Show GitHubOwner
 derive newtype instance EncodeJson GitHubOwner
 derive newtype instance DecodeJson GitHubOwner
 
-newtype GitHubProject = GitHubProject String
+newtype GitHubRepo = GitHubRepo String
 
-derive instance Eq GitHubProject
-derive instance Ord GitHubProject
-derive instance Newtype GitHubProject _
-derive newtype instance Show GitHubProject
-derive newtype instance EncodeJson GitHubProject
-derive newtype instance DecodeJson GitHubProject
+derive instance Eq GitHubRepo
+derive instance Ord GitHubRepo
+derive instance Newtype GitHubRepo _
+derive newtype instance Show GitHubRepo
+derive newtype instance EncodeJson GitHubRepo
+derive newtype instance DecodeJson GitHubRepo
 
 newtype GitCloneUrl = GitCloneUrl String
 
@@ -57,7 +57,7 @@ derive newtype instance DecodeJson BranchName
 type PackageInfoRows r =
   ( package :: Package
   , owner :: GitHubOwner
-  , repo :: GitHubProject
+  , repo :: GitHubRepo
   , gitUrl :: GitCloneUrl
   , defaultBranch :: BranchName
   , inBowerRegistry :: Boolean

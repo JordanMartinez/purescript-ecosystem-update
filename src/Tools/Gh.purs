@@ -9,7 +9,7 @@ import Effect.Aff.Class (class MonadAff, liftAff)
 import Effect.Class (liftEffect)
 import Effect.Exception (Error, throw)
 import Node.Path (FilePath)
-import Types (GitHubOwner, GitHubProject)
+import Types (GitHubOwner, GitHubRepo)
 import Utils (execAff)
 
 -- | Ensures user is logged in via `gh` tool
@@ -43,7 +43,7 @@ ghRepoFork
   => { cloneLocallyTo :: Maybe FilePath
      , orgName :: Maybe GitHubOwner
      , owner :: GitHubOwner
-     , repo :: GitHubProject
+     , repo :: GitHubRepo
      }
   -> m
        { error :: Maybe Error

@@ -13,7 +13,7 @@ import Effect.Class.Console (log)
 import Node.Path as Path
 import Packages (packages)
 import Tools.Gh (ghRepoFork)
-import Types (GitHubOwner, GitHubProject, Package, PackageInfo)
+import Types (GitHubOwner, GitHubRepo, Package, PackageInfo)
 
 cloneAll
   :: forall m
@@ -29,7 +29,7 @@ clone
   :: forall m
    . MonadAff m
   => Either
-       { owner :: GitHubOwner, repo :: GitHubProject, package :: Package }
+       { owner :: GitHubOwner, repo :: GitHubRepo, package :: Package }
        PackageInfo
   -> Maybe GitHubOwner
   -> m Unit

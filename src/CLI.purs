@@ -5,7 +5,7 @@ import Prelude
 import ArgParse.Basic (ArgError, fromRecord, optional)
 import ArgParse.Basic as Arg
 import ArgParse.Basic as ArgParse
-import Command (Command(..))
+import Command (Command(..), DependencyStage(..))
 import Data.Array as Array
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
@@ -16,7 +16,7 @@ import Data.String as String
 import Data.Version as Version
 import Node.Path as Path
 import Packages (packages)
-import Types (BranchName(..), GitHubOwner(..), GitHubProject(..), Package(..))
+import Types (BranchName(..), GitHubOwner(..), GitHubRepo(..), Package(..))
 
 parseCliArgs :: Array String -> Either ArgError Command
 parseCliArgs =
@@ -44,6 +44,7 @@ parseCliArgs =
       , checkCmd
       , makePrCmd
       , makeNextReleaseBatchCmd
+      , updateOrderCmd
       , releaseOrderCmd
       , genReleaseInfoCmd
       , getFileCmd
@@ -105,7 +106,7 @@ parseCliArgs =
                   Nothing -> Left "Repo does not start with 'purescript-', so cannot identify package name."
                   Just pkg -> Right
                     { owner: GitHubOwner owner
-                    , repo: GitHubProject repo
+                    , repo: GitHubRepo repo
                     , package: Package pkg
                     }
             | otherwise -> Left $ "Splitting '" <> s <> "' by the first `/` did not produce `OWNER/REPO`."
@@ -243,10 +244,15 @@ parseCliArgs =
       where
       flagDesc = "If set, does not delete the `pr-body.txt` file used as the content for the PR's body."
 
-  releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
-    ReleaseOrder <$ ArgParse.flagHelp
+  updateOrderCmd = ArgParse.command [ "updateOrder" ] description do
+    LibOrder UpdateOrder <$ ArgParse.flagHelp
     where
-    description = "Linearize the package dependency graph to see what to release next."
+    description = "Linearize the package dependency graph to see which library to update next."
+
+  releaseOrderCmd = ArgParse.command [ "releaseOrder" ] description do
+    LibOrder ReleaseOrder <$ ArgParse.flagHelp
+    where
+    description = "Linearize the package dependency graph to see which library to release next."
 
   genReleaseInfoCmd = ArgParse.command [ "releaseInfo" ] description do
     GenReleaseInfo <$ ArgParse.flagHelp

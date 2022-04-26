@@ -2,12 +2,14 @@ module Command.Release where
 
 import Prelude
 
-import Constants (jqScripts, libDir, repoFiles)
+import Constants (jqScripts, libDir, releaseFiles, repoFiles)
 import Data.Array (elem, find, fold)
 import Data.Array as Array
 import Data.Foldable (for_)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
+import Data.FunctorWithIndex (mapWithIndex)
 import Data.HashMap as HM
+import Data.HashSet as Set
 import Data.List.Types (List(..), (:))
 import Data.Maybe (Maybe(..), isJust, maybe, maybe')
 import Data.Newtype (unwrap)
@@ -15,12 +17,13 @@ import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Data.Version (Version)
 import Data.Version as Version
-import DependencyGraph (generateAllReleaseInfo, useNextMajorVersion)
+import DependencyGraph (getDependencyGraph, getNextReleaseInfo)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
 import Effect.Exception (throw)
 import Effect.Now (nowDateTime)
+import Foreign.Object as Object
 import Node.ChildProcess (ExecOptions)
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
@@ -30,26 +33,39 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Stream as Stream
 import Partial.Unsafe (unsafeCrashWith)
-import Tools.Jq (updateBowerDepsJqScript)
-import Types (BranchName, GitHubOwner, GitHubProject, Package)
-import Utils (SpawnExit(..), execAff', spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
+import Record as Record
+import Tools.Jq (regenerateJqBowerUpdateScripts)
+import Type.Proxy (Proxy(..))
+import Types (BranchName, GitHubOwner, GitHubRepo, Package)
+import Utils (SpawnExit(..), execAff', justOrCrash, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 createPrForNextReleaseBatch :: { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean } -> Aff Unit
 createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrBody } = do
-  { fullGraph, unfinishedPkgsGraph } <- generateAllReleaseInfo useNextMajorVersion
-  writeTextFile UTF8 jqScripts.updateBowerDepsToReleaseVersion
-    $ updateBowerDepsJqScript (append "v" <<< Version.showVersion) fullGraph
+  nextReleaseInfo <- getNextReleaseInfo
+  unreleasedPackages <- splitLines <$> readTextFile UTF8 releaseFiles.releasedPkgsFile
+  let { unfinishedPkgsGraph } = getDependencyGraph nextReleaseInfo unreleasedPackages
+
+  regenerateJqBowerUpdateScripts nextReleaseInfo
 
   let
+    unfinishedGraph = unfinishedPkgsGraph # mapWithIndex \k deps -> do
+      Object.lookup (unwrap k) nextReleaseInfo
+        # justOrCrash "Impossible. Package not in graph"
+        # Record.insert (Proxy :: Proxy "dependencies") (Set.toArray deps)
+        # Record.insert (Proxy :: Proxy "depCount") (Set.size deps)
+        # Record.modify (Proxy :: Proxy "nextVersion") (rightOrCrash "Invalid version" <<< Version.parseVersion)
+
     -- pkgsInNextBatch = HM.filter (\r -> Array.elem (unwrap r.pkg) ["now", "web-touchevents"]) unfinishedPkgsGraph
-    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedPkgsGraph
-  -- pkgsInNextBatch = unfinishedPkgsGraph
+    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedGraph
+    -- pkgsInNextBatch = unfinishedPkgsGraph
 
   for_ pkgsInNextBatch makeRelease
   where
   releaseBranchName = maybe "next-release" unwrap branchName
+
+  makeRelease :: _ -> Aff _
   makeRelease info = do
-    log $ "## Doing release changes for '" <> unwrap info.pkg <> "'"
+    log $ "## Doing release changes for '" <> pkg' <> "'"
     -- only prepare and submit PR if branch name doesn't already exist on remote
     -- as we may have already submitted a PR but not gotten it merged yet.
     branchResult <- execAff' "git branch -r" inRepoDir
@@ -73,11 +89,11 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
           void $ execAff' ("git branch -D " <> releaseBranchName) inRepoDir
       throwIfExecErrored =<< execAff' ("git switch -c " <> releaseBranchName) inRepoDir
       log $ "... updating bower.json file (if any)"
-      bowerStatus <- updateBowerToReleasedVersions info.pkg
+      bowerStatus <- updateBowerToReleasedVersions info.package
       log $ "... updating CI's node version to 14 (if needed)"
-      nodeStatus <- updateNode info.pkg
+      nodeStatus <- updateNode info.package
       log $ "... updating changelog file (if any)"
-      changelogStatus <- updateChangelog info.owner info.repo info.pkg info.version
+      changelogStatus <- updateChangelog info.owner info.repo info.package info.nextVersion
       log $ "... preparing PR"
       releaseBodyUri <- do
         let
@@ -109,8 +125,8 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
     where
     owner' = unwrap info.owner
     repo' = unwrap info.repo
-    pkg' = unwrap info.pkg
-    version' = "v" <> Version.showVersion info.version
+    pkg' = unwrap info.package
+    version' = "v" <> Version.showVersion info.nextVersion
     repoDir = Path.concat [ libDir, pkg' ]
 
     inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
@@ -125,7 +141,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       [ "pr"
       , "create"
       , "--title"
-      , "Prepare v" <> Version.showVersion info.version <> " release (1st PS 0.15.0-compatible release)"
+      , "Prepare v" <> Version.showVersion info.nextVersion <> " release (1st PS 0.15.0-compatible release)"
       , "--body-file"
       , bodyFilePath
       , "--label"
@@ -236,7 +252,7 @@ updateNode pkg = do
   inRepoDir :: forall r. { cwd :: Maybe FilePath | r } -> { cwd :: Maybe FilePath | r }
   inRepoDir r = r { cwd = Just repoDir }
 
-updateChangelog :: GitHubOwner -> GitHubProject -> Package -> Version -> Aff (FileStatus Unit Unit String)
+updateChangelog :: GitHubOwner -> GitHubRepo -> Package -> Version -> Aff (FileStatus Unit Unit String)
 updateChangelog owner repo pkg nextVersion = do
   fileExists <- liftEffect $ exists clFilePath
   if fileExists then do

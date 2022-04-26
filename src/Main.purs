@@ -15,7 +15,7 @@ import Command.GetFile as GetFileCmd
 import Command.Init as InitCmd
 import Command.Release as ReleaseCmd
 import Command.ReleaseInfo as RelaseInfoCmd
-import Command.ReleaseOrder as ReleaseOrderCmd
+import Command.LibOrder as LibOrderCmd
 import Command.Spago as SpagoCmd
 import Data.Array as Array
 import Data.Either (Either(..), either)
@@ -58,8 +58,8 @@ main = do
           CompileCmd.compile opts
         CheckForDeprecated opts -> do
           CheckForDeprecatedCmd.checkForDeprecated opts
-        ReleaseOrder ->
-          ReleaseOrderCmd.generateReleaseOrder
+        LibOrder depStage ->
+          LibOrderCmd.generateLibOrder depStage
         MakeNextReleaseBatch opts ->
           ReleaseCmd.createPrForNextReleaseBatch opts
         GenReleaseInfo ->
