@@ -63,8 +63,7 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
     pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedGraph
     -- pkgsInNextBatch = unfinishedPkgsGraph
 
-  when false do
-    for_ pkgsInNextBatch makeRelease
+  for_ pkgsInNextBatch makeRelease
   where
   releaseBranchName = maybe "next-release" unwrap branchName
 
