@@ -34,3 +34,9 @@ numbers
 js-uri
 posix-types
 distributive
+profunctor
+bifunctors
+integers
+contravariant
+exceptions
+node-url
