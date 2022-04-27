@@ -134,4 +134,5 @@ packageVersionOverrides =
   , Tuple "react" $ version 10 0 1 Nil Nil
   , Tuple "colors" $ version 7 0 1 Nil Nil
   , Tuple "quickcheck" $ version 8 0 1 Nil Nil
+  , Tuple "node-fs" $ version 7 0 1 Nil Nil
   ]
