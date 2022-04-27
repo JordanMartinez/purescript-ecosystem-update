@@ -7,6 +7,7 @@ import Data.Array as Array
 import Data.Foldable (foldl)
 import Data.Newtype (unwrap)
 import Data.Version as Version
+import DependencyGraph (objVersionStr, overridePackageVersions)
 import Effect.Aff (Aff)
 import Foreign.Object (Object)
 import Node.Encoding (Encoding(..))
@@ -34,7 +35,7 @@ regenerateJqBowerUpdateScripts nextReleaseInfo = do
   writeTextFile UTF8 jqScripts.updateBowerDepsToBranchNameVersion
     $ updateBowerDepsJqScript branchVersion
   writeTextFile UTF8 jqScripts.updateBowerDepsToReleaseVersion
-    $ updateBowerDepsJqScript releaseVersion
+    $ updateBowerDepsJqScript $ overridePackageVersions objVersionStr releaseVersion
 
 updateBowerDepsJqScript
   :: Object { inBowerRegistry :: Boolean, owner :: GitHubOwner, repo :: GitHubRepo, version :: String }

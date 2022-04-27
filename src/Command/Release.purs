@@ -17,7 +17,7 @@ import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Data.Version (Version)
 import Data.Version as Version
-import DependencyGraph (getDependencyGraph, getNextReleaseInfo)
+import DependencyGraph (getDependencyGraph, getNextReleaseInfo, hmapNextVersion, overridePackageVersions)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
@@ -59,11 +59,14 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
         # Record.insert (Proxy :: Proxy "depCount") (Set.size deps)
         # Record.modify (Proxy :: Proxy "nextVersion") (rightOrCrash "Invalid version" <<< Version.parseVersion)
 
+    unfinishedGraphWithPkgOverrides = overridePackageVersions hmapNextVersion unfinishedGraph
+
     -- pkgsInNextBatch = HM.filter (\r -> Array.elem (unwrap r.pkg) ["now", "web-touchevents"]) unfinishedPkgsGraph
-    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedGraph
+    pkgsInNextBatch = HM.filter (\r -> r.depCount == 0) unfinishedGraphWithPkgOverrides
     -- pkgsInNextBatch = unfinishedPkgsGraph
 
-  for_ pkgsInNextBatch makeRelease
+  when false do
+    for_ pkgsInNextBatch makeRelease
   where
   releaseBranchName = maybe "next-release" unwrap branchName
 

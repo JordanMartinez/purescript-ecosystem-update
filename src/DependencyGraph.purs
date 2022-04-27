@@ -7,26 +7,32 @@ import Control.Monad.Rec.Class (Step(..), tailRec)
 import Data.Argonaut.Decode (decodeJson, parseJson, printJsonDecodeError)
 import Data.Array as Array
 import Data.Either (either)
-import Data.Foldable (foldl)
+import Data.Foldable (class Foldable, foldl)
 import Data.HashMap (HashMap, lookup)
 import Data.HashMap as HM
 import Data.HashMap as HashMap
 import Data.HashSet (HashSet)
 import Data.HashSet as HashSet
 import Data.HashSet as Set
+import Data.List (List(..))
 import Data.List as List
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Newtype (unwrap)
 import Data.String as String
+import Data.Tuple (Tuple(..))
+import Data.Version (Version, version)
+import Data.Version as Version
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Exception (throw)
 import Foreign.Object (Object)
+import Foreign.Object as Object
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (readTextFile)
+import Partial.Unsafe (unsafeCrashWith)
 import Safe.Coerce (coerce)
 import Type.Row (type (+))
-import Types (DependencyGraphRows, Package(..), ReleaseInfo, PackageRows)
+import Types (DependencyGraphRows, Package(..), PackageRows, ReleaseInfo)
 
 getNextReleaseInfo :: Aff (Object (ReleaseInfo String String))
 getNextReleaseInfo = do
@@ -105,3 +111,35 @@ findAllTransitiveDeps packageMap = foldl buildMap HashMap.empty $ Array.filter (
         Nothing -> do
           let { deps, updatedMap } = getDepsRecursively package mapSoFar
           Loop $ state { allDeps = allDeps <> deps, mapSoFar = updatedMap, remaining = tail }
+
+overridePackageVersions :: forall f a. Foldable f => (f a -> Tuple String Version -> f a) -> f a -> f a
+overridePackageVersions overrideVersion pkgGraph = foldl overrideVersion pkgGraph packageVersionOverrides
+
+objVersionStr
+  :: forall r
+   . Object { version :: String | r }
+  -> Tuple String Version
+  -> Object { version :: String | r }
+objVersionStr obj (Tuple package version) = Object.alter
+    case _ of
+      Nothing -> unsafeCrashWith $ "Cannot find package with name: " <> package
+      Just r -> Just $ r { version = append "^" $ Version.showVersion version }
+    package
+    obj
+
+hmapNextVersion
+  :: forall r
+   . HashMap Package { nextVersion :: Version | r }
+  -> Tuple String Version
+  -> HashMap Package { nextVersion :: Version | r }
+hmapNextVersion hmap (Tuple package version) = HM.alter
+    case _ of
+      Nothing -> unsafeCrashWith $ "Cannot find package with name: " <> package
+      Just r -> Just $ r { nextVersion = version }
+    (Package package)
+    hmap
+
+packageVersionOverrides :: Array (Tuple String Version)
+packageVersionOverrides =
+  [ Tuple "arraybuffer-types" $ version 3 0 1 Nil Nil
+  ]
