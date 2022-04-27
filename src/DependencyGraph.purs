@@ -133,4 +133,5 @@ packageVersionOverrides =
   , Tuple "type-equality" $ version 4 0 1 Nil Nil
   , Tuple "react" $ version 10 0 1 Nil Nil
   , Tuple "colors" $ version 7 0 1 Nil Nil
+  , Tuple "quickcheck" $ version 8 0 2 Nil Nil
   ]
