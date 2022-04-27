@@ -50,3 +50,11 @@ st
 lcg
 react
 foldable-traversable
+web-promise
+unfoldable
+lazy
+node-buffer
+nonempty
+node-streams
+web-streams
+arrays
