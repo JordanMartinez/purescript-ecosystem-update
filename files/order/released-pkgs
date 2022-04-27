@@ -48,3 +48,5 @@ tailrec
 functors
 st
 lcg
+react
+foldable-traversable
