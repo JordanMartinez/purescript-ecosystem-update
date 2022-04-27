@@ -2,7 +2,6 @@
 0  foreign             https://github.com/purescript/purescript-foreign                     []
 0  form-urlencoded     https://github.com/purescript-contrib/purescript-form-urlencoded     []
 0  http-methods        https://github.com/purescript-contrib/purescript-http-methods        []
-0  matryoshka          https://github.com/purescript-contrib/purescript-matryoshka          []
 0  quickcheck          https://github.com/purescript/purescript-quickcheck                  []
 0  string-parsers      https://github.com/purescript-contrib/purescript-string-parsers      []
 1  foreign-object      https://github.com/purescript/purescript-foreign-object              ["quickcheck"]
