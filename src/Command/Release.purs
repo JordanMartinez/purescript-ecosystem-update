@@ -158,6 +158,8 @@ createPrForNextReleaseBatch { submitPr, branchName, deleteBranchIfExist, keepPrB
       , ""
       , "Backlinking to purescript/purescript#4244. Prepares project for first release that is compatible with PureScript v0.15.0."
       , ""
+      , ":ping_pong: @thomashoneyman"
+      , ""
       , ":robot: This is an automated pull request to prepare the next release of this library. PR was created via the [Release.purs](https://github.com/JordanMartinez/purescript-ecosystem-update/blob/master/src/purescript/Command/Release.purs) file. Some of the following steps are already done; others should be performed by a human once the pull request is merged:"
       , ""
       ]
