@@ -122,22 +122,10 @@ objVersionStr
   -> Object { version :: String | r }
 objVersionStr obj (Tuple package version) = Object.alter
     case _ of
-      Nothing -> unsafeCrashWith $ "Cannot find package with name: " <> package
+      Nothing -> unsafeCrashWith $ "Could not find package " <> package <> "; cannot override version"
       Just r -> Just $ r { version = append "^" $ Version.showVersion version }
     package
     obj
-
-hmapNextVersion
-  :: forall r
-   . HashMap Package { nextVersion :: Version | r }
-  -> Tuple String Version
-  -> HashMap Package { nextVersion :: Version | r }
-hmapNextVersion hmap (Tuple package version) = HM.alter
-    case _ of
-      Nothing -> unsafeCrashWith $ "Cannot find package with name: " <> package
-      Just r -> Just $ r { nextVersion = version }
-    (Package package)
-    hmap
 
 packageVersionOverrides :: Array (Tuple String Version)
 packageVersionOverrides =
