@@ -58,3 +58,14 @@ nonempty
 node-streams
 web-streams
 arrays
+lists
+transformers
+catenable-lists
+parallel
+semirings
+fixed-points
+machines
+gen
+free
+enums
+strings
