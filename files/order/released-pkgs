@@ -70,3 +70,8 @@ free
 enums
 strings
 matryoshka
+form-urlencoded
+http-methods
+foreign
+string-parsers
+colors
