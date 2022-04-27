@@ -129,5 +129,6 @@ objVersionStr obj (Tuple package version) = Object.alter
 
 packageVersionOverrides :: Array (Tuple String Version)
 packageVersionOverrides =
-  [ Tuple "arraybuffer-types" $ version 3 0 1 Nil Nil
+  [ Tuple "arraybuffer-types" $ version 3 0 2 Nil Nil
+  , Tuple "type-equality" $ version 4 0 1 Nil Nil
   ]
