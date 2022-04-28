@@ -126,3 +126,12 @@ web-xhr
 node-fs-aff
 node-net
 node-child-process
+coroutines
+web-clipboard
+routing
+web-uievents
+affjax
+aff-coroutines
+affjax
+web-cssom
+web-touchevents
