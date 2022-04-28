@@ -1,2 +1,2 @@
-0 ace         https://github.com/purescript-contrib/purescript-ace []
-0 aff-promise https://github.com/nwolverson/purescript-aff-promise []
+0 aff-promise            https://github.com/nwolverson/purescript-aff-promise                    []
+1 github-actions-toolkit https://github.com/purescript-contrib/purescript-github-actions-toolkit ["aff-promise"]
