@@ -587,6 +587,13 @@ packages =
     , defaultBranch: BranchName "main"
     , inBowerRegistry: true
     }
+  , { package: Package "github-actions-toolkit"
+    , owner: GitHubOwner "purescript-contrib"
+    , repo: GitHubRepo "purescript-github-actions-toolkit"
+    , gitUrl: GitCloneUrl "git@github.com:purescript-contrib/purescript-github-actions-toolkit.git"
+    , defaultBranch: BranchName "main"
+    , inBowerRegistry: false
+    }
   , { package: Package "http-methods"
     , owner: GitHubOwner "purescript-contrib"
     , repo: GitHubRepo "purescript-http-methods"
