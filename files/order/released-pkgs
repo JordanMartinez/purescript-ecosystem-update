@@ -142,3 +142,5 @@ formatters
 uri
 affjax-node
 ace
+aff-promise
+github-actions-toolkit
