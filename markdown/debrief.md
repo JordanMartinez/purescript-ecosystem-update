@@ -92,6 +92,10 @@ As we got closer to the end of the release cycle, the below questions arose:
   - Once the compiler is frozen?
   - When the compiles is frozen and after `spago` is updated, so that we can also uncomment the `spago test` lines in CI during these PRs and not need to a another round of maintenance PRs on core?
 
+## Breaking changes with mistakes
+
+Specifically, the breaking changes made to `node-streams`' `write` and `writeString` didn't implement the correct FFI signature. This needed to be resolved before a `0.15.0` release could be made and a new set of libraries released.
+
 ## General Takeaways
 
 - Having a monorepo for (or a subset of some of the libraries in) `core`, `contrib`, `node`, and `web` libraries would speed up their releases:
