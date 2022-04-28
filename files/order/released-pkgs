@@ -135,3 +135,9 @@ aff-coroutines
 affjax
 web-cssom
 web-touchevents
+parsing
+node-http
+affjax-web
+formatters
+uri
+affjax-node
