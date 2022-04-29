@@ -138,7 +138,7 @@ packageVersionOverrides =
   , Tuple "node-fs" $ version 8 0 0 Nil Nil
   , Tuple "node-process" $ version 10 0 0 Nil Nil
   , Tuple "github-actions-toolkit" $ version 0 5 0 Nil Nil
-  , Tuple "node-child-process" $ version 8 0 0 Nil Nil
+  , Tuple "node-child-process" $ version 9 0 0 Nil Nil
   , Tuple "node-fs-aff" $ version 9 0 0 Nil Nil
   , Tuple "node-net" $ version 4 0 0 Nil Nil
   , Tuple "node-readline" $ version 7 0 0 Nil Nil
