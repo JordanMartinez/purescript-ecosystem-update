@@ -96,6 +96,16 @@ As we got closer to the end of the release cycle, the below questions arose:
 
 Specifically, the breaking changes made to `node-streams`' `write` and `writeString` didn't implement the correct FFI signature. This needed to be resolved before a `0.15.0` release could be made and a new set of libraries released.
 
+## Miscellaneous things not in a chronological order
+
+- Dependencies on entities outside of Core Team members controls:
+  - `easy-purescript-nix`:
+    - `easy-purescript-nix` didn't add the `0.15.0` alpha releases when such PRs were submitted
+    - as a result, `spago`, which depends on that for its tests, couldn't be updated until it used a fork of `easy-purescript-nix`
+- dependencies before `0.15.0` PureScript release PR would build
+  - updating tests to use the released version of libraries
+  - referring to the first `0.15.0` package set
+
 ## General Takeaways
 
 - Having a monorepo for (or a subset of some of the libraries in) `core`, `contrib`, `node`, and `web` libraries would speed up their releases:
