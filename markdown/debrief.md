@@ -16,6 +16,7 @@ Originally, the whole goal of the `0.15.0` release was to drop CJS modules and o
   - All breaking changes were identified before the release cycle began, making it easy to know which issues/PRs to resolve before a library was "done"
 - The weekly working group meeting provided a point of contact to reach consensus about some things faster.
 - We added an 'ecosystem changelog' for easier perusal than checking each library's changelog
+- Communication via flowcharts indicated that we were making progress and helped people see where in the release cycle we were.
 
 ## Specific issues
 
