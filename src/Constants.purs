@@ -101,12 +101,14 @@ releaseInfoFiles
      , readmeFile :: String
      , releaseInfoPath :: String -> String
      , nextReleaseInfo :: String
+     , fillPackageSetInfo :: String
      }
 releaseInfoFiles = do
   { dir: Path.concat [ "files", "releaseInfo" ]
   , readmeFile: Path.concat [ "files", "releaseInfo", "README.md" ]
   , releaseInfoPath: \s -> Path.concat [ "files", "releaseInfo", "next-release-info_" <> s <> ".json" ]
   , nextReleaseInfo: Path.concat [ "files", "releaseInfo", "next-release-info_2022-04-26.json" ]
+  , fillPackageSetInfo: Path.concat [ "files", "releaseInfo", "fill-package-set-info.json" ]
   }
 
 pursTidyFiles

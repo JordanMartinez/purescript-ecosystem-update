@@ -49,6 +49,7 @@ parseCliArgs =
       , releaseOrderCmd
       , spagoOrderCmd
       , genReleaseInfoCmd
+      , genPackageSetInfoCmd
       , getFileCmd
       , genEcosystemChangelogCmd
       ]
@@ -267,6 +268,11 @@ parseCliArgs =
     GenReleaseInfo <$ ArgParse.flagHelp
     where
     description = "Generates the information needed to produce the release order and make library releases."
+
+  genPackageSetInfoCmd = ArgParse.command [ "packageSetInfo" ] description do
+    GenPackageSetInfo <$ ArgParse.flagHelp
+    where
+    description = "Generates the information for what the next version of each package in the package set is."
 
   getFileCmd = ArgParse.command [ "getFile" ] description do
     Arg.choose "outputType"

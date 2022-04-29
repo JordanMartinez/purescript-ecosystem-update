@@ -2,15 +2,16 @@ module Command.ReleaseInfo where
 
 import Prelude
 
-import Constants (libDir, releaseInfoFiles, repoFiles)
+import Constants (libDir, orderFiles, releaseInfoFiles, repoFiles)
 import Control.Monad.Except (runExcept)
 import Data.Argonaut.Core (stringifyWithIndent)
+import Data.Argonaut.Decode (decodeJson, parseJson, printJsonDecodeError)
 import Data.Argonaut.Decode as Json
 import Data.Argonaut.Encode (encodeJson)
 import Data.Array (elem, null)
 import Data.Array as Array
 import Data.Bifunctor (lmap)
-import Data.Either (either)
+import Data.Either (Either(..), either)
 import Data.Filterable (filterMap, partitionMap)
 import Data.Foldable (foldl, for_, maximum)
 import Data.Formatter.DateTime (FormatterCommand(..), format)
@@ -21,16 +22,19 @@ import Data.String (Pattern(..), stripPrefix)
 import Data.String as String
 import Data.String.Regex (regex, replace)
 import Data.String.Regex.Flags (dotAll, multiline, noFlags)
-import Data.Traversable (traverse)
+import Data.Traversable (for, traverse)
 import Data.Tuple (Tuple(..))
+import Data.Version (bumpMajor, major)
 import Data.Version as Version
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
+import Effect.Exception (throw)
 import Effect.Now (nowDateTime)
 import Foreign (readArray, readString, unsafeFromForeign, unsafeToForeign)
 import Foreign.Index (readProp)
 import Foreign.Keys (keys)
+import Foreign.Object (Object)
 import Foreign.Object as Object
 import Node.ChildProcess as CP
 import Node.Encoding (Encoding(..))
@@ -41,7 +45,7 @@ import Node.Path as Path
 import Node.Stream as Stream
 import Packages (packages)
 import Safe.Coerce (coerce)
-import Types (Package(..), PackageInfo, ReleaseInfo)
+import Types (GitCloneUrl, Package(..), PackageInfo, ReleaseInfo)
 import Utils (execAff', mkdir, rightOrCrash, spawnAff, spawnAff', splitLines, throwIfExecErrored, throwIfSpawnErrored, withSpawnResult)
 
 initCmd :: Aff Unit
@@ -212,3 +216,68 @@ generateReleaseInfo = do
             traverse readString dependenciesArr
 
         pure { hasFile: true, dependencies }
+
+generatePackageSetInfo :: Aff Unit
+generatePackageSetInfo = do
+  dtjResult <- withSpawnResult =<< spawnAff "dhall-to-json" [ "--file", orderFiles.lastStablePackageSet ]
+  throwIfSpawnErrored dtjResult
+  (packageGraph :: Object { dependencies :: Array Package, repo :: GitCloneUrl }) <-
+    either (liftEffect <<< throw <<< printJsonDecodeError) pure
+      $ decodeJson =<< parseJson dtjResult.stdout
+  let
+    spagoPackages = Object.toArrayWithKey Tuple
+      $ foldl (\acc pkg -> Object.delete (unwrap pkg.package) acc) packageGraph packages
+  results <- for spagoPackages \(Tuple pkgName { repo }) -> do
+    log $ "Generating info for package: " <> pkgName
+    let
+      ghRepo s = do
+        String.stripPrefix (Pattern "https://github.com/") s
+        >>= String.stripSuffix (Pattern ".git")
+    case ghRepo $ unwrap repo of
+      Nothing -> do
+        log $ "Could not get URL for package: " <> pkgName
+        pure $ Left pkgName
+      Just repoPart -> do
+        log $ "... getting list of tags"
+        ghApiResult <- withSpawnResult =<< spawnAff "gh"
+          [ "api"
+          , "/repos/" <> repoPart <> "/tags?per_page=5&page=1"
+          , "--jq"
+          , ".[].name"
+          ]
+        throwIfSpawnErrored ghApiResult
+        let
+          parseVersion s = lmap (\e ->"Could not parse version for tag: " <> s <> " - Error: " <> show e) do
+            Version.parseVersion $ fromMaybe s $ String.stripPrefix (Pattern "v") s
+
+          { left, right } = ghApiResult.stdout
+            # splitLines
+            # partitionMap parseVersion
+        case maximum right of
+          Nothing -> do
+            log $ "Could not determine max git tag for pkg, " <> pkgName
+            pure $ Right $ Left { pkgName, unparseableTags: left }
+          Just v -> do
+            log $ "... got maximum tag"
+            let
+              nextVersion = if major v == 0 then bumpMajor v else bumpMajor v
+            pure $ Right $ Right { pkgName, nextVersion, unparseableTags: left }
+  let
+    { left: urlFailure, right: urlResults } = partitionMap identity results
+    { left: noMaxTag, right: pkgsWithNextVersion } = partitionMap identity urlResults
+
+    obj :: Object String
+    obj = pkgsWithNextVersion # flip foldl Object.empty \acc next -> do
+      Object.insert next.pkgName (Version.showVersion next.nextVersion) acc
+  writeTextFile UTF8 releaseInfoFiles.fillPackageSetInfo
+    $ stringifyWithIndent 2
+    $ encodeJson obj
+  unless (Array.null urlFailure) do
+    log "Url failures:"
+    for_ urlFailure (log <<< append "Url failure: ")
+  unless (Array.null noMaxTag) do
+    log "No max tag:"
+    for_ noMaxTag \r -> do
+      log $ r.pkgName
+      traverse log r.unparseableTags
+  log "Done"

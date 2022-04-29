@@ -35,6 +35,7 @@ data Command
   | MakeNextReleaseBatch { submitPr :: Boolean, branchName :: Maybe BranchName, deleteBranchIfExist :: Boolean, keepPrBody :: Boolean }
   | EcosystemChangelog
   | GetFile GetFileOutput (Array FilePath)
+  | GenPackageSetInfo
 
 data DependencyStage
   = UpdateOrder

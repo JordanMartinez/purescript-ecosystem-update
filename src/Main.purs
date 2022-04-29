@@ -71,5 +71,7 @@ main = do
           GetFileCmd.getFile outputType filePaths
         EcosystemChangelog ->
           EcosystemCmd.generateEcosystemChangelog
+        GenPackageSetInfo ->
+          RelaseInfoCmd.generatePackageSetInfo
         _ -> do
           liftEffect $ Console.log "Command not yet implemented"
