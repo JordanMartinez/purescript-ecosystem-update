@@ -1,7 +1,7 @@
-const process = require("process");
-const fs = require("fs");
+import process from "process";
+import fs from "fs";
 
-exports.mkdirImpl = function(path) {
+export function mkdirImpl(path) {
   return function(opt) {
     return function (cb) {
       return function () {
@@ -9,9 +9,9 @@ exports.mkdirImpl = function(path) {
       };
     };
   };
-};
+}
 
-exports.rmImpl = function(path) {
+export function rmImpl(path) {
   return function(opt) {
     return function (cb) {
       return function () {
@@ -19,15 +19,15 @@ exports.rmImpl = function(path) {
       };
     };
   };
-};
+}
 
-exports.setProcessExitCode = function (code) {
+export function setProcessExitCode(code) {
   return function () {
     process.exitCode = code;
   };
-};
+}
 
-exports.onSpawn = function onSpawn(cp) {
+export function onSpawn(cp) {
   return function (cb) {
     return function () {
       cp.on("spawn", function () {
@@ -35,9 +35,9 @@ exports.onSpawn = function onSpawn(cp) {
       });
     };
   };
-};
+}
 
-exports.handleCallbackImpl = function (left, right, f) {
+export function handleCallbackImpl(left, right, f) {
   return function (err, value) {
     if (err) {
       f(left(err))();
@@ -45,8 +45,10 @@ exports.handleCallbackImpl = function (left, right, f) {
       f(right(value))();
     }
   };
-};
+}
 
-exports.fdStatImpl = fs.fdStat;
+export var fdStatImpl = fs.fdStat;
 
-exports.replaceAll = (r) => (s) => (str) => str.replaceAll(r, s);
+export function replaceAll(r) {
+  return (s) => (str) => str.replaceAll(r, s);
+}
