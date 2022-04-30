@@ -47,7 +47,7 @@ export function handleCallbackImpl(left, right, f) {
   };
 }
 
-export var fdStatImpl = fs.fdStat;
+export const fdStatImpl = fs.fdStat;
 
 export function replaceAll(r) {
   return (s) => (str) => str.replaceAll(r, s);
